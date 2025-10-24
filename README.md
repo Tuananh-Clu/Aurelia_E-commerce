@@ -1,6 +1,6 @@
 # Aurelia E-commerce
 
-Aurelia_E-commerce là một ứng dụng thương mại điện tử mẫu, được xây dựng bằng **Aurelia**, **TypeScript** và **C#**, cung cấp trải nghiệm mua sắm trực tuyến hiện đại.
+Aurelia_E-commerce là một ứng dụng thương mại điện tử mẫu, được xây dựng bằng React cung cấp trải nghiệm mua sắm trực tuyến hiện đại.
 
 ## 🚀 Tính năng
 
