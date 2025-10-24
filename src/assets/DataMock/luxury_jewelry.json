@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Cartier Love Bracelet",
+    "brand": "Cartier",
+    "price": 12500,
+    "currency": "USD",
+    "description": "Vòng tay Love bằng vàng hồng 18K, biểu tượng tình yêu bất diệt của Cartier.",
+    "images": 
+      "https://i.pinimg.com/736x/15/ef/fa/15effa2339f7b7adeb2d025345106248.jpg"
+    ,
+    "material": "18K Rose Gold",
+    "color": "Rose Gold",
+    "size": "16 cm",
+    "stock": 12
+  },
+  {
+    "id": 2,
+    "name": "Tiffany Diamond Ring",
+    "brand": "Tiffany & Co",
+    "price": 18500,
+    "currency": "USD",
+    "description": "Nhẫn kim cương Tiffany Setting 6 chấu, thiết kế kinh điển từ năm 1886.",
+    "images": 
+      "https://i.pinimg.com/1200x/2b/0f/79/2b0f797b26fe99f3ad5ab41911bb08a5.jpg"
+    ,
+    "material": "Platinum, Diamond",
+    "color": "Silver",
+    "size": "6",
+    "stock": 8
+  },
+  {
+    "id": 3,
+    "name": "Bvlgari Serpenti Necklace",
+    "brand": "Bvlgari",
+    "price": 32000,
+    "currency": "USD",
+    "description": "Vòng cổ Serpenti bằng vàng trắng 18K với kim cương pavé tinh xảo.",
+    "images": 
+      "https://i.pinimg.com/1200x/68/18/e3/6818e3d465e381005c0e0cba71604374.jpg"
+    ,
+    "material": "18K White Gold, Diamond",
+    "color": "White Gold",
+    "size": "45 cm",
+    "stock": 5
+  }
+]

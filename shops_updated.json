@@ -1,0 +1,3444 @@
+[
+  {
+    "shopId": "shop-001",
+    "shopName": "Saigon Luxury Fashion",
+    "products": [
+      {
+        "productId": "c775a34a-9324-4c1b-84e3-7d805dc65e1c",
+        "name": "Hermès Bracelet",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 47
+              },
+              {
+                "size": "M",
+                "quantity": 3
+              },
+              {
+                "size": "L",
+                "quantity": 5
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Bracelet",
+        "sold": 280
+      },
+      {
+        "productId": "5d26caca-e969-4f53-aeac-06d97e5f640e",
+        "name": "Hermès Casual Watch",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 28
+              },
+              {
+                "size": "S",
+                "quantity": 7
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 9
+              },
+              {
+                "size": "XL",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Casual Watch",
+        "sold": 226
+      },
+      {
+        "productId": "e303c4a9-e220-476f-bc75-0d65273dd062",
+        "name": "Dior Earrings",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 16
+              },
+              {
+                "size": "S",
+                "quantity": 64
+              },
+              {
+                "size": "M",
+                "quantity": 14
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Earrings",
+        "sold": 401
+      },
+      {
+        "productId": "ec603572-12f0-4c65-9cf9-fca4ce7a998c",
+        "name": "Gucci Evening Gown",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 76
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Evening Gown",
+        "sold": 471
+      },
+      {
+        "productId": "d7453805-e599-41b0-ad83-d5f911d58017",
+        "name": "Omega Constellation Co-Axial",
+        "brand": "Omega",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 14
+              }
+            ]
+          }
+        ],
+        "matchedName": "Omega Constellation Co-Axial",
+        "sold": 283
+      },
+      {
+        "productId": "5350ee9d-e4cb-4b6b-a33f-41e460525a84",
+        "name": "Prada Dress 25",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 6
+              },
+              {
+                "size": "S",
+                "quantity": 14
+              },
+              {
+                "size": "M",
+                "quantity": 13
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 5
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Dress 25",
+        "sold": 380
+      },
+      {
+        "productId": "28bcb7e9-4147-4f62-802b-f45fb0f82d09",
+        "name": "Chanel Belt",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 26
+              },
+              {
+                "size": "S",
+                "quantity": 31
+              },
+              {
+                "size": "M",
+                "quantity": 33
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Belt",
+        "sold": 174
+      }
+    ],
+    "owner": "John Smith",
+    "address": "300 Mậu Thân, Quận 2, Cần Thơ, Việt Nam",
+    "openingHours": "08:00 - 20:00",
+    "phone": "+44 20 7946 0001",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Cần Thơ",
+    "appointmentServices": [
+      {
+        "name": "Tư vấn thời trang riêng",
+        "description": "Khách hàng được chuyên gia thời trang hỗ trợ phối đồ và chọn sản phẩm phù hợp.",
+        "duration": "60 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Trải nghiệm phòng VIP",
+        "description": "Khách hàng có không gian riêng để thử đồ cao cấp, phục vụ nước uống.",
+        "duration": "90 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Trợ lý mua sắm cá nhân",
+        "description": "Có nhân viên đi cùng, tư vấn và hỗ trợ chọn mua sản phẩm.",
+        "duration": "120 phút",
+        "price": "Miễn phí cho thành viên VIP"
+      }
+    ],
+    "lat": 10.041348,
+    "lng": 105.770482
+  },
+  {
+    "shopId": "shop-002",
+    "shopName": "Paris Chic Boutique",
+    "products": [
+      {
+        "productId": "a2dba526-b761-4bdb-8532-23c2eaf7c78d",
+        "name": "Gucci Luxury 5",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 44
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Luxury 5",
+        "sold": 403
+      },
+      {
+        "productId": "35f0b9f1-4d50-4867-97d7-1d3a0f08b506",
+        "name": "Michael Kors Scarf 24",
+        "brand": "Michael Kors",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 15
+              }
+            ]
+          }
+        ],
+        "matchedName": "Michael Kors Scarf 24",
+        "sold": 167
+      },
+      {
+        "productId": "816e3a82-9c80-40d8-af42-fbf76355d0e7",
+        "name": "Gucci Bracelet",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 18
+              },
+              {
+                "size": "S",
+                "quantity": 0
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Bracelet",
+        "sold": 418
+      },
+      {
+        "productId": "5d26caca-e969-4f53-aeac-06d97e5f640e",
+        "name": "Hermès Casual Watch",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 19
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Casual Watch",
+        "sold": 474
+      },
+      {
+        "productId": "746bc2de-5476-4cea-b0a5-43edcd594598",
+        "name": "Swarovski Dress 1",
+        "brand": "Swarovski",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 48
+              },
+              {
+                "size": "S",
+                "quantity": 3
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Swarovski Dress 1",
+        "sold": 223
+      },
+      {
+        "productId": "dfa8d672-815c-4f8d-9070-68eea6406e2f",
+        "name": "Cartier Scarf 29",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 49
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Scarf 29",
+        "sold": 149
+      },
+      {
+        "productId": "33982f80-2841-4112-9fb5-d26d30e66cbc",
+        "name": "Rolex Casual Watch",
+        "brand": "Rolex",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 40
+              },
+              {
+                "size": "S",
+                "quantity": 3
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Rolex Casual Watch",
+        "sold": 272
+      }
+    ],
+    "owner": "Jean Martin",
+    "address": "153 Lê Lợi, Quận 3, TP.HCM, Việt Nam",
+    "openingHours": "10:00 - 22:00",
+    "phone": "+33 1 42 68 0001",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "TP.HCM",
+    "appointmentServices": [
+      {
+        "name": "Tư vấn với stylist",
+        "description": "Stylist chuyên nghiệp sẽ hỗ trợ phong cách và xu hướng mới.",
+        "duration": "60 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Trải nghiệm thử trước khi mua",
+        "description": "Khách hàng có thể mặc thử sản phẩm trước khi quyết định.",
+        "duration": "45 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Hẹn giờ nhận hàng tại cửa hàng",
+        "description": "Khách hàng đặt lịch để đến nhận hàng tại cửa hàng.",
+        "duration": "15 phút",
+        "price": "Miễn phí"
+      }
+    ],
+    "lat": 10.753464,
+    "lng": 106.710765
+  },
+  {
+    "shopId": "shop-003",
+    "shopName": "Milan Eleganza",
+    "products": [
+      {
+        "productId": "5fe15c05-72be-420b-9fac-d256511ef2fb",
+        "name": "Gucci Pleated Top",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 20
+              },
+              {
+                "size": "S",
+                "quantity": 20
+              },
+              {
+                "size": "M",
+                "quantity": 4
+              },
+              {
+                "size": "L",
+                "quantity": 7
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Pleated Top",
+        "sold": 230
+      },
+      {
+        "productId": "09dd16b4-a2a5-403c-8d16-186e1d67d4c5",
+        "name": "Prada Metal Strap",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 13
+              },
+              {
+                "size": "S",
+                "quantity": 8
+              },
+              {
+                "size": "M",
+                "quantity": 38
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Metal Strap",
+        "sold": 133
+      },
+      {
+        "productId": "33aee474-e6eb-4433-8de5-931ef0858f26",
+        "name": "Hermès Scarf",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 24
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Scarf",
+        "sold": 464
+      },
+      {
+        "productId": "29b49f7a-3054-4d54-bae5-f7a88280252d",
+        "name": "Chanel Necklace",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 23
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Necklace",
+        "sold": 397
+      },
+      {
+        "productId": "e686bd04-08ea-454f-9006-8c41b8395f2a",
+        "name": "Hermès Earrings",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 13
+              },
+              {
+                "size": "S",
+                "quantity": 30
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Earrings",
+        "sold": 388
+      },
+      {
+        "productId": "5d26caca-e969-4f53-aeac-06d97e5f640e",
+        "name": "Hermès Casual Watch",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 28
+              },
+              {
+                "size": "S",
+                "quantity": 7
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 9
+              },
+              {
+                "size": "XL",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Casual Watch",
+        "sold": 339
+      },
+      {
+        "productId": "e0d1c4ed-c5d0-484d-9560-e3ecbd2541af",
+        "name": "Chanel Classic Flap Bag",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 8
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Classic Flap Bag",
+        "sold": 191
+      },
+      {
+        "productId": "c7c50c07-d6d0-4028-ba39-e742860d2909",
+        "name": "Zara Scarf 6",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 49
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Scarf 6",
+        "sold": 105
+      }
+    ],
+    "owner": "Francesca Conti",
+    "address": "117 Lê Lợi, Quận 9, TP.HCM, Việt Nam",
+    "openingHours": "10:00 - 22:00",
+    "phone": "+39 02 76 0001",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "TP.HCM",
+    "appointmentServices": [
+      {
+        "name": "Phiên thử đồ sang trọng",
+        "description": "Khách hàng thử các sản phẩm cao cấp trong không gian riêng.",
+        "duration": "75 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Hẹn đo size may đo",
+        "description": "Khách hàng được đo size riêng để may đo trang phục.",
+        "duration": "30 phút",
+        "price": "Theo sản phẩm may đo"
+      },
+      {
+        "name": "Tư vấn mua sắm cá nhân",
+        "description": "Tư vấn riêng theo nhu cầu và phong cách cá nhân.",
+        "duration": "60 phút",
+        "price": "Miễn phí cho thành viên VIP"
+      }
+    ],
+    "lat": 10.800265,
+    "lng": 106.701121
+  },
+  {
+    "shopId": "shop-004",
+    "shopName": "London Trend House",
+    "products": [
+      {
+        "productId": "eda9dfe9-8342-4486-945d-99766959f807",
+        "name": "Chanel Sunglasses",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 7
+              },
+              {
+                "size": "M",
+                "quantity": 7
+              },
+              {
+                "size": "L",
+                "quantity": 8
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Sunglasses",
+        "sold": 406
+      },
+      {
+        "productId": "c29d4583-650c-4914-a0a3-ceb83b51762d",
+        "name": "Zara Bracelet 19",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 56
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Bracelet 19",
+        "sold": 403
+      },
+      {
+        "productId": "473db019-6588-4793-ad7e-1f587e57a4b9",
+        "name": "Chanel Cocktail Dress",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 41
+              },
+              {
+                "size": "M",
+                "quantity": 13
+              },
+              {
+                "size": "L",
+                "quantity": 10
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Cocktail Dress",
+        "sold": 136
+      },
+      {
+        "productId": "2c1c030c-f996-4b1b-9eae-9f43c8bdaa25",
+        "name": "Prada Top 35",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 24
+              },
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 4
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Top 35",
+        "sold": 93
+      },
+      {
+        "productId": "72229654-a90f-4108-a4c8-0f325d0e7886",
+        "name": "Prada Evening Gown",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 25
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 11
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Evening Gown",
+        "sold": 447
+      },
+      {
+        "productId": "3373e6ba-9801-4e83-b057-6eb02c300239",
+        "name": "Cartier Leather Strap",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Green",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 28
+              },
+              {
+                "size": "M",
+                "quantity": 11
+              },
+              {
+                "size": "L",
+                "quantity": 10
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Leather Strap",
+        "sold": 457
+      },
+      {
+        "productId": "e303c4a9-e220-476f-bc75-0d65273dd062",
+        "name": "Dior Earrings",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 16
+              },
+              {
+                "size": "S",
+                "quantity": 64
+              },
+              {
+                "size": "M",
+                "quantity": 14
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Earrings",
+        "sold": 261
+      }
+    ],
+    "owner": "Sophia Wilson",
+    "address": "132 Trần Hưng Đạo, Quận 11, TP.HCM, Việt Nam",
+    "openingHours": "08:00 - 20:00",
+    "phone": "+44 20 7946 0002",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "TP.HCM",
+    "appointmentServices": [
+      {
+        "name": "Xem trước bộ sưu tập túi độc quyền",
+        "description": "Khách hàng được xem trước các mẫu túi chưa ra mắt.",
+        "duration": "45 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Thử trang sức riêng tư",
+        "description": "Khách hàng được thử và tư vấn trang sức trong không gian riêng.",
+        "duration": "60 phút",
+        "price": "Miễn phí cho thành viên VIP"
+      },
+      {
+        "name": "Đặt hẹn VIP",
+        "description": "Khách hàng VIP được ưu tiên chọn lịch hẹn linh hoạt.",
+        "duration": "Theo yêu cầu",
+        "price": "Dành riêng cho VIP"
+      }
+    ],
+    "lat": 10.817718,
+    "lng": 106.65443
+  },
+  {
+    "shopId": "shop-005",
+    "shopName": "Tokyo Style Hub",
+    "products": [
+      {
+        "productId": "7024a993-9f0e-4272-89ac-ad0383191aa6",
+        "name": "Cartier Dress 37",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 14
+              },
+              {
+                "size": "S",
+                "quantity": 3
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 3
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Dress 37",
+        "sold": 416
+      },
+      {
+        "productId": "4d133fad-d439-411f-84a5-629fd0b609a2",
+        "name": "Prada Casual Dress",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 24
+              },
+              {
+                "size": "S",
+                "quantity": 61
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Casual Dress",
+        "sold": 303
+      },
+      {
+        "productId": "e6471b89-9892-49bd-a020-f07e7547b014",
+        "name": "Hermès Evening Gown",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 14
+              },
+              {
+                "size": "S",
+                "quantity": 17
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Evening Gown",
+        "sold": 351
+      },
+      {
+        "productId": "d88af63c-3a1c-4cd0-84a1-1722807f7d5d",
+        "name": "Tom Ford Satin Crop Top",
+        "brand": "Tom Ford",
+        "variants": [
+          {
+            "color": "Brown",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 26
+              },
+              {
+                "size": "S",
+                "quantity": 9
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Tom Ford Satin Crop Top",
+        "sold": 434
+      },
+      {
+        "productId": "c4779909-59c7-4a62-9c08-7f0ea803fcf9",
+        "name": "Cartier Necklace",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Pink",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 81
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Necklace",
+        "sold": 83
+      },
+      {
+        "productId": "792ac9e8-f778-4fde-bda1-747893bfd3f0",
+        "name": "Rolex Evening Gown",
+        "brand": "Rolex",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 37
+              },
+              {
+                "size": "S",
+                "quantity": 12
+              },
+              {
+                "size": "M",
+                "quantity": 4
+              },
+              {
+                "size": "L",
+                "quantity": 1
+              },
+              {
+                "size": "XL",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Rolex Evening Gown",
+        "sold": 114
+      },
+      {
+        "productId": "1229a46c-48fc-4559-8dc8-fe37c1e66e51",
+        "name": "Tiffany & Co. Belt 4",
+        "brand": "Tiffany & Co.",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 19
+              }
+            ]
+          }
+        ],
+        "matchedName": "Tiffany & Co. Belt 4",
+        "sold": 299
+      }
+    ],
+    "owner": "Yuki Nakamura",
+    "address": "137 Ngô Quyền, Quận 5, Hải Phòng, Việt Nam",
+    "openingHours": "10:00 - 22:00",
+    "phone": "+81 3 4578 0001",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Hải Phòng",
+    "appointmentServices": [
+      {
+        "name": "Xem trước phiên bản giới hạn",
+        "description": "Khách hàng được tham quan và thử các sản phẩm giới hạn.",
+        "duration": "45 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Buổi làm việc với stylist cá nhân",
+        "description": "Stylist cá nhân hỗ trợ định hình phong cách.",
+        "duration": "60 phút",
+        "price": "Theo gói stylist"
+      },
+      {
+        "name": "Nhận hàng tại cửa hàng với gói quà",
+        "description": "Khách hàng nhận hàng đã được gói quà sang trọng.",
+        "duration": "20 phút",
+        "price": "Miễn phí"
+      }
+    ],
+    "lat": 20.870712,
+    "lng": 106.662543
+  },
+  {
+    "shopId": "shop-006",
+    "shopName": "Milano Couture",
+    "products": [
+      {
+        "productId": "17b48450-affd-4378-8d9d-d5d24f216460",
+        "name": "Cartier Ring",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 82
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Ring",
+        "sold": 311
+      },
+      {
+        "productId": "62114b2c-fec2-4a4b-a8f2-841067dc7411",
+        "name": "Chanel Evening Gown",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 52
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Evening Gown",
+        "sold": 52
+      },
+      {
+        "productId": "88f3e7f4-e1c9-402c-bc63-0894c4aae6ff",
+        "name": "Hermès Leather Strap",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 10
+              },
+              {
+                "size": "S",
+                "quantity": 20
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 1
+              },
+              {
+                "size": "XL",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Leather Strap",
+        "sold": 123
+      },
+      {
+        "productId": "54136fa3-8351-410b-bbb0-219bdaf344c5",
+        "name": "Tiffany & Co. Return to Tiffany Pendant",
+        "brand": "Tiffany & Co.",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 30
+              }
+            ]
+          }
+        ],
+        "matchedName": "Tiffany & Co. Return to Tiffany Pendant",
+        "sold": 367
+      },
+      {
+        "productId": "3373e6ba-9801-4e83-b057-6eb02c300239",
+        "name": "Cartier Leather Strap",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Green",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 28
+              },
+              {
+                "size": "M",
+                "quantity": 11
+              },
+              {
+                "size": "L",
+                "quantity": 10
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Leather Strap",
+        "sold": 204
+      },
+      {
+        "productId": "9dd94f69-4729-4cae-ab10-52e20bc576a7",
+        "name": "Gucci Casual Dress",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 78
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Casual Dress",
+        "sold": 82
+      },
+      {
+        "productId": "e6471b89-9892-49bd-a020-f07e7547b014",
+        "name": "Hermès Evening Gown",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 14
+              },
+              {
+                "size": "S",
+                "quantity": 17
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Evening Gown",
+        "sold": 309
+      },
+      {
+        "productId": "d7e91514-2dbe-416b-bc1a-25dafa389f8a",
+        "name": "Gucci Leather Strap",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 32
+              },
+              {
+                "size": "S",
+                "quantity": 0
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Leather Strap",
+        "sold": 399
+      },
+      {
+        "productId": "eeee7b4e-3145-438a-9e8c-72fd11c1e4cb",
+        "name": "Hermès Sunglasses",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 7
+              },
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Sunglasses",
+        "sold": 315
+      },
+      {
+        "productId": "dcc0dc6e-f863-4564-96da-37a900a196f6",
+        "name": "Swarovski Attract Earrings",
+        "brand": "Swarovski",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 70
+              }
+            ]
+          }
+        ],
+        "matchedName": "Swarovski Attract Earrings",
+        "sold": 361
+      }
+    ],
+    "owner": "Luca Romano",
+    "address": "171 Phan Đình Phùng, Quận 2, Đà Lạt, Việt Nam",
+    "openingHours": "09:00 - 21:00",
+    "phone": "+39 02 76 0002",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Đà Lạt",
+    "appointmentServices": [
+      {
+        "name": "Hẹn may đo cao cấp",
+        "description": "Dịch vụ may đo riêng cho khách hàng sang trọng.",
+        "duration": "90 phút",
+        "price": "Theo sản phẩm may đo"
+      },
+      {
+        "name": "Tư vấn phụ kiện độc quyền",
+        "description": "Khách hàng được tư vấn chọn phụ kiện giới hạn và đặc biệt.",
+        "duration": "45 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Phòng stylist riêng",
+        "description": "Khách hàng có phòng riêng để làm việc với stylist.",
+        "duration": "90 phút",
+        "price": "Theo gói stylist"
+      }
+    ],
+    "lat": 11.953646,
+    "lng": 108.450457
+  },
+  {
+    "shopId": "shop-007",
+    "shopName": "Berlin Glamour",
+    "products": [
+      {
+        "productId": "6d4e1dfa-e9f6-4c52-9569-417af5a59005",
+        "name": "Zara Bracelet 38",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 36
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Bracelet 38",
+        "sold": 165
+      },
+      {
+        "productId": "e6471b89-9892-49bd-a020-f07e7547b014",
+        "name": "Hermès Evening Gown",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 14
+              },
+              {
+                "size": "S",
+                "quantity": 17
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Evening Gown",
+        "sold": 360
+      },
+      {
+        "productId": "1c2ee133-c047-4cb6-bbef-b85899041076",
+        "name": "Louis Vuitton Dress 14",
+        "brand": "Louis Vuitton",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 29
+              },
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Louis Vuitton Dress 14",
+        "sold": 197
+      },
+      {
+        "productId": "ec603572-12f0-4c65-9cf9-fca4ce7a998c",
+        "name": "Gucci Evening Gown",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 18
+              },
+              {
+                "size": "M",
+                "quantity": 13
+              },
+              {
+                "size": "L",
+                "quantity": 14
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Evening Gown",
+        "sold": 270
+      },
+      {
+        "productId": "eac474de-6a82-4573-82eb-66fc0e273ef1",
+        "name": "Rolex Handbag",
+        "brand": "Rolex",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 33
+              },
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 3
+              }
+            ]
+          }
+        ],
+        "matchedName": "Rolex Handbag",
+        "sold": 76
+      },
+      {
+        "productId": "88f3e7f4-e1c9-402c-bc63-0894c4aae6ff",
+        "name": "Hermès Leather Strap",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 21
+              },
+              {
+                "size": "S",
+                "quantity": 3
+              },
+              {
+                "size": "M",
+                "quantity": 30
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Leather Strap",
+        "sold": 500
+      },
+      {
+        "productId": "8a4e96ae-162b-4dcd-921f-bbed2be6d686",
+        "name": "Zara A-line Midi Dress",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 28
+              },
+              {
+                "size": "S",
+                "quantity": 20
+              },
+              {
+                "size": "M",
+                "quantity": 5
+              },
+              {
+                "size": "L",
+                "quantity": 2
+              },
+              {
+                "size": "XL",
+                "quantity": 5
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara A-line Midi Dress",
+        "sold": 237
+      },
+      {
+        "productId": "4d133fad-d439-411f-84a5-629fd0b609a2",
+        "name": "Prada Casual Dress",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 0
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 25
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Casual Dress",
+        "sold": 419
+      },
+      {
+        "productId": "5d26caca-e969-4f53-aeac-06d97e5f640e",
+        "name": "Hermès Casual Watch",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 19
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Casual Watch",
+        "sold": 429
+      }
+    ],
+    "owner": "Laura Fischer",
+    "address": "186 Nguyễn Trãi, Quận 5, Nha Trang, Việt Nam",
+    "openingHours": "08:00 - 20:00",
+    "phone": "+49 30 8921 0001",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Nha Trang",
+    "appointmentServices": [
+      {
+        "name": "Xem trước bộ sưu tập theo mùa",
+        "description": "Khách hàng được trải nghiệm bộ sưu tập mới nhất theo mùa.",
+        "duration": "60 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Trải nghiệm thử trước khi mua",
+        "description": "Khách hàng có thể mặc thử sản phẩm trước khi quyết định.",
+        "duration": "45 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Mua sắm cá nhân cùng stylist",
+        "description": "Stylist đi cùng và hỗ trợ khi mua sắm.",
+        "duration": "90 phút",
+        "price": "Theo gói stylist"
+      }
+    ],
+    "lat": 12.2555,
+    "lng": 109.216025
+  },
+  {
+    "shopId": "shop-008",
+    "shopName": "London Classic Wear",
+    "products": [
+      {
+        "productId": "95aa3a0d-895a-4393-8136-c77cdc0879fd",
+        "name": "Rolex Scarf",
+        "brand": "Rolex",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 42
+              },
+              {
+                "size": "S",
+                "quantity": 18
+              },
+              {
+                "size": "M",
+                "quantity": 18
+              }
+            ]
+          }
+        ],
+        "matchedName": "Rolex Scarf",
+        "sold": 297
+      },
+      {
+        "productId": "1b851d99-39bb-466f-abfa-e1d7cfcfbe23",
+        "name": "Hermès Luxury Watch",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 44
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Luxury Watch",
+        "sold": 216
+      },
+      {
+        "productId": "d88af63c-3a1c-4cd0-84a1-1722807f7d5d",
+        "name": "Tom Ford Satin Crop Top",
+        "brand": "Tom Ford",
+        "variants": [
+          {
+            "color": "Brown",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 26
+              },
+              {
+                "size": "S",
+                "quantity": 9
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Tom Ford Satin Crop Top",
+        "sold": 358
+      },
+      {
+        "productId": "2734bd9f-d2c6-4273-8671-fa870bc510dd",
+        "name": "Zara Belt 31",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 49
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Belt 31",
+        "sold": 101
+      },
+      {
+        "productId": "6d4e1dfa-e9f6-4c52-9569-417af5a59005",
+        "name": "Zara Bracelet 38",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 36
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Bracelet 38",
+        "sold": 184
+      },
+      {
+        "productId": "d840ec5d-1707-45ab-8715-c2b46a3b679d",
+        "name": "Gucci Earrings",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 2
+              },
+              {
+                "size": "S",
+                "quantity": 41
+              },
+              {
+                "size": "M",
+                "quantity": 30
+              },
+              {
+                "size": "L",
+                "quantity": 8
+              },
+              {
+                "size": "XL",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Earrings",
+        "sold": 485
+      },
+      {
+        "productId": "eda9dfe9-8342-4486-945d-99766959f807",
+        "name": "Chanel Sunglasses",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 11
+              },
+              {
+                "size": "S",
+                "quantity": 39
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Sunglasses",
+        "sold": 371
+      }
+    ],
+    "owner": "Sophia Wilson",
+    "address": "297 Lê Duẩn, Quận 6, Đà Nẵng, Việt Nam",
+    "openingHours": "10:00 - 22:00",
+    "phone": "+44 20 7946 0003",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Đà Nẵng",
+    "appointmentServices": [
+      {
+        "name": "Handbag customization appointment",
+        "description": "Dịch vụ đặc biệt tại cửa hàng.",
+        "duration": "60 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Private jewelry consultation",
+        "description": "Dịch vụ đặc biệt tại cửa hàng.",
+        "duration": "60 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Hẹn giờ nhận hàng tại cửa hàng",
+        "description": "Khách hàng đặt lịch để đến nhận hàng tại cửa hàng.",
+        "duration": "15 phút",
+        "price": "Miễn phí"
+      }
+    ],
+    "lat": 16.033552,
+    "lng": 108.207826
+  },
+  {
+    "shopId": "shop-009",
+    "shopName": "Paris Mode Gallery",
+    "products": [
+      {
+        "productId": "eda9dfe9-8342-4486-945d-99766959f807",
+        "name": "Chanel Sunglasses",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 11
+              },
+              {
+                "size": "S",
+                "quantity": 39
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Sunglasses",
+        "sold": 295
+      },
+      {
+        "productId": "47aa030d-9f6d-4cd6-96fd-964bf7533f1c",
+        "name": "Michael Kors Casual Dress",
+        "brand": "Michael Kors",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 74
+              }
+            ]
+          }
+        ],
+        "matchedName": "Michael Kors Casual Dress",
+        "sold": 343
+      },
+      {
+        "productId": "95aa3a0d-895a-4393-8136-c77cdc0879fd",
+        "name": "Rolex Scarf",
+        "brand": "Rolex",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 42
+              },
+              {
+                "size": "S",
+                "quantity": 18
+              },
+              {
+                "size": "M",
+                "quantity": 18
+              }
+            ]
+          }
+        ],
+        "matchedName": "Rolex Scarf",
+        "sold": 161
+      },
+      {
+        "productId": "50e62339-4a7b-4102-883b-c747f7946d01",
+        "name": "Dior Book Tote",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Pink",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 10
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Book Tote",
+        "sold": 407
+      },
+      {
+        "productId": "e3e4269a-db6e-41b1-99e2-fc3818622f99",
+        "name": "Swarovski Luxury 13",
+        "brand": "Swarovski",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 38
+              }
+            ]
+          }
+        ],
+        "matchedName": "Swarovski Luxury 13",
+        "sold": 492
+      },
+      {
+        "productId": "4d133fad-d439-411f-84a5-629fd0b609a2",
+        "name": "Prada Casual Dress",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 24
+              },
+              {
+                "size": "S",
+                "quantity": 61
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Casual Dress",
+        "sold": 210
+      },
+      {
+        "productId": "c97be946-f7ca-4e46-889a-6115822e87d6",
+        "name": "Dior Sunglasses",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 53
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Sunglasses",
+        "sold": 173
+      },
+      {
+        "productId": "a749cc45-739a-4dc8-9b1b-8e0f4230c5c3",
+        "name": "Omega Dress 3",
+        "brand": "Omega",
+        "variants": [
+          {
+            "color": "Green",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 9
+              },
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Omega Dress 3",
+        "sold": 372
+      }
+    ],
+    "owner": "Claire Bernard",
+    "address": "97 Trần Phú, Quận 7, Đà Lạt, Việt Nam",
+    "openingHours": "09:00 - 21:00",
+    "phone": "+33 1 42 68 0002",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Đà Lạt",
+    "appointmentServices": [
+      {
+        "name": "Phiên thử váy dạ hội",
+        "description": "Khách hàng thử các mẫu váy dạ hội sang trọng.",
+        "duration": "60 phút",
+        "price": "Theo sản phẩm"
+      },
+      {
+        "name": "Trải nghiệm mua sắm cùng stylist",
+        "description": "Stylist hướng dẫn toàn bộ trải nghiệm mua sắm.",
+        "duration": "120 phút",
+        "price": "Theo gói stylist"
+      },
+      {
+        "name": "Hẹn VIP với rượu champagne",
+        "description": "Khách hàng VIP được phục vụ champagne khi trải nghiệm.",
+        "duration": "90 phút",
+        "price": "Theo gói VIP"
+      }
+    ],
+    "lat": 11.93996,
+    "lng": 108.426678
+  },
+  {
+    "shopId": "shop-010",
+    "shopName": "Zurich Prestige",
+    "products": [
+      {
+        "productId": "eda9dfe9-8342-4486-945d-99766959f807",
+        "name": "Chanel Sunglasses",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 7
+              },
+              {
+                "size": "M",
+                "quantity": 7
+              },
+              {
+                "size": "L",
+                "quantity": 8
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Sunglasses",
+        "sold": 339
+      },
+      {
+        "productId": "9bf20887-557e-46f9-8f23-f0171c09e4a6",
+        "name": "Chanel Ring",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 9
+              },
+              {
+                "size": "M",
+                "quantity": 23
+              },
+              {
+                "size": "L",
+                "quantity": 13
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Ring",
+        "sold": 193
+      },
+      {
+        "productId": "0fde732e-167e-4b8c-9ef4-25cfeda3725d",
+        "name": "Tiffany & Co. Bag 33",
+        "brand": "Tiffany & Co.",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 12
+              }
+            ]
+          }
+        ],
+        "matchedName": "Tiffany & Co. Bag 33",
+        "sold": 178
+      },
+      {
+        "productId": "0e70eba0-0012-473f-b2b8-3e797fd1a856",
+        "name": "Cartier Belt",
+        "brand": "Cartier",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 91
+              }
+            ]
+          }
+        ],
+        "matchedName": "Cartier Belt",
+        "sold": 281
+      },
+      {
+        "productId": "8e8d5126-3f20-4005-b0db-2009d80ad14f",
+        "name": "Dior Belt",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 34
+              },
+              {
+                "size": "M",
+                "quantity": 6
+              },
+              {
+                "size": "L",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Belt",
+        "sold": 190
+      },
+      {
+        "productId": "e303c4a9-e220-476f-bc75-0d65273dd062",
+        "name": "Dior Earrings",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 65
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Earrings",
+        "sold": 426
+      }
+    ],
+    "owner": "Nina Schmid",
+    "address": "277 Lê Duẩn, Quận 7, Đà Nẵng, Việt Nam",
+    "openingHours": "08:00 - 20:00",
+    "phone": "+41 44 580 0001",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Đà Nẵng",
+    "appointmentServices": [
+      {
+        "name": "Tư vấn đồng hồ cao cấp",
+        "description": "Khách hàng được tư vấn chọn đồng hồ sang trọng.",
+        "duration": "60 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Trợ lý mua sắm cá nhân",
+        "description": "Có nhân viên đi cùng, tư vấn và hỗ trợ chọn mua sản phẩm.",
+        "duration": "120 phút",
+        "price": "Miễn phí cho thành viên VIP"
+      },
+      {
+        "name": "Tư vấn phụ kiện riêng",
+        "description": "Chuyên gia hỗ trợ mix & match phụ kiện theo phong cách.",
+        "duration": "45 phút",
+        "price": "Theo gói dịch vụ"
+      }
+    ],
+    "lat": 16.034677,
+    "lng": 108.223434
+  },
+  {
+    "shopId": "shop-011",
+    "shopName": "Zurich Fashion Line",
+    "products": [
+      {
+        "productId": "b32644bd-da3e-4af8-833d-47446721468b",
+        "name": "Swarovski Luxury 20",
+        "brand": "Swarovski",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 34
+              }
+            ]
+          }
+        ],
+        "matchedName": "Swarovski Luxury 20",
+        "sold": 73
+      },
+      {
+        "productId": "5fe15c05-72be-420b-9fac-d256511ef2fb",
+        "name": "Gucci Pleated Top",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 20
+              },
+              {
+                "size": "S",
+                "quantity": 20
+              },
+              {
+                "size": "M",
+                "quantity": 4
+              },
+              {
+                "size": "L",
+                "quantity": 7
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Pleated Top",
+        "sold": 448
+      },
+      {
+        "productId": "94d0a28f-82e8-4102-bbbe-434af0bb7d18",
+        "name": "Michael Kors Sunglasses",
+        "brand": "Michael Kors",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 36
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 27
+              }
+            ]
+          }
+        ],
+        "matchedName": "Michael Kors Sunglasses",
+        "sold": 104
+      },
+      {
+        "productId": "b7fe9c1c-d113-4069-885a-6de4dc413aee",
+        "name": "Saint Laurent Lace Blouse",
+        "brand": "Saint Laurent",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 77
+              },
+              {
+                "size": "S",
+                "quantity": 15
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 4
+              }
+            ]
+          }
+        ],
+        "matchedName": "Saint Laurent Lace Blouse",
+        "sold": 499
+      },
+      {
+        "productId": "35f0b9f1-4d50-4867-97d7-1d3a0f08b506",
+        "name": "Michael Kors Scarf 24",
+        "brand": "Michael Kors",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 15
+              }
+            ]
+          }
+        ],
+        "matchedName": "Michael Kors Scarf 24",
+        "sold": 195
+      },
+      {
+        "productId": "88f3e7f4-e1c9-402c-bc63-0894c4aae6ff",
+        "name": "Hermès Leather Strap",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Red",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 10
+              },
+              {
+                "size": "S",
+                "quantity": 20
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 1
+              },
+              {
+                "size": "XL",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Leather Strap",
+        "sold": 452
+      },
+      {
+        "productId": "8e8d5126-3f20-4005-b0db-2009d80ad14f",
+        "name": "Dior Belt",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 34
+              },
+              {
+                "size": "M",
+                "quantity": 6
+              },
+              {
+                "size": "L",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Belt",
+        "sold": 473
+      },
+      {
+        "productId": "8f6eca15-1069-44b2-b03b-5badbb8a4cfd",
+        "name": "Prada Nylon Backpack",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 20
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Nylon Backpack",
+        "sold": 412
+      },
+      {
+        "productId": "816e3a82-9c80-40d8-af42-fbf76355d0e7",
+        "name": "Gucci Bracelet",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 18
+              },
+              {
+                "size": "S",
+                "quantity": 0
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Bracelet",
+        "sold": 90
+      },
+      {
+        "productId": "eda9dfe9-8342-4486-945d-99766959f807",
+        "name": "Chanel Sunglasses",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 7
+              },
+              {
+                "size": "M",
+                "quantity": 7
+              },
+              {
+                "size": "L",
+                "quantity": 8
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Sunglasses",
+        "sold": 100
+      }
+    ],
+    "owner": "Lukas Meier",
+    "address": "294 Trần Hưng Đạo, Quận 2, TP.HCM, Việt Nam",
+    "openingHours": "08:00 - 20:00",
+    "phone": "+41 44 580 0002",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "TP.HCM",
+    "appointmentServices": [
+      {
+        "name": "Xem trước bộ sưu tập theo mùa",
+        "description": "Khách hàng được trải nghiệm bộ sưu tập mới nhất theo mùa.",
+        "duration": "60 phút",
+        "price": "Miễn phí"
+      },
+      {
+        "name": "Phiên trang sức độc quyền",
+        "description": "Khách hàng được thử và chọn trang sức độc quyền.",
+        "duration": "75 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Hẹn tư vấn stylist",
+        "description": "Đặt lịch làm việc với stylist theo khung giờ.",
+        "duration": "60 phút",
+        "price": "Theo gói stylist"
+      }
+    ],
+    "lat": 10.761809,
+    "lng": 106.681896
+  },
+  {
+    "shopId": "shop-012",
+    "shopName": "Tokyo Vogue Center",
+    "products": [
+      {
+        "productId": "bcbd903d-5efe-4b1c-b9b4-36242d780def",
+        "name": "Dior Necklace",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 58
+              },
+              {
+                "size": "S",
+                "quantity": 19
+              },
+              {
+                "size": "M",
+                "quantity": 23
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Necklace",
+        "sold": 122
+      },
+      {
+        "productId": "e6707071-0ab2-46f1-a9ec-0b23dd15ce24",
+        "name": "Dior Casual Watch",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 21
+              },
+              {
+                "size": "L",
+                "quantity": 6
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Casual Watch",
+        "sold": 382
+      },
+      {
+        "productId": "33aee474-e6eb-4433-8de5-931ef0858f26",
+        "name": "Hermès Scarf",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 24
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Scarf",
+        "sold": 232
+      },
+      {
+        "productId": "7c6e10e1-1957-43ad-9b58-9aee078a2fc9",
+        "name": "Dior Bracelet",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 28
+              },
+              {
+                "size": "M",
+                "quantity": 29
+              },
+              {
+                "size": "L",
+                "quantity": 34
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Bracelet",
+        "sold": 122
+      },
+      {
+        "productId": "8292c949-facc-4f17-909a-2d4c35ef33f4",
+        "name": "Dior Scarf",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 40
+              },
+              {
+                "size": "S",
+                "quantity": 4
+              },
+              {
+                "size": "M",
+                "quantity": 6
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Scarf",
+        "sold": 278
+      },
+      {
+        "productId": "d7453805-e599-41b0-ad83-d5f911d58017",
+        "name": "Omega Constellation Co-Axial",
+        "brand": "Omega",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 14
+              }
+            ]
+          }
+        ],
+        "matchedName": "Omega Constellation Co-Axial",
+        "sold": 173
+      },
+      {
+        "productId": "28bcb7e9-4147-4f62-802b-f45fb0f82d09",
+        "name": "Chanel Belt",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 26
+              },
+              {
+                "size": "S",
+                "quantity": 31
+              },
+              {
+                "size": "M",
+                "quantity": 33
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Belt",
+        "sold": 85
+      },
+      {
+        "productId": "dda79857-523f-41d5-9717-b6c25bf53acb",
+        "name": "Prada Scarf",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 88
+              },
+              {
+                "size": "M",
+                "quantity": 8
+              },
+              {
+                "size": "L",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Scarf",
+        "sold": 130
+      }
+    ],
+    "owner": "Aiko Yamamoto",
+    "address": "174 Hùng Vương, Quận 12, Nha Trang, Việt Nam",
+    "openingHours": "08:00 - 20:00",
+    "phone": "+81 3 4578 0002",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Nha Trang",
+    "appointmentServices": [
+      {
+        "name": "VIP room shopping experience",
+        "description": "Dịch vụ đặc biệt tại cửa hàng.",
+        "duration": "60 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Personal stylist meeting",
+        "description": "Dịch vụ đặc biệt tại cửa hàng.",
+        "duration": "60 phút",
+        "price": "Theo gói dịch vụ"
+      },
+      {
+        "name": "Tailored fashion consultation",
+        "description": "Dịch vụ đặc biệt tại cửa hàng.",
+        "duration": "60 phút",
+        "price": "Theo gói dịch vụ"
+      }
+    ],
+    "lat": 12.25566,
+    "lng": 109.188108
+  },
+  {
+    "shopId": "shop-013",
+    "shopName": "Milan Moda Italiana",
+    "products": [
+      {
+        "productId": "8e8d5126-3f20-4005-b0db-2009d80ad14f",
+        "name": "Dior Belt",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 34
+              },
+              {
+                "size": "M",
+                "quantity": 6
+              },
+              {
+                "size": "L",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Belt",
+        "sold": 216
+      },
+      {
+        "productId": "33982f80-2841-4112-9fb5-d26d30e66cbc",
+        "name": "Rolex Casual Watch",
+        "brand": "Rolex",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 40
+              },
+              {
+                "size": "S",
+                "quantity": 3
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              }
+            ]
+          }
+        ],
+        "matchedName": "Rolex Casual Watch",
+        "sold": 69
+      },
+      {
+        "productId": "c7c50c07-d6d0-4028-ba39-e742860d2909",
+        "name": "Zara Scarf 6",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 49
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Scarf 6",
+        "sold": 431
+      },
+      {
+        "productId": "eeee7b4e-3145-438a-9e8c-72fd11c1e4cb",
+        "name": "Hermès Sunglasses",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Gold",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 7
+              },
+              {
+                "size": "S",
+                "quantity": 2
+              },
+              {
+                "size": "M",
+                "quantity": 2
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Sunglasses",
+        "sold": 326
+      },
+      {
+        "productId": "473db019-6588-4793-ad7e-1f587e57a4b9",
+        "name": "Chanel Cocktail Dress",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 41
+              },
+              {
+                "size": "M",
+                "quantity": 13
+              },
+              {
+                "size": "L",
+                "quantity": 10
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Cocktail Dress",
+        "sold": 324
+      },
+      {
+        "productId": "f4ccd9d2-933b-45e2-a5a1-f9b0502c2b2d",
+        "name": "Swarovski Bracelet 11",
+        "brand": "Swarovski",
+        "variants": [
+          {
+            "color": "Green",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 14
+              }
+            ]
+          }
+        ],
+        "matchedName": "Swarovski Bracelet 11",
+        "sold": 493
+      },
+      {
+        "productId": "29b49f7a-3054-4d54-bae5-f7a88280252d",
+        "name": "Chanel Necklace",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "White",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 23
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Necklace",
+        "sold": 58
+      }
+    ],
+    "owner": "Luca Romano",
+    "address": "130 Bà Triệu, Quận 10, Huế, Việt Nam",
+    "openingHours": "09:00 - 21:00",
+    "phone": "+39 02 76 0003",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Huế",
+    "lat": 16.465463,
+    "lng": 107.571866
+  },
+  {
+    "shopId": "shop-014",
+    "shopName": "Tokyo Premium Wear",
+    "products": [
+      {
+        "productId": "e0f7c738-8a46-4468-9d4a-b3ba39149722",
+        "name": "Prada Handbag",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Green",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 31
+              },
+              {
+                "size": "S",
+                "quantity": 50
+              },
+              {
+                "size": "M",
+                "quantity": 8
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Handbag",
+        "sold": 145
+      },
+      {
+        "productId": "c29d4583-650c-4914-a0a3-ceb83b51762d",
+        "name": "Zara Bracelet 19",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 56
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Bracelet 19",
+        "sold": 364
+      },
+      {
+        "productId": "380746e6-a6d4-4a23-ade2-241b08819a3c",
+        "name": "Gucci Cocktail Dress",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Green",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 31
+              },
+              {
+                "size": "S",
+                "quantity": 3
+              },
+              {
+                "size": "M",
+                "quantity": 1
+              },
+              {
+                "size": "L",
+                "quantity": 4
+              },
+              {
+                "size": "XL",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Cocktail Dress",
+        "sold": 315
+      },
+      {
+        "productId": "e6471b89-9892-49bd-a020-f07e7547b014",
+        "name": "Hermès Evening Gown",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 14
+              },
+              {
+                "size": "S",
+                "quantity": 17
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Evening Gown",
+        "sold": 186
+      },
+      {
+        "productId": "09dd16b4-a2a5-403c-8d16-186e1d67d4c5",
+        "name": "Prada Metal Strap",
+        "brand": "Prada",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 13
+              },
+              {
+                "size": "S",
+                "quantity": 8
+              },
+              {
+                "size": "M",
+                "quantity": 38
+              }
+            ]
+          }
+        ],
+        "matchedName": "Prada Metal Strap",
+        "sold": 339
+      },
+      {
+        "productId": "d840ec5d-1707-45ab-8715-c2b46a3b679d",
+        "name": "Gucci Earrings",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 2
+              },
+              {
+                "size": "S",
+                "quantity": 41
+              },
+              {
+                "size": "M",
+                "quantity": 30
+              },
+              {
+                "size": "L",
+                "quantity": 8
+              },
+              {
+                "size": "XL",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Earrings",
+        "sold": 66
+      },
+      {
+        "productId": "24417a21-8170-48c8-9975-f866dcd792d3",
+        "name": "Swarovski Top 9",
+        "brand": "Swarovski",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 30
+              },
+              {
+                "size": "S",
+                "quantity": 0
+              },
+              {
+                "size": "M",
+                "quantity": 19
+              },
+              {
+                "size": "L",
+                "quantity": 2
+              },
+              {
+                "size": "XL",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Swarovski Top 9",
+        "sold": 67
+      },
+      {
+        "productId": "34a02a72-0fa0-4dfd-927f-6ee1b79f736b",
+        "name": "Pandora Essence Bracelet",
+        "brand": "Pandora",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 26
+              },
+              {
+                "size": "M",
+                "quantity": 9
+              },
+              {
+                "size": "L",
+                "quantity": 5
+              }
+            ]
+          }
+        ],
+        "matchedName": "Pandora Essence Bracelet",
+        "sold": 164
+      }
+    ],
+    "owner": "Haruto Suzuki",
+    "address": "138 Trần Phú, Quận 5, Nha Trang, Việt Nam",
+    "openingHours": "10:00 - 22:00",
+    "phone": "+81 3 4578 0003",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "Nha Trang",
+    "lat": 12.24319,
+    "lng": 109.184387
+  },
+  {
+    "shopId": "shop-015",
+    "shopName": "Milano Alta Moda",
+    "products": [
+      {
+        "productId": "c7c50c07-d6d0-4028-ba39-e742860d2909",
+        "name": "Zara Scarf 6",
+        "brand": "Zara",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 49
+              }
+            ]
+          }
+        ],
+        "matchedName": "Zara Scarf 6",
+        "sold": 246
+      },
+      {
+        "productId": "7c6e10e1-1957-43ad-9b58-9aee078a2fc9",
+        "name": "Dior Bracelet",
+        "brand": "Dior",
+        "variants": [
+          {
+            "color": "Black",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 28
+              },
+              {
+                "size": "M",
+                "quantity": 29
+              },
+              {
+                "size": "L",
+                "quantity": 34
+              }
+            ]
+          }
+        ],
+        "matchedName": "Dior Bracelet",
+        "sold": 168
+      },
+      {
+        "productId": "7a68cd98-7ab7-4d04-bb74-904dcb7a97ba",
+        "name": "Chanel Pleated Top",
+        "brand": "Chanel",
+        "variants": [
+          {
+            "color": "Beige",
+            "sizes": [
+              {
+                "size": "XS",
+                "quantity": 76
+              },
+              {
+                "size": "S",
+                "quantity": 6
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 0
+              }
+            ]
+          }
+        ],
+        "matchedName": "Chanel Pleated Top",
+        "sold": 242
+      },
+      {
+        "productId": "7afc8f1c-ce20-4bc0-a614-a98e2496e482",
+        "name": "Hermès Necklace",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Blue",
+            "sizes": [
+              {
+                "size": "S",
+                "quantity": 14
+              },
+              {
+                "size": "M",
+                "quantity": 0
+              },
+              {
+                "size": "L",
+                "quantity": 2
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Necklace",
+        "sold": 81
+      },
+      {
+        "productId": "c2d29674-3a42-4529-b35d-faa01b2eaf40",
+        "name": "Gucci Necklace 34",
+        "brand": "Gucci",
+        "variants": [
+          {
+            "color": "Silver",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 39
+              }
+            ]
+          }
+        ],
+        "matchedName": "Gucci Necklace 34",
+        "sold": 484
+      },
+      {
+        "productId": "c775a34a-9324-4c1b-84e3-7d805dc65e1c",
+        "name": "Hermès Bracelet",
+        "brand": "Hermès",
+        "variants": [
+          {
+            "color": "Purple",
+            "sizes": [
+              {
+                "size": "M",
+                "quantity": 59
+              }
+            ]
+          }
+        ],
+        "matchedName": "Hermès Bracelet",
+        "sold": 116
+      }
+    ],
+    "owner": "Giulia Bianchi",
+    "address": "6 Trần Hưng Đạo, Quận 10, TP.HCM, Việt Nam",
+    "openingHours": "10:00 - 22:00",
+    "phone": "+39 02 76 0004",
+    "services": [
+      "Shipping: Worldwide (5–14 business days)",
+      "Returns: 30-day returns (item must be unused)",
+      "Authenticity guarantee",
+      "Customer support: Mon–Sat 09:00–18:00 (local time)",
+      "In-store pickup available"
+    ],
+    "city": "TP.HCM",
+    "lat": 10.817416,
+    "lng": 106.680973
+  }
+]

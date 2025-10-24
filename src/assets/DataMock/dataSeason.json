@@ -1,0 +1,1128 @@
+{
+  "luxury_women_collections": [
+    {
+      "id": "spring-2025",
+      "slug": "spring-2025",
+      "name": "Mùa Xuân 2025",
+      "slogan": "Fresh Elegance for a New Beginning",
+      "description": "Phong cách tươi mới, nhẹ nhàng cho ngày xuân.",
+      "banner": "https://i.pinimg.com/1200x/89/8f/7b/898f7b2ff46c86d35cade9ed44ffd9b7.jpg",
+      "seasonalAttributes": {
+        "colors": [
+          "Pink",
+          "White",
+          "Light Blue",
+          "Mint Green",
+          "Lavender"
+        ],
+        "materials": [
+          "Silk",
+          "Cotton",
+          "Linen",
+          "Chiffon"
+        ],
+        "mood": "Fresh, Light, Romantic, Delicate",
+        "temperature": "Mild, Comfortable, 15-25°C"
+      },
+      "products": [
+        {
+          "id": "chanel-classic-flap-spring",
+          "name": "Chanel Classic Flap Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Chanel",
+          "origin": "France",
+          "price": 8800.0,
+          "description": "Iconic Chanel Classic Flap bag in lambskin leather with gold hardware. A timeless piece that defines luxury fashion.",
+          "rating": 4.9,
+          "stock": 12,
+          "createdAt": "2024-02-15T00:00:00",
+          "updatedAt": "2024-03-20T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/4937226/pexels-photo-4937226.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/4937226/pexels-photo-4937226.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/5698913/pexels-photo-5698913.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/1838602/pexels-photo-1838602.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/267322/pexels-photo-267322.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Lambskin Leather",
+          "variants": [
+            {
+              "color": "Pink",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 4
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 4
+                },
+                {
+                  "size": "Large",
+                  "quantity": 4
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "gucci-gg-marmont-spring",
+          "name": "Gucci GG Marmont Matelassé Shoulder Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Gucci",
+          "origin": "Italy",
+          "price": 2500.0,
+          "description": "Luxurious Gucci GG Marmont bag featuring the iconic GG logo and matelassé quilting. A perfect blend of vintage and modern style.",
+          "rating": 4.7,
+          "stock": 20,
+          "createdAt": "2024-02-20T00:00:00",
+          "updatedAt": "2024-03-25T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/33692370/pexels-photo-33692370.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/33692370/pexels-photo-33692370.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/29663075/pexels-photo-29663075.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33762367/pexels-photo-33762367.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33756912/pexels-photo-33756912.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "White",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 6
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 6
+                },
+                {
+                  "size": "Large",
+                  "quantity": 6
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "hermes-silk-scarf-spring",
+          "name": "Hermès Silk Scarf",
+          "type": "accessory",
+          "subcategory": "scarf",
+          "brand": "Hermès",
+          "origin": "France",
+          "price": 450.0,
+          "description": "Luxurious Hermès silk scarf featuring delicate spring floral patterns. Made from 100% pure silk.",
+          "rating": 4.8,
+          "stock": 25,
+          "createdAt": "2024-02-25T00:00:00",
+          "updatedAt": "2024-03-30T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1838602/pexels-photo-1838602.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1838602/pexels-photo-1838602.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/267322/pexels-photo-267322.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33767493/pexels-photo-33767493.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33738525/pexels-photo-33738525.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Pure Silk",
+          "variants": [
+            {
+              "color": "Lavender",
+              "sizes": [
+                {
+                  "size": "90cm x 90cm",
+                  "quantity": 25
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "dior-lady-dior-spring",
+          "name": "Dior Lady Dior Bag",
+          "type": "handbag",
+          "subcategory": "top handle bag",
+          "brand": "Dior",
+          "origin": "France",
+          "price": 4200.0,
+          "description": "Elegant Dior Lady Dior bag in soft lambskin with iconic cannage quilting. A symbol of Parisian elegance.",
+          "rating": 4.7,
+          "stock": 18,
+          "createdAt": "2024-03-01T00:00:00",
+          "updatedAt": "2024-04-05T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/11127242/pexels-photo-11127242.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/11127242/pexels-photo-11127242.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33736259/pexels-photo-33736259.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33725717/pexels-photo-33725717.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33692734/pexels-photo-33692734.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Lambskin Leather",
+          "variants": [
+            {
+              "color": "Light Blue",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 9
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 9
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "bottega-veneta-cassette-spring",
+          "name": "Bottega Veneta Cassette Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Bottega Veneta",
+          "origin": "Italy",
+          "price": 2800.0,
+          "description": "Sophisticated Bottega Veneta Cassette bag featuring the signature intrecciato weave. A modern interpretation of Italian craftsmanship.",
+          "rating": 4.6,
+          "stock": 15,
+          "createdAt": "2024-03-05T00:00:00",
+          "updatedAt": "2024-04-10T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/267322/pexels-photo-267322.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/267322/pexels-photo-267322.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33752401/pexels-photo-33752401.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33756912/pexels-photo-33756912.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/33762367/pexels-photo-33762367.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Mint Green",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 7
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 7
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        }
+      ]
+    },
+    {
+      "id": "summer-2025",
+      "slug": "summer-2025",
+      "name": "Mùa Hè 2025",
+      "slogan": "Chic & Breezy Vibes",
+      "description": "Phong cách năng động, thoải mái cho mùa hè.",
+      "banner": "https://i.pinimg.com/1200x/77/25/f9/7725f9199061de14e86b2e29bc85552b.jpg",
+      "seasonalAttributes": {
+        "colors": [
+          "Yellow",
+          "Orange",
+          "Coral",
+          "Turquoise",
+          "White",
+          "Bright Pink"
+        ],
+        "materials": [
+          "Linen",
+          "Cotton",
+          "Chiffon",
+          "Silk",
+          "Straw"
+        ],
+        "mood": "Bright, Energetic, Fun, Playful",
+        "temperature": "Hot, Sunny, 25-35°C"
+      },
+      "products": [
+        {
+          "id": "hermes-birkin-summer",
+          "name": "Hermès Birkin 30",
+          "type": "handbag",
+          "subcategory": "top handle bag",
+          "brand": "Hermès",
+          "origin": "France",
+          "price": 10000.0,
+          "description": "Ultra-luxurious Hermès Birkin bag in Togo leather. The ultimate status symbol in luxury fashion.",
+          "rating": 5.0,
+          "stock": 3,
+          "createdAt": "2024-05-01T00:00:00",
+          "updatedAt": "2024-06-15T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/2286921/pexels-photo-2286921.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/2286921/pexels-photo-2286921.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/3622617/pexels-photo-3622617.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/28606334/pexels-photo-28606334.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/28606336/pexels-photo-28606336.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Togo Leather",
+          "variants": [
+            {
+              "color": "Orange",
+              "sizes": [
+                {
+                  "size": "25cm",
+                  "quantity": 0
+                },
+                {
+                  "size": "30cm",
+                  "quantity": 0
+                },
+                {
+                  "size": "35cm",
+                  "quantity": 0
+                },
+                {
+                  "size": "40cm",
+                  "quantity": 0
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "balenciaga-city-summer",
+          "name": "Balenciaga City Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Balenciaga",
+          "origin": "Spain",
+          "price": 1500.0,
+          "description": "Edgy Balenciaga City bag with distinctive studded details. Perfect for making a bold summer statement.",
+          "rating": 4.5,
+          "stock": 22,
+          "createdAt": "2024-05-10T00:00:00",
+          "updatedAt": "2024-06-20T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/2897534/pexels-photo-2897534.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/2897534/pexels-photo-2897534.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/12753881/pexels-photo-12753881.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/28786299/pexels-photo-28786299.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/28606748/pexels-photo-28606748.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Coral",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 7
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 7
+                },
+                {
+                  "size": "Large",
+                  "quantity": 7
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "louis-vuitton-speedy-summer",
+          "name": "Louis Vuitton Speedy 30",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Louis Vuitton",
+          "origin": "France",
+          "price": 1500.0,
+          "description": "Classic Louis Vuitton Speedy in Monogram canvas. Perfect for summer travel with its spacious design.",
+          "rating": 4.7,
+          "stock": 25,
+          "createdAt": "2024-05-15T00:00:00",
+          "updatedAt": "2024-06-25T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/1578885/pexels-photo-1578885.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/2113994/pexels-photo-2113994.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/5886048/pexels-photo-5886048.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Monogram Canvas",
+          "variants": [
+            {
+              "color": "Brown",
+              "sizes": [
+                {
+                  "size": "25",
+                  "quantity": 6
+                },
+                {
+                  "size": "30",
+                  "quantity": 6
+                },
+                {
+                  "size": "35",
+                  "quantity": 6
+                },
+                {
+                  "size": "40",
+                  "quantity": 6
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "versace-medusa-summer",
+          "name": "Versace Medusa Head Bag",
+          "type": "handbag",
+          "subcategory": "clutch",
+          "brand": "Versace",
+          "origin": "Italy",
+          "price": 1200.0,
+          "description": "Glamorous Versace clutch featuring the iconic Medusa head. Perfect for summer evening events.",
+          "rating": 4.4,
+          "stock": 18,
+          "createdAt": "2024-05-20T00:00:00",
+          "updatedAt": "2024-07-01T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/1191532/pexels-photo-1191532.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/1191530/pexels-photo-1191530.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/1191529/pexels-photo-1191529.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Bright Pink",
+              "sizes": [
+                {
+                  "size": "One Size",
+                  "quantity": 18
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "fendi-baguette-summer",
+          "name": "Fendi Baguette Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Fendi",
+          "origin": "Italy",
+          "price": 3200.0,
+          "description": "Iconic Fendi Baguette bag with signature FF logo. A timeless piece that defined the 90s and remains relevant today.",
+          "rating": 4.8,
+          "stock": 12,
+          "createdAt": "2024-05-25T00:00:00",
+          "updatedAt": "2024-07-05T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1191532/pexels-photo-1191532.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1191532/pexels-photo-1191532.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Turquoise",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 6
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 6
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        }
+      ]
+    },
+    {
+      "id": "autumn-2025",
+      "slug": "autumn-2025",
+      "name": "Mùa Thu 2025",
+      "slogan": "Warm Tones, Cozy Elegance",
+      "description": "Gam màu ấm áp và thanh lịch cho mùa thu.",
+      "banner": "https://i.pinimg.com/1200x/ac/df/d2/acdfd2236192cf8a7fa52ac854c326df.jpg",
+      "seasonalAttributes": {
+        "colors": [
+          "Brown",
+          "Orange",
+          "Burgundy",
+          "Mustard",
+          "Deep Red",
+          "Camel"
+        ],
+        "materials": [
+          "Wool",
+          "Cashmere",
+          "Leather",
+          "Suede",
+          "Tweed"
+        ],
+        "mood": "Warm, Cozy, Sophisticated, Rich",
+        "temperature": "Cool, Crisp, 10-20°C"
+      },
+      "products": [
+        {
+          "id": "hermes-kelly-autumn",
+          "name": "Hermès Kelly 28",
+          "type": "handbag",
+          "subcategory": "top handle bag",
+          "brand": "Hermès",
+          "origin": "France",
+          "price": 12000.0,
+          "description": "Elegant Hermès Kelly bag in Epsom leather. Named after Grace Kelly, this is the epitome of sophistication.",
+          "rating": 4.9,
+          "stock": 5,
+          "createdAt": "2024-08-01T00:00:00",
+          "updatedAt": "2024-09-15T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/6311396/pexels-photo-6311396.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/6311396/pexels-photo-6311396.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200",
+            "https://images.pexels.com/photos/6311587/pexels-photo-6311587.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Epsom Leather",
+          "variants": [
+            {
+              "color": "Burgundy",
+              "sizes": [
+                {
+                  "size": "25cm",
+                  "quantity": 1
+                },
+                {
+                  "size": "28cm",
+                  "quantity": 1
+                },
+                {
+                  "size": "32cm",
+                  "quantity": 1
+                },
+                {
+                  "size": "35cm",
+                  "quantity": 1
+                },
+                {
+                  "size": "40cm",
+                  "quantity": 1
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "saint-laurent-sac-de-jour-autumn",
+          "name": "Saint Laurent Sac de Jour",
+          "type": "handbag",
+          "subcategory": "tote bag",
+          "brand": "Saint Laurent",
+          "origin": "France",
+          "price": 3000.0,
+          "description": "Sophisticated Saint Laurent Sac de Jour in smooth leather. Features clean lines and timeless elegance.",
+          "rating": 4.6,
+          "stock": 16,
+          "createdAt": "2024-08-10T00:00:00",
+          "updatedAt": "2024-09-20T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/6311587/pexels-photo-6311587.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/6311587/pexels-photo-6311587.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Smooth Leather",
+          "variants": [
+            {
+              "color": "Brown",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 5
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 5
+                },
+                {
+                  "size": "Large",
+                  "quantity": 5
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "valentino-rockstud-autumn",
+          "name": "Valentino Rockstud Shoulder Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Valentino",
+          "origin": "Italy",
+          "price": 2200.0,
+          "description": "Edgy Valentino Rockstud bag featuring signature pyramid studs. A perfect blend of rock and romance.",
+          "rating": 4.5,
+          "stock": 20,
+          "createdAt": "2024-08-15T00:00:00",
+          "updatedAt": "2024-09-25T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/6311398/pexels-photo-6311398.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/6311398/pexels-photo-6311398.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Camel",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 10
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 10
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "givenchy-antigona-autumn",
+          "name": "Givenchy Antigona Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Givenchy",
+          "origin": "France",
+          "price": 1800.0,
+          "description": "Structured Givenchy Antigona bag with clean geometric lines. A modern take on luxury handbags.",
+          "rating": 4.4,
+          "stock": 14,
+          "createdAt": "2024-08-20T00:00:00",
+          "updatedAt": "2024-09-30T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1578885/pexels-photo-1578885.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1578885/pexels-photo-1578885.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Mustard",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 4
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 4
+                },
+                {
+                  "size": "Large",
+                  "quantity": 4
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "bulgari-serpenti-autumn",
+          "name": "Bulgari Serpenti Forever Bag",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Bulgari",
+          "origin": "Italy",
+          "price": 2800.0,
+          "description": "Luxurious Bulgari Serpenti bag featuring the iconic snake motif. A symbol of power and elegance.",
+          "rating": 4.7,
+          "stock": 10,
+          "createdAt": "2024-08-25T00:00:00",
+          "updatedAt": "2024-10-05T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/3641055/pexels-photo-3641055.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/3641055/pexels-photo-3641055.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Leather",
+          "variants": [
+            {
+              "color": "Deep Red",
+              "sizes": [
+                {
+                  "size": "Small",
+                  "quantity": 5
+                },
+                {
+                  "size": "Medium",
+                  "quantity": 5
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        }
+      ]
+    },
+    {
+      "id": "winter-2025",
+      "slug": "winter-2025",
+      "name": "Mùa Đông 2025",
+      "slogan": "Luxury Warmth for Cold Days",
+      "description": "Giữ ấm sang trọng và phong cách cho mùa đông.",
+      "banner": "https://i.pinimg.com/1200x/3e/54/e9/3e54e99e85f6142f7f1420b47393f1de.jpg",
+      "seasonalAttributes": {
+        "colors": [
+          "Black",
+          "Navy",
+          "White",
+          "Silver",
+          "Deep Purple",
+          "Charcoal"
+        ],
+        "materials": [
+          "Fur",
+          "Cashmere",
+          "Wool",
+          "Leather",
+          "Velvet",
+          "Faux Fur"
+        ],
+        "mood": "Luxurious, Warm, Elegant, Sophisticated",
+        "temperature": "Cold, Harsh, -5 to 15°C"
+      },
+      "products": [
+        {
+          "id": "hermes-birkin-winter",
+          "name": "Hermès Birkin 35 Black",
+          "type": "handbag",
+          "subcategory": "top handle bag",
+          "brand": "Hermès",
+          "origin": "France",
+          "price": 15000.0,
+          "description": "Ultimate luxury Hermès Birkin in black Togo leather with palladium hardware. The most coveted handbag in the world.",
+          "rating": 5.0,
+          "stock": 2,
+          "createdAt": "2024-11-01T00:00:00",
+          "updatedAt": "2024-12-15T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/6311651/pexels-photo-6311651.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/6311651/pexels-photo-6311651.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Togo Leather",
+          "variants": [
+            {
+              "color": "Black",
+              "sizes": [
+                {
+                  "size": "25cm",
+                  "quantity": 0
+                },
+                {
+                  "size": "30cm",
+                  "quantity": 0
+                },
+                {
+                  "size": "35cm",
+                  "quantity": 0
+                },
+                {
+                  "size": "40cm",
+                  "quantity": 0
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "chanel-coco-crush-winter",
+          "name": "Chanel Coco Crush Bracelet",
+          "type": "jewelry",
+          "subcategory": "bracelet",
+          "brand": "Chanel",
+          "origin": "France",
+          "price": 2800.0,
+          "description": "Elegant Chanel Coco Crush bracelet in white gold. Features the iconic quilted pattern in precious metal.",
+          "rating": 4.8,
+          "stock": 15,
+          "createdAt": "2024-11-10T00:00:00",
+          "updatedAt": "2024-12-20T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/5699753/pexels-photo-5699753.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/5699753/pexels-photo-5699753.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "18K White Gold",
+          "variants": [
+            {
+              "color": "White",
+              "sizes": [
+                {
+                  "size": "16cm",
+                  "quantity": 3
+                },
+                {
+                  "size": "17cm",
+                  "quantity": 3
+                },
+                {
+                  "size": "18cm",
+                  "quantity": 3
+                },
+                {
+                  "size": "19cm",
+                  "quantity": 3
+                },
+                {
+                  "size": "20cm",
+                  "quantity": 3
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "louis-vuitton-keepall-winter",
+          "name": "Louis Vuitton Keepall 55",
+          "type": "luggage",
+          "subcategory": "travel bag",
+          "brand": "Louis Vuitton",
+          "origin": "France",
+          "price": 2500.0,
+          "description": "Iconic Louis Vuitton Keepall travel bag in Monogram canvas. Perfect for winter getaways and luxury travel.",
+          "rating": 4.7,
+          "stock": 20,
+          "createdAt": "2024-11-15T00:00:00",
+          "updatedAt": "2024-12-25T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1191530/pexels-photo-1191530.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1191530/pexels-photo-1191530.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Monogram Canvas",
+          "variants": [
+            {
+              "color": "Brown",
+              "sizes": [
+                {
+                  "size": "45",
+                  "quantity": 5
+                },
+                {
+                  "size": "50",
+                  "quantity": 5
+                },
+                {
+                  "size": "55",
+                  "quantity": 5
+                },
+                {
+                  "size": "60",
+                  "quantity": 5
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "rolex-submariner-winter",
+          "name": "Rolex Submariner",
+          "type": "watch",
+          "subcategory": "luxury watch",
+          "brand": "Rolex",
+          "origin": "Switzerland",
+          "price": 9100.0,
+          "description": "Iconic Rolex Submariner in stainless steel with black dial. The ultimate luxury sports watch.",
+          "rating": 4.9,
+          "stock": 5,
+          "createdAt": "2024-11-20T00:00:00",
+          "updatedAt": "2024-12-30T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/2113994/pexels-photo-2113994.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/2113994/pexels-photo-2113994.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Stainless Steel",
+          "variants": [
+            {
+              "color": "Steel",
+              "sizes": [
+                {
+                  "size": "40mm",
+                  "quantity": 5
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "tiffany-schlumberger-winter",
+          "name": "Tiffany & Co. Schlumberger Bird on a Rock Ring",
+          "type": "jewelry",
+          "subcategory": "ring",
+          "brand": "Tiffany & Co.",
+          "origin": "USA",
+          "price": 4500.0,
+          "description": "Exquisite Tiffany Schlumberger ring featuring a bird perched on a rock. A masterpiece of luxury jewelry design.",
+          "rating": 4.9,
+          "stock": 8,
+          "createdAt": "2024-11-25T00:00:00",
+          "updatedAt": "2025-01-05T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/5886048/pexels-photo-5886048.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/5886048/pexels-photo-5886048.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "18K Yellow Gold",
+          "variants": [
+            {
+              "color": "Gold",
+              "sizes": [
+                {
+                  "size": "5",
+                  "quantity": 1
+                },
+                {
+                  "size": "6",
+                  "quantity": 1
+                },
+                {
+                  "size": "7",
+                  "quantity": 1
+                },
+                {
+                  "size": "8",
+                  "quantity": 1
+                },
+                {
+                  "size": "9",
+                  "quantity": 1
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        }
+      ]
+    },
+    {
+      "id": "luxury-party-2025",
+      "slug": "luxury-party-2025",
+      "name": "Luxury Party 2025",
+      "slogan": "Shine Bright on Every Night",
+      "description": "Bộ sưu tập dạ hội sang trọng, lấp lánh và quyến rũ.",
+      "banner": "https://i.pinimg.com/1200x/d3/9c/d6/d39cd6ed7f4c27737736d47f4a35404f.jpg",
+      "seasonalAttributes": {
+        "colors": [
+          "Gold",
+          "Silver",
+          "Black",
+          "Red",
+          "Deep Blue",
+          "Emerald"
+        ],
+        "materials": [
+          "Silk",
+          "Satin",
+          "Sequin",
+          "Crystal",
+          "Precious Metals",
+          "Diamonds"
+        ],
+        "mood": "Glamorous, Elegant, Sophisticated, Dazzling",
+        "temperature": "Indoor, Climate Controlled, 20-25°C"
+      },
+      "products": [
+        {
+          "id": "chanel-coco-crush-party",
+          "name": "Chanel Coco Crush Earrings",
+          "type": "jewelry",
+          "subcategory": "earrings",
+          "brand": "Chanel",
+          "origin": "France",
+          "price": 1800.0,
+          "description": "Elegant Chanel Coco Crush earrings in yellow gold. Features the iconic quilted pattern in precious metal.",
+          "rating": 4.8,
+          "stock": 12,
+          "createdAt": "2024-12-01T00:00:00",
+          "updatedAt": "2025-01-15T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/6311676/pexels-photo-6311676.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/6311676/pexels-photo-6311676.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "18K Yellow Gold",
+          "variants": [
+            {
+              "color": "Gold",
+              "sizes": [
+                {
+                  "size": "One Size",
+                  "quantity": 12
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "hermes-constance-party",
+          "name": "Hermès Constance 18",
+          "type": "handbag",
+          "subcategory": "shoulder bag",
+          "brand": "Hermès",
+          "origin": "France",
+          "price": 7500.0,
+          "description": "Sophisticated Hermès Constance bag in smooth leather with gold hardware. Perfect for evening events.",
+          "rating": 4.9,
+          "stock": 6,
+          "createdAt": "2024-12-05T00:00:00",
+          "updatedAt": "2025-01-20T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/6311683/pexels-photo-6311683.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/6311683/pexels-photo-6311683.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Smooth Leather",
+          "variants": [
+            {
+              "color": "Black",
+              "sizes": [
+                {
+                  "size": "18cm",
+                  "quantity": 3
+                },
+                {
+                  "size": "24cm",
+                  "quantity": 3
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "cartier-panthere-party",
+          "name": "Cartier Panthère de Cartier Ring",
+          "type": "jewelry",
+          "subcategory": "ring",
+          "brand": "Cartier",
+          "origin": "France",
+          "price": 3200.0,
+          "description": "Exquisite Cartier Panthère ring featuring the iconic panther motif. A symbol of power and elegance.",
+          "rating": 4.9,
+          "stock": 10,
+          "createdAt": "2024-12-10T00:00:00",
+          "updatedAt": "2025-01-25T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1191529/pexels-photo-1191529.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1191529/pexels-photo-1191529.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "18K Yellow Gold",
+          "variants": [
+            {
+              "color": "Gold",
+              "sizes": [
+                {
+                  "size": "50",
+                  "quantity": 2
+                },
+                {
+                  "size": "52",
+                  "quantity": 2
+                },
+                {
+                  "size": "54",
+                  "quantity": 2
+                },
+                {
+                  "size": "56",
+                  "quantity": 2
+                },
+                {
+                  "size": "58",
+                  "quantity": 2
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "louis-vuitton-petite-malle-party",
+          "name": "Louis Vuitton Petite Malle",
+          "type": "handbag",
+          "subcategory": "clutch",
+          "brand": "Louis Vuitton",
+          "origin": "France",
+          "price": 4200.0,
+          "description": "Elegant Louis Vuitton Petite Malle in Monogram canvas. Inspired by vintage Louis Vuitton trunks.",
+          "rating": 4.7,
+          "stock": 8,
+          "createdAt": "2024-12-15T00:00:00",
+          "updatedAt": "2025-01-30T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/1191532/pexels-photo-1191532.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/1191532/pexels-photo-1191532.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "Monogram Canvas",
+          "variants": [
+            {
+              "color": "Brown",
+              "sizes": [
+                {
+                  "size": "One Size",
+                  "quantity": 8
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        },
+        {
+          "id": "tiffany-schlumberger-party",
+          "name": "Tiffany & Co. Schlumberger Blue Book Earrings",
+          "type": "jewelry",
+          "subcategory": "earrings",
+          "brand": "Tiffany & Co.",
+          "origin": "USA",
+          "price": 8500.0,
+          "description": "Exquisite Tiffany Schlumberger earrings from the Blue Book collection. Features precious stones and intricate design.",
+          "rating": 5.0,
+          "stock": 3,
+          "createdAt": "2024-12-20T00:00:00",
+          "updatedAt": "2025-02-05T00:00:00",
+          "thumbnail": "https://images.pexels.com/photos/2047906/pexels-photo-2047906.jpeg?auto=compress&cs=tinysrgb&h=480",
+          "images": [
+            "https://images.pexels.com/photos/2047906/pexels-photo-2047906.jpeg?auto=compress&cs=tinysrgb&h=1600&w=1200"
+          ],
+          "material": "18K Gold with Precious Stones",
+          "variants": [
+            {
+              "color": "Multi",
+              "sizes": [
+                {
+                  "size": "One Size",
+                  "quantity": 3
+                }
+              ]
+            }
+          ],
+          "sold": 0
+        }
+      ]
+    }
+  ]
+}
