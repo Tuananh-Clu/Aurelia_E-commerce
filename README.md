@@ -14,8 +14,8 @@ Aurelia_E-commerce là một ứng dụng thương mại điện tử mẫu, đ�
 * **Frontend Framework:** React
 * **Ngôn ngữ lập trình:** TypeScript, C#
 * **Quản lý gói:** npm
-
-## 💻 Cài đặt và chạy ứng dụng
+* **Các Dịch Vụ Bên Ngoài:** LocationIQ Để Tracking Đơn Hàng Trên Map Và Media Pose Dùng Để Tracking Các Point Trên Cơ Thể Để Tính Số Đo Trên Hình Ảnh 2D
+* ## 💻 Cài đặt và chạy ứng dụng
 
 1. Cài đặt các phụ thuộc:
 
@@ -35,3 +35,4 @@ Aurelia_E-commerce là một ứng dụng thương mại điện tử mẫu, đ�
 * Tích hợp backend mạnh mẽ bằng C# để lưu trữ đơn hàng, thông tin người dùng và sản phẩm.
 * Triển khai ứng dụng lên GitHub Pages, Netlify hoặc Vercel để thử nghiệm trực tuyến.
 * Cải thiện giao diện người dùng và trải nghiệm mobile.
+Note:Đang Trong Quá Trình Phát Triển
