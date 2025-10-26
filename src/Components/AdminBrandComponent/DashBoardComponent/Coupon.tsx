@@ -32,6 +32,8 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
     NgayKetThuc: "",
     PhamViApDung: "",
     GiaTri: "",
+    DieuKienApDung: "",
+    ApDungCho: "",
     TheLoaiApDung: "Phần trăm",
     isActive: true,
     SoLuong: "",
@@ -248,7 +250,7 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
                   </button>
                 </div>
               </div>
-
+              
               {/* Value Display */}
               <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4 mb-4">
                 <div className="flex items-center justify-between">
@@ -269,7 +271,6 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
                   </div>
                 </div>
               </div>
-
               {/* Details Grid */}
               <div className="grid grid-cols-2 gap-3 mb-4">
                 <div className="flex items-center gap-2 bg-gray-50 p-3 rounded-lg">

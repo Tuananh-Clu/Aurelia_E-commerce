@@ -60,6 +60,7 @@ export const api_Config = {
     DoanhThuCuaHang: "/api/Admin/GetDoanhThuCuaHang",
     ResetSoldProduct: "/api/Admin/ResetSold",
     DanhSachSanPhamBanChay: "/api/Admin/LaySanPhamBanChay",
+    GetDoanhThuCaNam: "/api/Admin/DoanhThuCaNam",
 
     GetShopInfo: "/api/Admin/InformationShop",
   },

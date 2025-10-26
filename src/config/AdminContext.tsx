@@ -13,6 +13,9 @@ type AdminContextType = {
   StoryBanner: any[];
   dataShop: any[];
   coupons: any[];
+  revenueData: any[];
+  categoryData: any[];
+  ServiceData: any[];
   handleClick: (type: string, data: any) => void;
   uptodatabase: (type: string, data: any) => void;
   handleDeleteCoupon: (couponId: string) => void;
@@ -29,6 +32,9 @@ export const AdminContext = createContext({
   StoryBanner: [],
   dataShop: [],
   coupons: [],
+  revenueData: [],
+  categoryData: [],
+  ServiceData: [],
   handleClick: () => {},
   uptodatabase: () => {},
   handleDeleteCoupon: () => {},
@@ -48,6 +54,9 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const [MainBanner, setMainBanner] = useState<any[]>([]);
     const [StoryBanner, setStoryBanner] = useState<any[]>([]);
     const [dataShop, setDataShop] = useState<any[]>([]);
+    const [revenueData, setRevenueData] = useState<any>(null);
+    const [categoryData, setCategoryData] = useState<any[]>([]);
+    const [ServiceData, setServiceData] = useState<any[]>([]);
     const handleClick = async (type: string, data: any) => {
       try {
         if (type === "Main") {
@@ -99,6 +108,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           shopRes,
           bestSellingRes,
           dataShopRes,
+          revenueDataRes,
         ] = await Promise.all([
           axios.get(UseApiUrl(api_Config.Banner.Getbanner)),
           axios.get(UseApiUrl(api_Config.Admin.RevenueData)),
@@ -106,6 +116,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           axios.get(UseApiUrl(api_Config.Admin.DoanhThuCuaHang)),
           axios.get(UseApiUrl(api_Config.Admin.DanhSachSanPhamBanChay)),
           axios.get(UseApiUrl(api_Config.Admin.GetShopInfo)),
+          axios.get(UseApiUrl(api_Config.Admin.GetDoanhThuCaNam)),
         ]);
 
         setMainBanner(bannerRes.data.mainBanner || []);
@@ -115,6 +126,11 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setDoanhThuCuaHang(shopRes.data.dataShop || []);
         setBestSellingProducts(bestSellingRes.data.listSold || []);
         setDataShop(dataShopRes.data || []);
+        setRevenueData(revenueDataRes.data.revenue || []);
+        setCategoryData(revenueDataRes.data.stockByType || []);
+        setServiceData(revenueDataRes.data.appointMent|| []);
+        console.log("sdada"+revenueDataRes);
+        console.log("✅ Revenue data:", revenueRes.data);
         console.log(dataShopRes.data);
         console.log(bannerRes.data);
         console.log("✅ Banner data:", bannerRes.data);
@@ -186,7 +202,9 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         const handleDeleteCoupon = async (voucherId: string) => {
           try {
             const response = await axios.delete(
-             `${ UseApiUrl(api_Config.Coupon.deleteCoupon)}?voucherId=${voucherId}`
+              `${UseApiUrl(
+                api_Config.Coupon.deleteCoupon
+              )}?voucherId=${voucherId}`
             );
             toast.success(response.data.message);
             fetchCoupons();
@@ -195,17 +213,15 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
             toast.error("Failed to delete coupon");
           }
         };
-        const handleToggleCouponStatus = async (
-          id: string,
-          bool: boolean
-        ) => {
+        const handleToggleCouponStatus = async (id: string, bool: boolean) => {
+          console.log("Toggle Coupon ID:", id, "to", bool);
           try {
             const response = await axios.post(
               UseApiUrl(api_Config.Coupon.toggleCouponStatus),
-              { id, bool },
+              { id, active: bool },
               { headers: { "Content-Type": "application/json" } }
             );
-          toast.success(response.data.message);
+            toast.success(response.data.message);
             fetchCoupons();
           } catch (error) {
             console.error("❌ Error toggling coupon status:", error);
@@ -216,6 +232,8 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         return (
           <AdminContext.Provider
             value={{
+              categoryData,
+              revenueData,
               dataRevenue,
               dataUser,
               doanhThuCuaHang,
@@ -223,8 +241,9 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               MainBanner,
               StoryBanner,
               coupons,
-              handleClick,
               dataShop,
+              ServiceData,
+              handleClick,
               uptodatabase,
               handleDeleteCoupon,
               handleAddCoupon,

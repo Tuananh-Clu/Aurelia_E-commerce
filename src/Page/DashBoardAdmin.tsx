@@ -2,11 +2,12 @@ import { Settings } from "lucide-react";
 import { useState } from "react";
 import { OverView } from "../Components/AdminBrandComponent/DashBoardComponent/OverView";
 import { BannerSetting } from "../Components/AdminBrandComponent/DashBoardComponent/Banner/BannerSetting";
-import { Revenue } from "../Components/AdminBrandComponent/DashBoardComponent/Revenue";
 import { SideBoard } from "../Components/AdminBrandComponent/DashBoardComponent/SideBoard";
 import { Collections } from "../Components/AdminBrandComponent/DashBoardComponent/Collections";
 import { Stores } from "../Components/AdminBrandComponent/DashBoardComponent/Store";
 import Coupon from "../Components/AdminBrandComponent/DashBoardComponent/Coupon";
+import { Revenue } from "../Components/AdminBrandComponent/DashBoardComponent/Revenue";
+
 
 export const AdminDashboard = () => {
   const [status, setStatus] = useState("Dashboard");
