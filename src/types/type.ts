@@ -36,6 +36,7 @@ export interface Product {
   sold: number;
   discountValue:number
   discountType:string
+  season:string
 }
 
 interface Variant {
@@ -186,3 +187,27 @@ export type StoryBanner = {
   colorMainTitle: string;
   colorText: string;
 };
+export interface ProductRef {
+  id: string;
+}
+
+export interface SeasonalAttributes {
+  colors: string[];
+  materials: string[];
+  mood: string;
+  temperature: string;
+}
+
+export interface Season {
+  id: string;
+  slug: string;
+  name: string;
+  slogan: string;
+  description: string;
+  banner: string;
+  seasonalAttributes: SeasonalAttributes;
+  products: ProductRef[];
+  active: boolean;
+  rate: number;
+  views: number;
+}

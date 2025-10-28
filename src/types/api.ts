@@ -9,6 +9,7 @@ export const api_Config = {
   Product: {
     GetProduct: "/api/Product/GetProduct",
     SearchProduct: "/api/Product/GetProductBySearch",
+    PostProduct: "/api/Product/PostProduct",
     UpdateQuantityProduct: "/api/Product/updateQuantityProduct",
   },
   User: {
@@ -77,6 +78,12 @@ export const api_Config = {
     updateCoupon: "/api/Coupon/AdjustVoucher",
     deleteCoupon: "/api/Coupon/DeleteVoucher",
     toggleCouponStatus: "/api/Coupon/UpdateStatusVoucher",
+  },
+  Collection:{
+    getallcollections: "/api/SeasonCollection/GetCollection",
+    getCollectionsById: "/api/SeasonCollection/GetProductWithId",
+    GetStat: "/api/SeasonCollection/GetStatCollection",
+    AddCollection: "/api/SeasonCollection/AddCollection",
   }
 };
 const api_Url = "https://localhost:7143";

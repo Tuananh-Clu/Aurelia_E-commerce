@@ -44,7 +44,7 @@ export const LeftSide: React.FC<LeftSides> = ({
     : "Không rõ";
 
   return (
-    <div className="w-full space-y-6 p-6 rounded-3xl bg-white shadow-xl">
+    <div className="w-full p-6 space-y-4 rounded-3xl bg-white shadow-xl">
       {/* User Info */}
       <div className="flex flex-col items-center text-center space-y-2">
         <img

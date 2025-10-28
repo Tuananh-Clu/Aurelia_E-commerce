@@ -16,6 +16,7 @@ export const SideBoard = ({
     { name: "Cửa hàng", icon: <Home size={20} />, badge: null },
     { name: "Doanh thu", icon: <BarChart3 size={20} />, badge: null },
     { name: "Collections", icon: <ShoppingBag size={20} />, badge: "12" },
+    { name: "Sản phẩm", icon: <Tag size={20} />, badge: "5" },
   ];
 
   const fadeUp = {

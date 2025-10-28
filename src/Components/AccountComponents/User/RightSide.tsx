@@ -47,7 +47,7 @@ export const RightSide: React.FC<RightProps> = ({
   const lastPurchaseDate = new Date(Number(donhangMoiNhat));
 
   return (
-    <div className="w-full mx-auto max-w-6xl space-y-10">
+    <div className="w-full mx-auto max-w-6xl space-y-10 overflow-y-auto max-h-screen ">
       <div>
         <Stats
           tongThuChi={tongThuChi}

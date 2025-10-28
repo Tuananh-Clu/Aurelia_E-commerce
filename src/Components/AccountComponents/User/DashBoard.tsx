@@ -34,9 +34,9 @@ export const DashBoard = () => {
           <EditProfile setState={setOpeneditProfile} />
         </div>
       )}
-      <div className="mt-24 px-6 md:px-20 lg:px-40">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1">
+      <div className="mt-24 px-6 md:px-20 lg:px-40 relative mb-10 ">
+        <div className="flex flex-row justify-between gap-8 relative  ">
+          <div className=" ">
             <LeftSide
               userString={userString }
               SanPhamDaThich={dataFavouriteItemUser.length}
@@ -46,7 +46,7 @@ export const DashBoard = () => {
               setState={setOpeneditProfile}
             />
           </div>
-          <div className="lg:col-span-3">
+          <div className="  ">
             <RightSide
               dataFavouriteItemUser={dataFavouriteItemUser}
               userRole={user?.tier}

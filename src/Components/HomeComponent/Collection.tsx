@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import data from "../../assets/DataMock/dataSeason.json";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { CollectionContext } from "../../config/SeasonContext";
 
 export const Collection = () => {
   const navigate = useNavigate();
+  const  {collectionData}=useContext(CollectionContext);
 
   return (
     <div className="px-6 md:px-12 py-16 space-y-24 relative z-1 mt-20">
@@ -11,7 +13,7 @@ export const Collection = () => {
         Các Bộ Sưu Tập Nổi Bật
       </h1>
 
-      {data.luxury_women_collections.map((item, index) => (
+      {collectionData.map((item, index) => (
         <motion.div
           key={item.id}
           whileHover={{ y: -4 }}
@@ -46,7 +48,7 @@ export const Collection = () => {
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
-              onClick={() => navigate(`/Collection/${item.slug}`)}
+              onClick={() => navigate(`/Collection/${item.id}`)}
               className="self-start bg-gradient-to-r from-gray-900 to-gray-700 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:from-gray-800 hover:to-gray-600 transition"
             >
               Xem sản phẩm

@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom"
 import { Navbar } from "../Components/HomeComponent/Navbar"
-import data from "../assets/DataMock/dataSeason.json";
+import { CollectionContext } from "../config/SeasonContext";
+import { useContext } from "react";
 
 export const AllCollection = () => {
     const navigate=useNavigate()
-     const collection = data.luxury_women_collections;
+    const { collectionData }=useContext(CollectionContext);
   return (
     <>
      <Navbar/>   
      <div>
-        {collection.map(item=>{
+        {collectionData?.map((item:any)=>{
             return(
                 <div className="relative">
                     <img className="w-full" src={item.banner} alt="" />

@@ -3,10 +3,12 @@ import { useState } from "react";
 import { OverView } from "../Components/AdminBrandComponent/DashBoardComponent/OverView";
 import { BannerSetting } from "../Components/AdminBrandComponent/DashBoardComponent/Banner/BannerSetting";
 import { SideBoard } from "../Components/AdminBrandComponent/DashBoardComponent/SideBoard";
-import { Collections } from "../Components/AdminBrandComponent/DashBoardComponent/Collections";
 import { Stores } from "../Components/AdminBrandComponent/DashBoardComponent/Store";
 import Coupon from "../Components/AdminBrandComponent/DashBoardComponent/Coupon";
 import { Revenue } from "../Components/AdminBrandComponent/DashBoardComponent/Revenue";
+import Collections from "../Components/AdminBrandComponent/DashBoardComponent/Collections";
+import ProductManagement from "../Components/AdminBrandComponent/DashBoardComponent/ProductManagement";
+
 
 
 export const AdminDashboard = () => {
@@ -27,6 +29,8 @@ export const AdminDashboard = () => {
         return <Collections />;
       case "Cài đặt":
         return <Settings />;
+      case "Sản phẩm":
+        return <ProductManagement />;
       default:
     }
   };

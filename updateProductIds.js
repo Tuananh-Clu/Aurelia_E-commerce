@@ -1,23 +1,48 @@
 import fs from "fs";
+import axios from "axios";
 
-const products = JSON.parse(fs.readFileSync("D:/Frontend/Aurelia/Aurelia/src/assets/DataMock/fashion_womens_100.json", "utf8"));
-const shops = JSON.parse(fs.readFileSync("c:/Users/TuanANh/Downloads/shops_with_random_fashion_products_v2.json", "utf8"));
+// ⚠️ Dán API Key Pexels của bạn vào đây:
+const PEXELS_API_KEY = "OP5fPQD0r8oK0CsTSi1PEgGqmhlc27mKEKqxUFtTtSKpqnPfhsVoUvOt";
 
-// Tạo map { name: id }
-const nameToId = new Map();
-for (const p of products) {
-  nameToId.set(p.name.trim().toLowerCase(), p.id);
+const INPUT_FILE = "fashion_all.json";
+const OUTPUT_FILE = "fashion_all_updated.json";
+
+// 🔍 Hàm tìm ảnh từ Pexels
+async function searchImages(query, perPage = 5) {
+  const res = await axios.get("https://api.pexels.com/v1/search", {
+    headers: { Authorization: PEXELS_API_KEY },
+    params: { query, per_page: perPage },
+  });
+  return res.data.photos.map((p) => p.src.large);
 }
 
-// Duyệt qua tất cả shop
-for (const shop of shops) {
-  for (const prod of shop.products) {
-    const matchId = nameToId.get(prod.name.trim().toLowerCase());
-    if (matchId) prod.productId = matchId;
+// 🚀 Hàm chính
+async function main() {
+  const data = JSON.parse(fs.readFileSync(INPUT_FILE, "utf-8"));
+
+  for (const product of data) {
+    const query = `${product.brand} ${product.subcategory || product.type}`;
+    console.log(`🔎 Đang tìm ảnh cho: ${product.name} (${query})`);
+
+    try {
+      const images = await searchImages(query, 8);
+      if (images.length >= 4) {
+        product.images = images.slice(0, 4);
+        product.thumbnail = images[0];
+        console.log(`✅ Cập nhật ảnh cho ${product.name}`);
+      } else {
+        console.warn(`⚠️ Không đủ ảnh cho ${product.name}`);
+      }
+    } catch (err) {
+      console.error(`❌ Lỗi khi tìm ảnh cho ${product.name}:`, err.message);
+    }
+
+    // ⏱️ Giới hạn để tránh bị khóa API
+    await new Promise((r) => setTimeout(r, 1000));
   }
+
+  fs.writeFileSync(OUTPUT_FILE, JSON.stringify(data, null, 2));
+  console.log(`🎉 Hoàn tất! File mới: ${OUTPUT_FILE}`);
 }
 
-// Xuất lại file mới
-fs.writeFileSync("shops_updated.json", JSON.stringify(shops, null, 2), "utf8");
-
-console.log("✅ Đã cập nhật productId cho tất cả shop. Kết quả lưu vào shops_updated.json");
+main();

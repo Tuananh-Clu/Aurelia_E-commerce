@@ -15,36 +15,39 @@ import { DashBoardShopProvider } from "./config/DashBoardShopContext.tsx";
 import { NotificationProvider } from "./config/NotifycationContext.tsx";
 import { AuthorForAdminProvider } from "./config/AuthorForAdmin.tsx";
 import { AdminProvider } from "./config/AdminContext.tsx";
+import { CollectionProvider } from "./config/SeasonContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <>
     {" "}
     <BrowserRouter>
-      <AuthorForAdminProvider>
-        <AdminProvider>
-          <NotificationProvider>
-            <DashBoardShopProvider>
-              <DiaChiProvider>
-                <AppointmentProvider>
-                  <AiPoseMeasureProvider>
-                    <CartProvider>
-                      <StoreProvider>
-                        <AuthForShopProvider>
-                          <AuthProvider>
-                            <FilterProvider>
-                              <App />
-                            </FilterProvider>
-                          </AuthProvider>
-                        </AuthForShopProvider>
-                      </StoreProvider>
-                    </CartProvider>
-                  </AiPoseMeasureProvider>
-                </AppointmentProvider>
-              </DiaChiProvider>
-            </DashBoardShopProvider>
-          </NotificationProvider>
-        </AdminProvider>
-      </AuthorForAdminProvider>
+      <CollectionProvider>
+        <AuthorForAdminProvider>
+          <AdminProvider>
+            <NotificationProvider>
+              <DashBoardShopProvider>
+                <DiaChiProvider>
+                  <AppointmentProvider>
+                    <AiPoseMeasureProvider>
+                      <CartProvider>
+                        <StoreProvider>
+                          <AuthForShopProvider>
+                            <AuthProvider>
+                              <FilterProvider>
+                                <App />
+                              </FilterProvider>
+                            </AuthProvider>
+                          </AuthForShopProvider>
+                        </StoreProvider>
+                      </CartProvider>
+                    </AiPoseMeasureProvider>
+                  </AppointmentProvider>
+                </DiaChiProvider>
+              </DashBoardShopProvider>
+            </NotificationProvider>
+          </AdminProvider>
+        </AuthorForAdminProvider>
+      </CollectionProvider>
     </BrowserRouter>
   </>
 );
