@@ -9,6 +9,8 @@ type CollectionContextType = {
     statCollection?: any;
     handleAddCollection: (newCollection: any) => Promise<void>;
     fetchData: (id: string) => Promise<void>;
+    handleUpdateCollection: (updatedCollection: any) => Promise<void>;
+    handleDeleteCollection: (id: string) => Promise<void>;
 };
 export const CollectionContext = createContext<CollectionContextType>({
     seasonCollections: [],
@@ -16,12 +18,47 @@ export const CollectionContext = createContext<CollectionContextType>({
     statCollection: undefined,
     handleAddCollection:async ()=> {},
     fetchData: async () => {},
+    handleUpdateCollection: async ()=> {},
+    handleDeleteCollection: async ()=> {},
 });
 export const CollectionProvider = ({ children }: { children: React.ReactNode }) => {
   const [seasonCollections, setSeasonCollections] = useState<any>();
   const [collectionData, setCollectionData] = useState<any[]>([]);
   const [statCollection, setStatCollection] = useState<any>();
+  const [update,setUpdate]=useState<boolean>(false);
+    const handleAddCollection = async(newCollection: any) => {
+      try{
+        await axios.post(UseApiUrl(api_Config.Collection.AddCollection), newCollection,{headers:{'Content-Type':'application/json'}});
+        toast.success('Collection added successfully!');
+        setUpdate(!update);
+      }
+      catch(error){
+        console.error('Error adding new collection:', error);
+      }
+    };
 
+    const handleUpdateCollection = async(updatedCollection: any) => {
+      try{
+       const reponse=await axios.put(UseApiUrl(api_Config.Collection.UpdateCollection), updatedCollection,{headers:{'Content-Type':'application/json'}});
+       console.log(updatedCollection.id);
+        toast.success(reponse.data);
+        setUpdate(!update);
+      }
+      catch(error){
+        console.error('Error updating collection:', error);
+      }
+    };
+
+    const handleDeleteCollection = async(id: string) => {
+      try{
+        const response = await axios.delete(`${UseApiUrl(api_Config.Collection.DeleteCollection)}?collectionId=${id}`);
+        toast.success(response.data);
+        setUpdate(!update);
+      }
+      catch(error){
+        console.error('Error deleting collection:', error);
+      }
+    };
   useEffect(() => {
     Promise.all([
       axios.get(UseApiUrl(api_Config.Collection.getallcollections)),
@@ -34,7 +71,8 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
     .catch((error) => {
       console.error('Error fetching collection data:', error);
     });
-  }, []);
+  }, [update]);
+  
     const fetchData = async (id:string) => {
       try {
         const response = await axios.get(`${UseApiUrl(api_Config.Collection.getCollectionsById)}?id=${id}`)
@@ -43,17 +81,9 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
         console.error('Error fetching season collections:', error);
       }
     };
-    const handleAddCollection = async(newCollection: any) => {
-      try{
-        await axios.post(UseApiUrl(api_Config.Collection.AddCollection), newCollection,{headers:{'Content-Type':'application/json'}});
-        toast.success('Collection added successfully!');
-      }
-      catch(error){
-        console.error('Error adding new collection:', error);
-      }
-    };
+
     return (
-    <CollectionContext.Provider value={{ seasonCollections, fetchData, collectionData, statCollection, handleAddCollection }}>
+    <CollectionContext.Provider value={{ seasonCollections, fetchData, collectionData, statCollection, handleAddCollection, handleUpdateCollection, handleDeleteCollection }}>
       {children}
     </CollectionContext.Provider>
   );

@@ -11,6 +11,7 @@ export const api_Config = {
     SearchProduct: "/api/Product/GetProductBySearch",
     PostProduct: "/api/Product/PostProduct",
     UpdateQuantityProduct: "/api/Product/updateQuantityProduct",
+    DeleteProduct:"/api/Product/DeleteProuct"
   },
   User: {
     LayTHongTinUser: "/api/Client/LayThongTinNguoiDung",
@@ -84,6 +85,8 @@ export const api_Config = {
     getCollectionsById: "/api/SeasonCollection/GetProductWithId",
     GetStat: "/api/SeasonCollection/GetStatCollection",
     AddCollection: "/api/SeasonCollection/AddCollection",
+    UpdateCollection: "/api/SeasonCollection/UpdateCollection",
+    DeleteCollection: "/api/SeasonCollection/DeleteCollection",
   }
 };
 const api_Url = "https://localhost:7143";

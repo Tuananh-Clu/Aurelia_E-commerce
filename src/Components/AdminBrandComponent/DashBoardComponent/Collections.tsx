@@ -8,8 +8,10 @@ import AddCollectionForm from './CollectionComponent/AddCollectionForm';
 export default function Collections() {
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState('grid');
-    const [activeAddCollection, setActiveAddCollection] = useState<boolean>(false);
-  const { collectionData, statCollection } = useContext(CollectionContext);
+  const [activeAddCollection, setActiveAddCollection] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>('Add');
+  const [dataEdit, setDataEdit] = useState<any>(null);
+  const { collectionData, statCollection,handleDeleteCollection } = useContext(CollectionContext);
   const navigate=useNavigate()
 
   const filteredCollections = collectionData?.filter((collection) => 
@@ -23,18 +25,18 @@ export default function Collections() {
     <div className="max-h-screen  overflow-y-auto bg-black text-white p-8 relative overflow-hidden">
       {activeAddCollection?
       <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-start justify-center z-50 overflow-y-auto "> 
-        <AddCollectionForm setState={setActiveAddCollection} />
+        <AddCollectionForm status={status}  season={dataEdit} setState={setActiveAddCollection} />
       </div>
 
       :''}
       {/* Animated background orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s'}}></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-rose-500/20 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s', animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-400/15 rounded-full blur-3xl animate-pulse" style={{animationDuration: '5s', animationDelay: '2s'}}></div>
+        <div className="absolute top-0 right-0 w-full h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse" style={{animationDuration: '4s'}}></div>
+        <div className="absolute bottom-0 left-0 w-full h-96 bg-rose-500/20 rounded-full blur-3xl animate-pulse" style={{animationDuration: '6s', animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 w-full h-96 bg-pink-400/15 rounded-full blur-3xl animate-pulse" style={{animationDuration: '5s', animationDelay: '2s'}}></div>
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="w-full mx-auto relative z-10">
         <div className="mb-12 backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -62,8 +64,8 @@ export default function Collections() {
             {[
               { label: 'Collections', value: statCollection?.totalCollection || 0, icon: Package, color: 'from-pink-500 to-rose-500', change: '+12%' },
               { label: 'Products', value: statCollection?.totalProduct || 0, icon: Shirt, color: 'from-rose-500 to-pink-600', change: '+8%' },
-              { label: 'Rating', value: statCollection?.totalRating || 0, icon: Star, color: 'from-pink-400 to-rose-400', change: '+5%' },
-              { label: 'Views', value: statCollection?.totalViews || 0, icon: Eye, color: 'from-fuchsia-500 to-pink-500', change: '+15%' }
+              { label: 'Rating', value: statCollection?.totalRating.toLocaleString() || 0, icon: Star, color: 'from-pink-400 to-rose-400', change: '+5%' },
+              { label: 'Views', value: statCollection?.totalViews.toLocaleString() || 0, icon: Eye, color: 'from-fuchsia-500 to-pink-500', change: '+15%' }
             ].map((stat, i) => (
               <div key={i} className="group relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-all hover:scale-105">
                 <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity" style={{backgroundImage: `linear-gradient(to bottom right, var(--tw-gradient-stops))`}}></div>
@@ -137,14 +139,17 @@ export default function Collections() {
                   </div>
 
                   {/* Floating actions */}
-                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+                  <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 z-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
                     {[
-                      { icon: Eye, color: 'from-blue-500 to-cyan-500' },
-                      { icon: Edit, color: 'from-purple-500 to-pink-500' },
-                      { icon: Trash2, color: 'from-red-500 to-orange-500' }
+                      { icon: Edit, color: 'from-purple-500 to-pink-500', handleclick: () => { setStatus('edit'); setDataEdit(collection);setActiveAddCollection(true) } },
+                      { icon: Trash2, color: 'from-red-500 to-orange-500', handleclick: () => {
+                        if (window.confirm('Are you sure you want to delete this collection?')) {
+                          handleDeleteCollection(collection.id);
+                        }
+                      }},
                     ].map((action, i) => (
-                      <button key={i} className={`p-3 bg-gradient-to-br ${action.color} rounded-xl backdrop-blur-xl hover:scale-110 transition-transform`}>
-                        <action.icon className="w-4 h-4" />
+                      <button onClick={action.handleclick} key={i} className={`p-3 bg-gradient-to-br ${action.color} rounded-xl backdrop-blur-xl hover:scale-110 transition-transform`}>
+                        <action.icon onClick={action.handleclick} className="w-4 h-4" />
                       </button>
                     ))}
                   </div>

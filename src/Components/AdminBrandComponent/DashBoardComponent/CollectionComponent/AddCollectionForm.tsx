@@ -2,35 +2,46 @@ import { X, XCircleIcon } from "lucide-react";
 import React, { useContext, useState } from "react";
 import { FilterProductContext } from "../../../../config/FIlterProduct";
 import { CollectionContext } from "../../../../config/SeasonContext";
-
+import { v4 as uuid } from "uuid";
 export default function AddCollectionForm({
   setState,
+  status,
+  season,
 }: {
   setState: React.Dispatch<React.SetStateAction<boolean>>;
+  status: string;
+  season?: any;
 }) {
-  const { handleAddCollection } = useContext(CollectionContext);
+  const { handleAddCollection, handleUpdateCollection } =
+    useContext(CollectionContext);
   const { dataProduct } = useContext(FilterProductContext);
   const [text, setText] = useState("");
   const [filteredSeason, setFilteredSeason] = useState("");
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
 
   const [form, setForm] = useState({
-    id: crypto.randomUUID(),
-    slug: "",
-    name: "",
-    slogan: "",
-    description: "",
-    banner: "",
-    seasonalAttributes: {
-      colors: [],
-      materials: [],
-      mood: "",
-      temperature: "",
-    },
-    products: selectedProducts,
-    active: false,
-    rate: 4.5,
-    views: 0,
+    id:
+      status === "edit" && season
+        ? season.id
+        : uuid(),
+    slug: status === "edit" ? season.slug : "",
+    name: status === "edit"? season.name : "",
+    slogan: status === "edit"  ? season.slogan : "",
+    description: status === "edit"  ? season.description : "",
+    banner: status === "edit"  ? season.banner : "",
+    seasonalAttributes:
+      status === "edit" && season
+        ? season.seasonalAttributes
+        : {
+            colors: [],
+            materials: [],
+            mood: "",
+            temperature: "",
+          },
+    products: status === "edit" ? season.products : selectedProducts.map((p) => p.id),
+    active: status === "edit"  ? season.active : true,
+    rate: status === "edit" ? season.rate : 0,
+    views: status === "edit"  ? season.views : 0,
   });
 
   const filteredList = dataProduct.filter((product) => {
@@ -38,12 +49,19 @@ export default function AddCollectionForm({
     const matchSeason = !filteredSeason || product.season === filteredSeason;
     return matchName && matchSeason;
   });
-
   const handleSelectProduct = (product: any) => {
     if (selectedProducts.find((p) => p.id === product.id)) {
       setSelectedProducts((prev) => prev.filter((p) => p.id !== product.id));
+      setForm((prev) => ({
+        ...prev,
+        products: prev.products.filter((id: string) => id !== product.id),
+      }));
     } else {
       setSelectedProducts((prev) => [...prev, product]);
+      setForm((prev) => ({
+        ...prev,
+        products: [...prev.products, {id: product.id}],
+      }));
     }
   };
 
@@ -54,10 +72,18 @@ export default function AddCollectionForm({
   const clearAll = () => setSelectedProducts([]);
 
   const handleSubmit = () => {
-    handleAddCollection(form);
+    if (status === "edit") {
+      handleUpdateCollection(form);
+      setState(false);
+      console.log(form);
+      console.log(selectedProducts)
+    } else {
+      handleAddCollection(form);
+      setState(false);
+      console.log(form);
+    }
   };
 
-  // ✅ Change input
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -84,10 +110,12 @@ export default function AddCollectionForm({
             <span className="text-3xl">🌸</span>
           </div>
           <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-            Thêm Mùa Mới
+            {status === "edit" ? "Chỉnh Sửa Bộ Sưu Tập" : "Thêm Bộ Sưu Tập Mới"}
           </h2>
           <p className="text-gray-500 mt-2 text-sm">
-            Tạo bộ sưu tập theo mùa độc đáo của bạn
+            {status === "edit"
+              ? "Cập nhật thông tin bộ sưu tập của bạn bên dưới."
+              : "Điền thông tin chi tiết về bộ sưu tập mới của bạn bên dưới."}
           </p>
         </div>
 
@@ -240,9 +268,10 @@ export default function AddCollectionForm({
 
             {/* Danh sách sản phẩm */}
             <ul className="flex-1 overflow-y-auto border border-gray-300 rounded-lg p-3 bg-white/70 shadow-inner max-h-[400px]">
-              {filteredList.map((product) => {
+              {filteredList.map((product: any) => {
                 const isSelected = selectedProducts.find(
-                  (p) => p.id === product.id
+                  (p) =>
+                    p.id === (status === "edit" ? form.products : product.id)
                 );
                 return (
                   <li
@@ -289,21 +318,41 @@ export default function AddCollectionForm({
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  {selectedProducts.map((p) => (
-                    <div
-                      key={p.id}
-                      onClick={() => handleRemoveProduct(p)}
-                      className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm cursor-pointer hover:border-red-400"
-                    >
-                      <img
-                        src={p.thumbnail}
-                        alt={p.name}
-                        className="w-10 h-10 rounded-md object-cover"
-                      />
-                      <span className="text-sm">{p.name}</span>
-                      <X className="w-4 h-4 text-red-500" />
-                    </div>
-                  ))}
+                  {status === "edit"
+                    ? dataProduct
+                        .filter((p) =>
+                          selectedProducts.find((sp) => sp.id === p.id)
+                        )
+                        .map((p) => (
+                          <div
+                            key={p.id}
+                            onClick={() => handleRemoveProduct(p)}
+                            className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm cursor-pointer hover:border-red-400"
+                          >
+                            <img
+                              src={p.thumbnail}
+                              alt={p.name}
+                              className="w-10 h-10 rounded-md object-cover"
+                            />
+                            <span className="text-sm">{p.name}</span>
+                            <X className="w-4 h-4 text-red-500" />
+                          </div>
+                        ))
+                    : selectedProducts.map((p) => (
+                        <div
+                          key={p.id}
+                          onClick={() => handleRemoveProduct(p)}
+                          className="flex items-center gap-2 bg-white border border-gray-200 rounded-xl px-3 py-2 shadow-sm cursor-pointer hover:border-red-400"
+                        >
+                          <img
+                            src={p.thumbnail}
+                            alt={p.name}
+                            className="w-10 h-10 rounded-md object-cover"
+                          />
+                          <span className="text-sm">{p.name}</span>
+                          <X className="w-4 h-4 text-red-500" />
+                        </div>
+                      ))}
                 </div>
               </div>
             )}
@@ -312,7 +361,7 @@ export default function AddCollectionForm({
               onClick={handleSubmit}
               className="mt-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-pink-700 transition-all shadow-md"
             >
-              ➕ Thêm Mùa Mới
+              {status === "edit" ? "Cập Nhật Bộ Sưu Tập" : "Thêm Bộ Sưu Tập"}
             </button>
           </div>
         </div>

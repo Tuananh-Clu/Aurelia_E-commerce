@@ -35,8 +35,8 @@ export const AdminDashboard = () => {
     }
   };
   return (
-    <div className=" flex bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 flex-row min-h-screen w-full">
-      <div className="w-64">
+    <div className=" flex  bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 flex-row min-h-screen w-full">
+      <div >
         <SideBoard onClick={setStatus} status={status} />
       </div>
       <div className="w-full">{statusComponent(status)}</div>

@@ -1,4 +1,4 @@
-import { useContext, useState, useMemo, useEffect } from "react";
+import { useContext, useState, useMemo } from "react";
 import {
   Plus,
   Search,
@@ -15,23 +15,52 @@ import {
 } from "lucide-react";
 import { FilterProductContext } from "../../../config/FIlterProduct";
 import ImportExcel from "./ProductManagementComponents/ImportExcel";
+import { AddProduct } from "../../DashBoardShopComponent/ProductListComponents/AddProduct";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { api_Config, UseApiUrl } from "../../../types/api";
+import toast from "react-hot-toast";
 export default function ProductManagement() {
   const { dataProduct } = useContext(FilterProductContext);
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
   const [activeAddProduct, setActiveAddProduct] = useState(false);
+  const [editProduct, setEditProduct] = useState<boolean>(false);
   const [openImportModal, setOpenImportModal] = useState(false);
+  const [dataEdit, setDataEdit] = useState<any>(null);
   const filteredProducts = useMemo(() => {
     return dataProduct.filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [dataProduct, searchTerm]);
+  const handleDeleteProduct =async (productId:string) => {
+    try {
+      await axios.delete(`${UseApiUrl(api_Config.Product.DeleteProduct)}?productId=${productId}`
+      );
+      toast.success("Product deleted successfully");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+      toast.error("Failed to delete product");
+    }
+  };
   return (
     <div className="max-h-screen bg-black text-white p-8 relative overflow-hidden">
       {/* Import Excel Modal */}
-      {openImportModal && <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-20">
-        <ImportExcel setOpenImportModal={setOpenImportModal} />
-        </div>}
+      {editProduct === true && (
+        <AddProduct
+          onClose={setEditProduct}
+          dataEdit={filteredProducts}
+          ProductId={dataEdit?.id}
+          sold={dataEdit?.sold}
+          title="Sửa Sản Phẩm"
+        />
+      )}
+      {openImportModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-20">
+          <ImportExcel setOpenImportModal={setOpenImportModal} />
+        </div>
+      )}
       {/* Background Orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
@@ -66,14 +95,19 @@ export default function ProductManagement() {
                   <span>Add Product</span>
                 </div>
               </button>
-              <button onClick={()=>{setOpenImportModal(true)}} className="group relative px-6 py-1 bg-gradient-to-r from-green-600 to-green-400 rounded-2xl font-bold text-lg overflow-hidden transform hover:scale-105 transition-all ">
+              <button
+                onClick={() => {
+                  setOpenImportModal(true);
+                }}
+                className="group relative px-6 py-1 bg-gradient-to-r from-green-600 to-green-400 rounded-2xl font-bold text-lg overflow-hidden transform hover:scale-105 transition-all "
+              >
                 <h1 className="text-lg font-bold">
                   Import From Excel{" "}
                   <ArrowRight className="inline-block w-4 h-4" />
                 </h1>
-                  <span>
-                    Upload <File className="inline-block w-4 h-4" />
-                  </span>
+                <span>
+                  Upload <File className="inline-block w-4 h-4" />
+                </span>
               </button>
             </div>
           </div>
@@ -143,13 +177,25 @@ export default function ProductManagement() {
                 </div>
 
                 {/* Floating actions */}
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
-                  {[Eye, Edit, Trash2].map((Icon, i) => (
+                <div className="absolute top-4 right-4 flex gap-2 opacity-0 z-100 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+                  {[
+                    {
+                      icon: Edit,
+                      onClick: () => {
+                        setEditProduct(true);
+                        setDataEdit(p);
+                      },
+                    },
+                    {
+                      icon: Trash2,
+                      onClick: () => handleDeleteProduct(p.id),
+                    },
+                  ].map((Icon, i) => (
                     <button
                       key={i}
                       className="p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-transform hover:scale-110"
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon.icon className="w-5 h-5" onClick={Icon.onClick} />
                     </button>
                   ))}
                 </div>
@@ -197,7 +243,10 @@ export default function ProductManagement() {
                       className="w-full group/btn relative px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl font-bold overflow-hidden transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 mt-5"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
-                      <div className="relative flex items-center justify-center gap-2">
+                      <div
+                        onClick={() => navigate(`/Fashion/Products/${p.id}`)}
+                        className="relative flex items-center justify-center gap-2"
+                      >
                         <span>View Details</span>
                         <ArrowRight className="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform" />
                       </div>

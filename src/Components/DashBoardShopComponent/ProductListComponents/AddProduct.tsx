@@ -123,7 +123,8 @@ useEffect(()=>{
       { color: colors[0] || "Default", sizes: sizes.map(size => ({ size, quantity: 0 })) }
     ],
     discountType: dataEditProduct ? dataEditProduct.discountType : "",
-    discountValue: dataEditProduct ? dataEditProduct.discountValue : 0
+    discountValue: dataEditProduct ? dataEditProduct.discountValue : 0,
+    season:""
   }
 
   const handleClickUpdateStatus = async (e: React.FormEvent) => {
@@ -142,7 +143,7 @@ useEffect(()=>{
     taskFetchSanPham();
   }, [handleClickUpdateStatus]);
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 text-black">
       <div className="relative w-5/6 lg:w-3/4 max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl bg-gradient-to-br from-yellow-200 via-amber-300 to-orange-400 p-6 backdrop-blur-md border border-white/30">
         <X
           onClick={() => onClose(false)}
