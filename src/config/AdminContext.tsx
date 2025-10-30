@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { api_Config, UseApiUrl } from "../types/api";
 import axios from "axios";
 import toast from "react-hot-toast";
+import type { Coupon, order } from "../types/type";
 
 type AdminContextType = {
   dataRevenue: any;
@@ -16,12 +17,14 @@ type AdminContextType = {
   revenueData: any[];
   categoryData: any[];
   ServiceData: any[];
+  dataVoucher: Coupon[];
   handleClick: (type: string, data: any) => void;
   uptodatabase: (type: string, data: any) => void;
   handleDeleteCoupon: (couponId: string) => void;
   handleAddCoupon: (couponData: any) => void;
   handleUpdateCoupon: (couponData: any) => void;
   handleToggleCouponStatus: (couponId: string, bool: boolean) => void;
+  suggestVoucher: ( order: order|undefined) => void;
 };
 export const AdminContext = createContext({
   dataRevenue: null,
@@ -31,20 +34,23 @@ export const AdminContext = createContext({
   MainBanner: [],
   StoryBanner: [],
   dataShop: [],
-  coupons: [],
+  coupons: [] as Coupon[],
   revenueData: [],
   categoryData: [],
   ServiceData: [],
+  dataVoucher: [] as Coupon[],
   handleClick: () => {},
   uptodatabase: () => {},
   handleDeleteCoupon: () => {},
   handleAddCoupon: () => {},
   handleUpdateCoupon: () => {},
   handleToggleCouponStatus: () => {},
+  suggestVoucher: () => {},
 } as AdminContextType);
 
 export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   {
+    const user=JSON.parse(localStorage.getItem("user") || "{}");
     //-- DashBoard Data ---
     const location = useLocation();
     const [dataRevenue, setDataRevenue] = useState<any>(null);
@@ -57,6 +63,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const [revenueData, setRevenueData] = useState<any>(null);
     const [categoryData, setCategoryData] = useState<any[]>([]);
     const [ServiceData, setServiceData] = useState<any[]>([]);
+    const [dataVoucher, setDataVoucher] = useState<Coupon[]>([]);
     const handleClick = async (type: string, data: any) => {
       try {
         if (type === "Main") {
@@ -229,6 +236,21 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           }
         };
 
+        const suggestVoucher = async ( order: order|undefined) => {
+          try {
+            const response = await axios.post(
+              `${UseApiUrl(api_Config.Coupon.suggestVoucher)}?id=${user.id}`,
+              order,
+              { headers: { "Content-Type": "application/json" } }
+            );
+            setDataVoucher(response.data);
+            fetchCoupons();
+          } catch (error) {
+            console.error("❌ Error suggesting voucher:", error);
+            toast.error("Failed to suggest voucher");
+          }
+        };
+
         return (
           <AdminContext.Provider
             value={{
@@ -243,12 +265,14 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               coupons,
               dataShop,
               ServiceData,
+              dataVoucher,
               handleClick,
               uptodatabase,
               handleDeleteCoupon,
               handleAddCoupon,
               handleUpdateCoupon,
               handleToggleCouponStatus,
+              suggestVoucher,
             }}
           >
             {children}

@@ -9,10 +9,14 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import type { DiaChi, order } from "../types/type";
+import { TicketCheck } from "lucide-react";
+import { ListCoupon } from "../Components/ListCoupon";
 
 export const Checkout = () => {
-  const { CartDataAdd, setDataOrder, LayToaDo, phiVanChuyen, LayPhiVanCHuyen } =
+  const { CartDataAdd, setDataOrder, LayToaDo, phiVanChuyen, LayPhiVanCHuyen,dataOrder } =
     useContext(CartContext);
+  const [isOpen, setIsOpen] = useState(false)
+  const [order, setOrder] = useState<order|undefined>(undefined);
   const {
     savedAddress = [],
     SaveDiaChi,
@@ -88,6 +92,7 @@ export const Checkout = () => {
       }
     };
     setDataOrder(data);
+    setOrder(data);
     LayPhiVanCHuyen(true);
   }, [formData, toaDo, CartDataAdd]);
 
@@ -121,6 +126,7 @@ export const Checkout = () => {
     <>
       <Navbar />
       <main className="min-h-[100vh] pt-28 px-6 md:px-20 bg-white">
+        <ListCoupon isOpen={isOpen} setIsOpen={setIsOpen}  dataOrder={CartDataAdd} order={order}/>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -211,7 +217,10 @@ export const Checkout = () => {
                 required
               />
             </div>
-
+            <button type="button" onClick={()=>setIsOpen(true)} className="flex flex-row items-center justify-between pt-4 px-4 py-3 border border-dashed border-gray-300 rounded-xl group hover:bg-gray-700 cursor-pointer w-full transition-all duration-300">
+              <h3 className="text-gray-700 font-medium mb-2 group-hover:text-white">Mã giảm giá</h3>
+              <TicketCheck className="mx-4 mb-4 text-gray-500 group-hover:text-white" />
+            </button>
             <PaymentOptions value={formData.payment} onChange={handleChange} />
 
             {/* Lưu địa chỉ */}

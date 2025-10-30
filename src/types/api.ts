@@ -79,6 +79,7 @@ export const api_Config = {
     updateCoupon: "/api/Coupon/AdjustVoucher",
     deleteCoupon: "/api/Coupon/DeleteVoucher",
     toggleCouponStatus: "/api/Coupon/UpdateStatusVoucher",
+    suggestVoucher: "/api/Coupon/SuggestVoucher",
   },
   Collection:{
     getallcollections: "/api/SeasonCollection/GetCollection",
