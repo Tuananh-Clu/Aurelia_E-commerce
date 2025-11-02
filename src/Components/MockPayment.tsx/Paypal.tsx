@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 export const MockPayPal = ({ onClose }: { onClose: () => void }) => {
   const [loading, setLoading] = useState(false);
   const navigate=useNavigate()
-  const {dataOrder,handleClick,setCartDataAdd}=useContext(CartContext)
+  const {dataOrder,handleClickPayment,setCartDataAdd}=useContext(CartContext)
   const handlePay = () => {
     setLoading(true);
-     handleClick()
+     handleClickPayment()
     setTimeout(() => {
       setLoading(false);
       navigate("/")

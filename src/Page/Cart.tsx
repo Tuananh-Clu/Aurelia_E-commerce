@@ -15,11 +15,19 @@ export const Cart = () => {
     () => CartDataAdd.reduce((s, i) => s + i.price * i.quantity, 0),
     [CartDataAdd]
   );
-
+  for(let i=0;i<CartDataAdd.length;i++){
+    for(let j=i+1;j<CartDataAdd.length;j++){
+      if(CartDataAdd[i].Itemid===CartDataAdd[j].Itemid){
+        CartDataAdd.splice(j,1);
+        CartDataAdd[i].quantity+=1;
+        j--;
+      }
+    }
+  }
   const formatPrice = (num: number) =>
-    new Intl.NumberFormat("en-US", {
+    new Intl.NumberFormat("vi-VN", {
       style: "currency",
-      currency: "USD",
+      currency: "VND",
     }).format(num);
 
   const updateQty = (id: string, newQty: number) => {
@@ -66,9 +74,9 @@ export const Cart = () => {
                 Giỏ hàng của bạn đang trống.
               </motion.div>
             ) : (
-              CartDataAdd.map((i) => (
+              CartDataAdd.map((i,index) => (
                 <motion.div
-                  key={i.Itemid }
+                  key={index }
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="flex items-center gap-8 bg-white rounded-3xl p-6 shadow-md border border-gray-200 hover:shadow-xl transition-all"
@@ -128,10 +136,9 @@ export const Cart = () => {
                 <span>Tạm tính</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Vận chuyển</span>
-                <span className="text-green-600 font-medium">Miễn phí</span>
-              </div>
+              {
+                
+              }
               <div className="border-t pt-5 flex justify-between text-lg font-semibold text-gray-800">
                 <span>Tổng</span>
                 <span>{formatPrice(subtotal)}</span>

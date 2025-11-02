@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext,  useState, type ReactNode, type SetStateAction } from "react";
 import { api_Config, UseApiUrl } from "../types/api";
-import toast from "react-hot-toast";
+ 
 
 
 
@@ -29,14 +29,13 @@ export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
       );
 
       if (response.status === 200) {
-        toast.success(response.data.message);
         localStorage.setItem("shop",JSON.stringify(response.data.dataStore))
         setIsignned(true);
         localStorage.setItem("tokenShop",response.data.token);
       }
-      toast.success(response.data.message);
+      
     } catch (error) {
-      console.log(error);
+      
 
     }
   };

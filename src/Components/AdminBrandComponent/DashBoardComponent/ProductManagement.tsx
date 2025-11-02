@@ -38,7 +38,7 @@ export default function ProductManagement() {
     try {
       await axios.delete(`${UseApiUrl(api_Config.Product.DeleteProduct)}?productId=${productId}`
       );
-      toast.success("Product deleted successfully");
+      
     } catch (error) {
       console.error("Error deleting product:", error);
       toast.error("Failed to delete product");

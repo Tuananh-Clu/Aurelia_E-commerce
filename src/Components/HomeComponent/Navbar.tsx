@@ -1,8 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/aurelia_logo_svg.svg";
 import { motion } from "framer-motion";
+import { useContext } from "react";
+import { CartContext } from "../../config/CartContext";
+import { Cart } from "../../Page/Cart";
+import { ShoppingCartIcon } from "lucide-react";
 export const Navbar = () => {
   const navigate = useNavigate();
+  const {CartDataAdd}=useContext(CartContext)
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -33,7 +38,10 @@ export const Navbar = () => {
 
           <ul className="hidden md:flex flex-row gap-8 items-center text-white font-heading">
             <motion.li whileHover={{ y: -2, color: "#a6b0bb" }} onClick={() => navigate("/search")}>Search</motion.li>
-            <motion.li whileHover={{ y: -2, color: "#a6b0bb" }} onClick={() => navigate("/cart")}>Cart</motion.li>
+            <motion.li className="flex flex-row" whileHover={{ y: -2, color: "#a6b0bb" }} onClick={() => navigate("/cart")}>Cart  {CartDataAdd.length>0 && (<motion.div className="relative flex flex-col gap-3" initial={{ right:10 , opacity:0 }}  animate={{ right:0, opacity:100 }} transition={{ duration: 1.0 }}>
+              <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.0 }} className=" absolute top-[-10px] right-[-10px] bg-red-700 rounded-full w-4 h-4 flex items-center justify-center text-center">{CartDataAdd.length}</motion.div>
+              <ShoppingCartIcon className="w-5" />
+              </motion.div>)}</motion.li>
             <motion.li whileHover={{ y: -2, color: "#a6b0bb" }} onClick={() => navigate("/account")}>Account</motion.li>
           </ul>
 

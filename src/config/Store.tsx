@@ -34,10 +34,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         productSize,
       });
       setDataStore(data.data);
-      console.log(idProduct, productSize);
-      console.log(data);
     } catch (error) {
-      console.log("error");
+      
     }
   };
   const GetStoreById = async (
@@ -49,9 +47,8 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         `${UseApiUrl(api_Config.Shop.GetShopById)}?Id=${id}`
       );
       setState(data.data);
-      console.log(data);
     } catch (error) {
-      console.log("error");
+      
     }
   };
   return (

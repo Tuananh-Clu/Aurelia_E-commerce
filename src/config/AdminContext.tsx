@@ -18,6 +18,8 @@ type AdminContextType = {
   categoryData: any[];
   ServiceData: any[];
   dataVoucher: Coupon[];
+  selectvoucher: Coupon[] ;
+  setSelectvoucher: React.Dispatch<React.SetStateAction<Coupon[] >>;
   handleClick: (type: string, data: any) => void;
   uptodatabase: (type: string, data: any) => void;
   handleDeleteCoupon: (couponId: string) => void;
@@ -39,6 +41,8 @@ export const AdminContext = createContext({
   categoryData: [],
   ServiceData: [],
   dataVoucher: [] as Coupon[],
+  selectvoucher: [] as Coupon[] ,
+  setSelectvoucher: () => {},
   handleClick: () => {},
   uptodatabase: () => {},
   handleDeleteCoupon: () => {},
@@ -64,22 +68,23 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const [categoryData, setCategoryData] = useState<any[]>([]);
     const [ServiceData, setServiceData] = useState<any[]>([]);
     const [dataVoucher, setDataVoucher] = useState<Coupon[]>([]);
+    const [selectvoucher, setSelectvoucher] = useState<Coupon[] >([]);
     const handleClick = async (type: string, data: any) => {
       try {
         if (type === "Main") {
-          const response = await axios.post(
+          await axios.post(
             UseApiUrl(api_Config.Banner.AdjustMainBanner),
             data,
             { headers: { "Content-Type": "application/json" } }
           );
-          toast.success(response.data);
+          
         } else {
-          const response = await axios.post(
+           await axios.post(
             UseApiUrl(api_Config.Banner.AdjustStoryBanner),
             data,
             { headers: { "Content-Type": "application/json" } }
           );
-          toast.success(response.data);
+          
         }
       } catch (error) {
         console.error("❌ Error updating banner:", error);
@@ -88,19 +93,19 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const uptodatabase = async (type: string, data: any) => {
       try {
         if (type === "Main" || type.includes("Main")) {
-          const response = await axios.post(
+          await axios.post(
             UseApiUrl(api_Config.Banner.AddMainBanner),
             data,
             { headers: { "Content-Type": "application/json" } }
           );
-          toast.success(response.data);
+          
         } else {
-          const response = await axios.post(
+          await axios.post(
             UseApiUrl(api_Config.Banner.AddStoryBanner),
             data,
             { headers: { "Content-Type": "application/json" } }
           );
-          toast.success(response.data);
+          
         }
       } catch (error) {
         console.error("❌ Error updating banner:", error);
@@ -136,11 +141,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setRevenueData(revenueDataRes.data.revenue || []);
         setCategoryData(revenueDataRes.data.stockByType || []);
         setServiceData(revenueDataRes.data.appointMent|| []);
-        console.log("sdada"+revenueDataRes);
-        console.log("✅ Revenue data:", revenueRes.data);
-        console.log(dataShopRes.data);
-        console.log(bannerRes.data);
-        console.log("✅ Banner data:", bannerRes.data);
+        
       } catch (error) {
         console.error("❌ Error fetching data:", error);
       }
@@ -169,7 +170,6 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               UseApiUrl(api_Config.Coupon.getCoupons)
             );
             setCoupons(response.data);
-            toast.success(response.data.message);
           } catch (error) {
             console.error("❌ Error fetching coupons:", error);
           }
@@ -180,12 +180,12 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         }, []);
         const handleAddCoupon = async (couponData: any) => {
           try {
-            const response = await axios.post(
+           await axios.post(
               UseApiUrl(api_Config.Coupon.addCoupon),
               couponData,
               { headers: { "Content-Type": "application/json" } }
             );
-            toast.success(response.data.message);
+            
             fetchCoupons();
           } catch (error) {
             console.error("❌ Error adding coupon:", error);
@@ -194,12 +194,12 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         };
         const handleUpdateCoupon = async (couponData: any) => {
           try {
-            const response = await axios.post(
+           await axios.post(
               UseApiUrl(api_Config.Coupon.updateCoupon),
               couponData,
               { headers: { "Content-Type": "application/json" } }
             );
-            toast.success(response.data.message);
+            
             fetchCoupons();
           } catch (error) {
             console.error("❌ Error updating coupon:", error);
@@ -208,12 +208,12 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         };
         const handleDeleteCoupon = async (voucherId: string) => {
           try {
-            const response = await axios.delete(
+           await axios.delete(
               `${UseApiUrl(
                 api_Config.Coupon.deleteCoupon
               )}?voucherId=${voucherId}`
             );
-            toast.success(response.data.message);
+            
             fetchCoupons();
           } catch (error) {
             console.error("❌ Error deleting coupon:", error);
@@ -221,14 +221,14 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           }
         };
         const handleToggleCouponStatus = async (id: string, bool: boolean) => {
-          console.log("Toggle Coupon ID:", id, "to", bool);
+          
           try {
-            const response = await axios.post(
+          await axios.post(
               UseApiUrl(api_Config.Coupon.toggleCouponStatus),
               { id, active: bool },
               { headers: { "Content-Type": "application/json" } }
             );
-            toast.success(response.data.message);
+            
             fetchCoupons();
           } catch (error) {
             console.error("❌ Error toggling coupon status:", error);
@@ -266,6 +266,8 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               dataShop,
               ServiceData,
               dataVoucher,
+              selectvoucher,
+              setSelectvoucher,
               handleClick,
               uptodatabase,
               handleDeleteCoupon,

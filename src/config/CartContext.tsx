@@ -1,13 +1,14 @@
-import React, { createContext,  useState } from "react";
+import React, { createContext,  useContext,  useState } from "react";
 import { type order, type Cart } from "../types/type";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { api_Config, UseApiUrl } from "../types/api";
+import { AdminContext } from "./AdminContext";
 
 type CartContexts = {
   CartDataAdd: Cart[];
   dataOrder: order | undefined;
-  handleClick: () => Promise<void>;
+  handleClickPayment: () => Promise<void>;
   setDataOrder: React.Dispatch<React.SetStateAction<order | undefined>>;
   setCartDataAdd: React.Dispatch<React.SetStateAction<Cart[]>>;
   LayToaDo: (address: string) => Promise<{ lat: number; lon: number } | null>;
@@ -18,7 +19,7 @@ type CartContexts = {
 export const CartContext = createContext<CartContexts>({
   CartDataAdd: [],
   dataOrder: undefined,
-  handleClick: async () => {},
+  handleClickPayment: async () => {},
   LayToaDo: async () => null,
   setDataOrder: () => {},
   setCartDataAdd: () => {},
@@ -28,6 +29,7 @@ export const CartContext = createContext<CartContexts>({
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const {setSelectvoucher } = useContext(AdminContext);
   const [CartDataAdd, setCartDataAdd] = useState<Cart[]>([]);
   const [dataOrder, setDataOrder] = useState<order | undefined>();
   const [phiVanChuyen, setPhiVanChuyen] = useState("");
@@ -35,13 +37,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("token");
   const LOCATIONIQ_KEY = "pk.fd3f99a25f3d03893a6936b3b255288c";
   // Thanh toán
-  const handleClick = async () => {
+  const handleClickPayment = async () => {
     if (!dataOrder) return;
 
     try {
       if(shopId===""){
         return;
       }
+      setSelectvoucher([]);
       // Thêm order
       await axios.post(
         `${UseApiUrl(api_Config.User.SuccessPayAddOrder)}?shopId=${shopId}`,
@@ -79,7 +82,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         },
       });
       localStorage.setItem("user", JSON.stringify(reponse.data.user));
-      toast.success("Thanh toán thành công!");
     } catch (error) {
       console.error(error);
       toast.error("Thanh toán không thành công!");
@@ -118,7 +120,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         setPhiVanChuyen(data.data.shippingFee);
         setShopId(data.data.storeId);
       } catch {
-        console.log("Loi LayPhiVanCHuyen");
+        
       }
     };
     
@@ -129,7 +131,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         setCartDataAdd,
         dataOrder,
         setDataOrder,
-        handleClick,
+        handleClickPayment,
         LayToaDo,
         LayPhiVanCHuyen,
         phiVanChuyen,

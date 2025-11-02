@@ -57,7 +57,7 @@ export const MainProduct = () => {
     }
 
     try {
-      const response = await axios.post(
+       await axios.post(
         UseApiUrl(api_Config.User.AddFavouriteItems),
         item,
         {
@@ -68,7 +68,7 @@ export const MainProduct = () => {
         }
       );
       setHeartPopup(true);
-      toast.success(response.data.message);
+      toast.success("Đã thêm sản phẩm vào yêu thích");
     } catch {
       toast.error("Không thể thêm sản phẩm yêu thích");
     }
@@ -76,11 +76,11 @@ export const MainProduct = () => {
 
   const AddToCart = useCallback(
     (item: Product) => {
-      if (!selectedColor) {
+      if (selectedColor==null || selectedColor === "") {
         toast.error("Vui Lòng Chọn Màu Sản Phẩm");
         return;
       }
-      if (!selectedSize) {
+      if (selectedSize==null || selectedSize === "") {
         toast.error("Vui Lòng Chọn Kích Cỡ Sản Phẩm");
         return;
       }
@@ -97,7 +97,7 @@ export const MainProduct = () => {
       };
 
       setCartDataAdd((prev) => [...prev, cartItem]);
-      toast.success("Thêm Vào Giỏ Hàng Thành Công");
+      toast.success("Đã thêm sản phẩm vào giỏ hàng");
     },
     [selectedColor, selectedSize, setCartDataAdd]
   );
@@ -168,6 +168,8 @@ export const MainProduct = () => {
                   createdAt: product.createdAt,
                   updatedAt: product.updatedAt,
                   sold: product.sold,
+                  season: product.season,
+
                 })}
               />
               <h2 className="text-gray-400 text-xs">Reference {product.id}</h2>

@@ -98,7 +98,8 @@ export type order = {
   status: string;
   phone: string;
   address: string;
-  ngayTaoDon:string
+  ngayTaoDon:string,
+  voucherUsed:Coupon[]|null,
   lat:number|undefined,
   ion:number|undefined
   payment: string;
@@ -212,17 +213,18 @@ export interface Season {
   views: number;
 }
 export interface Coupon {
-  id: string;                  // Mã định danh duy nhất
-  code: string;                // Mã coupon
-  NgayBatDau: string;          // ISO string (Date)
-  NgayKetThuc: string;         // ISO string (Date)
-  PhamViApDung?: string | null;// Khu vực áp dụng
-  GiaTri?: number | null;      // Giá trị giảm
-  giaTriDeApDung?: number | null; // Giá trị đơn hàng tối thiểu
-  typeCoupon?: "donhang" | "ship" | null; // Loại coupon
-  DieuKienApDung?: string | null; // Điều kiện sử dụng
-  ApDungCho?: string | null;      // Áp dụng cho sản phẩm / dịch vụ nào
-  isActive: boolean;              // Còn hiệu lực hay không
-  SoLuong: number;                // Số lượng coupon còn lại
-  Reuse: string;                  // Số lần sử dụng (VD: "1 lần/người")
+  id: string;                  
+  code: string;            
+  ngayBatDau: string;          
+  ngayKetThuc: string;       
+  phamViApDung?: string[] | null;
+  giaTri?: number ; 
+  moTa?: string | null;    
+  giaTriDeApDung?: number | null; 
+  typeCoupon?: "order" | "ship" | null;
+  dieuKienApDung?: string | null; 
+  isActive: boolean;             
+  soLuong: number;               
+  reuse: string;  
+  loaiGiam:string;              
 }

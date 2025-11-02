@@ -65,8 +65,6 @@ const ImportExcel = ({setOpenImportModal}:{setOpenImportModal:React.Dispatch<Rea
     setIsLoading(true);
     try {
       await axios.post(UseApiUrl(api_Config.Product.PostProduct), datas, { headers: { 'Content-Type': 'application/json' } });
-       console.log("Dữ liệu import:", datas);
-      toast.success("Import sản phẩm thành công!");
       setSuccess(true);
     } catch (error) {
       console.error("Lỗi import:", error);

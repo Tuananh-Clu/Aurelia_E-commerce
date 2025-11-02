@@ -74,7 +74,7 @@ export const DashBoardShopProvider = ({
         setDataDonHang(reponse.data.listOrder);
         setDataLichHen(reponse.data.listAppoinment);
       } catch {
-        console.log("error");
+        
       }
     };
 
@@ -89,10 +89,10 @@ export const DashBoardShopProvider = ({
         },
         { headers: { "Content-Type": "application/json" } }
       );
-      toast.success(response.data.message);
+      
       await taskFetch();
     } catch {
-      console.log("error");
+      
     }
   };
   const taskFetchSanPham = async () => {
@@ -104,7 +104,7 @@ export const DashBoardShopProvider = ({
       );
       setDataSanPham(reponse.data);
     } catch {
-      console.log("error");
+      
     }
   };
   const updateProduct=async(datas:Product)=>{
@@ -116,10 +116,10 @@ export const DashBoardShopProvider = ({
         datas,
         { headers: { "Content-Type": "application/json" } }
       );
-      toast.success(reponse.data.message);
+      
       taskFetchSanPham();
     } catch {
-      console.log("error");
+      
     }
   };
     const editProduct=async(datas:Product)=>{
@@ -131,10 +131,10 @@ export const DashBoardShopProvider = ({
         datas,
         { headers: { "Content-Type": "application/json" } }
       );
-      toast.success(reponse.data.message);
+      
       taskFetchSanPham();
     } catch {
-      console.log("error");
+      
     }
   };
   const getAllCustomer = async () => {
@@ -146,9 +146,8 @@ export const DashBoardShopProvider = ({
       setTotalCustomer(reponse.data.totalCustomer);
       setTotaldoanhthu(reponse.data.totalDoanhThu);
       setAvgchitieu(reponse.data.averageChiTieuKhachHang);
-      console.log(reponse.data);
     } catch {
-      console.log("error");
+      
     }
   };
   useEffect(() => {

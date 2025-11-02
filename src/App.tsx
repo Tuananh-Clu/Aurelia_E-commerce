@@ -52,7 +52,7 @@ function App() {
 
   return (
     <div ref={ref}>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <Suspense
         fallback={
           <div className="w-full py-20 text-center text-gray-600">

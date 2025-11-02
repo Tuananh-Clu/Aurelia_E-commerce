@@ -11,10 +11,12 @@ import { v4 as uuidv4 } from "uuid";
 import type { DiaChi, order } from "../types/type";
 import { TicketCheck } from "lucide-react";
 import { ListCoupon } from "../Components/ListCoupon";
+import { AdminContext } from "../config/AdminContext";
 
 export const Checkout = () => {
-  const { CartDataAdd, setDataOrder, LayToaDo, phiVanChuyen, LayPhiVanCHuyen,dataOrder } =
+  const { CartDataAdd, setDataOrder, LayToaDo, phiVanChuyen, LayPhiVanCHuyen } =
     useContext(CartContext);
+  const { selectvoucher } = useContext(AdminContext);
   const [isOpen, setIsOpen] = useState(false)
   const [order, setOrder] = useState<order|undefined>(undefined);
   const {
@@ -32,8 +34,7 @@ export const Checkout = () => {
     payment: "cod",
   });
   const [saveAddressCheck, setSaveAddressCheck] = useState(false);
-  const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
-
+const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
   // Chọn địa chỉ đã lưu
   const handleSelectAddress = (addr: any) => {
     setFormData({
@@ -44,21 +45,31 @@ export const Checkout = () => {
       payment: formData.payment,
     });
   };
-  const subtotal = useMemo(
-    () =>
-      user.benefits.freeShipping===true&&user.value===0?CartDataAdd.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      ):CartDataAdd.reduce((s, i) => s + i.price * i.quantity, 0) +
-      Number(phiVanChuyen)-(CartDataAdd.reduce((s, i) => s + i.price * i.quantity, 0)*user.benefits.value)/100,
-    [CartDataAdd, phiVanChuyen]
-  );
+  const subtotal = useMemo(() => {
+    const cartTotal = CartDataAdd.reduce((s, i) => s + i.price * i.quantity, 0);
+    const memberDiscount = (cartTotal * (user.benefits?.value || 0)) / 100;
+    const cartAfterDiscount = cartTotal - memberDiscount;
 
-  const formatPrice = (num: number) =>
-    new Intl.NumberFormat("en-US", {
+    if (user.benefits?.freeShipping === true && user.value === 0) {
+      return cartTotal;
+    }
+    let shippingFee = Number(phiVanChuyen) || 0;
+    let voucherDiscount = 0;
+    if (selectvoucher?.find(item => item.typeCoupon === "ship")) {
+      voucherDiscount = selectvoucher.find(item => item.typeCoupon === "ship")?.giaTri || 0;
+      shippingFee = Math.max(0, shippingFee - voucherDiscount);
+    } else if (selectvoucher?.find(item => item.typeCoupon === "order")) {
+      voucherDiscount = selectvoucher.find(item => item.typeCoupon === "order")?.giaTri || 0;
+    }
+
+    return cartAfterDiscount + shippingFee - (selectvoucher?.find(item => item.typeCoupon === "order") ? voucherDiscount : 0);
+  }, [CartDataAdd, phiVanChuyen, selectvoucher, user.benefits, user.value]);
+
+  const formatPrice = (num: number|undefined) =>
+    new Intl.NumberFormat("vi-VN", {
       style: "currency",
-      currency: "USD",
-    }).format(num);
+      currency: "VND",
+    }).format(num||0);
   const now = new Date();
   const isoUTC = now.toISOString().replace("Z", "+00:00");
   // Lấy tọa độ
@@ -82,6 +93,7 @@ export const Checkout = () => {
       address: formData.address,
       payment: formData.payment,
       product: CartDataAdd,
+      voucherUsed: selectvoucher,
       lat: toaDo?.lat,
       ion: toaDo?.lon,
       ngayTaoDon:isoUTC,
@@ -287,9 +299,18 @@ export const Checkout = () => {
                 )}</span>
               </div>
               {
+                selectvoucher? <div className="flex justify-between font-medium">
+                <span>Mã giảm giá </span>
+                <span className="text-green-600"> - {selectvoucher.find(item => item.typeCoupon === "order")?.loaiGiam==="percent"
+                ?`${selectvoucher.find(item => item.typeCoupon === "order")?.giaTri}%`:
+                formatPrice(Number(selectvoucher.find(item => item.typeCoupon === "order")?.giaTri))}
+                </span>
+              </div>:null
+              }
+              {
                 user.benefits.freeShipping===true&&user.value===0?null:<div className="flex justify-between font-medium">
                 <span>Phí vận chuyển</span>
-                <span>{formatPrice(Number(phiVanChuyen))}</span>
+                <span>{formatPrice(Number(phiVanChuyen)-Number(selectvoucher?.find(item => item.typeCoupon==="ship")?.giaTri) || Number(phiVanChuyen))}</span>
               </div>
               }
               <div className="border-t mt-4 pt-4 flex justify-between text-lg font-bold text-gray-900">

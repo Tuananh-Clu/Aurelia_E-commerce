@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom";
 export const CreditCardPayment = ({ onClose }: { onClose: () => void }) => {
   const navigate=useNavigate()
   const [loading, setLoading] = useState(false);
-  const  {handleClick,setCartDataAdd}=useContext(CartContext)
+  const  {handleClickPayment,setCartDataAdd}=useContext(CartContext)
   const handlePay = () => {
     setLoading(true);
-    handleClick()
+    handleClickPayment()
     setTimeout(() => {
       setLoading(false);
       navigate("/")

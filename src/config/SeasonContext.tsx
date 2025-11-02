@@ -29,7 +29,6 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
     const handleAddCollection = async(newCollection: any) => {
       try{
         await axios.post(UseApiUrl(api_Config.Collection.AddCollection), newCollection,{headers:{'Content-Type':'application/json'}});
-        toast.success('Collection added successfully!');
         setUpdate(!update);
       }
       catch(error){
@@ -40,8 +39,6 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
     const handleUpdateCollection = async(updatedCollection: any) => {
       try{
        const reponse=await axios.put(UseApiUrl(api_Config.Collection.UpdateCollection), updatedCollection,{headers:{'Content-Type':'application/json'}});
-       console.log(updatedCollection.id);
-        toast.success(reponse.data);
         setUpdate(!update);
       }
       catch(error){
@@ -52,7 +49,6 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
     const handleDeleteCollection = async(id: string) => {
       try{
         const response = await axios.delete(`${UseApiUrl(api_Config.Collection.DeleteCollection)}?collectionId=${id}`);
-        toast.success(response.data);
         setUpdate(!update);
       }
       catch(error){

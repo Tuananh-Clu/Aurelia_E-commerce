@@ -65,8 +65,6 @@ export const NotificationProvider = ({
       .build();
 
     newConnection.on("NotificationOrder", (msg: string) => {
-      console.log("📩 Received order:", msg);
-      
 
       setMessage(prevMessage => [...prevMessage, msg]);
 
@@ -76,8 +74,7 @@ export const NotificationProvider = ({
     });
 
     newConnection.on("AppointmentBooking", (msg: string) => {
-      console.log("📩 Received appointment:", msg);
-      
+
       setAppointment(prevAppointment => [...prevAppointment, msg]);
       
       saveToDatabase(msg, "Appointment").catch(err =>
@@ -89,10 +86,8 @@ export const NotificationProvider = ({
       try {
         if (newConnection.state === HubConnectionState.Disconnected) {
           await newConnection.start();
-          console.log("✅ SignalR connected");
           await newConnection.invoke("JoinGroupShop", shopId);
           await newConnection.invoke("JoinGroupShopAppointment", shopId);
-          console.log(`🟢 Joined group: Shop_${shopId}`);
         }
       } catch (err) {
         console.error("❌ SignalR connect failed:", err);
@@ -105,7 +100,6 @@ export const NotificationProvider = ({
 
     return () => {
       newConnection.stop();
-      console.log("🔴 SignalR disconnected");
     };
   }, [shopId]); 
 
@@ -138,12 +132,11 @@ export const NotificationProvider = ({
   const logOut = async () => {
     localStorage.removeItem("tokenShop");
     setIsignned(false);
-    toast.success("Đăng Xuất Thành Công");
+    
     if (connection && connection.state === HubConnectionState.Connected) {
       try {
         await connection.invoke("LeaveGroupShop", shopId);
         await connection.stop();
-        console.log("🔴 Disconnected from SignalR");
       } catch (error) {
         console.error("Error stopping SignalR:", error);
       }

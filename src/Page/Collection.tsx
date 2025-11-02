@@ -17,7 +17,7 @@ export const Collection = () => {
   if (!seasonCollections) return <p>Collection không tồn tại</p>;
   const collection=seasonCollections.map((item:any)=>item.season)[0];
   const products=seasonCollections.map((item:any)=>item.products).flat();
-  console.log(seasonCollections);
+  
   return (
     <>
       <Navbar />

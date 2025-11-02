@@ -62,14 +62,13 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         }
       );
       setHuyDonHangs(!huyDonHangs);
-      toast.success(response.data.message);
     } catch (error) {
       console.error(error);
       toast.error("Hủy đơn hàng không thành công!");
     }
   };
   useEffect(() => {
-    console.log(token)
+    
     const fetch = async () => {
       try {
         const response = await axios.get(UseApiUrl(api_Config.Product.GetProduct));
@@ -78,7 +77,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
           setIsLoading(false);
         }
       } catch (error) {
-        console.log(error);
+        
       }
     };
     if (dataProduct.length === 0) {
@@ -92,7 +91,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         const response = await axios.get(`${UseApiUrl(api_Config.Product.SearchProduct)}?key=${key}`);
         setDataFilter(response.data);
       } catch (error) {
-        console.log(error);
+        
       }
     };
     fetch();
@@ -110,7 +109,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         });
         setDataFavouriteItemUser(response.data);
       } catch (error) {
-        console.log(error);
+        
       }
     };
     fetch();
@@ -129,7 +128,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         setSoLuongDonHang(response.data.soLuongDon);
         setTongThuChi(response.data.tongTien);
       } catch (error) {
-        console.log(error);
+        
       }
     };
     fetch();
@@ -147,7 +146,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         });
         setDonHang(response.data);
       } catch (error) {
-        console.log(error);
+        
       }
     };
     fetch();

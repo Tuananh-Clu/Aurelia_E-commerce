@@ -148,7 +148,6 @@ export const AddBanner = ({
       });
 
       const data = await res.json();
-      console.log("ImgBB upload result:", data);
 
       if (!data.success) {
         throw new Error(data.error?.message || "Upload failed");

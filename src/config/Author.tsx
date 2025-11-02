@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState, type ReactNode, type SetStateAction } from "react";
 import { api_Config, UseApiUrl } from "../types/api";
-import toast from "react-hot-toast";
+ 
 
 
 type AuthContextType = {
@@ -31,14 +31,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       );
 
       if (response.status === 200) {
-        toast.success(response.data.message);
         localStorage.setItem("user",JSON.stringify(response.data.user))
-        console.log(response.data.user)
         setIsignned(true);
         localStorage.setItem("token",response.data.token);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   };
   const register=async(UserName:string,Email:string,Password:string)=>{
@@ -50,13 +48,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       );
 
       if (response.status === 200) {
-         toast.success(response.data.message);
         setIsignned(true);
         localStorage.setItem("user",JSON.stringify(response.data.user))
         localStorage.setItem("token",response.data.token);
       }
     } catch (error) {
-      console.log(error);
+      
     }
   }
    const token=localStorage.getItem("token");
@@ -76,11 +73,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       );
 
       if (response.status === 200) {
-          toast.success(response.data.message);
           localStorage.setItem("user",JSON.stringify(response.data.user))
       }
     } catch (error) {
-      console.log(error);
+      
     }
   }
   return (

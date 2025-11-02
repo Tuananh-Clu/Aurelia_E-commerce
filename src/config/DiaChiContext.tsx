@@ -54,7 +54,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }
       );
-      toast.success(response.data.message || "Lưu địa chỉ thành công");
+      
       fetchDiaChi(); // reload danh sách
     } catch (error) {
       toast.error("Lỗi khi lưu địa chỉ");
@@ -72,7 +72,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
           "Content-Type": "application/json",
         },
       });
-      toast.success("Xóa địa chỉ thành công");
+      
       fetchDiaChi();
     } catch (error) {
       toast.error("Lỗi khi xóa địa chỉ");

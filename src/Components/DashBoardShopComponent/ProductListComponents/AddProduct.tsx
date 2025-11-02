@@ -47,7 +47,6 @@ export const AddProduct = ({
     });
 
     const data = await res.json();
-    console.log("ImgBB upload result:", data); 
 
     if (!data.success) {
       throw new Error(data.error?.message || "Upload failed");
@@ -63,7 +62,6 @@ useEffect(()=>{
   files.forEach(element => {
     uploadImage([element]).then((url) => {
       setImageUrl(prev=>[url,...prev]);
-      console.log(dataEditProduct?.sold);
       
     });
   });
