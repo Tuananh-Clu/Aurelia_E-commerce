@@ -3,6 +3,7 @@ import type { Measure } from "../types/type";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../types/api";
 import toast from "react-hot-toast";
+import { AuthContext } from "./Author";
 
 
 type AIMeasureContextType = {
@@ -25,6 +26,7 @@ type AiPoseMeasureProviderProps = {
 
 export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ children }) => {
   const [DataMeasure, setDataMeasure] = useState<Measure>();
+  const {isSignned}=useContext(AuthContext)
   const token=localStorage.getItem("token")
   const postMeasureToDB=async()=>{
     try{
@@ -40,6 +42,7 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
     }
   }
   useEffect(()=>{
+    if(isSignned===false) return
     const fetch=async()=>{
       try{
         const data=await axios.get(UseApiUrl(api_Config.User.LaySoDo),{headers:{"Authorization":`Bearer ${token}`}})

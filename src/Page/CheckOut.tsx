@@ -294,7 +294,7 @@ const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
                 <span>Ưu đãi thành viên </span>
                 <span className="text-green-600"> -{formatPrice(
                   (CartDataAdd.reduce((s, i) => s + i.price * i.quantity, 0) *
-                    user.benefits.value) /
+                    user.benefits?.value) /
                     100
                 )}</span>
               </div>
@@ -308,7 +308,7 @@ const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
               </div>:null
               }
               {
-                user.benefits.freeShipping===true&&user.value===0?null:<div className="flex justify-between font-medium">
+                user.benefits?.freeShipping===true&&user.value===0?null:<div className="flex justify-between font-medium">
                 <span>Phí vận chuyển</span>
                 <span>{formatPrice(Number(phiVanChuyen)-Number(selectvoucher?.find(item => item.typeCoupon==="ship")?.giaTri) || Number(phiVanChuyen))}</span>
               </div>

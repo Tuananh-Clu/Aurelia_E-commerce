@@ -1,81 +1,73 @@
-import type React from "react"
-import { Package, MapPin, Store } from "lucide-react"
+import React from "react";
+import { Package, MapPin, Store } from "lucide-react";
 
 export type LeftSites = {
-  data: any
-}
+  data: any;
+};
 
-export const LeftSite: React.FC<LeftSites> = ({ data }) => {
+const LeftSite: React.FC<LeftSites> = ({ data }) => {
   return (
-    <div className="  ">
-      <div className="max-w-5xl mx-auto space-y-8">
-        {/* Header Section */}
-        <div className="bg-white rounded-2xl shadow-xl p-8 border border-slate-100">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg">
-              <Package className="w-6 h-6 text-white" />
+    <div className="py-20 bg-slate-50 max-h-screen overflow-y-scroll">
+      <div className="max-w-4xl mx-auto space-y-8 px-4">
+        {/* Header */}
+        <div className="bg-white rounded-3xl shadow-md p-8 border border-slate-100">
+          <div className="flex items-center gap-4 mb-3">
+            <div className="p-3 bg-blue-600 rounded-xl shadow-md">
+              <Package className="w-7 h-7 text-white" />
             </div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-              Thông Tin Đơn Hàng
-            </h2>
+            <h2 className="text-2xl font-bold text-slate-900">Thông Tin Đơn Hàng</h2>
           </div>
-          <p className="text-slate-500 ml-14">Chi tiết sản phẩm và đơn hàng của bạn</p>
+          <p className="text-slate-500 ml-16 text-sm">Thông tin chi tiết về đơn hàng</p>
         </div>
 
-        {/* Products Section */}
-        <div className="space-y-4">
+        {/* Product List */}
+        <div className="space-y-6">
           {data?.data.product.map((item: any, index: any) => (
             <div
               key={index}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-100 hover:border-blue-200 group"
+              className="bg-white rounded-2xl shadow-md p-6 border border-slate-200 hover:shadow-lg transition-all duration-300"
             >
-              <div className="flex flex-col md:flex-row gap-6 p-6">
-                {/* Image Section */}
-                <div className="relative overflow-hidden rounded-xl bg-slate-100 flex-shrink-0">
+              <div className="flex flex-col md:flex-row gap-6">
+                {/* Image */}
+                <div className="relative w-full md:w-40 h-40 rounded-xl overflow-hidden bg-slate-100 shadow-sm">
                   <img
                     src={item.thumnail}
                     alt={item.name}
-                    className="w-full md:w-48 h-48 object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full">
-                    <span className="text-sm font-semibold text-blue-600">#{index + 1}</span>
+                  <div className="absolute top-2 right-2 bg-white px-2 py-1 rounded-full shadow text-xs font-semibold text-blue-600">
+                    #{index + 1}
                   </div>
                 </div>
 
-                {/* Info Section */}
+                {/* Info */}
                 <div className="flex-1 space-y-3">
-                  <h3 className="text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors">
-                    {item.name}
-                  </h3>
-                  
+                  <h3 className="text-lg font-semibold text-slate-800">{item.name}</h3>
+
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div className="flex flex-col">
-                      <span className="text-xs text-slate-500 uppercase tracking-wider mb-1">Màu sắc</span>
-                      <span className="text-sm font-semibold text-slate-700">{item.color}</span>
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase">Màu sắc</p>
+                      <p className="text-sm font-medium text-slate-700">{item.color}</p>
                     </div>
-                    
-                    <div className="flex flex-col">
-                      <span className="text-xs text-slate-500 uppercase tracking-wider mb-1">Kích thước</span>
-                      <span className="text-sm font-semibold text-slate-700">{item.size}</span>
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase">Kích thước</p>
+                      <p className="text-sm font-medium text-slate-700">{item.size}</p>
                     </div>
-                    
-                    <div className="flex flex-col">
-                      <span className="text-xs text-slate-500 uppercase tracking-wider mb-1">Số lượng</span>
-                      <span className="text-sm font-semibold text-slate-700">x{item.quantity}</span>
+                    <div>
+                      <p className="text-xs text-slate-400 uppercase">Số lượng</p>
+                      <p className="text-sm font-medium text-slate-700">x{item.quantity}</p>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap gap-4 pt-3 border-t border-slate-100">
+                  <div className="border-t pt-3 flex flex-wrap gap-6 text-sm text-slate-700">
                     <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm text-slate-600">Tổng tiền:</span>
-                      <span className="text-lg font-bold text-blue-600">{item.price}</span>
+                      <span className="font-semibold text-blue-600">{item.price}</span>
+                      <span className="text-slate-500">Tổng tiền</span>
                     </div>
-                    
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-slate-600">Ngày mua:</span>
-                      <span className="text-sm font-semibold text-slate-700">
-                        {new Date(Number(item.dateBuy)).toLocaleDateString('vi-VN')}
+                    <div>
+                      <span className="text-slate-500 mr-1">Ngày mua:</span>
+                      <span className="font-medium">
+                        {new Date(Number(item.dateBuy)).toLocaleDateString("vi-VN")}
                       </span>
                     </div>
                   </div>
@@ -85,40 +77,36 @@ export const LeftSite: React.FC<LeftSites> = ({ data }) => {
           ))}
         </div>
 
-        {/* Shop Info Section */}
-        <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-xl p-8 border border-slate-100">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg">
-              <Store className="w-6 h-6 text-white" />
+        {/* Shop Info */}
+        <div className="bg-white rounded-3xl shadow-lg p-8 border border-slate-100 space-y-6">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="p-3 bg-emerald-600 rounded-xl shadow-md">
+              <Store className="w-7 h-7 text-white" />
             </div>
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-              Thông Tin Cửa Hàng
-            </h2>
+            <h2 className="text-xl font-bold text-slate-900">Thông Tin Cửa Hàng</h2>
           </div>
-          
-          <div className="space-y-4">
-            <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-100">
-              <h3 className="text-sm text-slate-500 uppercase tracking-wider mb-2">Cửa hàng</h3>
-              <p className="text-lg font-semibold text-slate-800">{data?.shopName}</p>
-              <p className="text-slate-600 mt-1 flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-1 text-slate-400 flex-shrink-0" />
-                <span>{data?.address}</span>
-              </p>
-            </div>
 
-            <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-6 text-white shadow-lg">
-              <div className="flex items-center gap-2 mb-3">
-                <MapPin className="w-5 h-5" />
-                <h3 className="text-sm uppercase tracking-wider font-semibold">Địa chỉ giao hàng</h3>
-              </div>
-              <p className="text-xl font-bold mb-1">{data?.data.name}</p>
-              <p className="text-blue-100">{data?.data.address}</p>
+          <div className="bg-slate-50 rounded-xl p-5 border border-slate-200">
+            <p className="text-xs text-slate-500 uppercase">Cửa hàng</p>
+            <p className="text-lg font-semibold text-slate-800">{data?.shopName}</p>
+            <p className="text-slate-600 mt-1 flex items-start gap-2">
+              <MapPin className="w-4 h-4 mt-1 text-slate-400" />
+              {data?.address}
+            </p>
+          </div>
+
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <MapPin className="w-5 h-5" />
+              <h3 className="text-sm uppercase font-semibold">Địa chỉ giao hàng</h3>
             </div>
+            <p className="text-xl font-bold">{data?.data.name}</p>
+            <p className="text-blue-100 text-sm mt-1">{data?.data.address}</p>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LeftSite
+export default LeftSite;

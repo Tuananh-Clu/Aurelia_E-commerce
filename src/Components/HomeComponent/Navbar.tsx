@@ -13,7 +13,7 @@ export const Navbar = () => {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 120, damping: 16 }}
-      className="w-full fixed top-0 left-0 z-[100] bg-black/30 backdrop-blur-md border-b border-white/10"
+      className="w-full fixed top-0 left-0 z-[1000] bg-black/30 backdrop-blur-md border-b border-white/10"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="h-16 flex items-center justify-between">

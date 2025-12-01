@@ -18,7 +18,7 @@ export const BodySize = () => {
   return (
     <>
     <Navbar/>
-    <div className='mt-20 px-20 flex flex-row items-center'>
+    <div className='mt-20 px-15 flex flex-row items-center'>
           <Main isCameraOn={isCameraOn} setIsCameraOn={setIsCameraOn}  />
           <DashBoardMeasures setIsCameraOn={setIsCameraOn} iscameraOn={isCameraOn} datas={DataMeasure} setDatas={setSafeData}/>
     </div>

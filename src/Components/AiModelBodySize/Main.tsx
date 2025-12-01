@@ -116,8 +116,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
 
       const rightHand = results.poseLandmarks?.[16];
       const handInBox =
-        rightHand.x > 0.18 &&
-        rightHand.x < 0.5 &&
+        rightHand.x > 0.2 &&
+        rightHand.x < 0.56 &&
         rightHand.y > 0.41 &&
         rightHand.y < 0.78;
 
@@ -126,18 +126,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       ctx.lineWidth = 4;
       ctx.strokeRect(0.2 * width, 0.3 * height, 150, 150);
 
-      const keyPoints = [
-        head,
-        leftFoot,
-        rightFoot,
-        shoulderLeft,
-        shoulderRight,
-        leftHip,
-        rightHip,
-      ];
-      const allVisible = keyPoints.every((k) => (k.visibility ?? 0) > 0.05);
 
-      if (!allVisible || isCountingDownRef.current || !handInBox) return;
+      if ( isCountingDownRef.current || !handInBox) return;
 
       isCountingDownRef.current = true;
       setNumber(3);
@@ -231,7 +221,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   }, [isCameraOn, location]);
 
   return (
-    <div className="relative w-[1200px] h-[830px] overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="relative w-[1300px] h-[700px] p-9 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
       <video
         ref={videoRef}
         className="hidden"

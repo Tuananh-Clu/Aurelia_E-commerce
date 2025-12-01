@@ -71,9 +71,9 @@ export const DashBoardMeasures: React.FC<MeasuresProps> = ({
   const hasData = measures.some((m) => m.value);
 
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 to-gray-100  flex items-center justify-center">
-      <div className="bg-white shadow-2xl rounded-3xl p-8 w-full max-w-lg border border-gray-200">
-        <div className="text-center mb-6">
+    <div className="bg-gradient-to-br p-6 max-h-[700px] from-gray-50 to-gray-100  flex items-center justify-center">
+      <div className="bg-white shadow-2xl rounded-3xl px-6 py-2 w-full max-w-md border border-gray-200">
+        <div className="text-center mb-1">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full mb-4">
             {iscameraOn ? (
               <Camera className="w-8 h-8 text-white" />
@@ -92,9 +92,9 @@ export const DashBoardMeasures: React.FC<MeasuresProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center justify-center mb-6">
+        <div className="flex items-center justify-center ">
           <div
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium ${
+            className={`flex items-center gap-2 px-2 py-1 rounded-full text-sm font-medium ${
               iscameraOn
                 ? "bg-green-100 text-green-700"
                 : "bg-gray-100 text-gray-600"
@@ -108,7 +108,7 @@ export const DashBoardMeasures: React.FC<MeasuresProps> = ({
             {iscameraOn ? "Camera đang bật" : "Camera đang tắt"}
           </div>
         </div>
-        <div className="overflow-hidden rounded-xl border border-gray-200 mb-6">
+        <div className="overflow-hidden rounded-xl border border-gray-200 ">
           <table className="w-full">
             <thead>
               <tr className="bg-gradient-to-r from-blue-50 to-indigo-50">
