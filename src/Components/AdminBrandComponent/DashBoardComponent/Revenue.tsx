@@ -13,7 +13,7 @@ import {
   Filler,
 } from "chart.js";
 import { useContext, useState } from "react";
-import { AdminContext } from "../../../config/AdminContext";
+import { AdminContext } from "../../../contexts/AdminContext";
 import { Bar, Doughnut, Radar, Line } from "react-chartjs-2";
 import { TrendingUp, PieChart, Activity, Sparkles, DollarSign, ShoppingCart, Zap, Star } from "lucide-react";
 

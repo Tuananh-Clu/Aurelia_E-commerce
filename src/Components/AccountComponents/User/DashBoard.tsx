@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Navbar } from "../../HomeComponent/Navbar";
+import { Navbar } from "../../HomeLayoutComponent/Navbar";
 import { LeftSide } from "./LeftSide";
 import { RightSide } from "./RightSide";
-import { FilterProductContext } from "../../../config/FIlterProduct";
+import { FilterProductContext } from "../../../contexts/FIlterProduct";
 import type { Clients } from "../../../types/type";
-import { AiPoseMeasureContext } from "../../../config/AIPoseMeasure";
+import { AiPoseMeasureContext } from "../../../contexts/AIPoseMeasure";
 import EditProfile from "./EditProfile";
 import { useLocation } from "react-router-dom";
 

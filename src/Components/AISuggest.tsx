@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { AiPoseMeasureContext } from "../config/AIPoseMeasure";
+import { AiPoseMeasureContext } from "../contexts/AIPoseMeasure";
 
 type AiSuggestBoxProps = {
   productId: string;

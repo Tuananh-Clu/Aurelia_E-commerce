@@ -9,9 +9,9 @@ import {
   Inbox,
 } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
-import { DashBoardShopCOntext } from "../../config/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../contexts/DashBoardShopContext";
 import { Notification } from "./Notification";
-import { NotificationContext } from "../../config/NotifycationContext";
+import { NotificationContext } from "../../contexts/NotifycationContext";
 
 export function DashBoardShop({
   onclick,

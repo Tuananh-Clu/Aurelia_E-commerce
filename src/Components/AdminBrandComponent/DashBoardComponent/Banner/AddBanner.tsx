@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ArrowBigLeft, Check, X } from "lucide-react";
 import { LayoutPreview } from "./LayoutPreview";
-import { AdminContext } from "../../../../config/AdminContext";
+import { AdminContext } from "../../../../contexts/AdminContext";
 
 const styleByLayoutMain: Record<string, any> = {
   A: {

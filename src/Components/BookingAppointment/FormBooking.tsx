@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { type Appointment, type filterSLot, type Shop } from "../../types/type";
-import { StoreContext } from "../../config/Store";
+import { StoreContext } from "../../contexts/Store";
 import { useParams } from "react-router-dom";
 import { Clock, MapPin, Phone } from "lucide-react";
-import { AppointmentContext } from "../../config/AppointmentContext";
+import { AppointmentContext } from "../../contexts/AppointmentContext";
 import { v4 as uuidv4 } from "uuid";
 import { NotifySuccessBooking } from "../NotifySuccessBooking";
-import { Navbar } from "../HomeComponent/Navbar";
-import { Footer } from "../HomeComponent/Footer";
+import { Navbar } from "../HomeLayoutComponent/Navbar";
+import { Footer } from "../HomeLayoutComponent/Footer";
 type SlotStatus = { time: string; full: boolean | false };
 
 export default function BookingForm() {

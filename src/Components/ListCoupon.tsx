@@ -5,7 +5,7 @@ import {
   Tag,
 
 } from "lucide-react";
-import { AdminContext } from "../config/AdminContext";
+import { AdminContext } from "../contexts/AdminContext";
 import type { Cart, order } from "../types/type";
 import { CouponCard } from "./CheckOutComponents/CouponCard";
 

@@ -1,50 +1,52 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import { Pose, type Results } from "@mediapipe/pose";
 import { Camera } from "@mediapipe/camera_utils";
-import { AiPoseMeasureContext } from "../../config/AIPoseMeasure";
-import { useLocation } from "react-router-dom";
+import { AiPoseMeasureContext } from "../../contexts/AIPoseMeasure";
 
 type MainCamera = {
   isCameraOn: boolean;
   setIsCameraOn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+// Memoize calculation functions outside component to avoid recreation
+const calculate3DDistance = (p1: { x: number; y: number; z: number }, p2: { x: number; y: number; z: number }) => {
+  const dx = p1.x - p2.x;
+  const dy = p1.y - p2.y;
+  const dz = p1.z - p2.z;
+  return Math.sqrt(dx * dx + dy * dy + dz * dz);
+};
+
+const calculateDepthFromZ = (
+  leftZ: number,
+  rightZ: number,
+  baseWidth: number
+) => {
+  const zDiff = Math.abs(leftZ - rightZ);
+  let ratio = 0.8 + (zDiff > 0.03 ? zDiff * 2 : 0);
+  ratio = Math.max(0.7, Math.min(1.0, ratio));
+  return baseWidth * ratio;
+};
+
+const calculateEllipseCircumference = (width: number, depth: number) => {
+  const a = width / 2;
+  const b = depth / 2;
+  const h = Math.pow((a - b) / (a + b), 2);
+  return Math.PI * (a + b) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
+};
+
 export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [handOn, setHandOn] = useState(false);
   const { setDataMeasure } = useContext(AiPoseMeasureContext);
   const [popUp, setPopup] = useState(false);
   const [number, setNumber] = useState(3);
   const isCountingDownRef = useRef(false);
-  const location = useLocation();
+  const countdownIntervalRef = useRef<number | null>(null);
+  const poseRef = useRef<Pose | null>(null);
+  const cameraInstanceRef = useRef<Camera | null>(null);
 
-  const calculate3DDistance = (p1: any, p2: any) =>
-    Math.sqrt(
-      Math.pow(p1.x - p2.x, 2) +
-        Math.pow(p1.y - p2.y, 2) +
-        Math.pow(p1.z - p2.z, 2)
-    );
-
-  const calculateDepthFromZ = (
-    leftZ: number,
-    rightZ: number,
-    baseWidth: number
-  ) => {
-    const zDiff = Math.abs(leftZ - rightZ);
-    let ratio = 0.8 + (zDiff > 0.03 ? zDiff * 2 : 0);
-    ratio = Math.max(0.7, Math.min(1.0, ratio));
-    return baseWidth * ratio;
-  };
-
-  const calculateEllipseCircumference = (width: number, depth: number) => {
-    const a = width / 2;
-    const b = depth / 2;
-    const h = Math.pow((a - b) / (a + b), 2);
-    return Math.PI * (a + b) * (1 + (3 * h) / (10 + Math.sqrt(4 - 3 * h)));
-  };
-
-  const drawLandmarks = (
+  // Memoize drawLandmarks to avoid recreation
+  const drawLandmarks = useCallback((
     ctx: CanvasRenderingContext2D,
     landmarks: any[],
     poseLandmarks: any[],
@@ -61,29 +63,24 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       ctx.fill();
       ctx.globalAlpha = 1;
     });
-  };
+  }, []);
 
-  useEffect(() => {
-    if (!isCameraOn || !videoRef.current || !canvasRef.current) return;
+  // Memoize handleResults outside useEffect to avoid recreation
+  const handleResults = useCallback((results: Results) => {
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video) return;
 
-    const pose = new Pose({
-      locateFile: (file) =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
-    });
-    pose.setOptions({
-      modelComplexity: 2,
-      smoothLandmarks: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-    });
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    pose.onResults((results: Results) => {
-      const ctx = canvasRef.current!.getContext("2d")!;
-      const width = canvasRef.current!.width;
-      const height = canvasRef.current!.height;
+    const width = canvas.width;
+    const height = canvas.height;
 
+    // Use requestAnimationFrame for smoother rendering
+    requestAnimationFrame(() => {
       ctx.clearRect(0, 0, width, height);
-      ctx.drawImage(videoRef.current!, 0, 0, width, height);
+      ctx.drawImage(video, 0, 0, width, height);
 
       if (!results.poseWorldLandmarks || results.poseWorldLandmarks.length < 33)
         return;
@@ -115,31 +112,40 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       ];
 
       const rightHand = results.poseLandmarks?.[16];
+      if (!rightHand) return;
+
       const handInBox =
         rightHand.x > 0.2 &&
         rightHand.x < 0.56 &&
         rightHand.y > 0.41 &&
         rightHand.y < 0.78;
-
-      setHandOn(handInBox); // để cập nhật màu khung
+      
       ctx.strokeStyle = handInBox ? "#00FF00" : "#FF0000";
       ctx.lineWidth = 4;
       ctx.strokeRect(0.2 * width, 0.3 * height, 150, 150);
 
-
-      if ( isCountingDownRef.current || !handInBox) return;
+      if (isCountingDownRef.current || !handInBox) return;
 
       isCountingDownRef.current = true;
       setNumber(3);
       setPopup(true);
 
-      const countdown = setInterval(() => {
+      // Clear any existing interval
+      if (countdownIntervalRef.current !== null) {
+        clearInterval(countdownIntervalRef.current);
+      }
+
+      countdownIntervalRef.current = window.setInterval(() => {
         setNumber((prev) => {
           if (prev <= 1) {
-            clearInterval(countdown);
+            if (countdownIntervalRef.current !== null) {
+              clearInterval(countdownIntervalRef.current);
+              countdownIntervalRef.current = null;
+            }
             setPopup(false);
             isCountingDownRef.current = false;
 
+            // Calculate measurements
             const shoulderWidth = calculate3DDistance(
               shoulderLeft,
               shoulderRight
@@ -196,29 +202,75 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         });
       }, 1000);
     });
-    let cameraInstance: Camera | null = null;
+  }, [drawLandmarks, setDataMeasure]);
+
+  useEffect(() => {
+    if (!isCameraOn || !videoRef.current || !canvasRef.current) return;
+
+    const pose = new Pose({
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
+    });
+    pose.setOptions({
+      modelComplexity: 2,
+      smoothLandmarks: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5,
+    });
+
+    pose.onResults(handleResults);
+    poseRef.current = pose;
     navigator.mediaDevices
       .getUserMedia({ video: { width: 1280, height: 720 } })
       .then((stream) => {
-        if (videoRef.current) videoRef.current.srcObject = stream;
-        const camera = new Camera(videoRef.current!, {
-          onFrame: async () => await pose.send({ image: videoRef.current! }),
+        if (!videoRef.current) return;
+        
+        videoRef.current.srcObject = stream;
+        const camera = new Camera(videoRef.current, {
+          onFrame: async () => {
+            if (videoRef.current && poseRef.current) {
+              await poseRef.current.send({ image: videoRef.current });
+            }
+          },
           width: 1280,
           height: 720,
         });
-        cameraInstance = camera;
+        cameraInstanceRef.current = camera;
         camera.start();
+      })
+      .catch((error) => {
+        console.error("Error accessing camera:", error);
       });
 
     return () => {
-      cameraInstance?.stop();
+      // Cleanup interval
+      if (countdownIntervalRef.current !== null) {
+        clearInterval(countdownIntervalRef.current);
+        countdownIntervalRef.current = null;
+      }
+      
+      // Stop camera
+      if (cameraInstanceRef.current) {
+        cameraInstanceRef.current.stop();
+        cameraInstanceRef.current = null;
+      }
+      
+      // Stop media stream
       const stream = videoRef.current?.srcObject as MediaStream;
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
-        videoRef.current!.srcObject = null;
+        if (videoRef.current) {
+          videoRef.current.srcObject = null;
+        }
+      }
+      
+      // Close pose
+      if (poseRef.current) {
+        poseRef.current.close();
+        poseRef.current = null;
       }
     };
-  }, [isCameraOn, location]);
+  }, [isCameraOn, handleResults]);
 
   return (
     <div className="relative w-[1300px] h-[700px] p-9 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">

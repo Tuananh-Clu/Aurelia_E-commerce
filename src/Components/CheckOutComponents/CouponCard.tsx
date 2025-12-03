@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import type { Coupon } from "../../types/type";
 import { Copy, Check, Gift, Percent, Zap, TruckIcon } from "lucide-react";
-import { AdminContext } from "../../config/AdminContext";
+import { AdminContext } from "../../contexts/AdminContext";
 import toast from "react-hot-toast";
 export const CouponCard = ({
   setIsOpen,

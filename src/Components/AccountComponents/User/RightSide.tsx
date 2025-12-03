@@ -1,6 +1,6 @@
 import type { AppointmentCustomer, order, Product } from "../../../types/type";
 import { useContext, useEffect, useState } from "react";
-import { AppointmentContext } from "../../../config/AppointmentContext";
+import { AppointmentContext } from "../../../contexts/AppointmentContext";
 import { Stats } from "./RightSideComponent.tsx/Stats";
 import { RecentOrder } from "./RightSideComponent.tsx/RecentOrder";
 import { HistoryOrder } from "./RightSideComponent.tsx/HistoryOrder";

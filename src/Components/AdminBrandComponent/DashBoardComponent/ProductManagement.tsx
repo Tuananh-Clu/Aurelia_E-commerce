@@ -13,12 +13,12 @@ import {
   ArrowRight,
   File,
 } from "lucide-react";
-import { FilterProductContext } from "../../../config/FIlterProduct";
+import { FilterProductContext } from "../../../contexts/FIlterProduct";
 import ImportExcel from "./ProductManagementComponents/ImportExcel";
 import { AddProduct } from "../../DashBoardShopComponent/ProductListComponents/AddProduct";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { api_Config, UseApiUrl } from "../../../types/api";
+import { api_Config, UseApiUrl } from "../../../services/api";
 import toast from "react-hot-toast";
 export default function ProductManagement() {
   const { dataProduct } = useContext(FilterProductContext);

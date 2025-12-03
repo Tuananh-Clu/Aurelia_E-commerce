@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Edit3 } from "lucide-react";
 import { Save } from "lucide-react";
-import { AdminContext } from "../../../../config/AdminContext";
+import { AdminContext } from "../../../../contexts/AdminContext";
 import { useContext } from "react";
 
 export const EditCoupon = ({ editing, setEditing }: any) => {

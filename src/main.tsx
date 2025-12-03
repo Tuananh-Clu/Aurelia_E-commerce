@@ -3,19 +3,19 @@ import "./index.css";
 import "leaflet/dist/leaflet.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
-import { FilterProvider } from "./config/FIlterProduct.tsx";
-import { AuthProvider } from "./config/Author.tsx";
-import { StoreProvider } from "./config/Store.tsx";
-import { CartProvider } from "./config/CartContext.tsx";
-import { AiPoseMeasureProvider } from "./config/AIPoseMeasure.tsx";
-import { AppointmentProvider } from "./config/AppointmentContext.tsx";
-import { DiaChiProvider } from "./config/DiaChiContext.tsx";
-import { AuthForShopProvider } from "./config/AuthorForShop.tsx";
-import { DashBoardShopProvider } from "./config/DashBoardShopContext.tsx";
-import { NotificationProvider } from "./config/NotifycationContext.tsx";
-import { AuthorForAdminProvider } from "./config/AuthorForAdmin.tsx";
-import { AdminProvider } from "./config/AdminContext.tsx";
-import { CollectionProvider } from "./config/SeasonContext.tsx";
+import { FilterProvider } from "./contexts/FIlterProduct.tsx";
+import { AuthProvider } from "./contexts/Author.tsx";
+import { StoreProvider } from "./contexts/Store.tsx";
+import { CartProvider } from "./contexts/CartContext.tsx";
+import { AiPoseMeasureProvider } from "./contexts/AIPoseMeasure.tsx";
+import { AppointmentProvider } from "./contexts/AppointmentContext.tsx";
+import { DiaChiProvider } from "./contexts/DiaChiContext.tsx";
+import { AuthForShopProvider } from "./contexts/AuthorForShop.tsx";
+import { DashBoardShopProvider } from "./contexts/DashBoardShopContext.tsx";
+import { NotificationProvider } from "./contexts/NotifycationContext.tsx";
+import { AuthorForAdminProvider } from "./contexts/AuthorForAdmin.tsx";
+import { AdminProvider } from "./contexts/AdminContext.tsx";
+import { CollectionProvider } from "./contexts/SeasonContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <>

@@ -1,17 +1,17 @@
-import { Navbar } from "../Components/HomeComponent/Navbar";
-import { Footer } from "../Components/HomeComponent/Footer";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import { motion } from "framer-motion";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { CartContext } from "../config/CartContext";
-import { DiaChiContext } from "../config/DiaChiContext";
-import { PaymentOptions } from "../Components/PaymentOptions";
+import { CartContext } from "../contexts/CartContext";
+import { DiaChiContext } from "../contexts/DiaChiContext";
+import { PaymentOptions } from "../Components/MockPayment.tsx/PaymentOptions";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import type { DiaChi, order } from "../types/type";
 import { TicketCheck } from "lucide-react";
 import { ListCoupon } from "../Components/ListCoupon";
-import { AdminContext } from "../config/AdminContext";
+import { AdminContext } from "../contexts/AdminContext";
 
 export const Checkout = () => {
   const { CartDataAdd, setDataOrder, LayToaDo, phiVanChuyen, LayPhiVanCHuyen } =

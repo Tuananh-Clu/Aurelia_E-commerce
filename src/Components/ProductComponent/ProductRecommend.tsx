@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { FilterProductContext } from "../../config/FIlterProduct";
+import { FilterProductContext } from "../../contexts/FIlterProduct";
 
 export const ProductRecommend = () => {
   const {dataProduct}=useContext(FilterProductContext)

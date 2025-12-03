@@ -14,7 +14,7 @@ import {
   Search,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AdminContext } from "../../../config/AdminContext";
+import { AdminContext } from "../../../contexts/AdminContext";
 import { AddCoupon } from "./CouponComponent/AddCoupon";
 import { EditCoupon } from "./CouponComponent/EditCoupon";
 import { v4 as uuid } from "uuid";

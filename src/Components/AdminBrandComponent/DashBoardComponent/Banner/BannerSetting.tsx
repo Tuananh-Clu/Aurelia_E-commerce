@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import { AdminContext } from "../../../../config/AdminContext";
+import { AdminContext } from "../../../../contexts/AdminContext";
 import { AddBanner } from "./AddBanner";
 import { LayoutPreview } from "./LayoutPreview";
 import { ImagePlus, Edit2, Type, Palette } from "lucide-react";

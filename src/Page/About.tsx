@@ -1,5 +1,5 @@
-import { Navbar } from "../Components/HomeComponent/Navbar";
-import { Footer } from "../Components/HomeComponent/Footer";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import { motion } from "framer-motion";
 
 export const About = () => {

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { Plus, Search,  Edit, Trash2, Eye,  Package, Star, Zap, Shirt,ArrowRight, Filter, Grid, List } from 'lucide-react';
-import { CollectionContext } from '../../../config/SeasonContext';
+import { CollectionContext } from '../../../contexts/SeasonContext';
 import { useNavigate } from 'react-router-dom';
 import AddCollectionForm from './CollectionComponent/AddCollectionForm';
 

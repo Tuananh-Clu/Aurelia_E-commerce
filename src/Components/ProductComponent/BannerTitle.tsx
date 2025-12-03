@@ -1,5 +1,5 @@
 
-import { FilterProductContext } from "../../config/FIlterProduct";
+import { FilterProductContext } from "../../contexts/FIlterProduct";
 import { useContext } from "react";
 export const BannerTitle = () => {
     const {key}=useContext(FilterProductContext)  

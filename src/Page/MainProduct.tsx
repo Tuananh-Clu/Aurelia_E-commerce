@@ -1,18 +1,18 @@
 import { useLocation, useParams } from "react-router-dom";
-import { Navbar } from "../Components/HomeComponent/Navbar";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
 import { Heart } from "lucide-react";
 import { useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductRecommend } from "../Components/ProductComponent/ProductRecommend";
-import { Footer } from "../Components/HomeComponent/Footer";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import dataCollection from "../assets/DataMock/dataSeason.json";
-import { FilterProductContext } from "../config/FIlterProduct";
+import { FilterProductContext } from "../contexts/FIlterProduct";
 import type { Cart, Product } from "../types/type";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { api_Config, UseApiUrl } from "../types/api";
+import { api_Config, UseApiUrl } from "../services/api";
 import { TimKiemTaiStore } from "../Components/TimKiemTaiStore";
-import { CartContext } from "../config/CartContext";
+import { CartContext } from "../contexts/CartContext";
 import { AiSuggestBox } from "../Components/AISuggest";
 
 export const MainProduct = () => {

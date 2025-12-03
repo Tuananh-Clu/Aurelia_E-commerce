@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Footer } from "../Components/HomeComponent/Footer";
-import { Navbar } from "../Components/HomeComponent/Navbar";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
 import { useContext, useEffect } from "react";
-import { CollectionContext } from "../config/SeasonContext";
+import { CollectionContext } from "../contexts/SeasonContext";
 
 
 export const Collection = () => {

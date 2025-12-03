@@ -1,7 +1,7 @@
 import { Search, ToolCase, X } from "lucide-react";
 import { useContext, useState } from "react";
-import { FilterProductContext } from "../../config/FIlterProduct";
-import { DanhMuc } from "../HomeComponent/DanhMucSanPham";
+import { FilterProductContext } from "../../contexts/FIlterProduct";
+import { DanhMuc } from "../HomeLayoutComponent/DanhMucSanPham";
 import { useNavigate } from "react-router-dom";
 
 export const FilterType = () => {

@@ -10,7 +10,7 @@ import {
   Building2,
 } from "lucide-react";
 import { useContext, useState } from "react";
-import { AdminContext } from "../../../config/AdminContext";
+import { AdminContext } from "../../../contexts/AdminContext";
 
 
 

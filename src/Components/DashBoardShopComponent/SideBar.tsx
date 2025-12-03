@@ -9,7 +9,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { PopupSetting } from "./PopupSetting";
-import { NotificationContext } from "../../config/NotifycationContext";
+import { NotificationContext } from "../../contexts/NotifycationContext";
 type SideBars={
   setState:React.Dispatch<React.SetStateAction<string>>
   state:string

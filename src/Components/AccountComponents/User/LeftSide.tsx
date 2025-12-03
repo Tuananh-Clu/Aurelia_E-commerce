@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../../config/Author";
+import { AuthContext } from "../../../contexts/Author";
 import type { Clients, Measure } from "../../../types/type";
 import { motion } from "framer-motion";
 import { LogOut, Pencil, Gift } from "lucide-react";

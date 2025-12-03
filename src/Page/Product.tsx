@@ -1,6 +1,6 @@
 
-import { Footer } from "../Components/HomeComponent/Footer";
-import { Navbar } from "../Components/HomeComponent/Navbar";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
 import { BannerTitle } from "../Components/ProductComponent/BannerTitle";
 import { FilterType } from "../Components/ProductComponent/FilterType";
 import { ListProduct } from "../Components/ProductComponent/ListProduct";

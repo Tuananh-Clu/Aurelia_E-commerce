@@ -9,7 +9,7 @@ import {
   Award,
   Sparkles,
 } from "lucide-react";
-import { DashBoardShopCOntext } from "../../config/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../contexts/DashBoardShopContext";
 
 export default function ListCustomer() {
   const [search, setSearch] = useState("");

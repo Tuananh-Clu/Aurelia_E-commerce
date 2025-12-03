@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Navbar } from "../HomeComponent/Navbar";
+import { Navbar } from "../HomeLayoutComponent/Navbar";
 import { RightSiteMap } from "./RightSiteMap";
 
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { api_Config, UseApiUrl } from "../../types/api";
+import { api_Config, UseApiUrl } from "../../services/api";
 import type { order } from "../../types/type";
 import LeftSite from "./LeftSite";
 

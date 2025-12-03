@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext, useState } from "react";
-import { AuthContext } from "../config/Author";
+import { AuthContext } from "../contexts/Author";
 
 export const FormAuthor = () => {
   const [tab, setTab] = useState<"login" | "register">("login");

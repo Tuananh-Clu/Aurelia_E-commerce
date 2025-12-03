@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 import { useContext } from "react";
-import { AdminContext } from "../../../config/AdminContext";
+import { AdminContext } from "../../../contexts/AdminContext";
 import { Bar } from "react-chartjs-2";
 
 export const OverView = () => {

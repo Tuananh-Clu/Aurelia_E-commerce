@@ -1,6 +1,6 @@
 import { X, CreditCard, Calendar, Lock, User } from "lucide-react";
 import { useContext, useState } from "react";
-import { CartContext } from "../../config/CartContext";
+import { CartContext } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 
 export const CreditCardPayment = ({ onClose }: { onClose: () => void }) => {

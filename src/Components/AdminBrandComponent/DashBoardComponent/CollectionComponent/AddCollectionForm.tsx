@@ -1,7 +1,7 @@
 import { X, XCircleIcon } from "lucide-react";
 import React, { useContext, useState } from "react";
-import { FilterProductContext } from "../../../../config/FIlterProduct";
-import { CollectionContext } from "../../../../config/SeasonContext";
+import { FilterProductContext } from "../../../../contexts/FIlterProduct";
+import { CollectionContext } from "../../../../contexts/SeasonContext";
 import { v4 as uuid } from "uuid";
 export default function AddCollectionForm({
   setState,

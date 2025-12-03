@@ -12,7 +12,7 @@ import {
   Grid,
   List,
 } from "lucide-react";
-import { DashBoardShopCOntext } from "../../config/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../contexts/DashBoardShopContext";
 import { Export } from "./ProductListComponents/Export";
 import { AddProduct } from "./ProductListComponents/AddProduct";
 

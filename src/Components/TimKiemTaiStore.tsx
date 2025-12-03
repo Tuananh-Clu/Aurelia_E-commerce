@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import React, { useContext, type SetStateAction, useState } from "react";
 import type { Product } from "../types/type";
-import { StoreContext } from "../config/Store";
+import { StoreContext } from "../contexts/Store";
 import { useNavigate } from "react-router-dom";
 
 type ProductFindProps = {

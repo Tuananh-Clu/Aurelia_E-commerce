@@ -2,7 +2,7 @@ import React, {  useContext, useEffect, useState } from "react";
 import { Plus, Trash2, X } from "lucide-react";
 import type { Product } from "../../../types/type";
 import { v4 as uuid } from "uuid";
-import { DashBoardShopCOntext } from "../../../config/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../../contexts/DashBoardShopContext";
 
 
 export const AddProduct = ({

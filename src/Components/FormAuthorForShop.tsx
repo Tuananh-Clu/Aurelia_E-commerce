@@ -1,8 +1,8 @@
 import { User, Lock } from "lucide-react";
-import { Navbar } from "./HomeComponent/Navbar";
-import { Footer } from "./HomeComponent/Footer";
+import { Navbar } from "./HomeLayoutComponent/Navbar";
+import { Footer } from "./HomeLayoutComponent/Footer";
 import { useContext, useEffect, useState } from "react";
-import { AuthForShopContext } from "../config/AuthorForShop";
+import { AuthForShopContext } from "../contexts/AuthorForShop";
 import { useNavigate } from "react-router-dom";
 
 export default function FormAuthorForShop() {

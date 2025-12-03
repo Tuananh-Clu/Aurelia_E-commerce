@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { AuthContext } from "../../../config/Author";
+import { AuthContext } from "../../../contexts/Author";
 
 const InputField = ({
   icon: Icon,

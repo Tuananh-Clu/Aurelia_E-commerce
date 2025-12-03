@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Mail, Lock } from "lucide-react";
-import { CartContext } from "../../config/CartContext";
+import { CartContext } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 
 export const MockPayPal = ({ onClose }: { onClose: () => void }) => {

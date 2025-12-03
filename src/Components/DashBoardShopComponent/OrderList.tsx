@@ -10,7 +10,7 @@ import {
   Calendar,
   User,
 } from "lucide-react";
-import { DashBoardShopCOntext } from "../../config/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../contexts/DashBoardShopContext";
 import { PopUpDetail } from "./OrderListMiniComponent/PopUpDetail";
 
 export default function OrderListElegant() {

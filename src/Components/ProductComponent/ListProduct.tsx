@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FilterProductContext } from "../../config/FIlterProduct";
+import { FilterProductContext } from "../../contexts/FIlterProduct";
 import { motion } from "framer-motion";
 import {  useNavigate } from "react-router-dom";
 

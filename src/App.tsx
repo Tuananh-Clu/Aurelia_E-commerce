@@ -1,16 +1,38 @@
 import { Route, Routes, useLocation} from "react-router-dom";
 import { useEffect, useRef, lazy, Suspense } from "react";
-import { MainProduct } from "./Page/MainProduct";
 import { Toaster } from "react-hot-toast";
-import { Checkout } from "./Page/CheckOut";
-import { MockPayMent} from "./Page/MockPayMent";
-import { BodySize } from "./Page/BodySize";
-import FormBooking from "./Components/BookingAppointment/FormBooking";
-import { MainPage } from "./Components/TrackingOrder/MainPage";
-import FormAuthorForShop from "./Components/FormAuthorForShop";
-import DashboardShop from "./Page/DashBoardShop";
-import { AdminSiteLog } from "./Components/AdminBrandComponent/LogIn/AdminSiteLog";
-import { AdminDashboard } from "./Page/DashBoardAdmin";
+
+// Lazy load all routes for better code splitting
+const MainProduct = lazy(() =>
+  import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
+);
+const Checkout = lazy(() =>
+  import("./Page/CheckOut").then((m) => ({ default: m.Checkout }))
+);
+const MockPayMent = lazy(() =>
+  import("./Page/MockPayMent").then((m) => ({ default: m.MockPayMent }))
+);
+const BodySize = lazy(() =>
+  import("./Page/BodySize").then((m) => ({ default: m.BodySize }))
+);
+const FormBooking = lazy(() =>
+  import("./Components/BookingAppointment/FormBooking").then((m) => ({ default: m.default }))
+);
+const MainPage = lazy(() =>
+  import("./Components/TrackingOrder/MainPage").then((m) => ({ default: m.MainPage }))
+);
+const FormAuthorForShop = lazy(() =>
+  import("./Components/FormAuthorForShop").then((m) => ({ default: m.default }))
+);
+const DashboardShop = lazy(() =>
+  import("./Page/DashboardAccount/DashBoardShop").then((m) => ({ default: m.default }))
+);
+const AdminSiteLog = lazy(() =>
+  import("./Components/AdminBrandComponent/LogIn/AdminSiteLog").then((m) => ({ default: m.AdminSiteLog }))
+);
+const AdminDashboard = lazy(() =>
+  import("./Page/DashboardAccount/DashBoardAdmin").then((m) => ({ default: m.AdminDashboard }))
+);
 
 
 const Home = lazy(() =>
@@ -32,7 +54,7 @@ const Cart = lazy(() =>
   import("./Page/Cart").then((m) => ({ default: m.Cart }))
 );
 const Account = lazy(() =>
-  import("./Page/Account").then((m) => ({ default: m.Account }))
+  import("./Page/DashboardAccount/DashBoardUser").then((m) => ({ default: m.Account }))
 );
 const About = lazy(() =>
   import("./Page/About").then((m) => ({ default: m.About }))

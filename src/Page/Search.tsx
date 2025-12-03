@@ -1,10 +1,10 @@
-import { Navbar } from "../Components/HomeComponent/Navbar";
-import { Footer } from "../Components/HomeComponent/Footer";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import type { ChangeEvent } from "react";
 import { Search as SearchIcon } from "lucide-react";
-import { FilterProductContext } from "../config/FIlterProduct";
+import { FilterProductContext } from "../contexts/FIlterProduct";
 import { useNavigate } from "react-router-dom";
 
 export const Search = () => {

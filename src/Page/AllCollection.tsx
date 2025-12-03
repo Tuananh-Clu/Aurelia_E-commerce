@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
-import { Navbar } from "../Components/HomeComponent/Navbar"
-import { CollectionContext } from "../config/SeasonContext";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar"
+import { CollectionContext } from "../contexts/SeasonContext";
 import { useContext } from "react";
 
 export const AllCollection = () => {

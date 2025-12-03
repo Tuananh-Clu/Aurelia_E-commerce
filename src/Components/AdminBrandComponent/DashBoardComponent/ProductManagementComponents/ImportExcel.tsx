@@ -10,7 +10,7 @@ import {
   XCircle,
 } from "lucide-react";
 import type { Product } from "../../../../types/type";
-import { api_Config, UseApiUrl } from "../../../../types/api";
+import { api_Config, UseApiUrl } from "../../../../services/api";
 import toast from "react-hot-toast";
 
 

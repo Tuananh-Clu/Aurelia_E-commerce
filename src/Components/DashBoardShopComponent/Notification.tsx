@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { NotificationContext } from "../../config/NotifycationContext";
-import { DashBoardShopCOntext } from "../../config/DashBoardShopContext";
+import { NotificationContext } from "../../contexts/NotifycationContext";
+import { DashBoardShopCOntext } from "../../contexts/DashBoardShopContext";
 import { CheckCircle, Bell, Calendar, Package } from "lucide-react";
 
 export const Notification = () => {

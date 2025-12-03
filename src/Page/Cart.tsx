@@ -1,9 +1,9 @@
-import { Navbar } from "../Components/HomeComponent/Navbar";
-import { Footer } from "../Components/HomeComponent/Footer";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import { motion } from "framer-motion";
 import { useMemo, useContext } from "react";
 import { Trash2 } from "lucide-react";
-import { CartContext } from "../config/CartContext";
+import { CartContext } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 

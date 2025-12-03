@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { LockKeyhole, ShieldCheck } from "lucide-react";
 import { useContext, useState } from "react";
-import { AuthorForAdminContext } from "../../../config/AuthorForAdmin";
+import { AuthorForAdminContext } from "../../../contexts/AuthorForAdmin";
 import { useNavigate } from "react-router-dom";
 
 
