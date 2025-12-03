@@ -8,7 +8,6 @@ type MainCamera = {
   setIsCameraOn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// Memoize calculation functions outside component to avoid recreation
 const calculate3DDistance = (p1: { x: number; y: number; z: number }, p2: { x: number; y: number; z: number }) => {
   const dx = p1.x - p2.x;
   const dy = p1.y - p2.y;
@@ -44,8 +43,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   const countdownIntervalRef = useRef<number | null>(null);
   const poseRef = useRef<Pose | null>(null);
   const cameraInstanceRef = useRef<Camera | null>(null);
-
-  // Memoize drawLandmarks to avoid recreation
   const drawLandmarks = useCallback((
     ctx: CanvasRenderingContext2D,
     landmarks: any[],
@@ -65,7 +62,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
     });
   }, []);
 
-  // Memoize handleResults outside useEffect to avoid recreation
   const handleResults = useCallback((results: Results) => {
     const canvas = canvasRef.current;
     const video = videoRef.current;

@@ -46,7 +46,7 @@ export const DashBoard = () => {
               setState={setOpeneditProfile}
             />
           </div>
-          <div className="  ">
+          <div className=" w-full md:w-4/5 ">
             <RightSide
               dataFavouriteItemUser={dataFavouriteItemUser}
               userRole={user?.tier}
