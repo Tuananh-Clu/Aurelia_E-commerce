@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext,  useState, type ReactNode, type SetStateAction } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../Components/Toaster";
  
 
 
@@ -32,10 +33,11 @@ export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("shop",JSON.stringify(response.data.dataStore))
         setIsignned(true);
         localStorage.setItem("tokenShop",response.data.token);
+        Toaster.success("Đăng nhập thành công");
       }
       
     } catch (error) {
-      
+      Toaster.error("Đăng nhập thất bại");
 
     }
   };

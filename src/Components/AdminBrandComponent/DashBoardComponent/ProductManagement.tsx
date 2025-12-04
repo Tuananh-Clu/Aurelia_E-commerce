@@ -19,7 +19,7 @@ import { AddProduct } from "../../DashBoardShopComponent/ProductListComponents/A
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../../../services/api";
-import toast from "react-hot-toast";
+import { Toaster } from "../../Toaster";
 export default function ProductManagement() {
   const { dataProduct } = useContext(FilterProductContext);
   const navigate = useNavigate();
@@ -38,10 +38,10 @@ export default function ProductManagement() {
     try {
       await axios.delete(`${UseApiUrl(api_Config.Product.DeleteProduct)}?productId=${productId}`
       );
-      
+      Toaster.success("Đã xóa sản phẩm thành công!");
     } catch (error) {
       console.error("Error deleting product:", error);
-      toast.error("Failed to delete product");
+      Toaster.error("Không thể xóa sản phẩm. Vui lòng thử lại.");
     }
   };
   return (

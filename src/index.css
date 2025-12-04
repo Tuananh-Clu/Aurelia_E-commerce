@@ -9,44 +9,56 @@
   font-style: normal;
 }
 
-/* Design tokens */
+/* Design tokens - Light & Minimal */
 :root{
-  --bg: #0b0d10;
-  --surface: #0f1318;
-  --muted-surface: #12171e;
-  --card: #0f1115;
-  --text: #e7edf3;
-  --text-muted: #a6b0bb;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --muted-surface: #f5f5f5;
+  --card: #ffffff;
+  --text: #1a1a1a;
+  --text-muted: #6b7280;
   --primary: #111827;
   --primary-contrast: #ffffff;
   --accent: #6366f1; /* indigo */
-  --accent-2: #22d3ee; /* cyan */
-  --ring: rgba(99,102,241,0.35);
-  --shadow: 0 10px 25px rgba(2,6,23,0.35);
+  --accent-2: #8b5cf6; /* purple */
+  --ring: rgba(99,102,241,0.15);
+  --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* Utilities that complement Tailwind */
+/* Utilities that complement Tailwind - Light Theme */
 .elevated{
   background: var(--card);
   box-shadow: var(--shadow);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 .glass{
-  background: rgba(15, 17, 21, 0.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .ring-accent{
-  box-shadow: 0 0 0 1px var(--ring), 0 8px 30px rgba(17,24,39,0.25);
+  box-shadow: 0 0 0 1px var(--ring), 0 2px 8px rgba(0,0,0,0.08);
 }
 .btn-primary{
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: var(--primary-contrast);
+  transition: all 0.2s ease;
 }
 .btn-primary:hover{
   filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 .text-muted{ color: var(--text-muted); }
 .text-body{ color: var(--text); }
+
+/* Light theme base styles */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
 /* Smooth scrolling and base */
 

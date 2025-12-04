@@ -5,7 +5,7 @@ import { useMemo, useContext } from "react";
 import { Trash2 } from "lucide-react";
 import { CartContext } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 
 export const Cart = () => {
   const { CartDataAdd, setCartDataAdd } = useContext(CartContext);
@@ -43,7 +43,7 @@ export const Cart = () => {
   };
  const checkOut = () => {
   if (CartDataAdd.length === 0) {
-    toast.error("Giỏ hàng của bạn đang trống");
+    Toaster.error("Giỏ hàng của bạn đang trống!");
     return;
   } else {
     navigate("/payment");

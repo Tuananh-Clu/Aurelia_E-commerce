@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 import type { Appointment, order, Product } from "../types/type";
 export type DashBoardShopCOntexts = {
   dataLichHen: Appointment[] | undefined;
@@ -61,7 +61,7 @@ export const DashBoardShopProvider = ({
       );
       setState(response.data);
     } catch {
-      toast.error("");
+      Toaster.error("Không thể tải dữ liệu dashboard. Vui lòng thử lại.");
     }
   };
     const taskFetch = async () => {
@@ -91,8 +91,9 @@ export const DashBoardShopProvider = ({
       );
       
       await taskFetch();
+      Toaster.success(`Đã cập nhật trạng thái đơn hàng thành "${status}"!`);
     } catch {
-      
+      Toaster.error("Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại.");
     }
   };
   const taskFetchSanPham = async () => {
@@ -118,8 +119,9 @@ export const DashBoardShopProvider = ({
       );
       
       taskFetchSanPham();
+      Toaster.success("Đã thêm sản phẩm thành công!");
     } catch {
-      
+      Toaster.error("Không thể thêm sản phẩm. Vui lòng thử lại.");
     }
   };
     const editProduct=async(datas:Product)=>{
@@ -133,8 +135,9 @@ export const DashBoardShopProvider = ({
       );
       
       taskFetchSanPham();
+      Toaster.success("Đã cập nhật sản phẩm thành công!");
     } catch {
-      
+      Toaster.error("Không thể cập nhật sản phẩm. Vui lòng thử lại.");
     }
   };
   const getAllCustomer = async () => {

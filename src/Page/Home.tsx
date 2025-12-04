@@ -32,7 +32,13 @@ export const Home = () => {
   };
 
   return (
-    <div className="min-h-screen w-full relative">
+    <motion.div
+      initial={{ opacity: 0, left: "24px", bottom: "-24px" }}
+      animate={{ opacity: 1, left: "0px", bottom: "0px" }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen w-full relative"
+    >
       {isScroll ? (
         <div
           onClick={handleClick}
@@ -52,7 +58,7 @@ export const Home = () => {
       />
       <Navbar />
       <HeroBanner />
-            <motion.section
+      <motion.section
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -102,6 +108,6 @@ export const Home = () => {
       ></motion.section>
 
       <Footer />
-    </div>
+    </motion.div>
   );
 };

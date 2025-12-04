@@ -25,12 +25,12 @@ export const DashBoard = () => {
     donhangMoiNhat,
   } = useContext(FilterProductContext);
   return (
-    <>
+    <div className="min-h-screen bg-gray-100 relative ">
       <div>
         <Navbar />
       </div>
       {openeditProfile && (
-        <div className="w-full fixed inset-0 h-screen py-20 z-99 bg-black/90">
+        <div className="w-full fixed inset-0 h-screen py-20 z-99 bg-black/90 ">
           <EditProfile setState={setOpeneditProfile} />
         </div>
       )}
@@ -58,6 +58,6 @@ export const DashBoard = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

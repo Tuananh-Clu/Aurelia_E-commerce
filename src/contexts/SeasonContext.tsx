@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext,  useEffect,  useState } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 
 type CollectionContextType = {
     seasonCollections: any;
@@ -30,29 +30,35 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
       try{
         await axios.post(UseApiUrl(api_Config.Collection.AddCollection), newCollection,{headers:{'Content-Type':'application/json'}});
         setUpdate(!update);
+        Toaster.success("Đã thêm collection thành công!");
       }
       catch(error){
         console.error('Error adding new collection:', error);
+        Toaster.error("Không thể thêm collection. Vui lòng thử lại.");
       }
     };
 
     const handleUpdateCollection = async(updatedCollection: any) => {
       try{
-       const reponse=await axios.put(UseApiUrl(api_Config.Collection.UpdateCollection), updatedCollection,{headers:{'Content-Type':'application/json'}});
+       await axios.put(UseApiUrl(api_Config.Collection.UpdateCollection), updatedCollection,{headers:{'Content-Type':'application/json'}});
         setUpdate(!update);
+        Toaster.success("Đã cập nhật collection thành công!");
       }
       catch(error){
         console.error('Error updating collection:', error);
+        Toaster.error("Không thể cập nhật collection. Vui lòng thử lại.");
       }
     };
 
     const handleDeleteCollection = async(id: string) => {
       try{
-        const response = await axios.delete(`${UseApiUrl(api_Config.Collection.DeleteCollection)}?collectionId=${id}`);
+       await axios.delete(`${UseApiUrl(api_Config.Collection.DeleteCollection)}?collectionId=${id}`);
         setUpdate(!update);
+        Toaster.success("Đã xóa collection thành công!");
       }
       catch(error){
         console.error('Error deleting collection:', error);
+        Toaster.error("Không thể xóa collection. Vui lòng thử lại.");
       }
     };
   useEffect(() => {

@@ -6,7 +6,8 @@ import { CartContext } from "../contexts/CartContext";
 import { DiaChiContext } from "../contexts/DiaChiContext";
 import { PaymentOptions } from "../Components/MockPayment.tsx/PaymentOptions";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
+import { LoadingOverlay } from "../Components/LoadingOverlay";
 import { v4 as uuidv4 } from "uuid";
 import type { DiaChi, order } from "../types/type";
 import { TicketCheck } from "lucide-react";
@@ -34,7 +35,8 @@ export const Checkout = () => {
     payment: "cod",
   });
   const [saveAddressCheck, setSaveAddressCheck] = useState(false);
-const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
   // Chọn địa chỉ đã lưu
   const handleSelectAddress = (addr: any) => {
     setFormData({
@@ -114,8 +116,12 @@ const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!CartDataAdd.length) return toast.error("Giỏ hàng của bạn đang trống!");
+    if (!CartDataAdd.length) {
+      Toaster.error("Giỏ hàng của bạn đang trống!");
+      return;
+    }
 
+    setIsSubmitting(true);
     try {
       if (saveAddressCheck) {
         await SaveDiaChi({
@@ -124,18 +130,23 @@ const [toaDo, setToaDo] = useState<{ lat?: number; lon?: number }>();
           diaChi: formData.address,
           email: formData.email,
         });
+        Toaster.success("Đã lưu địa chỉ thành công!");
       }
+      await new Promise(resolve => setTimeout(resolve, 500)); // Simulate processing
       navigate(`/payment/${formData.payment}`);
     } catch {
-      toast.error("Lưu địa chỉ thất bại!");
+      Toaster.error("Lưu địa chỉ thất bại! Vui lòng thử lại.");
+    } finally {
+      setIsSubmitting(false);
+      LayPhiVanCHuyen(false);
     }
-    LayPhiVanCHuyen(false);
   };
 
   const handleDelete = (addr: DiaChi) => XoaDiaChi(addr);
 
   return (
     <>
+      <LoadingOverlay isLoading={isSubmitting} message="Đang xử lý đơn hàng..." />
       <Navbar />
       <main className="min-h-[100vh] pt-28 px-6 md:px-20 bg-white">
         <ListCoupon isOpen={isOpen} setIsOpen={setIsOpen}  dataOrder={CartDataAdd} order={order}/>

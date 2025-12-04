@@ -3,7 +3,6 @@ import logo from "../../assets/aurelia_logo_svg.svg";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
-import { Cart } from "../../Page/Cart";
 import { ShoppingCartIcon } from "lucide-react";
 export const Navbar = () => {
   const navigate = useNavigate();

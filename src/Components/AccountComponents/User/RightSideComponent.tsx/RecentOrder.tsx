@@ -122,7 +122,7 @@ const OrderCard = ({ order, calcOrderTotal, formatDate, huyDonHang, navigate }:a
             </button>
           )}
           <button
-            onClick={() => navigate(`/Order/${order.orderId}`)}
+            onClick={() => navigate(`/tracking/${order.orderId}`)}
             className="px-3 py-1.5 rounded-lg border border-indigo-500 text-indigo-600 hover:bg-indigo-50 transition text-sm font-medium"
           >
             Chi tiết

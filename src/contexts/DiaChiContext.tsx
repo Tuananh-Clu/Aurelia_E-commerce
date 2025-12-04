@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 import type { DiaChi } from "../types/type";
 
 interface DiaChiContextType {
@@ -31,7 +31,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
       });
       setSaveAddress(response.data);
     } catch (error) {
-      toast.error("Lỗi khi lấy địa chỉ");
+      Toaster.error("Không thể lấy danh sách địa chỉ. Vui lòng thử lại.");
       console.error(error);
     }
   };
@@ -56,8 +56,9 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
       );
       
       fetchDiaChi(); // reload danh sách
+      Toaster.success("Đã lưu địa chỉ thành công!");
     } catch (error) {
-      toast.error("Lỗi khi lưu địa chỉ");
+      Toaster.error("Không thể lưu địa chỉ. Vui lòng thử lại.");
       console.error(error);
     }
   };
@@ -74,8 +75,9 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
       });
       
       fetchDiaChi();
+      Toaster.success("Đã xóa địa chỉ thành công!");
     } catch (error) {
-      toast.error("Lỗi khi xóa địa chỉ");
+      Toaster.error("Không thể xóa địa chỉ. Vui lòng thử lại.");
       console.error(error);
     }
   };

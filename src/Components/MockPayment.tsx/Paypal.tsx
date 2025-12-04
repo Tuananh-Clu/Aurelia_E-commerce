@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { Mail, Lock } from "lucide-react";
 import { CartContext } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
+import { LoadingOverlay } from "../LoadingOverlay";
+
 
 export const MockPayPal = ({ onClose }: { onClose: () => void }) => {
   const [loading, setLoading] = useState(false);
@@ -16,9 +18,10 @@ export const MockPayPal = ({ onClose }: { onClose: () => void }) => {
     }, 1500);
     setCartDataAdd([])
   };
-
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+    <>
+      <LoadingOverlay isLoading={loading} message="Đang xử lý thanh toán..." />
+      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
         {/* Header */}
         <div className="flex justify-between items-center p-4 border-b bg-gray-50">
@@ -78,7 +81,7 @@ export const MockPayPal = ({ onClose }: { onClose: () => void }) => {
           <button
             onClick={handlePay}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 bg-[#0070BA] hover:bg-[#005EA6] disabled:bg-blue-300 text-white py-3 rounded-full font-semibold text-base shadow-md transition-colors"
+            className="w-full flex items-center justify-center gap-2 bg-[#0070BA] hover:bg-[#005EA6] disabled:bg-blue-300 disabled:cursor-not-allowed text-white py-3 rounded-full font-semibold text-base shadow-md transition-all transform hover:scale-[1.02] active:scale-[0.98]"
           >
             {loading ? (
               <span className="animate-pulse">Đang xử lý...</span>
@@ -96,5 +99,6 @@ export const MockPayPal = ({ onClose }: { onClose: () => void }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };

@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -15,63 +15,59 @@ export type RightProps = {
   data: any;
 };
 
+// ICONS -----------------------------------------------------
 const shopIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/25/25694.png",
   iconSize: [36, 36],
   iconAnchor: [18, 36],
-  popupAnchor: [0, -36],
+});
+
+const shipperIcon = new L.Icon({
+  iconUrl: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png",
+  iconSize: [36, 36],
+  iconAnchor: [18, 36],
 });
 
 const customerIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
   iconSize: [36, 36],
   iconAnchor: [18, 36],
-  popupAnchor: [0, -36],
 });
 
+// Fit map to route -------------------------------------------
 const FitMap: React.FC<{ route: [number, number][] }> = ({ route }) => {
   const map = useMap();
   useEffect(() => {
-    if (route.length > 0) {
-      map.fitBounds(route);
-    }
-  }, [route, map]);
+    if (route.length > 0) map.fitBounds(route);
+  }, [route]);
   return null;
 };
-const shipperIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png",
-  iconSize: [36, 36],
-  iconAnchor: [18, 36],
-  popupAnchor: [0, -36],
-});
-let indexs = 0;
-const stateMentStatus = (status: string) => {
-  switch (status) {
-    case "Chờ Xác Nhận":
-      return (indexs = 0);
-    case "Xác Nhận":
-      return (indexs = 1);
-    case "Đóng Gói":
-      return (indexs = 2);
-    case "Đang giao":
-      return (indexs = 3);
-    case "Đã Giao":
-      return (indexs = 4);
-    default:
-      return (indexs = 0);
-  }
-};
 
-const shipperPosition: [number, number] = [10.762622, 106.660172];
+// Main Component ---------------------------------------------
 export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
   const apiKey = "pk.fd3f99a25f3d03893a6936b3b255288c";
   const [route, setRoute] = useState<[number, number][]>([]);
+  const status = data?.data?.status;
 
-  const shop: [number, number] | null = data ? [data.lat, data.ion] : null;
-  const customer: [number, number] | null = data?.data
-    ? [data.data.lat, data.data.ion]
+  // Convert status → index
+  const statusIndex = useMemo(() => {
+    const table: Record<string, number> = {
+      "Chờ Xác Nhận": 0,
+      "Xác Nhận": 1,
+      "Đóng Gói": 2,
+      "Đang giao": 3,
+      "Đã Giao": 4,
+    };
+    return table[status] ?? 0;
+  }, [status]);
+
+  const shop = data ? [data.lat, data.ion] as [number, number] : null;
+  const customer = data?.data 
+    ? [data.data.lat, data.data.ion] as [number, number] 
     : null;
-  console.log(data);
+  const shipperPosition: [number, number] = [10.762622, 106.660172];
+
+  // Fetch route -------------------------------------------------
   useEffect(() => {
     if (!shop || !customer) return;
 
@@ -82,118 +78,89 @@ export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
           `https://us1.locationiq.com/v1/directions/driving/${coords}?key=${apiKey}&geometries=geojson`
         );
         const json = await res.json();
-        if (json?.routes?.[0]?.geometry?.coordinates) {
-          const routeCoords = json.routes[0].geometry.coordinates.map(
-            ([lon, lat]: [number, number]) => [lat, lon]
-          );
-          setRoute(routeCoords);
-        }
+
+        const geo = json.routes?.[0]?.geometry?.coordinates ?? [];
+        setRoute(geo.map(([lon, lat]: [number, number]) => [lat, lon]));
       } catch (err) {
-        console.error("Error fetching route:", err);
+        console.error(err);
       }
     };
 
     fetchRoute();
   }, [shop, customer]);
 
-  const center: [number, number] = shop || [0, 0];
-  useEffect(() => {
-    stateMentStatus(data?.data.status);
-  }, [data?.data.status]);
+  const icons = [<Clock1 />, <CheckCircle />, <Package />, <Truck />, <Home />];
+
   return (
-    <div className="relative w-full ">
-      <div className="">
-        <MapContainer
-          center={center}
-          zoom={14}
-          style={{
-            height: "90vh",
-            width: "100%",
-            borderRadius: "16px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-          }}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <div className="relative w-full">
+      {/* MAP AREA */}
+      <MapContainer
+        center={shop ?? [0, 0]}
+        zoom={14}
+        style={{
+          height: "90vh",
+          width: "100%",
+          borderRadius: "16px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+        }}
+      >
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-          {shop && (
-            <Marker position={shop} icon={shopIcon}>
-              <Popup>
-                <div style={{ fontSize: "14px", fontWeight: "bold" }}>
-                  🏬 {data.shopName}
-                </div>
-              </Popup>
-            </Marker>
-          )}
-          {shipperPosition && (
-            <Marker position={shipperPosition} icon={shipperIcon}>
-              <Popup>
-                <div style={{ fontSize: "14px", fontWeight: "bold" }}>
-                  🚚 {data?.data?.name}
-                </div>
-              </Popup>
-            </Marker>
-          )}
-          {customer && (
-            <Marker position={customer} icon={customerIcon}>
-              <Popup>
-                <div style={{ fontSize: "14px", fontWeight: "bold" }}>
-                  👤 {data.data.name}
-                </div>
-              </Popup>
-            </Marker>
-          )}
+        {shop && <Marker position={shop} icon={shopIcon} />}
+        {customer && <Marker position={customer} icon={customerIcon} />}
+        {shipperPosition && <Marker position={shipperPosition} icon={shipperIcon} />}
 
-          {route.length > 0 && (
-            <>
-              <Polyline
-                positions={route}
-                color="#4CAF50"
-                weight={5}
-                opacity={0.8}
-              />
-              <FitMap route={route} />
-            </>
-          )}
-        </MapContainer>
-      </div>
-      <div className="absolute top-4 right-4 bg-gray-700/70 text-white rounded-lg p-4 w-56 flex flex-col items-center  z-[1000] shadow-lg">
-        <h2 className="font-semibold mb-2">Trạng thái đơn hàng</h2>
-        <div className="flex flex-col  items-center">
-          {Array(5)
-            .fill(0)
-            .map((_, index) => (
-              <div key={index} className="flex flex-col items-center">
-               <div
-                key={index}
-                className={`flex items-center justify-center rounded-full transition-all duration-300 shadow-md cursor-pointer ${
-                  indexs === index
+        {route.length > 0 && (
+          <>
+            <Polyline positions={route} color="#4CAF50" weight={5} opacity={0.8} />
+            <FitMap route={route} />
+          </>
+        )}
+      </MapContainer>
+
+      {/* TRACKING STATUS CARD */}
+      <div className="absolute top-4 right-4 bg-gray-800/80 text-white rounded-2xl p-4 w-60 z-[999] shadow-xl backdrop-blur">
+        <h2 className="text-center font-semibold mb-2">Trạng thái đơn hàng</h2>
+
+        <div className="flex flex-col items-center py-2">
+          {icons.map((icon, index) => (
+            <div key={index} className="flex flex-col items-center">
+              {/* Status Icon */}
+              <div
+                className={`flex items-center justify-center rounded-full transition-all duration-300 
+                ${
+                  statusIndex === index
                     ? "bg-gradient-to-r from-green-400 to-green-600 w-16 h-16 scale-110 shadow-green-500/40"
-                    : "bg-gray-700 hover:bg-gray-600 w-10 h-10 opacity-80"
+                    : "bg-gray-700 w-11 h-11 opacity-70"
                 }`}
               >
-                {index === 0 && <span><Clock1/></span>}
-                {index === 1 && <span><CheckCircle/></span>}
-                {index === 2 && <span><Package/></span>}
-                {index === 3 && <span><Truck/></span>}
-                {index === 4 && <span><Home/></span>}
-                
+                {icon}
               </div>
-              {index < 4 && (
+
+              {/* Line between icons */}
+              {index < icons.length - 1 && (
                 <div
-                  className={`w-1 h-[70px] ${
-                    indexs > index
+                  className={`w-1 h-[70px] transition-all duration-500 ${
+                    statusIndex > index
                       ? "bg-gradient-to-b from-green-400 to-green-600"
-                      : "bg-white opacity-60"
-                  } transition-all duration-300`}
+                      : "bg-white/40"
+                  }`}
                 ></div>
               )}
-              </div> 
-            ))}
+            </div>
+          ))}
         </div>
 
-        <div>{data?.data.status}</div>
-        <h1 className=" text-xs text-center">Được Cập Nhật Lần Cuối { new Date(data?.data.tracking.updateTime).toLocaleDateString()}</h1>
-    </div>
+        {/* Text status */}
+        <div className="text-center mt-2 text-sm opacity-90">
+          {status}
+        </div>
+
+        <div className="text-xs text-center opacity-70 mt-1">
+          Cập nhật lần cuối:{" "}
+          {new Date(data?.data?.tracking?.updateTime).toLocaleDateString()}
+        </div>
+      </div>
     </div>
   );
-}
+};

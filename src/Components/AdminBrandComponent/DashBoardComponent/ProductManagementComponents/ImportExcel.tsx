@@ -11,7 +11,8 @@ import {
 } from "lucide-react";
 import type { Product } from "../../../../types/type";
 import { api_Config, UseApiUrl } from "../../../../services/api";
-import toast from "react-hot-toast";
+import { Toaster } from "../../../Toaster";
+import { LoadingOverlay } from "../../../LoadingOverlay";
 
 
 
@@ -60,22 +61,31 @@ const ImportExcel = ({setOpenImportModal}:{setOpenImportModal:React.Dispatch<Rea
     }
   };
   const handleFileUpload = async () => {
-    if (!file) return alert("Vui lòng chọn tệp Excel!");
+    if (!file) {
+      Toaster.error("Vui lòng chọn tệp Excel!");
+      return;
+    }
 
     setIsLoading(true);
     try {
       await axios.post(UseApiUrl(api_Config.Product.PostProduct), datas, { headers: { 'Content-Type': 'application/json' } });
       setSuccess(true);
+      Toaster.success("Import sản phẩm từ Excel thành công!");
+      setTimeout(() => {
+        setOpenImportModal(false);
+      }, 2000);
     } catch (error) {
       console.error("Lỗi import:", error);
-      toast.error("Import thất bại, kiểm tra lại file Excel!");
+      Toaster.error("Import thất bại! Vui lòng kiểm tra lại file Excel.");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="relative p-8 rounded-2xl shadow-xl bg-gradient-to-br from-blue-50/60 to-purple-100/40 backdrop-blur-lg border border-white/30 w-full max-w-4xl mx-auto mt-10">
+    <>
+      <LoadingOverlay isLoading={isLoading} message="Đang import sản phẩm..." />
+      <div className="relative p-8 rounded-2xl shadow-xl bg-gradient-to-br from-blue-50/60 to-purple-100/40 backdrop-blur-lg border border-white/30 w-full max-w-4xl mx-auto mt-10">
         <XCircle className="absolute top-4 right-4 w-6 h-6 text-gray-400 cursor-pointer hover:text-gray-600 transition-colors" onClick={() => setOpenImportModal(false)} />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-blue-300/20 via-purple-300/20 to-pink-300/20 blur-2xl rounded-3xl"></div>
 
@@ -191,7 +201,8 @@ const ImportExcel = ({setOpenImportModal}:{setOpenImportModal:React.Dispatch<Rea
           Import thành công!
         </div>
       )}
-    </div>
+      </div>
+    </>
   );
 };
 

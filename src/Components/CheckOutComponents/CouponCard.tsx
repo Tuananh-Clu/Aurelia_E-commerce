@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import type { Coupon } from "../../types/type";
-import { Copy, Check, Gift, Percent, Zap, TruckIcon } from "lucide-react";
+import { Copy, Check, Percent, Zap, TruckIcon } from "lucide-react";
 import { AdminContext } from "../../contexts/AdminContext";
-import toast from "react-hot-toast";
+import { Toaster } from "../Toaster";
+
 export const CouponCard = ({
-  setIsOpen,
   selectvoucher,
   setSelectvoucher,
   type,
@@ -72,7 +72,7 @@ export const CouponCard = ({
       return;
     }
     setSelectvoucher((prev) => [...(prev || []), coupon]);
-    toast.success("Áp dụng mã giảm giá thành công");
+    Toaster.success("Áp dụng mã giảm giá thành công");
   };
   const removeAppliedCoupon = (couponId: string) => {
     setSelectvoucher((prev) =>

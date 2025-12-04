@@ -3,7 +3,7 @@ import type { order, Product } from "../types/type";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
 import { useLocation } from "react-router-dom";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 
 type FilterProductContextType = {
   key: string;
@@ -46,14 +46,14 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const [DonHang, setDonHang] = useState([]);
   const [donhangMoiNhat, setDonhangMoiNhat] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [token] = useState<string | null>(localStorage.getItem("token"));
   const [huyDonHangs, setHuyDonHangs] = useState<boolean>(false);
   const location = useLocation();
 
 
  const huyDonHang=async(orderId:string)=>{
     try {
-      const response=await axios.post(`${UseApiUrl(api_Config.User.HuyDon)}?orderId=${orderId}`,{},
+      await axios.post(`${UseApiUrl(api_Config.User.HuyDon)}?orderId=${orderId}`,{},
         {
           headers: {  
             Authorization: `Bearer ${token}`,
@@ -62,9 +62,10 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
         }
       );
       setHuyDonHangs(!huyDonHangs);
+      Toaster.success("Đã hủy đơn hàng thành công!");
     } catch (error) {
       console.error(error);
-      toast.error("Hủy đơn hàng không thành công!");
+      Toaster.error("Hủy đơn hàng không thành công! Vui lòng thử lại.");
     }
   };
   useEffect(() => {

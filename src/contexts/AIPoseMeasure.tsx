@@ -2,8 +2,8 @@ import React, { createContext, useContext, useEffect, useState, useCallback, use
 import type { Measure } from "../types/type";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
-import toast from "react-hot-toast";
 import { AuthContext } from "./Author";
+import { Toaster } from "../Components/Toaster";
 
 
 type AIMeasureContextType = {
@@ -41,10 +41,10 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
           "Content-Type":"application/json"
         }
       });
-      toast.success("Đã lưu số đo thành công");
+      Toaster.success("Đã lưu số đo thành công!");
     }
     catch(error){
-      toast.error("Không thể lưu số đo");
+      Toaster.error("Không thể lưu số đo. Vui lòng thử lại.");
     }
   }, [DataMeasure, token]);
 
@@ -58,7 +58,6 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
         setDataMeasure(data.data);
       }
       catch{
-        // Silent fail - user might not have measurements yet
       }
     }
     fetch();
@@ -85,11 +84,10 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
       SetStateAction(data.data.message);
     }
     catch{
-      toast.error("Không thể lấy gợi ý size");
+      Toaster.error("Không thể lấy gợi ý size. Vui lòng thử lại.");
     }
   }, [token]);
 
-  // Memoize context value to prevent unnecessary re-renders
   const contextValue = useMemo(() => ({
     DataMeasure,
     setDataMeasure,

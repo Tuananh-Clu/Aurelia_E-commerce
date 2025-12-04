@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 import { NotifySuccessBooking } from "../NotifySuccessBooking";
 import { Navbar } from "../HomeLayoutComponent/Navbar";
 import { Footer } from "../HomeLayoutComponent/Footer";
+import { LoadingOverlay } from "../LoadingOverlay";
 type SlotStatus = { time: string; full: boolean | false };
 
 export default function BookingForm() {
@@ -30,6 +31,7 @@ export default function BookingForm() {
   });
   const [showConfirm, setShowConfirm] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { UpLoadAppointment, UpLoadAppointmentForCustomer, LocSlot } =
     useContext(AppointmentContext);
   useEffect(() => {
@@ -101,9 +103,9 @@ export default function BookingForm() {
     fetchSlots();
   }, [selectedDate]);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setShowConfirm(false);
-    setIsSuccess(true);
+    setIsSubmitting(true);
     const appointment: Appointment = {
       id: uuidv4(),
       shopId: dataStore?.shopId!,
@@ -123,24 +125,31 @@ export default function BookingForm() {
       updatedAt: new Date().toISOString(),
       notes: note,
     };
-    UpLoadAppointment(appointment, dataStore?.shopId!, setNotify);
-    UpLoadAppointmentForCustomer(
-      {
-        id: appointment.id,
-        shopName: appointment.shopName,
-        Address: dataStore?.address,
-        itemImage: appointment.itemImage,
-        itemName: appointment.itemName,
-        service: appointment.service,
-        date: appointment.date,
-        slot: appointment.slot,
-        status: appointment.status,
-        createdAt: appointment.createdAt,
-        notes: appointment.notes,
-        duration: duration,
-      },
-      setNotify
-    );
+    try {
+      await Promise.all([
+        UpLoadAppointment(appointment, dataStore?.shopId!, setNotify),
+        UpLoadAppointmentForCustomer(
+          {
+            id: appointment.id,
+            shopName: appointment.shopName,
+            Address: dataStore?.address,
+            itemImage: appointment.itemImage,
+            itemName: appointment.itemName,
+            service: appointment.service,
+            date: appointment.date,
+            slot: appointment.slot,
+            status: appointment.status,
+            createdAt: appointment.createdAt,
+            notes: appointment.notes,
+            duration: duration,
+          },
+          setNotify
+        )
+      ]);
+      setIsSuccess(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
@@ -149,6 +158,7 @@ export default function BookingForm() {
 
   return (
     <>
+      <LoadingOverlay isLoading={isSubmitting} message="Đang đặt lịch hẹn..." />
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 py-20">
         <div className="max-w-6xl mx-auto px-6 space-y-10">

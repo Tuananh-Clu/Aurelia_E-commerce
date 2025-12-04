@@ -1,7 +1,7 @@
 import React, { createContext,  useContext,  useState, useCallback, useMemo } from "react";
 import { type order, type Cart } from "../types/type";
 import axios from "axios";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 import { api_Config, UseApiUrl } from "../services/api";
 import { AdminContext } from "./AdminContext";
 
@@ -85,9 +85,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         },
       });
       localStorage.setItem("user", JSON.stringify(reponse.data.user));
+      Toaster.success("Thanh toán thành công! Đơn hàng đã được tạo.");
     } catch (error) {
       console.error(error);
-      toast.error("Thanh toán không thành công!");
+      Toaster.error("Thanh toán không thành công! Vui lòng thử lại.");
     }
   }, [dataOrder, shopId, token, setSelectvoucher]);
   
@@ -125,8 +126,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         );
         setPhiVanChuyen(data.data.shippingFee);
         setShopId(data.data.storeId);
+        Toaster.success("Đã tính phí vận chuyển thành công!");
       } catch {
-        
+        Toaster.error("Không thể tính phí vận chuyển. Vui lòng thử lại.");
       }
     }, [dataOrder]);
     

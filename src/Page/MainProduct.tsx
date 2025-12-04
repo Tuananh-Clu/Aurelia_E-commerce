@@ -8,7 +8,7 @@ import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import dataCollection from "../assets/DataMock/dataSeason.json";
 import { FilterProductContext } from "../contexts/FIlterProduct";
 import type { Cart, Product } from "../types/type";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
 import { TimKiemTaiStore } from "../Components/TimKiemTaiStore";
@@ -52,7 +52,7 @@ export const MainProduct = () => {
   const handleToggleFavourite = useCallback(async (item: Product) => {
     const token = localStorage.getItem("token");
     if (!token) {
-      toast.error("Bạn cần đăng nhập để thêm yêu thích");
+      Toaster.error("Bạn cần đăng nhập để thêm yêu thích");
       return;
     }
 
@@ -68,20 +68,20 @@ export const MainProduct = () => {
         }
       );
       setHeartPopup(true);
-      toast.success("Đã thêm sản phẩm vào yêu thích");
+      Toaster.success("Đã thêm sản phẩm vào yêu thích!");
     } catch {
-      toast.error("Không thể thêm sản phẩm yêu thích");
+      Toaster.error("Không thể thêm sản phẩm yêu thích. Vui lòng thử lại.");
     }
   }, []);
 
   const AddToCart = useCallback(
     (item: Product) => {
       if (selectedColor==null || selectedColor === "") {
-        toast.error("Vui Lòng Chọn Màu Sản Phẩm");
+        Toaster.error("Vui lòng chọn màu sản phẩm!");
         return;
       }
       if (selectedSize==null || selectedSize === "") {
-        toast.error("Vui Lòng Chọn Kích Cỡ Sản Phẩm");
+        Toaster.error("Vui lòng chọn kích cỡ sản phẩm!");
         return;
       }
 
@@ -97,7 +97,7 @@ export const MainProduct = () => {
       };
 
       setCartDataAdd((prev) => [...prev, cartItem]);
-      toast.success("Đã thêm sản phẩm vào giỏ hàng");
+      Toaster.success("Đã thêm sản phẩm vào giỏ hàng!");
     },
     [selectedColor, selectedSize, setCartDataAdd]
   );

@@ -2,8 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { api_Config, UseApiUrl } from "../services/api";
 import axios from "axios";
-import toast from "react-hot-toast";
 import type { Coupon, order } from "../types/type";
+import { Toaster } from "../Components/Toaster";
 
 type AdminContextType = {
   dataRevenue: any;
@@ -13,7 +13,7 @@ type AdminContextType = {
   MainBanner: any[];
   StoryBanner: any[];
   dataShop: any[];
-  coupons: any[];
+  coupons: Coupon[];
   revenueData: any[];
   categoryData: any[];
   ServiceData: any[];
@@ -77,17 +77,17 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
             data,
             { headers: { "Content-Type": "application/json" } }
           );
-          
+          Toaster.success("✅ Banner updated successfully!");
         } else {
            await axios.post(
             UseApiUrl(api_Config.Banner.AdjustStoryBanner),
             data,
             { headers: { "Content-Type": "application/json" } }
           );
-          
+          Toaster.success("✅ Banner updated successfully!");
         }
       } catch (error) {
-        console.error("❌ Error updating banner:", error);
+        Toaster.error("❌ Error updating banner:");
       }
     };
     const uptodatabase = async (type: string, data: any) => {
@@ -185,11 +185,10 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               couponData,
               { headers: { "Content-Type": "application/json" } }
             );
-            
+            Toaster.success("✅ Coupon added successfully!");
             fetchCoupons();
           } catch (error) {
-            console.error("❌ Error adding coupon:", error);
-            toast.error("Failed to add coupon");
+            Toaster.error("Failed to add coupon");
           }
         };
         const handleUpdateCoupon = async (couponData: any) => {
@@ -199,11 +198,10 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               couponData,
               { headers: { "Content-Type": "application/json" } }
             );
-            
+            Toaster.success("✅ Coupon updated successfully!");
             fetchCoupons();
           } catch (error) {
-            console.error("❌ Error updating coupon:", error);
-            toast.error("Failed to update coupon");
+            Toaster.error("Failed to update coupon");
           }
         };
         const handleDeleteCoupon = async (voucherId: string) => {
@@ -213,11 +211,10 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
                 api_Config.Coupon.deleteCoupon
               )}?voucherId=${voucherId}`
             );
-            
+            Toaster.success("✅ Coupon deleted successfully!");
             fetchCoupons();
           } catch (error) {
-            console.error("❌ Error deleting coupon:", error);
-            toast.error("Failed to delete coupon");
+            Toaster.error("Failed to delete coupon");
           }
         };
         const handleToggleCouponStatus = async (id: string, bool: boolean) => {
@@ -228,11 +225,10 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
               { id, active: bool },
               { headers: { "Content-Type": "application/json" } }
             );
-            
+            Toaster.success("✅ Coupon status toggled successfully!");
             fetchCoupons();
           } catch (error) {
-            console.error("❌ Error toggling coupon status:", error);
-            toast.error("Failed to toggle coupon status");
+            Toaster.error("Failed to toggle coupon status");
           }
         };
 
@@ -246,8 +242,6 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
             setDataVoucher(response.data);
             fetchCoupons();
           } catch (error) {
-            console.error("❌ Error suggesting voucher:", error);
-            toast.error("Failed to suggest voucher");
           }
         };
 

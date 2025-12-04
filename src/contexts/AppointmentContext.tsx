@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 import type { Appointment, AppointmentCustomer, filterSLot } from "../types/type";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
-import toast from "react-hot-toast";
+import { Toaster } from "../Components/Toaster";
 
 type AppointmentContexts = {
   UpLoadAppointment: (
@@ -50,10 +50,11 @@ export const AppointmentProvider = ({
           },
         }
       );
-      setState(response.data.message)
+      setState(response.data.message);
+      Toaster.success("Đã tạo lịch hẹn thành công!");
     } catch (error) {
       console.error("Lỗi Fetch", error);
-      toast.error("Không thể tạo lịch hẹn");
+      Toaster.error("Không thể tạo lịch hẹn. Vui lòng thử lại.");
     }
   };
   const UpLoadAppointmentForCustomer = async (
@@ -70,10 +71,12 @@ export const AppointmentProvider = ({
           },
         }
       );
-      setState(response.data.message)
+      setState(response.data.message);
+      Toaster.success("Đã thêm lịch hẹn vào tài khoản của bạn!");
     } catch (error) {
       console.error("Lỗi Fetch", error);
       setState("Không thể tạo lịch hẹn");
+      Toaster.error("Không thể thêm lịch hẹn. Vui lòng thử lại.");
     }
   };
   const LocSlot = async (

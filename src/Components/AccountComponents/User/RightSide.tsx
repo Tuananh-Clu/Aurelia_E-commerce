@@ -8,6 +8,7 @@ import { Favourite } from "./RightSideComponent.tsx/Favourite";
 import { BarprocessTier } from "./RightSideComponent.tsx/BarprocessTier";
 import { motion } from "framer-motion";
 import { ArrowBigLeft, BoxIcon, HeartIcon, ListOrdered, Ticket } from "lucide-react";
+import { Voucher } from "./RightSideComponent.tsx/Voucher";
 
 type RightProps = {
   dataFavouriteItemUser: Product[];
@@ -118,7 +119,9 @@ export const RightSide: React.FC<RightProps> = ({
         );
 
       case "voucher":
-        return <div className="text-gray-500 text-center py-10">Chưa có dữ liệu Voucher</div>;
+        return <MotionWrapper>
+          <Voucher />
+        </MotionWrapper>;
     }
   };
 

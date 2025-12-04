@@ -12,7 +12,7 @@ export const Collection = () => {
     if (id) {
       fetchData(id);
     }
-  }, [id, fetchData]);
+  }, [id]);
   const navigate=useNavigate()
   if (!seasonCollections) return <p>Collection không tồn tại</p>;
   const collection=seasonCollections.map((item:any)=>item.season)[0];

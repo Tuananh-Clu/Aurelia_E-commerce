@@ -23,7 +23,7 @@ export const ListCoupon = ({
 
   const { coupons,suggestVoucher,selectvoucher,setSelectvoucher} = useContext(AdminContext);
 
-  const [validationMessage, setValidationMessage] = useState<string | null>(null);
+  const [validationMessage] = useState<string | null>(null);
 
   useEffect(() => {
     suggestVoucher(order ?? undefined);
