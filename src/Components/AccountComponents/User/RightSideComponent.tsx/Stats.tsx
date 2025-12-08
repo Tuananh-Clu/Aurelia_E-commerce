@@ -14,7 +14,7 @@ export const Stats = ({tongThuChi,soLuongDonHang,lastPurchaseDate,userRole,dataF
     },
     {
       title: "Mua Gần Nhất",
-      value: lastPurchaseDate.toLocaleDateString(),
+      value: lastPurchaseDate ? "Chưa có đơn" : new Date(lastPurchaseDate).toLocaleDateString("vi-VN"),
       subtitle: "Lần mua gần đây",
       icon: Clock,
       color: "from-purple-500 to-pink-500",
@@ -35,7 +35,7 @@ export const Stats = ({tongThuChi,soLuongDonHang,lastPurchaseDate,userRole,dataF
     },
   ];
   return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((s, i) => {
           const Icon = s.icon;
           return (

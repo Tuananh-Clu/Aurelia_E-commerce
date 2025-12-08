@@ -101,7 +101,7 @@ export default function EditProfile({
     setIsEditing(false);
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-emerald-50 py-10 px-16">
+    <div className={`min-h-screen bg-gradient-to-br from-indigo-50 via-white to-emerald-50 md:py-10 md:px-16 px-8 py-5  md:w-full  w-[400px] ${isEditing ? "h-[150vh]" : "h-[130vh]"} rounded-3xl shadow-xl border border-gray-200`}>
       <div
         onClick={() => setState(false)}
         className="backdrop-blur-md bg-white/10 border border-white/20 w-10 h-10 rounded-2xl 
@@ -119,7 +119,7 @@ export default function EditProfile({
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <div>
-            <h1 className="text-3xl font-extrabold text-gray-900">
+            <h1 className="md:text-3xl text-2xl font-extrabold text-gray-900">
               Hồ sơ cá nhân
             </h1>
             <p className="text-gray-500 mt-1">
@@ -129,7 +129,7 @@ export default function EditProfile({
           {!isEditing && (
             <button
               onClick={() => setIsEditing(true)}
-              className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 transition"
+              className="flex items-center gap-2 md:px-5 md:py-2.5 px-3 py-2 bg-indigo-600 text-white rounded-xl shadow-md hover:bg-indigo-700 transition"
             >
               <Edit2 size={18} />
               Chỉnh sửa
@@ -137,13 +137,13 @@ export default function EditProfile({
           )}
         </div>
 
-        <div className="flex flex-row  gap-8">
+        <div className="flex md:flex-row flex-col  gap-8">
           {/* Avatar Card */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-2xl shadow-lg w-2/4 text-center border border-gray-100 "
+            className="bg-white rounded-2xl shadow-lg md:w-2/4 text-center border border-gray-100 "
           >
             <div className="relative  mb-4 flex flex-col items-center justify-center">
               <img
@@ -180,7 +180,7 @@ export default function EditProfile({
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="w-3/4 bg-white rounded-2xl shadow-lg p-8 border border-gray-100"
+            className="md:w-3/4 bg-white rounded-2xl shadow-lg p-8 border border-gray-100"
           >
             {!isEditing ? (
               <div className="space-y-6">

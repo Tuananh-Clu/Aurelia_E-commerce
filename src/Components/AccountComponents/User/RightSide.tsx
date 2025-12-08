@@ -8,7 +8,7 @@ import { Favourite } from "./RightSideComponent.tsx/Favourite";
 import { BarprocessTier } from "./RightSideComponent.tsx/BarprocessTier";
 import { motion } from "framer-motion";
 import { ArrowBigLeft, BoxIcon, HeartIcon, ListOrdered, Ticket } from "lucide-react";
-import { Voucher } from "./RightSideComponent.tsx/Voucher";
+import Voucher from "./RightSideComponent.tsx/Voucher";
 
 type RightProps = {
   dataFavouriteItemUser: Product[];
@@ -23,29 +23,29 @@ const DASHBOARD_CARDS = [
   {
     label: "Đơn hàng gần đây",
     icon: BoxIcon,
-    bgGradient: "from-red-50 to-white",
-    textColor: "text-red-500",
+    bg: "bg-gradient-to-b from-[#fff5f5] to-white",
+    color: "text-red-500",
     key: "recentOrder",
   },
   {
     label: "Sản phẩm yêu thích",
     icon: HeartIcon,
-    bgGradient: "from-pink-50 to-white",
-    textColor: "text-pink-600",
+    bg: "bg-gradient-to-b from-[#ffeaf4] to-white",
+    color: "text-pink-600",
     key: "favourite",
   },
   {
     label: "Lịch hẹn",
     icon: ListOrdered,
-    bgGradient: "from-gray-50 to-white",
-    textColor: "text-gray-600",
+    bg: "bg-gradient-to-b from-[#f7f7f7] to-white",
+    color: "text-gray-600",
     key: "listAppointment",
   },
   {
     label: "Voucher",
     icon: Ticket,
-    bgGradient: "from-yellow-50 to-white",
-    textColor: "text-yellow-600",
+    bg: "bg-gradient-to-b from-[#fff7d6] to-white",
+    color: "text-yellow-600",
     key: "voucher",
   },
 ];
@@ -63,8 +63,9 @@ export const RightSide: React.FC<RightProps> = ({
   const [activeSite, setActiveSite] = useState<"stats" | "recentOrder" | "listAppointment" | "favourite" | "voucher">("stats");
 
   const lastPurchaseDate = new Date(Number(donhangMoiNhat));
+
   useEffect(() => {
-    const fetchAppointments = async () => {
+    const load = async () => {
       try {
         const data = await LayDachSachLichHenCuaUser();
         setDataAppointment(Array.isArray(data) ? data : []);
@@ -72,14 +73,14 @@ export const RightSide: React.FC<RightProps> = ({
         setDataAppointment(null);
       }
     };
-    fetchAppointments();
+    load();
   }, []);
 
   const renderContent = () => {
     switch (activeSite) {
       case "stats":
         return (
-          <div className="space-y-6">
+          <div className="space-y-10">
             <Stats
               tongThuChi={tongThuChi}
               soLuongDonHang={soLuongDonHang}
@@ -87,12 +88,17 @@ export const RightSide: React.FC<RightProps> = ({
               dataFavouriteItemUser={dataFavouriteItemUser}
               userRole={userRole}
             />
-            <h1 className="text-2xl font-semibold text-gray-700">Bảng điều khiển</h1>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            <h1 className="text-3xl font-semibold text-gray-800 tracking-tight">
+              Bảng điều khiển
+            </h1>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {DASHBOARD_CARDS.map((card) => (
                 <DashboardCard key={card.key} card={card} onClick={() => setActiveSite(card.key as any)} />
               ))}
             </div>
+
             <BarprocessTier />
           </div>
         );
@@ -119,23 +125,31 @@ export const RightSide: React.FC<RightProps> = ({
         );
 
       case "voucher":
-        return <MotionWrapper>
-          <Voucher />
-        </MotionWrapper>;
+        return (
+          <MotionWrapper>
+            <Voucher />
+          </MotionWrapper>
+        );
     }
   };
 
   return (
-    <div className="w-full max-w-8xl mx-auto space-y-10 overflow-y-auto max-h-screen p-4">
+    <div className="w-full max-w-7xl mx-auto  overflow-y-auto max-h-screen px-4 md:px-10 py-6">
       {activeSite !== "stats" && (
         <button
-          className="mb-4 px-3 py-2 bg-gray-700 text-white rounded-full flex items-center hover:bg-white hover:text-gray-700 transition"
           onClick={() => setActiveSite("stats")}
+          className="
+            mb-4 px-4 py-2 flex items-center gap-2 rounded-full
+            bg-white/20 backdrop-blur-md border border-white/30
+            text-gray-900 shadow-md transition-all duration-200
+            hover:bg-white hover:text-gray-800
+          "
         >
-          <ArrowBigLeft className="w-5 h-5 mr-2" />
+          <ArrowBigLeft className="w-5 h-5" />
           Quay lại
         </button>
       )}
+
       {renderContent()}
     </div>
   );
@@ -148,29 +162,33 @@ const DashboardCard = ({
   card: typeof DASHBOARD_CARDS[number];
   onClick: () => void;
 }) => {
-  const { label, icon: Icon, bgGradient, textColor } = card;
+  const { label, icon: Icon, bg, color } = card;
+
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.04 }}
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={`
-        flex flex-col items-center justify-center p-4 rounded-xl
-        bg-gradient-to-b ${bgGradient} shadow-sm
-        hover:shadow-lg hover:-translate-y-1 transition-all duration-300
-        cursor-pointer group
+        ${bg} ${color}
+        flex flex-col items-center justify-center
+        rounded-2xl p-6 cursor-pointer
+        shadow-[0_4px_20px_rgba(0,0,0,0.06)]
+        hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)]
+        transition-all group
       `}
     >
-      <Icon className={`w-10 h-10 ${textColor} group-hover:scale-110 transition-all`} />
-      <span className="mt-2 text-sm font-semibold text-gray-700">{label}</span>
-    </div>
+      <Icon className={`w-10 h-10 ${color} group-hover:scale-125 transition-all duration-300`} />
+      <span className="mt-3 text-sm font-medium text-gray-700">{label}</span>
+    </motion.div>
   );
 };
 
-
 const MotionWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <motion.div
-    initial={{ opacity: 0, x: -10 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.4 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, ease: "easeOut" }}
   >
     {children}
   </motion.div>

@@ -30,16 +30,14 @@ export const CartContext = createContext<CartContexts>({
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const {setSelectvoucher } = useContext(AdminContext);
-  const [CartDataAdd, setCartDataAdd] = useState<Cart[]>([]);
+  const [CartDataAdd, setCartDataAdd] = useState<Cart[]>(localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems") || "[]") : []);
   const [dataOrder, setDataOrder] = useState<order | undefined>();
   const [phiVanChuyen, setPhiVanChuyen] = useState("");
   const [shopId, setShopId] = useState<string>("");
-  
-  // Memoize token to avoid reading from localStorage on every render
   const token = useMemo(() => localStorage.getItem("token"), []);
   const LOCATIONIQ_KEY = "pk.fd3f99a25f3d03893a6936b3b255288c";
   
-  // Memoize handleClickPayment to prevent recreation
+
   const handleClickPayment = useCallback(async () => {
     if (!dataOrder) return;
 
@@ -48,7 +46,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
       setSelectvoucher([]);
-      // Thêm order
       await axios.post(
         `${UseApiUrl(api_Config.User.SuccessPayAddOrder)}?shopId=${shopId}`,
         dataOrder,
@@ -60,7 +57,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         }
       );
 
-      // Cập nhật số lượng sản phẩm
       await axios.post(
         UseApiUrl(api_Config.Product.UpdateQuantityProduct),
         dataOrder.product.map((item) => ({
@@ -79,6 +75,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         }
       );
      const reponse= await axios.get(UseApiUrl(api_Config.User.LayTHongTinUser), {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      localStorage.removeItem("cartItems");
+      setCartDataAdd([]);
+      await axios.delete(UseApiUrl(api_Config.User.XoaGioHang),{
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -126,13 +130,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         );
         setPhiVanChuyen(data.data.shippingFee);
         setShopId(data.data.storeId);
-        Toaster.success("Đã tính phí vận chuyển thành công!");
       } catch {
-        Toaster.error("Không thể tính phí vận chuyển. Vui lòng thử lại.");
       }
     }, [dataOrder]);
-    
-  // Memoize context value to prevent unnecessary re-renders
+ 
   const contextValue = useMemo(() => ({
     CartDataAdd,
     setCartDataAdd,

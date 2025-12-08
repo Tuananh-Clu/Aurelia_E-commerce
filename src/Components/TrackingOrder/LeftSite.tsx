@@ -7,7 +7,7 @@ export type LeftSites = {
 
 const LeftSite: React.FC<LeftSites> = ({ data }) => {
   return (
-    <div className="py-20 bg-slate-50 max-h-screen overflow-y-scroll">
+  <div className="py-10 lg:py-20 bg-slate-50 lg:max-h-screen lg:overflow-y-scroll">
       <div className="max-w-4xl mx-auto space-y-8 px-4">
         {/* Header */}
         <div className="bg-white rounded-3xl shadow-md p-8 border border-slate-100">

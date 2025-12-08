@@ -33,7 +33,7 @@ export const Collection = () => {
           </div>
 
           {/* Nội dung */}
-          <div className="md:w-1/2 flex flex-col justify-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm shadow-md">
+          <div className="md:w-1/2 w-full flex flex-col justify-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm shadow-md">
             <p className="text-sm uppercase tracking-widest text-gray-500 mb-1">
               {item.slug}
             </p>
@@ -49,7 +49,7 @@ export const Collection = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               onClick={() => navigate(`/Collection/${item.id}`)}
-              className="self-start bg-gradient-to-r from-gray-900 to-gray-700 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:from-gray-800 hover:to-gray-600 transition"
+              className="self-start bg-gradient-to-r from-gray-900 to-gray-700 text-white px-8 py-3 rounded-full font-semibold shadow-md hover:from-gray-800 hover:to-gray-600 transition cursor-pointer"
             >
               Xem sản phẩm
             </motion.button>

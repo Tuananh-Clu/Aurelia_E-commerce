@@ -23,7 +23,7 @@ export const HotProducts = () => {
       <div className="w-20 h-1 bg-gradient-to-r from-gray-400 to-gray-600 mx-auto mb-12 rounded-full shadow"></div>
 
       {/* Grid sản phẩm */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto md:px-6 px-4">
         {hotItems.map((p) => (
           <motion.div
             onClick={() => navigate(`Fashion/Products/${p.id}`)}

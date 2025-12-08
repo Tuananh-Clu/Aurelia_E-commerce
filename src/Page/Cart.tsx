@@ -36,10 +36,15 @@ export const Cart = () => {
         i.Itemid === id ? { ...i, quantity: Math.max(newQty, 1) } : i
       )
     );
+    localStorage.setItem("cartItems", JSON.stringify(CartDataAdd));
   };
 
   const removeItem = (id: string) => {
     setCartDataAdd((prev) => prev.filter((i) => i.Itemid !== id));
+    localStorage.removeItem("cartItems");
+    localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.getItem("user") || "{}"), gioHangCuaBan: CartDataAdd.filter((i) => i.Itemid !== id) }));
+    setCartDataAdd(CartDataAdd.filter((i) => i.Itemid !== id));
+    localStorage.setItem("cartItems", JSON.stringify(CartDataAdd.filter((i) => i.Itemid !== id)));
   };
  const checkOut = () => {
   if (CartDataAdd.length === 0) {
@@ -92,14 +97,14 @@ export const Cart = () => {
                     <p className="text-sm text-gray-500">Màu: {i.color}</p>
                     <div className="flex items-center gap-3 mt-4">
                       <button
-                        className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100"
+                        className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100 cursor-pointer"
                         onClick={() => updateQty(i.Itemid , i.quantity - 1)}
                       >
                         –
                       </button>
                       <span className="text-lg font-medium">{i.quantity}</span>
                       <button
-                        className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100"
+                        className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100 cursor-pointer"
                         onClick={() => updateQty(i.Itemid , i.quantity + 1)}
                       >
                         +
@@ -112,7 +117,7 @@ export const Cart = () => {
                     </div>
                     <button
                       onClick={() => removeItem(i.Itemid )}
-                      className="text-gray-400 hover:text-red-500 transition"
+                      className="text-gray-400 hover:text-red-500 transition cursor-pointer"
                     >
                       <Trash2 size={22} />
                     </button>

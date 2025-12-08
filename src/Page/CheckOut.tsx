@@ -182,7 +182,7 @@ export const Checkout = () => {
                       <button
                         type="button"
                         onClick={() => handleSelectAddress(addr)}
-                        className="flex-1 text-left"
+                        className="flex-1 text-left cursor-pointer"
                       >
                         <p className="font-medium">
                           {addr.hoVaTen} - {addr.soDT}
@@ -192,7 +192,7 @@ export const Checkout = () => {
                       <button
                         type="button"
                         onClick={() => handleDelete(addr)}
-                        className="ml-3 text-red-500 font-semibold hover:text-red-700 transition"
+                        className="ml-3 text-red-500 font-semibold hover:text-red-700 transition cursor-pointer"
                       >
                         Xóa
                       </button>
@@ -263,7 +263,7 @@ export const Checkout = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
-              className="w-full mt-6 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 rounded-full py-4 text-lg font-semibold shadow-md hover:shadow-xl transition-all"
+                className="w-full mt-6 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 rounded-full py-4 text-lg font-semibold shadow-md hover:shadow-xl transition-all cursor-pointer"
             >
               Xác nhận đặt hàng
             </motion.button>

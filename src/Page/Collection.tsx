@@ -1,31 +1,36 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Footer } from "../Components/HomeLayoutComponent/Footer";
 import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CollectionContext } from "../contexts/SeasonContext";
-
+import { LoadingOverlay } from "../Components/LoadingOverlay";
 
 export const Collection = () => {
   const { id } = useParams();
   const { seasonCollections, fetchData } = useContext(CollectionContext);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     if (id) {
-      fetchData(id);
+      fetchData(id)
+        .then(() => setIsLoading(false))
+        .catch(() => setIsLoading(false));
     }
   }, [id]);
+
   const navigate=useNavigate()
   if (!seasonCollections) return <p>Collection không tồn tại</p>;
   const collection=seasonCollections.map((item:any)=>item.season)[0];
   const products=seasonCollections.map((item:any)=>item.products).flat();
-  
+
   return (
     <>
       <Navbar />
-
+      {isLoading !== false && <LoadingOverlay isLoading={true} message="Đang Tải" />}
       <section
         className="relative w-full h-[80vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: `url(${collection.banner})`,
+          backgroundImage: `url(${collection?.banner})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

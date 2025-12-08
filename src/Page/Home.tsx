@@ -42,7 +42,7 @@ export const Home = () => {
       {isScroll ? (
         <div
           onClick={handleClick}
-          className="fixed bg-black px-2 rounded-full text-white py-2 bottom-10 z-100 right-10"
+          className="fixed bg-black px-2 rounded-full text-white py-2 bottom-10 z-100 right-10 cursor-pointer"
         >
           <ArrowUp />
         </div>

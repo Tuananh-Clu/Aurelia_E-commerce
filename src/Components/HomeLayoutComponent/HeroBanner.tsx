@@ -153,13 +153,13 @@ export const HeroBanner = () => {
       {/* Navigation Buttons */}
       <button
         onClick={() => setIndex((prev) => (prev - 1 + banners.length) % banners.length)}
-        className="absolute left-5 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white rounded-full p-2 shadow-md"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white rounded-full p-2 shadow-md cursor-pointer"
       >
         <ChevronLeft className="w-6 h-6 text-gray-700" />
       </button>
       <button
         onClick={() => setIndex((prev) => (prev + 1) % banners.length)}
-        className="absolute right-5 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white rounded-full p-2 shadow-md"
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 bg-white/60 hover:bg-white rounded-full p-2 shadow-md cursor-pointer"
       >
         <ChevronRight className="w-6 h-6 text-gray-700" />
       </button>

@@ -33,7 +33,7 @@ export const TimKiemTaiStore: React.FC<ProductFindProps> = ({
   }
 
   return (
-    <div className="w-full h-screen z-200 bg-white fixed top-0 left-0  overflow-y-auto">
+    <div className="w-full h-screen z-[9999] bg-white fixed md:top-0 md:left-0  overflow-y-auto">
       {/* Header */}
       <div className="flex justify-between items-center p-5 border-b border-gray-300">
         <h1 className="text-lg font-semibold">Tìm Kiếm Tại Store</h1>

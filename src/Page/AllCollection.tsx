@@ -3,6 +3,7 @@ import { Navbar } from "../Components/HomeLayoutComponent/Navbar"
 import { CollectionContext } from "../contexts/SeasonContext";
 import { useContext } from "react";
 
+
 export const AllCollection = () => {
     const navigate=useNavigate()
     const { collectionData }=useContext(CollectionContext);

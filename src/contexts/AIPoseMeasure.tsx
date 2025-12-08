@@ -2,19 +2,18 @@ import React, { createContext, useContext, useEffect, useState, useCallback, use
 import type { Measure } from "../types/type";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
-import { AuthContext } from "./Author";
 import { Toaster } from "../Components/Toaster";
 
 
 type AIMeasureContextType = {
-  DataMeasure?: Measure;         
+  DataMeasure: Measure ;         
   postMeasureToDB:()=>Promise<void>,  
   getAIAdviceMeasure:(ProductId:string,type:string,subCategory:string,SetStateAction:React.Dispatch<React.SetStateAction<string>>)=>Promise<void>
-  setDataMeasure: React.Dispatch<React.SetStateAction<Measure | undefined>>; 
+  setDataMeasure: React.Dispatch<React.SetStateAction<Measure>>; 
 };
 
 export const AiPoseMeasureContext = createContext<AIMeasureContextType>({
-  DataMeasure: undefined,
+  DataMeasure: {} as Measure,
   getAIAdviceMeasure:async()=>{},
   postMeasureToDB:async()=>{},
   setDataMeasure: () => {},
@@ -25,13 +24,23 @@ type AiPoseMeasureProviderProps = {
 };
 
 export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ children }) => {
-  const [DataMeasure, setDataMeasure] = useState<Measure>();
-  const {isSignned}=useContext(AuthContext);
-  
-  // Memoize token to avoid reading from localStorage on every render
+  const [DataMeasure, setDataMeasure] = useState<Measure>({} as Measure);
   const token = useMemo(() => localStorage.getItem("token"), []);
-  
-  // Memoize postMeasureToDB to prevent recreation
+  const fetch=async()=>{
+      try{
+        const data=await axios.get(UseApiUrl(api_Config.User.LaySoDo),{
+          headers:{"Authorization":`Bearer ${token}`}
+        });
+        setDataMeasure(data.data);
+      }
+      catch(error){ 
+      }
+    }
+  useEffect(()=>{
+    if(!token) return;
+    fetch();
+  }, [token]);
+
   const postMeasureToDB = useCallback(async()=>{
     if (!DataMeasure || !token) return;
     try{
@@ -41,6 +50,7 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
           "Content-Type":"application/json"
         }
       });
+      localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.getItem("user") || "{}"), soDoNguoiDung: DataMeasure }));
       Toaster.success("Đã lưu số đo thành công!");
     }
     catch(error){
@@ -48,22 +58,6 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
     }
   }, [DataMeasure, token]);
 
-  useEffect(()=>{
-    if(isSignned===false || !token) return;
-    const fetch=async()=>{
-      try{
-        const data=await axios.get(UseApiUrl(api_Config.User.LaySoDo),{
-          headers:{"Authorization":`Bearer ${token}`}
-        });
-        setDataMeasure(data.data);
-      }
-      catch{
-      }
-    }
-    fetch();
-  }, [isSignned, token]);
-
-  // Memoize getAIAdviceMeasure
   const getAIAdviceMeasure = useCallback(async(
     ProductId:string,
     type:string,

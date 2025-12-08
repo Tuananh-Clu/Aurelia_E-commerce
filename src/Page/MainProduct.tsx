@@ -1,7 +1,14 @@
 import { useLocation, useParams } from "react-router-dom";
 import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
-import { Heart } from "lucide-react";
-import { useContext, useEffect, useState, useCallback, useMemo } from "react";
+import { ArrowBigLeftDashIcon, Heart } from "lucide-react";
+import {
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductRecommend } from "../Components/ProductComponent/ProductRecommend";
 import { Footer } from "../Components/HomeLayoutComponent/Footer";
@@ -21,14 +28,15 @@ export const MainProduct = () => {
 
   const { dataProduct, dataFavouriteItemUser } =
     useContext(FilterProductContext);
-  const { setCartDataAdd } = useContext(CartContext);
+  const { setCartDataAdd, CartDataAdd } = useContext(CartContext);
 
   const [toggleBar, setToggleBar] = useState("Description");
   const [heartPopup, setHeartPopup] = useState(false);
   const [findStore, setFindStore] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const imgRef = useRef<HTMLDivElement>(null);
   const product = useMemo((): Product | undefined => {
     if (!id) return undefined;
 
@@ -57,30 +65,36 @@ export const MainProduct = () => {
     }
 
     try {
-       await axios.post(
-        UseApiUrl(api_Config.User.AddFavouriteItems),
-        item,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axios.post(UseApiUrl(api_Config.User.AddFavouriteItems), item, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
       setHeartPopup(true);
       Toaster.success("Đã thêm sản phẩm vào yêu thích!");
     } catch {
       Toaster.error("Không thể thêm sản phẩm yêu thích. Vui lòng thử lại.");
     }
   }, []);
+  const handleClickLeftRight = (direction: "left" | "right") => {
+    if (imgRef.current) {
+      const scrollAmount = 500;
+      if (direction === "left") {
+        imgRef.current.scrollLeft -= scrollAmount;
+      } else {
+        imgRef.current.scrollLeft += scrollAmount;
+      }
+    }
+  };
 
   const AddToCart = useCallback(
     (item: Product) => {
-      if (selectedColor==null || selectedColor === "") {
+      if (selectedColor == null || selectedColor === "") {
         Toaster.error("Vui lòng chọn màu sản phẩm!");
         return;
       }
-      if (selectedSize==null || selectedSize === "") {
+      if (selectedSize == null || selectedSize === "") {
         Toaster.error("Vui lòng chọn kích cỡ sản phẩm!");
         return;
       }
@@ -88,7 +102,10 @@ export const MainProduct = () => {
       const cartItem: Cart = {
         Itemid: item.id,
         name: item.name,
-        price: item.discountValue>0?item.price - (item.price * item.discountValue) / 100:item.price,
+        price:
+          item.discountValue > 0
+            ? item.price - (item.price * item.discountValue) / 100
+            : item.price,
         size: selectedSize,
         color: selectedColor,
         thumnail: item.thumbnail,
@@ -97,6 +114,10 @@ export const MainProduct = () => {
       };
 
       setCartDataAdd((prev) => [...prev, cartItem]);
+      localStorage.setItem(
+        "cartItems",
+        JSON.stringify([...CartDataAdd, cartItem])
+      );
       Toaster.success("Đã thêm sản phẩm vào giỏ hàng!");
     },
     [selectedColor, selectedSize, setCartDataAdd]
@@ -108,20 +129,8 @@ export const MainProduct = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="flex flex-row">
-        <div>
-          {product?.images.map((src, idx) => (
-            <img
-              key={idx}
-              className="w-[1200px]"
-              src={src}
-              alt={product.name}
-            />
-          ))}
-        </div>
-        <div
-          className={`fixed backdrop-blur-2xl z-500 right-0 w-[1500px] h-full transition-all duration-300 ${
+      <Navbar />    <div
+          className={`fixed backdrop-blur-2xl z-[9999] right-0 lg:w-[1300px] md:w-[700px] w-[350px]  md:h-full h-[400px] transition-all duration-300 ${
             findStore
               ? "opacity-100 translate-x-0"
               : "opacity-0 translate-x-full"
@@ -132,9 +141,87 @@ export const MainProduct = () => {
         {findStore && (
           <div className="fixed bg-black/50 backdrop-blur-2xl inset-0 w-full h-screen z-100"></div>
         )}
+      <div className="flex flex-col md:flex-row justify-around pb-20 bg-gradient-to-b from-neutral-50 to-neutral-100">
+        <div className="relative w-full overflow-hidden">
+          <div
+            ref={imgRef}
+            className="flex md:block flex-row overflow-x-scroll no-scrollbar snap-x snap-mandatory w-full"
+          >
+            {product?.images.map((src, idx) => (
+              <div
+                key={idx}
+                className="relative flex flex-col items-center w-full flex-shrink-0 snap-center md:flex-shrink "
+              >
+                <img
+                  src={src}
+                  alt={product.name}
+                  className="
+            md:w-[1200px] md:h-auto
+            w-[500px] h-[700px]
+            object-cover shadow-lg
+            transition-all duration-300
+          "
+                />
+                          <button
+            className="
+            md:hidden absolute top-1/2 left-4 -translate-y-1/2
+            bg-black/40 backdrop-blur-xl
+            text-white rounded-full p-3 shadow-xl
+            hover:bg-black/60 transition
+            z-50
+          "
+            onClick={() => {
+              handleClickLeftRight("left");
+              setScrollPosition((prev) => Math.max(prev - 1, 0));
+            }}
+          >
+            <ArrowBigLeftDashIcon className="w-6 h-6" />
+          </button>
+
+          <button
+            className="
+            md:hidden absolute top-1/2 right-4 -translate-y-1/2
+            bg-black/40 backdrop-blur-xl
+            text-white rounded-full p-3 shadow-xl
+            hover:bg-black/60 transition
+            z-50
+          "
+            onClick={() => {
+              setScrollPosition((prev) => Math.min(prev + 1, product.images.length - 1));
+              handleClickLeftRight("right");
+            }}
+          >
+            <ArrowBigLeftDashIcon className="w-6 h-6 rotate-180" />
+          </button>
+              </div>
+            ))}
+          </div>
+
+
+          {/* Indicators (Mobile) */}
+          <div className="w-full flex items-center justify-center mt-4 md:hidden">
+            <div className="flex gap-2">
+              {product.images.map((_, index) => (
+                <div
+                  key={index}
+                  className={`
+                  h-2 rounded-full transition-all duration-300
+                  ${
+                    index === scrollPosition
+                      ? "bg-black w-6"
+                      : "bg-gray-400 w-2"
+                  }
+                `}
+                ></div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+    
 
         {/* Right: Details */}
-        <div className="sticky top-50 h-full px-10 translate-y-1/3 w-full">
+        <div className="sticky md:top-50 h-full px-10 md:translate-y-1/3 mt-10 w-full">
           {/* Title + Favourite */}
           <div className="flex flex-row w-full justify-between items-center">
             <div className="flex flex-col gap-2">
@@ -148,31 +235,34 @@ export const MainProduct = () => {
                 className={`cursor-pointer ${
                   heartPopup ? "text-red-600" : "text-black"
                 }`}
-                onClick={() => handleToggleFavourite({
-                  id: product.id,
-                  name: product.name,
-                  price: product.price,
-                  discountValue: product.discountValue,
-                  thumbnail: product.thumbnail,
-                  images: product.images,
-                  material: product.material,
-                  description: product.description,
-                  type: product.type,
-                  subcategory: product.subcategory,
-                  variants: product.variants,
-                  discountType: product.discountType,
-                  brand: product.brand,
-                  origin: product.origin,
-                  rating: product.rating,
-                  stock: product.stock,
-                  createdAt: product.createdAt,
-                  updatedAt: product.updatedAt,
-                  sold: product.sold,
-                  season: product.season,
-
-                })}
+                onClick={() =>
+                  handleToggleFavourite({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    discountValue: product.discountValue,
+                    thumbnail: product.thumbnail,
+                    images: product.images,
+                    material: product.material,
+                    description: product.description,
+                    type: product.type,
+                    subcategory: product.subcategory,
+                    variants: product.variants,
+                    discountType: product.discountType,
+                    brand: product.brand,
+                    origin: product.origin,
+                    rating: product.rating,
+                    stock: product.stock,
+                    createdAt: product.createdAt,
+                    updatedAt: product.updatedAt,
+                    sold: product.sold,
+                    season: product.season,
+                  })
+                }
               />
-              <h2 className="text-gray-400 text-xs">Reference {product.id}</h2>
+              <h2 className="text-gray-400 md:text-left text-right text-xs">
+                Reference {product.id}
+              </h2>
             </div>
           </div>
 

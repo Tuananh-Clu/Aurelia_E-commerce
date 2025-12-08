@@ -6,17 +6,23 @@ import { FilterProductContext } from "../../../contexts/FIlterProduct";
 import type { Clients } from "../../../types/type";
 import { AiPoseMeasureContext } from "../../../contexts/AIPoseMeasure";
 import EditProfile from "./EditProfile";
-import { useLocation } from "react-router-dom";
+
+
 
 export const DashBoard = () => {
   const userString = localStorage.getItem("user");
   const [openeditProfile, setOpeneditProfile] = useState(false);
   const { DataMeasure } = useContext(AiPoseMeasureContext);
-  const location=useLocation();
   const [user, setUser] = useState<Clients | null>(null);
+  const location=window.location.href;
+  
+
   useEffect(() => {
-    setUser(userString ? JSON.parse(userString) : null);
-  }, [location]);
+    setUser(JSON.parse(userString || "{}"));
+    console.log(DataMeasure)
+    
+  }, [location, userString]);
+
   const {
     dataFavouriteItemUser,
     soLuongDonHang,
@@ -24,21 +30,27 @@ export const DashBoard = () => {
     DonHang,
     donhangMoiNhat,
   } = useContext(FilterProductContext);
+
   return (
-    <div className="min-h-screen bg-gray-100 relative ">
-      <div>
-        <Navbar />
-      </div>
+    <div className="min-h-screen  relative">
+      {/* NAVBAR */}
+      <Navbar />
+
+      {/* EDIT PROFILE MODAL */}
       {openeditProfile && (
-        <div className="w-full fixed inset-0 h-screen py-20 z-99 bg-black/90 ">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] overflow-y-auto py-10 flex justify-center px-4 h-full">
           <EditProfile setState={setOpeneditProfile} />
         </div>
       )}
-      <div className="mt-24 px-6 md:px-20 lg:px-40 relative mb-10 ">
-        <div className="flex flex-row justify-between gap-8 relative  ">
-          <div className=" ">
+
+      {/* MAIN LAYOUT */}
+      <div className="mt-24 px-4 sm:px-6 lg:px-20 xl:px-40 mb-10">
+        <div className="flex flex-col lg:flex-row gap-10">
+
+          {/* LEFT PANEL — MOBILE ON TOP */}
+          <div className="w-full lg:w-1/3 xl:w-1/4 md:h-screen lg:h-auto">
             <LeftSide
-              userString={userString }
+              userString={userString}
               SanPhamDaThich={dataFavouriteItemUser.length}
               SoLuongDon={soLuongDonHang}
               Voucher={0}
@@ -46,7 +58,9 @@ export const DashBoard = () => {
               setState={setOpeneditProfile}
             />
           </div>
-          <div className=" w-full md:w-4/5 ">
+
+          {/* RIGHT PANEL — MAIN CONTENT */}
+          <div className="w-full  lg:w-2/3 xl:w-3/4 h-screen lg:h-auto">
             <RightSide
               dataFavouriteItemUser={dataFavouriteItemUser}
               userRole={user?.tier}

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AiPoseMeasureContext } from "../contexts/AIPoseMeasure";
+import { AuthContext } from "../contexts/Author";
 
 type AiSuggestBoxProps = {
   productId: string;
@@ -9,8 +10,10 @@ type AiSuggestBoxProps = {
 
 export const AiSuggestBox = ({ productId, type, subcategory }: AiSuggestBoxProps) => {
     const {getAIAdviceMeasure}=useContext(AiPoseMeasureContext)
+    const {isSignned}=useContext(AuthContext)
     const [AIAdvice,setAIAdvice]=useState("");
     useEffect(()=>{
+      if(isSignned===false) return; 
         getAIAdviceMeasure(productId,type,subcategory,setAIAdvice)
     },[productId])
   return (

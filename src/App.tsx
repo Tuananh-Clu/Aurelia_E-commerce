@@ -96,7 +96,10 @@ function App() {
   return (
     <div ref={ref}>
       {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
           <LoadingScreen />
+        </div>
+
 
       )}
       <Toaster position="top-center" reverseOrder={false} />

@@ -97,16 +97,16 @@ export function DashBoardShop({
   );
 
   return (
-    <main className="flex-1 bg-gray-50 p-8 overflow-y-auto">
+  <main className="flex-1 bg-gray-50 p-4 md:p-8 overflow-y-auto">
       {/* Header */}
-      <header className="flex items-center justify-between mb-8">
+      <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-500 mt-1">
             Chào mừng trở lại! Đây là tổng quan hôm nay.
           </p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4 w-full md:w-auto">
           <div className="relative">
             <Search
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
@@ -115,7 +115,7 @@ export function DashBoardShop({
             <input
               type="text"
               placeholder="Tìm kiếm..."
-              className="pl-12 pr-4 py-3 bg-white rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-64 shadow-sm"
+              className="pl-12 pr-4 py-3 bg-white rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-64 shadow-sm"
             />
           </div>
           <button
@@ -132,7 +132,7 @@ export function DashBoardShop({
       </header>
 
       {/* Stats Grid */}
-      <section className="grid grid-cols-4 gap-6 mb-8">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -157,7 +157,7 @@ export function DashBoardShop({
       </section>
 
       {/* Two Column Layout */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-6">

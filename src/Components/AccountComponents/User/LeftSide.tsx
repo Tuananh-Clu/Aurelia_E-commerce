@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/Author";
 import type { Clients, Measure } from "../../../types/type";
 import { motion } from "framer-motion";
-import { LogOut, Pencil, Gift } from "lucide-react";
+import { LogOut, Pencil} from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../../contexts/CartContext";
 
 type LeftSides = {
   userString: string | null;
@@ -20,15 +21,18 @@ export const LeftSide: React.FC<LeftSides> = ({
   SanPhamDaThich,
   Voucher,
   soDo,
-  setState
+  setState,
 }) => {
   const { setIsignned } = useContext(AuthContext);
+  const {setCartDataAdd}=useContext(CartContext)
   const user: Clients | null = userString ? JSON.parse(userString) : null;
   const navigate = useNavigate();
 
   const handleLogOut = () => {
     localStorage.clear();
     setIsignned(false);
+    setCartDataAdd([]);
+    navigate("/");
   };
 
   const bodyMeasurements = [
@@ -44,33 +48,43 @@ export const LeftSide: React.FC<LeftSides> = ({
     : "Không rõ";
 
   return (
-    <div className="w-full p-6 space-y-4 rounded-3xl bg-white shadow-xl">
-      {/* User Info */}
-      <div className="flex flex-col items-center text-center space-y-2">
-        <img
-          className="w-20 h-20 rounded-full ring-2 ring-indigo-200 shadow-sm"
-          src={user?.avatar || "https://via.placeholder.com/150"
-          }
-          alt="avatar"
-        />
-        <h1 className="text-lg font-semibold text-gray-800">
+    <div className="w-full p-6 space-y-6 rounded-3xl bg-white/80 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-white/30 ">
+      
+      {/* USER INFO */}
+      <div className="flex flex-col items-center text-center space-y-3">
+        <div className="relative">
+          <img
+            className="w-24 h-24 rounded-full ring-4 ring-indigo-200 shadow-lg object-cover"
+            src={user?.avatar || "https://via.placeholder.com/150"}
+            alt="avatar"
+          />
+          <div className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-green-500 border-2 border-white"></div>
+        </div>
+
+        <h1 className="text-lg font-bold text-gray-800 tracking-wide">
           {user?.name ? `Xin chào, ${user.name}` : "Xin chào, Bạn"}
         </h1>
-        <p className="text-xs text-gray-500">Tham gia từ {createdAt}</p>
-        <p className="text-xs text-indigo-600 font-medium">
-          Thành viên {user?.tier ?? ""}
+
+        <p className="text-xs text-gray-500">
+          Thành viên:{" "}
+          <span className="text-indigo-600 font-semibold">{user?.tier}</span>
         </p>
+
+        <p className="text-xs text-gray-400">
+          Tham gia từ {createdAt}
+        </p>
+
         <motion.button
-        onClick={() => setState ? setState(true) : null}
           whileHover={{ scale: 1.05 }}
-          className="flex items-center gap-1 text-xs px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700"
+          onClick={() => setState?.(true)}
+          className="flex items-center gap-2 text-xs px-3 py-1 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 shadow-sm"
         >
           <Pencil size={14} /> Sửa hồ sơ
         </motion.button>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-3 text-center">
+      {/* STATS */}
+      <div className="grid grid-cols-3 gap-4">
         {[
           { label: "Đơn hàng", value: SoLuongDon },
           { label: "Yêu thích", value: SanPhamDaThich },
@@ -78,30 +92,31 @@ export const LeftSide: React.FC<LeftSides> = ({
         ].map((stat, i) => (
           <motion.div
             key={i}
-            whileHover={{ y: -2 }}
-            className="p-3 rounded-2xl bg-gradient-to-br from-gray-50 to-white shadow-sm"
+            whileHover={{ scale: 1.05 }}
+            className="p-4 rounded-2xl bg-gradient-to-br from-gray-50 to-white shadow-md border border-gray-100"
           >
             <p className="text-xs text-gray-500">{stat.label}</p>
-            <p className="text-sm font-bold text-gray-800">{stat.value}</p>
+            <p className="text-xl font-bold text-gray-900">{stat.value}</p>
           </motion.div>
         ))}
       </div>
 
-      {/* Body Measurements */}
+      {/* BODY SIZE */}
       <div>
-        <h2 className="text-sm font-semibold mb-2 text-gray-700">
+        <h2 className="text-sm font-bold mb-2 text-gray-700">
           Số đo cơ thể
         </h2>
-        <div className="grid grid-cols-2 gap-2 text-sm">
+
+        <div className="grid grid-cols-2 gap-3">
           {bodyMeasurements.map(
             (m, i) =>
               m.value && (
                 <div
                   key={i}
-                  className="p-2 rounded-xl bg-gray-50 flex justify-between shadow-sm"
+                  className="p-3 rounded-xl bg-gray-50 border border-gray-100 shadow-sm flex justify-between text-sm"
                 >
                   <span className="text-gray-500">{m.name}</span>
-                  <span className="font-medium text-gray-800">
+                  <span className="font-semibold text-gray-800">
                     {m.value}
                     {m.unit}
                   </span>
@@ -111,30 +126,22 @@ export const LeftSide: React.FC<LeftSides> = ({
         </div>
       </div>
 
+      {/* UPDATE BODY BUTTON */}
       <motion.button
-        whileHover={{ y: -1 }}
+        whileHover={{ scale: 1.03 }}
         onClick={() => navigate("/bodyMeasurements")}
-        className="w-full py-2 mt-1 rounded-xl bg-indigo-600 text-white text-sm hover:bg-indigo-700"
+        className="w-full py-2 rounded-xl bg-indigo-600 text-white text-sm shadow-md hover:bg-indigo-700"
       >
         Cập nhật số đo
       </motion.button>
 
 
-      <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-50 to-indigo-100 text-sm shadow-sm">
-        <div className="flex items-center gap-2 mb-1">
-          <Gift size={16} className="text-indigo-600" />
-          <span className="font-semibold text-gray-800">Ưu đãi</span>
-        </div>
-        Giảm{" "}
-        <span className="font-semibold text-indigo-600">15%</span> cho đơn tiếp
-        theo — mã: <span className="font-mono">VIP15</span>
-      </div>
 
-
+      {/* LOGOUT BUTTON */}
       <motion.button
         whileHover={{ scale: 1.02 }}
         onClick={handleLogOut}
-        className="w-full py-2 rounded-xl bg-red-500 text-white text-sm hover:bg-red-600 shadow-sm"
+        className="w-full py-2 rounded-xl bg-red-500 text-white text-sm shadow hover:bg-red-600"
       >
         <LogOut size={16} className="inline mr-1" /> Đăng xuất
       </motion.button>

@@ -76,13 +76,15 @@ export const CollectionProvider = ({ children }: { children: React.ReactNode }) 
   }, [update]);
   
     const fetchData = async (id:string) => {
-      try {
-        const response = await axios.get(`${UseApiUrl(api_Config.Collection.getCollectionsById)}?id=${id}`)
+
+      try {  
+         const response = await axios.get(`${UseApiUrl(api_Config.Collection.getCollectionsById)}?id=${id}`)
         setSeasonCollections(response.data.seasonCollectionsWithProducts);
       } catch (error) {
         console.error('Error fetching season collections:', error);
       }
     };
+
 
     return (
     <CollectionContext.Provider value={{ seasonCollections, fetchData, collectionData, statCollection, handleAddCollection, handleUpdateCollection, handleDeleteCollection }}>

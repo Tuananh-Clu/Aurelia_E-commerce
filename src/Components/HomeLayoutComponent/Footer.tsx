@@ -3,7 +3,7 @@ import logo from "../../assets/aurelia_logo_svg.svg"
 
 export const Footer = () => {
   return (
-    <div className="relative bg-black w-full px-20 py-12 text-white border-t border-white/10">
+    <div className="relative bg-black w-full md:px-20 md:py-12 px-6 py-8 text-white border-t border-white/10">
       <div className=" flex flex-row items-center justify-between ">
         <div className="flex flex-col ">
           <img src={logo} alt="Aurelia Logo" className="w-64 opacity-95" />
@@ -16,7 +16,7 @@ export const Footer = () => {
             <a href="#" className="hover:text-white transition-colors"><Twitter /></a>
           </div>
         </div>
-        <div className="flex flex-row gap-10 py-12 ">
+        <div className="flex flex-col md:flex-row gap-10 py-12 ">
             <div>
           <h2 className="font-semibold text-lg font-heading  mb-4">Pages</h2>
           <ul className="space-y-2 text-gray-400">

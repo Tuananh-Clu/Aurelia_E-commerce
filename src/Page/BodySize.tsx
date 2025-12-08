@@ -11,7 +11,6 @@ export const BodySize = () => {
   const {DataMeasure,postMeasureToDB}=useContext(AiPoseMeasureContext);
   const [safeData,setSafeData]=useState(false);
   
-  // Fix: Use useEffect instead of conditional in render
   useEffect(() => {
     if (safeData) {
       postMeasureToDB();
@@ -22,9 +21,9 @@ export const BodySize = () => {
   return (
     <>
     <Navbar/>
-    <div className='mt-20 px-15 flex flex-row items-center'>
+    <div className='mt-20 px-15 flex flex-col md:flex-row items-center'>
           <Main isCameraOn={isCameraOn} setIsCameraOn={setIsCameraOn}  />
-          <DashBoardMeasures setIsCameraOn={setIsCameraOn} iscameraOn={isCameraOn} datas={DataMeasure} setDatas={setSafeData}/>
+            <DashBoardMeasures setIsCameraOn={setIsCameraOn} iscameraOn={isCameraOn} datas={DataMeasure} setDatas={setSafeData}/>        
     </div>
     </>
   )

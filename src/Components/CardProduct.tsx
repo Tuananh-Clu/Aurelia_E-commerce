@@ -8,7 +8,7 @@ export const CardProduct = ({item}:{item:any}) => {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ y: -4 }}
-      className="group rounded-2xl bg-white/95 shadow-lg hover:shadow-2xl transition-all duration-300 p-5 border border-gray-100"
+      className="group rounded-2xl bg-white/95 shadow-lg hover:shadow-2xl transition-all duration-300 p-5 border border-gray-100 cursor-pointer"
     >
       <div className="w-full h-[300px] md:h-[350px] lg:h-[400px] overflow-hidden rounded-2xl mb-4">
         <motion.img

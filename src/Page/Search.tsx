@@ -17,7 +17,7 @@ export const Search = () => {
     <>
       <Navbar />
       <main className="min-h-[100vh] pt-40 px-6 md:px-10 py-16">
-        <div className="max-w-5xl mx-auto ">
+        <div className="max-w-6xl mx-auto ">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -48,17 +48,17 @@ export const Search = () => {
             {dataFilter.length} kết quả
           </motion.p>
 
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
             {dataFilter.slice(0, more).map((item, idx) => (
               <motion.div
-              onClick={()=>navigate(`/Fashion/Products/${item.id}`)}
+                onClick={() => navigate(`/Fashion/Products/${item.id}`)}
                 key={item.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.05 * idx }}
-                className="bg-white rounded-2xl shadow-sm overflow-hidden group"
+                className="bg-white  shadow-sm overflow-hidden group cursor-pointer"
               >
-                <div className="h-60 overflow-hidden">
+                <div className="h-90 overflow-hidden">
                   <motion.img
                     src={item.thumbnail}
                     alt={item.name}
@@ -68,7 +68,7 @@ export const Search = () => {
                   />
                 </div>
                 <div className="p-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center flex-col gap-2">
                     <h3 className="font-medium">{item.name}</h3>
                     <span className="text-sm text-gray-600">{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
                   </div>

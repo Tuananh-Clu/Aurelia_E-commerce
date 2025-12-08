@@ -5,6 +5,7 @@ export const api_Config = {
     login: "/api/Authentication/LogIn",
     ShopLogin: "/api/Authentication/LogInShop",
     signUp: "/api/Authentication/Register",
+
   },
   Product: {
     GetProduct: "/api/Product/GetProduct",
@@ -31,6 +32,9 @@ export const api_Config = {
     updateprofile: "/api/Client/UpdateProfile",
     UpdateTier: "/api/Client/UpdateTier",
     HuyDon: "/api/Client/HuyDonHang",
+        AutoAddGioHang: "/api/Client/AutoAddGioHangKhiLog",
+        XoaGioHang: "/api/Client/XoaGioHang" 
+
   },
   Shop: {
     GetDataShop: "/api/Shop/GetShopDataAcoountByID",

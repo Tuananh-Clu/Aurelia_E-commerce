@@ -23,12 +23,13 @@ export const MainPage = () => {
   return (
     <>
       <Navbar />
-      <div className=" w-full gap-4 flex  justify-around">
-        <LeftSite data={data} />
-        <div className="w-4/5 mt-20">
-        <RightSiteMap data={data} />
+      <div className="w-full flex flex-col lg:flex-row gap-4 justify-around px-4 lg:px-8 py-6">
+        <div className="w-full lg:w-2/5 lg:max-w-xl">
+          <LeftSite data={data} />
         </div>
-
+        <div className="w-full lg:w-3/5 mt-6 lg:mt-20">
+          <RightSiteMap data={data} />
+        </div>
       </div>
     </>
   );
