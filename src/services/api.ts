@@ -94,7 +94,7 @@ export const api_Config = {
     DeleteCollection: "/api/SeasonCollection/DeleteCollection",
   }
 };
-const api_Url = "https://localhost:7143";
+const api_Url = "http://localhost:5075";
 
 export const UseApiUrl = (item: string) => {
   return api_Url + item;
