@@ -11,7 +11,9 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+dotenv.net.DotEnv.Load();
+builder.Configuration["MongoDbSettings:ConnectionString"] = Environment.GetEnvironmentVariable("MONGODB_URI");
+builder.Configuration["Jwt:Key"] = Environment.GetEnvironmentVariable("JWT_KEY");
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -69,7 +71,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 builder.Services.AddSignalR();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

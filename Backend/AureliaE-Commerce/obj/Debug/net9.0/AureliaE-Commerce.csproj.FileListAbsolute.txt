@@ -311,3 +311,5 @@ D:\Frontend\Aurelia\Backend\AureliaE-Commerce\obj\Debug\net9.0\refint\AureliaE-C
 D:\Frontend\Aurelia\Backend\AureliaE-Commerce\obj\Debug\net9.0\AureliaE-Commerce.pdb
 D:\Frontend\Aurelia\Backend\AureliaE-Commerce\obj\Debug\net9.0\AureliaE-Commerce.genruntimeconfig.cache
 D:\Frontend\Aurelia\Backend\AureliaE-Commerce\obj\Debug\net9.0\ref\AureliaE-Commerce.dll
+D:\Frontend\Aurelia\Backend\AureliaE-Commerce\bin\Debug\net9.0\dotenv.net.dll
+D:\Frontend\Aurelia\Backend\AureliaE-Commerce\obj\Debug\net9.0\AureliaE-Commerce.sourcelink.json
