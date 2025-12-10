@@ -1,477 +1,924 @@
-﻿using AureliaE_Commerce.Context;
+﻿using AureliaE_Commerce.Common;
+using AureliaE_Commerce.Context;
 using AureliaE_Commerce.Dto;
 using AureliaE_Commerce.Hubs;
 using AureliaE_Commerce.Model;
 using AureliaE_Commerce.Model.CouponProperty;
 using AureliaE_Commerce.Model.Shop;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Newtonsoft.Json.Linq;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace AureliaE_Commerce.Controller
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
     public class ClientController : ControllerBase
     {
-        public readonly IMongoCollection<Client> mongoCollection;
-        public readonly IMongoCollection<Shop> mongo;
-        public readonly IMongoCollection<Product> mongos;
-        public readonly IHubContext<NotifyHub> hubContext;
-        public readonly IMongoCollection<MaGiamGia> voucher;
-        public ClientController(MongoDbContext dbContext, IHubContext<NotifyHub> hubContexts)
+        private readonly IMongoCollection<Client> _clientCollection;
+        private readonly IMongoCollection<Shop> _shopCollection;
+        private readonly IMongoCollection<Product> _productCollection;
+        private readonly IHubContext<NotifyHub> _hubContext;
+        private readonly IMongoCollection<MaGiamGia> _voucherCollection;
+        private readonly ILogger<ClientController> _logger;
+
+        public ClientController(
+            MongoDbContext dbContext,
+            IHubContext<NotifyHub> hubContext,
+            ILogger<ClientController> logger)
         {
-            mongoCollection = dbContext.Client;
-            hubContext = hubContexts;
-            mongo = dbContext.Shop;
-            mongos = dbContext.SanPham;
-            voucher = dbContext.MaGiamGiaVoucher;
+            _clientCollection = dbContext.Client;
+            _hubContext = hubContext;
+            _shopCollection = dbContext.Shop;
+            _productCollection = dbContext.SanPham;
+            _voucherCollection = dbContext.MaGiamGiaVoucher;
+            _logger = logger;
         }
+
         [NonAction]
-        public string? GetHeader(string? token)
+        private string? GetUserIdFromToken(string? token)
         {
             if (string.IsNullOrWhiteSpace(token))
                 return null;
+
             if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
             {
                 token = token.Substring("Bearer ".Length).Trim();
             }
+
             if (string.IsNullOrWhiteSpace(token))
                 return null;
 
-            var handler = new JwtSecurityTokenHandler();
+            try
+            {
+                var handler = new JwtSecurityTokenHandler();
+                if (!handler.CanReadToken(token))
+                    return null;
 
-            if (!handler.CanReadToken(token))
-                return null; 
-
-            var jwtToken = handler.ReadJwtToken(token);
-
-            var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-
-            return userId;
+                var jwtToken = handler.ReadJwtToken(token);
+                return jwtToken.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         [HttpGet("LayThongTinNguoiDung")]
-        public async Task<IActionResult> GetDataUser([FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            return Ok(new
-            {
-                user = data
-            });
-        }
-        [HttpPost("AddItems")]
-        public async Task<IActionResult> AddItems(
-        [FromHeader(Name = "Authorization")] string token,
-        [FromBody] Product product)
-        {
-            var userId = GetHeader(token);
-
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-
-            var update = Builders<Client>.Update.Push(c => c.SanPhamYeuThich, product);
-
-            var result = await mongoCollection.UpdateOneAsync(filter, update);
-
-            if (result.ModifiedCount > 0)
-            {
-                return Ok(new { message = "Thêm sản phẩm thành công" });
-            }
-
-            return BadRequest(new { message = "Không tìm thấy user hoặc thêm thất bại" });
-        }
-
-
-        [HttpPost("AutoAddGioHangKhiLog")]
-        public async Task<IActionResult> AddDon(
-        [FromHeader(Name = "Authorization")]
-        string token,
-        [FromBody] List<ItemOrder> Product)
-        {
-            var userId = GetHeader(token);
-
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-
-            var ids = Product.Select(p => p.Itemid).ToList();
-            var update = Builders<Client>.Update.PushEach(a => a.GioHangCuaBan, Product);
-            var delete = Builders<Client>.Update.Set(a => a.GioHangCuaBan, new List<ItemOrder>());
-            await mongoCollection.UpdateOneAsync(filter, update);
-            return Ok(new
-            {
-                s = "Add thanh cong",
-                p = Product
-            });
-
-        }
-
-        [HttpDelete("XoaGioHang")]
-        public async Task<IActionResult> XoaGioHang(
-      [FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-            var update = Builders<Client>.Update.Set(c => c.GioHangCuaBan, new List<ItemOrder>());
-
-            await mongoCollection.UpdateOneAsync(filter, update);
-
-            return Ok("Đã xóa toàn bộ giỏ hàng");
-        }
-
-
-        [HttpGet("GetItemFavourite")]
-        public async Task<IActionResult> GetItemFavourite(
-        [FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var client = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-
-            if (client == null)
-                return NotFound("Client not found");
-
-            return Ok(client.SanPhamYeuThich);
-        }
-
-
-
-        [HttpPost("AddDonHang")]
-        public async Task<IActionResult> AddDonHang(
-        [FromHeader(Name = "Authorization")] string token, [FromBody] OrderModel order, [FromQuery] string shopId)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var update = Builders<Client>.Update.Push("DonHangCuaBan", order);
-            var result = await mongoCollection.UpdateOneAsync(filter, update);
-            string shopGroup = $"Shop_{shopId}";
-            string messages = $"Đơn hàng mới #{order.orderId} từ {order.name}";
-            var value = order.product.Sum(a => a.price * a.quantity);
-
-            var point = value switch
-            {
-                <= 100_000_000 => 100,
-                <= 500_000_000 => 500,
-                <= 1_000_000_000 => 1000,
-                _ => 2000
-
-            };
-            var productId = order.product.Select(a => a.Itemid).FirstOrDefault();
-            var updates = Builders<Client>.Update.Set(a => a.Point, point);
-            await mongoCollection.UpdateOneAsync(filter, updates);
-            var quantity = order.product.Where(a => a.Itemid == productId).Sum(a => a.quantity);
-
-            var filters = Builders<Shop>.Filter.And(
-                Builders<Shop>.Filter.Eq(a => a.shopId, shopId),
-                Builders<Shop>.Filter.ElemMatch(a => a.products, s => s.productId == productId)
-            );
-            var filterVoucher = Builders<MaGiamGia>.Filter.Eq(a => a.code, order.voucherUsed != null && order.voucherUsed.Count > 0 ? order.voucherUsed[0].code : "");
-            var updateVoucher = Builders<MaGiamGia>.Update.Inc(a => a.soLuong, -1);
-            await voucher.UpdateOneAsync(filterVoucher, updateVoucher);
-            var updatess = Builders<Shop>.Update.Inc("products.$.sold", quantity);
-            await mongo.UpdateOneAsync(filters, updatess);
-            var data = new
-            {
-                message = messages
-            };
-            await hubContext.Clients.Group(shopGroup).SendAsync("NotificationOrder", data);
-            if (result.ModifiedCount > 0)
-            {
-                return Ok(new { message = "Thêm sản phẩm thành công" });
-            }
-
-            return BadRequest(new { message = "Không tìm thấy user hoặc thêm thất bại" });
-
-        }
-        [HttpGet("LayDonHang")]
-        public async Task<IActionResult> LayDonHang([FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            var order = data.DonHangCuaBan;
-            return Ok(order);
-        }
-        [HttpGet("LayDonHangGanDay")]
-        public async Task<IActionResult> LayDonHangGanDay([FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-
-            if (data == null || data.DonHangCuaBan == null || !data.DonHangCuaBan.Any())
-                return NotFound("Không tìm thấy đơn hàng nào");
-
-            var orderGanDay = data.DonHangCuaBan.SelectMany(a => a.product)
-                .OrderByDescending(o => o.dateBuy)
-                .FirstOrDefault();
-
-            return Ok(new
-            {
-                ngayMoiNhat = orderGanDay.dateBuy
-            });
-        }
-
-        [HttpGet("GetSoLuongDonHang")]
-        public async Task<IActionResult> GetSoLuongDonHang([FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-
-            if (data == null)
-            {
-                return NotFound(new { message = "User not found" });
-            }
-
-            var soLuongDon = data.DonHangCuaBan.Count(a => a.status != "Đã Hủy");
-            var tongTien = data.DonHangCuaBan
-                .Where(a => a.status != "Đã Hủy")
-                .SelectMany(dh => dh.product)
-                .Sum(p => p.quantity * p.price);
-
-            return Ok(new
-            {
-                SoLuongDon = soLuongDon,
-                TongTien = tongTien
-            });
-        }
-        [HttpPost("UpMeasure")]
-        public async Task<IActionResult> UpMeasure([FromHeader(Name = "Authorization")] string token, [FromBody] Measure measure)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-
-            var update = Builders<Client>.Update.Set("SoDoNgDUng", measure);
-            await mongoCollection.UpdateOneAsync(filter, update);
-            return Ok(measure);
-        }
-        [HttpGet("GetSoDo")]
-        public async Task<IActionResult> GetSoDo([FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("Invalid or missing token");
-            if (data.SoDoNgDUng == null)
-            {
-                return BadRequest();
-            }
-            var das = data.SoDoNgDUng;
-            if (das == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(new Measure
-            {
-                vai = das.vai ?? "",
-                eo = das.eo ?? "",
-                chieuCao = das.chieuCao ?? "",
-                nguc = das.nguc ?? "",
-                hong = das.hong ?? ""
-            });
-
-
-        }
-        [HttpPost("AddCuocHenUser")]
-        public async Task<IActionResult> AddCuocHen([FromHeader(Name = "Authorization")] string token, [FromBody] ClientAppointment clientAppointment)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var update = Builders<Client>.Update.Push("LichSuCuocHen", clientAppointment);
-            await mongoCollection.UpdateOneAsync(filter, update);
-
-            return Ok(new { message = "Thêm Lịch Hẹn Thành Công!" });
-        }
-        [HttpGet("LayCuocHenUser")]
-        public async Task<IActionResult> LayCuocHen([FromHeader(Name = "Authorization")] string token)
-        {
-
-            var userId = GetHeader(token);
-            var user = await mongoCollection.Find(u => u.Id == userId).FirstOrDefaultAsync();
-
-            if (user == null)
-            {
-
-                return NotFound(new { message = "Người dùng không tồn tại" });
-            }
-            var firstAppointment = user.LichSuCuocHen?.ToList();
-
-            if (firstAppointment == null)
-            {
-                return Ok(new { message = "Chưa có cuộc hẹn nào" });
-            }
-            return Ok(firstAppointment);
-        }
-
-        [HttpPost("LuuDiaChi")]
-        public async Task<IActionResult> LuuAddress([FromHeader(Name = "Authorization")] string token, [FromBody] ThongTinCaNhan thongTinCaNhan)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var update = Builders<Client>.Update.Push(a => a.ThongTinDatHang, thongTinCaNhan);
-            await mongoCollection.UpdateOneAsync(filter, update);
-            return Ok(new { message = "Lưu Thành Công" });
-        }
-        [HttpGet("LayDiaChi")]
-        public async Task<IActionResult> LayDiaChi([FromHeader(Name = "Authorization")] string token)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            return Ok(data.ThongTinDatHang);
-        }
-        [HttpPost("XoaDiaChi")]
-        public async Task<IActionResult> XoaDiaChi(
-     [FromHeader(Name = "Authorization")] string token,
-     [FromBody] ThongTinCaNhan thongTinCaNhan)
-        {
-            var userId = GetHeader(token);
-
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-
-            var update = Builders<Client>.Update.PullFilter(
-                c => c.ThongTinDatHang,
-                td => td.HoVaTen == thongTinCaNhan.HoVaTen &&
-                      td.DiaChi == thongTinCaNhan.DiaChi &&
-                      td.Email == thongTinCaNhan.Email &&
-                      td.SoDT == thongTinCaNhan.SoDT
-            );
-
-            var result = await mongoCollection.UpdateOneAsync(filter, update);
-
-            if (result.ModifiedCount > 0)
-                return Ok(new { message = "Xóa thành công" });
-            else
-                return NotFound(new { message = "Không tìm thấy địa chỉ" });
-        }
-        [HttpPost("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileCustomer updateProfileCustomer, [FromHeader(Name = "Authorization")] string token)
-        {
-            var userToken = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userToken);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            var update = Builders<Client>.Update.Set(s => s.Name, updateProfileCustomer.hovaten)
-                .Set(s => s.Email, updateProfileCustomer.email)
-                .Set(s => s.SoDt, updateProfileCustomer.soDt)
-                .Set(s => s.DiaChi, updateProfileCustomer.address)
-                .Set(s => s.Avatar, updateProfileCustomer.avatarUrl);
-            await mongoCollection.UpdateOneAsync(filter, update);
-            var user = new Client
-            {
-                Id = data.Id,
-                PassWord = data.PassWord,
-                Point = data.Point,
-                ThongTinDatHang = data.ThongTinDatHang,
-                NgayTaoTaiKhoan = data.NgayTaoTaiKhoan,
-                Tier = data.Tier,
-                Name = updateProfileCustomer.hovaten,
-                Email = updateProfileCustomer.email,
-                SoDt = updateProfileCustomer.soDt,
-                DiaChi = updateProfileCustomer.address,
-                Avatar = updateProfileCustomer.avatarUrl,
-                SanPhamYeuThich = data.SanPhamYeuThich,
-                LichSuCuocHen = data.LichSuCuocHen,
-                DonHangCuaBan = data.DonHangCuaBan,
-                SoDoNgDUng = data.SoDoNgDUng,
-
-            };
-            return Ok(new { message = "Cập Nhật Thành Công", user = user });
-
-        }
-        [HttpPost("UpdateTier")]
-        public async Task UpdateTier([FromHeader(Name = "Authorization")] string token)
-        {
-            var userToken = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userToken);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            var point = data.Point;
-            var tier = point switch
-            {
-                <= 1000 => "Bronze",
-                <= 5000 => "Silver",
-                <= 10000 => "Gold",
-                <= 20000 => "Diamond",
-                _ => "Royal"
-            };
-            var update = Builders<Client>.Update.Set(s => s.Tier, tier);
-            await mongoCollection.UpdateOneAsync(filter, update);
-            var dataBenfit = new benefit
-            {
-                name = "",
-                freeShipping = true,
-                value=0
-            };
-            benefit dataBenefit = tier switch
-            {
-                "Bronze" => new benefit { name = "Ưu đãi sinh nhật 3%", freeShipping = false, value = 3 },
-                "Silver" => new benefit { name = "Miễn phí vận chuyển đơn đầu tiên + Ưu đãi sinh nhật 5%", freeShipping = true, value = 5 },
-                "Gold" => new benefit { name = "Giảm 10% cho tất cả sản phẩm + Ưu tiên hỗ trợ khách hàng", freeShipping = true, value = 10 },
-                "Diamond" => new benefit { name = "Giảm 15% + Quà tri ân mỗi quý", freeShipping = true, value = 15 },
-                "Royal" => new benefit { name = "Giảm 20% + Ưu đãi sự kiện VIP + Hỗ trợ riêng 24/7", freeShipping = true, value = 20 },
-                "Royal Plus" => new benefit { name = "Giảm 30% + Quà tặng độc quyền + Trải nghiệm cao cấp", freeShipping = true, value = 30 },
-                _ => null
-            };
-
-            if (dataBenefit != null)
-            {
-                var updates = Builders<Client>.Update.Set(a => a.Benefits, dataBenefit);
-                await mongoCollection.UpdateOneAsync(filter, updates);
-            }
-
-        }
-        [HttpPost("HuyDonHang")]
-        public async Task<IActionResult> HuyDonHang([FromHeader(Name = "Authorization")] string token, [FromQuery] string orderId)
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetUserData([FromHeader(Name = "Authorization")] string? token)
         {
             try
             {
-                var userToken = GetHeader(token);
-                var filter = Builders<Client>.Filter.And(Builders<Client>.Filter.Eq(c => c.Id, userToken),
-                     Builders<Client>.Filter.ElemMatch(c => c.DonHangCuaBan, d => d.orderId == orderId));
-                var update = Builders<Client>.Update.Set("DonHangCuaBan.$.status", "Đã Hủy");
-                await mongoCollection.UpdateOneAsync(filter, update);
-
-                var filterShop = Builders<Shop>.Filter.ElemMatch(a => a.Orders, s => s.orderId == orderId);
-                var updateShop = Builders<Shop>.Update.Set("Orders.$.status", "Đã Hủy");
-                await mongo.UpdateOneAsync(filterShop, updateShop);
-
-                var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-                var quantity = data.DonHangCuaBan.SelectMany(a => a.product).Select(a => a.quantity).First();
-                var size = data.DonHangCuaBan.SelectMany(a => a.product).Select(a => a.size).First();
-                var productID = data.DonHangCuaBan.SelectMany(a => a.product).Select(a => a.Itemid).First();
-                var color = data.DonHangCuaBan.SelectMany(a => a.product).Select(a => a.color).First();
-                var filterSanPham = Builders<Product>.Filter.And(
-                    Builders<Product>.Filter.Eq(a => a.id, productID),
-                    Builders<Product>.Filter.Eq("variants.color", color),
-                    Builders<Product>.Filter.Eq("variants.sizes.size", size)
-                    );
-                var updatesanpham = Builders<Product>.Update.Inc("variants.$[v].sizes.$[s].quantity", quantity);
-                var arrayFilters = new List<ArrayFilterDefinition>
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
                 {
-                    new BsonDocumentArrayFilterDefinition<BsonDocument>(new BsonDocument("v.color", color)),
-                    new BsonDocumentArrayFilterDefinition<BsonDocument>(new BsonDocument("s.size", size))
-                };
-                var updateOptions = new UpdateOptions { ArrayFilters = arrayFilters };
-                await mongos.UpdateOneAsync(filterSanPham, updatesanpham,updateOptions);
-                return Ok(new { message = "Đã Hủy Thành Công" });
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                return Ok(ApiResponse<object>.SuccessResponse(new { user = client }, "Lấy thông tin người dùng thành công"));
             }
             catch (Exception ex)
             {
-                return BadRequest(new { error = ex.Message });
+                _logger.LogError(ex, "Error retrieving user data");
+                throw;
             }
+        }
 
+        [HttpPost("AddItems")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> AddFavoriteItem(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] Product product)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (product == null)
+                {
+                    return BadRequest(ApiResponse.Error("Sản phẩm không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var update = Builders<Client>.Update.Push(c => c.SanPhamYeuThich, product);
+                var result = await _clientCollection.UpdateOneAsync(filter, update);
+
+                if (result.MatchedCount == 0)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                _logger.LogInformation("Favorite item added for user {UserId}: {ProductId}", userId, product.id);
+                return Ok(ApiResponse.Success("Thêm sản phẩm yêu thích thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding favorite item");
+                throw;
+            }
+        }
+
+        [HttpPost("AutoAddGioHangKhiLog")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> AutoAddToCart(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] List<ItemOrder> products)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (products == null || !products.Any())
+                {
+                    return BadRequest(ApiResponse.Error("Danh sách sản phẩm không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var update = Builders<Client>.Update.PushEach(a => a.GioHangCuaBan, products);
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                _logger.LogInformation("Auto added {Count} items to cart for user {UserId}", products.Count, userId);
+                return Ok(ApiResponse<object>.SuccessResponse(new { products }, "Thêm vào giỏ hàng thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error auto adding to cart");
+                throw;
+            }
+        }
+
+        [HttpDelete("XoaGioHang")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> ClearCart([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var update = Builders<Client>.Update.Set(c => c.GioHangCuaBan, new List<ItemOrder>());
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                _logger.LogInformation("Cart cleared for user {UserId}", userId);
+                return Ok(ApiResponse.Success("Đã xóa toàn bộ giỏ hàng"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error clearing cart");
+                throw;
+            }
+        }
+
+        [HttpGet("GetItemFavourite")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<List<Product>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetFavoriteItems([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var favorites = client.SanPhamYeuThich ?? new List<Product>();
+                return Ok(ApiResponse<List<Product>>.SuccessResponse(favorites, "Lấy danh sách sản phẩm yêu thích thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving favorite items");
+                throw;
+            }
+        }
+
+        [HttpPost("AddDonHang")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> AddOrder(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] OrderModel order,
+            [FromQuery] string shopId)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (order == null || order.product == null || !order.product.Any())
+                {
+                    return BadRequest(ApiResponse.Error("Dữ liệu đơn hàng không hợp lệ"));
+                }
+
+                if (string.IsNullOrWhiteSpace(shopId))
+                {
+                    return BadRequest(ApiResponse.Error("Shop ID không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var update = Builders<Client>.Update.Push("DonHangCuaBan", order);
+                var result = await _clientCollection.UpdateOneAsync(filter, update);
+
+                if (result.MatchedCount == 0)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                string shopGroup = $"Shop_{shopId}";
+                string message = $"Đơn hàng mới #{order.orderId} từ {order.name}";
+                var totalValue = order.product.Sum(a => a.price * a.quantity);
+
+                var points = totalValue switch
+                {
+                    <= 100_000_000 => 100,
+                    <= 500_000_000 => 500,
+                    <= 1_000_000_000 => 1000,
+                    _ => 2000
+                };
+
+                var pointUpdate = Builders<Client>.Update.Set(a => a.Point, points);
+                await _clientCollection.UpdateOneAsync(filter, pointUpdate);
+
+                var firstProductId = order.product.Select(a => a.Itemid).FirstOrDefault();
+                var quantity = order.product.Where(a => a.Itemid == firstProductId).Sum(a => a.quantity);
+
+                var shopFilter = Builders<Shop>.Filter.And(
+                    Builders<Shop>.Filter.Eq(a => a.shopId, shopId),
+                    Builders<Shop>.Filter.ElemMatch(a => a.products, s => s.productId == firstProductId)
+                );
+
+                if (order.voucherUsed != null && order.voucherUsed.Any())
+                {
+                    var voucherCode = order.voucherUsed[0].code;
+                    var voucherFilter = Builders<MaGiamGia>.Filter.Eq(a => a.code, voucherCode);
+                    var voucherUpdate = Builders<MaGiamGia>.Update.Inc(a => a.soLuong, -1);
+                    await _voucherCollection.UpdateOneAsync(voucherFilter, voucherUpdate);
+                }
+
+                var shopUpdate = Builders<Shop>.Update.Inc("products.$.sold", quantity);
+                await _shopCollection.UpdateOneAsync(shopFilter, shopUpdate);
+
+                await _hubContext.Clients.Group(shopGroup).SendAsync("NotificationOrder", new { message });
+
+                _logger.LogInformation("Order added for user {UserId}, OrderId: {OrderId}", userId, order.orderId);
+                return Ok(ApiResponse.Success("Thêm đơn hàng thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding order");
+                throw;
+            }
+        }
+
+        [HttpGet("LayDonHang")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<List<OrderModel>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOrders([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var orders = client.DonHangCuaBan ?? new List<OrderModel>();
+                return Ok(ApiResponse<List<OrderModel>>.SuccessResponse(orders, "Lấy danh sách đơn hàng thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving orders");
+                throw;
+            }
+        }
+
+        [HttpGet("LayDonHangGanDay")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetRecentOrder([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null || client.DonHangCuaBan == null || !client.DonHangCuaBan.Any())
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy đơn hàng nào"));
+                }
+
+                var recentOrder = client.DonHangCuaBan
+                    .SelectMany(a => a.product ?? new List<ItemOrder>())
+                    .OrderByDescending(o => o.dateBuy)
+                    .FirstOrDefault();
+
+                if (recentOrder == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy đơn hàng gần đây"));
+                }
+
+                return Ok(ApiResponse<object>.SuccessResponse(new { ngayMoiNhat = recentOrder.dateBuy }, "Lấy đơn hàng gần đây thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving recent order");
+                throw;
+            }
+        }
+
+        [HttpGet("GetSoLuongDonHang")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOrderStatistics([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var activeOrders = client.DonHangCuaBan?.Where(a => a.status != "Đã Hủy").ToList() ?? new List<OrderModel>();
+                var soLuongDon = activeOrders.Count;
+                var tongTien = activeOrders
+                    .SelectMany(dh => dh.product ?? new List<ItemOrder>())
+                    .Sum(p => p.quantity * p.price);
+
+                return Ok(ApiResponse<object>.SuccessResponse(new
+                {
+                    SoLuongDon = soLuongDon,
+                    TongTien = tongTien
+                }, "Lấy thống kê đơn hàng thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving order statistics");
+                throw;
+            }
+        }
+
+        [HttpPost("UpMeasure")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<Measure>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SaveMeasurements(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] Measure measure)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (measure == null)
+                {
+                    return BadRequest(ApiResponse.Error("Dữ liệu số đo không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var update = Builders<Client>.Update.Set("SoDoNgDUng", measure);
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                _logger.LogInformation("Measurements saved for user {UserId}", userId);
+                return Ok(ApiResponse<Measure>.SuccessResponse(measure, "Lưu số đo thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving measurements");
+                throw;
+            }
+        }
+
+        [HttpGet("GetSoDo")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<Measure>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetMeasurements([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                if (client.SoDoNgDUng == null)
+                {
+                    return NotFound(ApiResponse.Error("Người dùng chưa có số đo"));
+                }
+
+                var measure = new Measure
+                {
+                    vai = client.SoDoNgDUng.vai ?? "",
+                    eo = client.SoDoNgDUng.eo ?? "",
+                    chieuCao = client.SoDoNgDUng.chieuCao ?? "",
+                    nguc = client.SoDoNgDUng.nguc ?? "",
+                    hong = client.SoDoNgDUng.hong ?? ""
+                };
+
+                return Ok(ApiResponse<Measure>.SuccessResponse(measure, "Lấy số đo thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving measurements");
+                throw;
+            }
+        }
+
+        [HttpPost("AddCuocHenUser")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> AddAppointment(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] ClientAppointment clientAppointment)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (clientAppointment == null)
+                {
+                    return BadRequest(ApiResponse.Error("Dữ liệu lịch hẹn không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var update = Builders<Client>.Update.Push("LichSuCuocHen", clientAppointment);
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                _logger.LogInformation("Appointment added for user {UserId}", userId);
+                return Ok(ApiResponse.Success("Thêm lịch hẹn thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding appointment");
+                throw;
+            }
+        }
+
+        [HttpGet("LayCuocHenUser")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<List<ClientAppointment>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAppointments([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var client = await _clientCollection.Find(u => u.Id == userId).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var appointments = client.LichSuCuocHen?.ToList() ?? new List<ClientAppointment>();
+
+                if (!appointments.Any())
+                {
+                    return Ok(ApiResponse<List<ClientAppointment>>.SuccessResponse(appointments, "Chưa có cuộc hẹn nào"));
+                }
+
+                return Ok(ApiResponse<List<ClientAppointment>>.SuccessResponse(appointments, "Lấy danh sách lịch hẹn thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving appointments");
+                throw;
+            }
+        }
+
+        [HttpPost("LuuDiaChi")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> SaveAddress(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] ThongTinCaNhan addressInfo)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (addressInfo == null)
+                {
+                    return BadRequest(ApiResponse.Error("Dữ liệu địa chỉ không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var update = Builders<Client>.Update.Push(a => a.ThongTinDatHang, addressInfo);
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                _logger.LogInformation("Address saved for user {UserId}", userId);
+                return Ok(ApiResponse.Success("Lưu địa chỉ thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error saving address");
+                throw;
+            }
+        }
+
+        [HttpGet("LayDiaChi")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<List<ThongTinCaNhan>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAddresses([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var addresses = client.ThongTinDatHang ?? new List<ThongTinCaNhan>();
+                return Ok(ApiResponse<List<ThongTinCaNhan>>.SuccessResponse(addresses, "Lấy danh sách địa chỉ thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving addresses");
+                throw;
+            }
+        }
+
+        [HttpDelete("XoaDiaChi")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteAddress(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromBody] ThongTinCaNhan addressInfo)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (addressInfo == null)
+                {
+                    return BadRequest(ApiResponse.Error("Dữ liệu địa chỉ không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var update = Builders<Client>.Update.PullFilter(
+                    c => c.ThongTinDatHang,
+                    td => td.HoVaTen == addressInfo.HoVaTen &&
+                          td.DiaChi == addressInfo.DiaChi &&
+                          td.Email == addressInfo.Email &&
+                          td.SoDT == addressInfo.SoDT
+                );
+
+                var result = await _clientCollection.UpdateOneAsync(filter, update);
+
+                if (result.ModifiedCount == 0)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy địa chỉ để xóa"));
+                }
+
+                _logger.LogInformation("Address deleted for user {UserId}", userId);
+                return Ok(ApiResponse.Success("Xóa địa chỉ thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting address");
+                throw;
+            }
+        }
+
+        [HttpPut("UpdateProfile")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProfile(
+            [FromBody] UpdateProfileCustomer updateProfileCustomer,
+            [FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (updateProfileCustomer == null)
+                {
+                    return BadRequest(ApiResponse.Error("Dữ liệu cập nhật không được để trống"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var update = Builders<Client>.Update
+                    .Set(s => s.Name, updateProfileCustomer.hovaten)
+                    .Set(s => s.Email, updateProfileCustomer.email)
+                    .Set(s => s.SoDt, updateProfileCustomer.soDt)
+                    .Set(s => s.DiaChi, updateProfileCustomer.address)
+                    .Set(s => s.Avatar, updateProfileCustomer.avatarUrl);
+
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                var updatedClient = new
+                {
+                    id = client.Id,
+                    name = updateProfileCustomer.hovaten,
+                    email = updateProfileCustomer.email,
+                    soDt = updateProfileCustomer.soDt,
+                    address = updateProfileCustomer.address,
+                    avatar = updateProfileCustomer.avatarUrl,
+                    point = client.Point,
+                    tier = client.Tier,
+                    thongTinDatHang = client.ThongTinDatHang,
+                    ngayTaoTaiKhoan = client.NgayTaoTaiKhoan,
+                    sanPhamYeuThich = client.SanPhamYeuThich,
+                    lichSuCuocHen = client.LichSuCuocHen,
+                    donHangCuaBan = client.DonHangCuaBan,
+                    soDoNguoiDung = client.SoDoNgDUng
+                };
+
+                _logger.LogInformation("Profile updated for user {UserId}", userId);
+                return Ok(ApiResponse<object>.SuccessResponse(new { user = updatedClient }, Constants.SuccessMessages.UPDATED));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating profile");
+                throw;
+            }
+        }
+
+        [HttpPost("UpdateTier")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateTier([FromHeader(Name = "Authorization")] string? token)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
+                var client = await _clientCollection.Find(filter).FirstOrDefaultAsync();
+
+                if (client == null)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy người dùng"));
+                }
+
+                var points = client.Point;
+                var tier = points switch
+                {
+                    <= 1000 => Constants.UserTiers.BRONZE,
+                    <= 5000 => "Silver",
+                    <= 10000 => "Gold",
+                    <= 20000 => "Diamond",
+                    _ => "Royal"
+                };
+
+                var update = Builders<Client>.Update.Set(s => s.Tier, tier);
+                await _clientCollection.UpdateOneAsync(filter, update);
+
+                var benefit = tier switch
+                {
+                    "Bronze" => new benefit { name = "Ưu đãi sinh nhật 3%", freeShipping = false, value = 3 },
+                    "Silver" => new benefit { name = "Miễn phí vận chuyển đơn đầu tiên + Ưu đãi sinh nhật 5%", freeShipping = true, value = 5 },
+                    "Gold" => new benefit { name = "Giảm 10% cho tất cả sản phẩm + Ưu tiên hỗ trợ khách hàng", freeShipping = true, value = 10 },
+                    "Diamond" => new benefit { name = "Giảm 15% + Quà tri ân mỗi quý", freeShipping = true, value = 15 },
+                    "Royal" => new benefit { name = "Giảm 20% + Ưu đãi sự kiện VIP + Hỗ trợ riêng 24/7", freeShipping = true, value = 20 },
+                    "Royal Plus" => new benefit { name = "Giảm 30% + Quà tặng độc quyền + Trải nghiệm cao cấp", freeShipping = true, value = 30 },
+                    _ => null
+                };
+
+                if (benefit != null)
+                {
+                    var benefitUpdate = Builders<Client>.Update.Set(a => a.Benefits, benefit);
+                    await _clientCollection.UpdateOneAsync(filter, benefitUpdate);
+                }
+
+                _logger.LogInformation("Tier updated for user {UserId}: {Tier}", userId, tier);
+                return Ok(ApiResponse.Success($"Cập nhật tier thành công: {tier}"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating tier");
+                throw;
+            }
+        }
+
+        [HttpPost("HuyDonHang")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> CancelOrder(
+            [FromHeader(Name = "Authorization")] string? token,
+            [FromQuery] string orderId)
+        {
+            try
+            {
+                var userId = GetUserIdFromToken(token);
+                if (string.IsNullOrWhiteSpace(userId))
+                {
+                    return Unauthorized(ApiResponse.Error("Token không hợp lệ"));
+                }
+
+                if (string.IsNullOrWhiteSpace(orderId))
+                {
+                    return BadRequest(ApiResponse.Error("Order ID không được để trống"));
+                }
+
+                var clientFilter = Builders<Client>.Filter.And(
+                    Builders<Client>.Filter.Eq(c => c.Id, userId),
+                    Builders<Client>.Filter.ElemMatch(c => c.DonHangCuaBan, d => d.orderId == orderId)
+                );
+
+                var clientUpdate = Builders<Client>.Update.Set("DonHangCuaBan.$.status", "Đã Hủy");
+                var clientResult = await _clientCollection.UpdateOneAsync(clientFilter, clientUpdate);
+
+                if (clientResult.MatchedCount == 0)
+                {
+                    return NotFound(ApiResponse.Error("Không tìm thấy đơn hàng"));
+                }
+
+                var shopFilter = Builders<Shop>.Filter.ElemMatch(a => a.Orders, s => s.orderId == orderId);
+                var shopUpdate = Builders<Shop>.Update.Set("Orders.$.status", "Đã Hủy");
+                await _shopCollection.UpdateOneAsync(shopFilter, shopUpdate);
+
+                var client = await _clientCollection.Find(clientFilter).FirstOrDefaultAsync();
+                if (client?.DonHangCuaBan != null)
+                {
+                    var order = client.DonHangCuaBan.FirstOrDefault(o => o.orderId == orderId);
+                    if (order?.product != null && order.product.Any())
+                    {
+                        var firstProduct = order.product.First();
+                        var quantity = firstProduct.quantity;
+                        var size = firstProduct.size;
+                        var productId = firstProduct.Itemid;
+                        var color = firstProduct.color;
+
+                        var productFilter = Builders<Product>.Filter.And(
+                            Builders<Product>.Filter.Eq(a => a.id, productId),
+                            Builders<Product>.Filter.Eq("variants.color", color),
+                            Builders<Product>.Filter.Eq("variants.sizes.size", size)
+                        );
+
+                        var productUpdate = Builders<Product>.Update.Inc("variants.$[v].sizes.$[s].quantity", quantity);
+                        var arrayFilters = new List<ArrayFilterDefinition>
+                        {
+                            new BsonDocumentArrayFilterDefinition<BsonDocument>(new BsonDocument("v.color", color)),
+                            new BsonDocumentArrayFilterDefinition<BsonDocument>(new BsonDocument("s.size", size))
+                        };
+                        var updateOptions = new UpdateOptions { ArrayFilters = arrayFilters };
+                        await _productCollection.UpdateOneAsync(productFilter, productUpdate, updateOptions);
+                    }
+                }
+
+                _logger.LogInformation("Order cancelled: {OrderId} by user {UserId}", orderId, userId);
+                return Ok(ApiResponse.Success("Hủy đơn hàng thành công"));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error cancelling order");
+                throw;
+            }
         }
     }
-
-
 }
