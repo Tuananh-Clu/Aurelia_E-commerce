@@ -1,0 +1,6 @@
+@AureliaE_Commerce_HostAddress = http://localhost:5075
+
+GET {{AureliaE_Commerce_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
