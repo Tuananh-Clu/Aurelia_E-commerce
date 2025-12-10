@@ -26,9 +26,9 @@ export default function MainContents() {
     }
   };
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-row h-[100vh] bg-gray-50">
       <SideBar setState={setStatePage}  state={statePage}/>
-      <div className="w-full">
+      <div className="w-full max-h-[100vh] overflow-y-auto p-6">
               {bru()}
       </div>
     </div>

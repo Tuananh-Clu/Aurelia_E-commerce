@@ -56,7 +56,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }
       );
-
       await axios.post(
         UseApiUrl(api_Config.Product.UpdateQuantityProduct),
         dataOrder.product.map((item) => ({

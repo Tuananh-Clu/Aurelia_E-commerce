@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SideBoard = ({
   onClick,
@@ -31,7 +32,7 @@ export const SideBoard = ({
     { name: "Collections", icon: <ShoppingBag size={20} />, badge: "12" },
     { name: "Sản phẩm", icon: <Tag size={20} />, badge: "5" },
   ];
-
+  const navigate = useNavigate();
   const fadeUp = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
@@ -192,6 +193,11 @@ export const SideBoard = ({
           <motion.button
             whileHover={{ scale: 1.02, x: 4 }}
             whileTap={{ scale: 0.98 }}
+            onClick={()=>{
+              navigate("/login");
+              localStorage.removeItem("AdminToken");
+              
+            }}
             className={`flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/50 border border-transparent rounded-xl transition-all duration-300 group`}
           >
             <LogOut

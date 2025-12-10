@@ -14,7 +14,7 @@ export const PopupSetting = () => {
         if(token){
             localStorage.removeItem('tokenShop');
         }
-        navigate('/loginShop');
+        navigate('/login');
     }
   return (
     <div className='absolute bottom-20 bg-white  text-black p-4 rounded shadow-lg w-50 flex flex-col items-center '>

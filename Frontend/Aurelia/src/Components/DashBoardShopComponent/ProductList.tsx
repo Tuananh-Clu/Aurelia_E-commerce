@@ -164,7 +164,7 @@ const ProductList = () => {
                   className="px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 font-medium text-gray-700"
                 >
                   <option value="all">Tất cả loại</option>
-                  {datasanPham.danhSachSanPham
+                  {datasanPham?.danhSachSanPham
                     .reduce((types: any, p: any) => {
                       if (!types.includes(p.type)) types.push(p.type);
                       return types;

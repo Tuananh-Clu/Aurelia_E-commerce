@@ -2,6 +2,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { useEffect, useRef, lazy, Suspense, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { LoadingScreen } from "./Components/LoadingScreen";
+import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -25,17 +26,9 @@ const MainPage = lazy(() =>
     default: m.MainPage,
   }))
 );
-const FormAuthorForShop = lazy(() =>
-  import("./Components/FormAuthorForShop").then((m) => ({ default: m.default }))
-);
 const DashboardShop = lazy(() =>
   import("./Page/DashboardAccount/DashBoardShop").then((m) => ({
     default: m.default,
-  }))
-);
-const AdminSiteLog = lazy(() =>
-  import("./Components/AdminBrandComponent/LogIn/AdminSiteLog").then((m) => ({
-    default: m.AdminSiteLog,
   }))
 );
 const AdminDashboard = lazy(() =>
@@ -128,10 +121,9 @@ function App() {
           <Route path="/bodyMeasurements" element={<BodySize />} />
           <Route path="/BookingAppointment/:id" element={<FormBooking />} />
           <Route path="/tracking/:id" element={<MainPage />} />
-          <Route path="/logInShop" element={<FormAuthorForShop />} />
+          <Route path="/login" element={<FormAuthorForShopAndAdmin />} />
           <Route path="/DashBoardShop" element={<DashboardShop />} />
-          <Route path="/Admin" element={<AdminSiteLog />} />
-          <Route path="/Admin/DashboardAdmin" element={<AdminDashboard />} />
+          <Route path="/Admin" element={<AdminDashboard />} />
         </Routes>
       </Suspense>
     </div>

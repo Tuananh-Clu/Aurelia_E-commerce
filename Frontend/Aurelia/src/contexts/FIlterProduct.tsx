@@ -116,12 +116,12 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     try {
       const dataCached = localStorage.getItem("allProducts");
       if (dataCached) {
-        setDataProduct(JSON.parse(dataCached));
+        setDataProduct(JSON.parse(dataCached).data);
         return;
       }
-      const response = await axios.get<Product[]>(UseApiUrl(api_Config.Product.GetProduct));
-      setDataProduct(response.data);
-      localStorage.setItem("allProducts", JSON.stringify(response.data));
+      const response = await axios.get<{ data: Product[] }>(UseApiUrl(api_Config.Product.GetProduct));
+      setDataProduct(response.data.data);
+      localStorage.setItem("allProducts", JSON.stringify(response.data.data));
     } catch (error) {
       console.error("Lỗi khi lấy sản phẩm:", error);
     }

@@ -15,12 +15,12 @@ namespace AureliaE_Commerce.Controllers
     [Produces("application/json")]
     public class ProductController : ControllerBase
     {
-        private readonly IProductItemsService _productItemsService;
+        private readonly ProductItemsService _productItemsService;
         private readonly IMongoCollection<Product> _mongoCollection;
         private readonly ILogger<ProductController> _logger;
 
         public ProductController(
-            IProductItemsService productItemsService,
+            ProductItemsService productItemsService,
             MongoDbContext dbContext,
             ILogger<ProductController> logger)
         {
@@ -69,7 +69,7 @@ namespace AureliaE_Commerce.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error importing products from file");
-                throw; // Let middleware handle
+                throw; 
             }
         }
 
