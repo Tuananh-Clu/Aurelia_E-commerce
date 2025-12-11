@@ -44,7 +44,7 @@ export default function AddCollectionForm({
     views: status === "edit"  ? season.views : 0,
   });
 
-  const filteredList = dataProduct.filter((product) => {
+  const filteredList = dataProduct?.filter((product) => {
     const matchName = product.name.toLowerCase().includes(text.toLowerCase());
     const matchSeason = !filteredSeason || product.season === filteredSeason;
     return matchName && matchSeason;
@@ -97,14 +97,13 @@ export default function AddCollectionForm({
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center relative min-h-screen p-8">
+    <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center relative  p-8 ">
       <X
         onClick={() => setState(false)}
         className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
       />
 
-      <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-10 w-full max-w-7xl border text-black border-white/20 transition-all duration-500 hover:shadow-purple-200/50">
-        {/* --- HEADER --- */}
+      <div className="bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl p-9 w-full max-w-7xl h-screen overflow-y-auto border text-black border-white/20 transition-all duration-500 hover:shadow-purple-200/50">
         <div className="text-center mb-10">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl mb-4 shadow-lg">
             <span className="text-3xl">🌸</span>
@@ -248,7 +247,7 @@ export default function AddCollectionForm({
             {/* Bộ lọc season */}
             <div className="flex flex-wrap gap-2 mb-4">
               {Array.from(
-                new Set(dataProduct.map((p) => p.season).filter(Boolean))
+                new Set(dataProduct?.map((p) => p.season).filter(Boolean))
               ).map((season, index) => (
                 <button
                   key={index}
@@ -268,7 +267,7 @@ export default function AddCollectionForm({
 
             {/* Danh sách sản phẩm */}
             <ul className="flex-1 overflow-y-auto border border-gray-300 rounded-lg p-3 bg-white/70 shadow-inner max-h-[400px]">
-              {filteredList.map((product: any) => {
+              {filteredList?.map((product: any) => {
                 const isSelected = selectedProducts.find(
                   (p) =>
                     p.id === (status === "edit" ? form.products : product.id)

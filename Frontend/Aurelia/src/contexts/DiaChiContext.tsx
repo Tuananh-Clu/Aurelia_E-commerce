@@ -31,7 +31,6 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
       });
       setSaveAddress(response.data);
     } catch (error) {
-      Toaster.error("Không thể lấy danh sách địa chỉ. Vui lòng thử lại.");
       console.error(error);
     }
   };

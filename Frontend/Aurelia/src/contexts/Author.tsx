@@ -14,9 +14,11 @@ import { AiPoseMeasureContext } from "./AIPoseMeasure";
 
 type AuthContextType = {
   isSignned: boolean;
-
+  errorMessage: string;
   setIsignned: React.Dispatch<SetStateAction<boolean>>;
+  setErrorMessage: React.Dispatch<SetStateAction<string>>;
   logIn: (Email: string, Password: string) => Promise<void>;
+
   register: (
     UserName: string,
     Email: string,
@@ -33,6 +35,8 @@ type AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>({
   isSignned: false,
+  errorMessage: "",
+  setErrorMessage: () => {},
   setIsignned: () => {},
   logIn: async () => {},
   register: async () => {},
@@ -44,6 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [doneWork, setDoneWork] = useState(false);
   const { setDataMeasure } = useContext(AiPoseMeasureContext);
   const { CartDataAdd, setCartDataAdd } = useContext(CartContext);
+  const [errorMessage, setErrorMessage] = useState("");
   const logIn = async (Email: string, Password: string) => {
     try {
       const response = await axios.post(
@@ -58,21 +63,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setDataMeasure(response.data.user.soDoNguoiDung);
         setIsignned(true);
         Toaster.success("Đăng nhập thành công!");
-        const token = response.data.token;
         await axios.post(
           UseApiUrl(api_Config.User.AutoAddGioHang),
           CartDataAdd,
           {
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${response.data.token}`,
             },
           }
         );
         setDoneWork(true);
       }
-    } catch (error) {
-      Toaster.error("Đăng nhập thất bại! Vui lòng kiểm tra lại thông tin.");
+    } catch (error:any) {
+      setErrorMessage(error.response?.data?.message || "Đã xảy ra lỗi.");
     }
   };
   useEffect(() => {
@@ -98,8 +102,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem("token", response.data.token);
         Toaster.success("Đăng ký thành công! Chào mừng bạn đến với Aurelia!");
       }
+      if(response.status === 400){
+        setErrorMessage(response.data.message);
+      }
     } catch (error) {
-      Toaster.error("Đăng ký thất bại! Vui lòng thử lại.");
     }
   };
   const token = localStorage.getItem("token");
@@ -143,7 +149,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   return (
     <AuthContext.Provider
-      value={{ isSignned, setIsignned, logIn, register, UpdateProfile }}
+      value={{ isSignned, setIsignned, logIn, register, UpdateProfile,errorMessage,setErrorMessage }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,13 +1,15 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/Author";
 
 export const FormAuthor = () => {
   const [tab, setTab] = useState<"login" | "register">("login");
-  const { logIn, register } = useContext(AuthContext);
+  const { logIn, register, errorMessage, setErrorMessage } =
+    useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [shake, setShake] = useState(false);
 
   const handleSubmit = async (type: "login" | "register") => {
     if (type === "login") {
@@ -16,6 +18,20 @@ export const FormAuthor = () => {
       register(username, email, password);
     }
   };
+  useEffect(() => {
+   
+    if (tab === "register") {
+      setErrorMessage("");
+      setEmail("");
+      setPassword("");
+      setUsername("");
+      setShake(false);
+    }
+     if (errorMessage) {
+      const timer = setTimeout(() => setShake(true), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [handleSubmit, errorMessage, setErrorMessage, setTab, shake]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-100">
@@ -54,9 +70,12 @@ export const FormAuthor = () => {
           {tab === "login" ? (
             <motion.form
               key="login"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 1, y: 15 }}
+              animate={
+                shake ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, y: 15 }
+              }
               exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.3 }}
               className="grid gap-4"
             >
               <input
@@ -73,6 +92,9 @@ export const FormAuthor = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
               />
+              <div className="  text-red-600 px-4 py-2 mt-4 rounded-lg shadow-lg">
+                {errorMessage}
+              </div>
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
@@ -86,9 +108,11 @@ export const FormAuthor = () => {
           ) : (
             <motion.form
               key="register"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
+              initial={{ opacity: 1, y: 15 }}
+              animate={
+                shake ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, y: 15 }
+              }
+              transition={{ duration: 0.3 }}
               className="grid gap-4"
             >
               <input
@@ -111,6 +135,9 @@ export const FormAuthor = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
               />
+              <div className="  text-red-600 px-4 py-2 mt-4 rounded-lg shadow-lg">
+                {errorMessage}
+              </div>
               <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}

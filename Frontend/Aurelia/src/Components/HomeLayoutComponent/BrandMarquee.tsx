@@ -22,7 +22,7 @@ export const BrandMarquee = () => {
 
   const items = [...brands, ...brands];
   return (
-    <section className="w-full bg-white py-8 border-y   border-gray-100">
+    <section className="w-full bg-white md:py-8 border-y   border-gray-100">
       <div className="max-w-7xl mx-auto  px-6 overflow-hidden">
         <motion.div
           className="flex gap-10 whitespace-nowrap"

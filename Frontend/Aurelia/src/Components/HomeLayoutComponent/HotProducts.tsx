@@ -15,7 +15,7 @@ export const HotProducts = () => {
   }, [dataProduct]);
 
   return (
-    <section className="relative z-1  py-16 ">
+    <section className="relative z-1  md:py-16 ">
       {/* Tiêu đề */}
       <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-center mb-10 tracking-tight bg-gradient-to-r from-gray-700 via-gray-800 to-black text-transparent bg-clip-text drop-shadow-sm">
         Sản phẩm hot

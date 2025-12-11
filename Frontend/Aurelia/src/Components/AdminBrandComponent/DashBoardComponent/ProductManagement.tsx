@@ -1,17 +1,18 @@
+/** REFACTORED RESPONSIVE VERSION **/
+
 import { useContext, useState, useMemo } from "react";
 import {
   Plus,
   Search,
   Edit,
   Trash2,
-  Eye,
-  Star,
-  Package,
   Grid,
   List,
   Filter,
   ArrowRight,
   File,
+  Package,
+  Star,
 } from "lucide-react";
 import { FilterProductContext } from "../../../contexts/FIlterProduct";
 import ImportExcel from "./ProductManagementComponents/ImportExcel";
@@ -20,23 +21,28 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../../../services/api";
 import { Toaster } from "../../Toaster";
+
 export default function ProductManagement() {
   const { dataProduct } = useContext(FilterProductContext);
   const navigate = useNavigate();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
   const [activeAddProduct, setActiveAddProduct] = useState(false);
   const [editProduct, setEditProduct] = useState<boolean>(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [dataEdit, setDataEdit] = useState<any>(null);
+
   const filteredProducts = useMemo(() => {
-    return dataProduct.filter((product) =>
+    return dataProduct?.filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [dataProduct, searchTerm]);
-  const handleDeleteProduct =async (productId:string) => {
+
+  const handleDeleteProduct = async (productId: string) => {
     try {
-      await axios.delete(`${UseApiUrl(api_Config.Product.DeleteProduct)}?productId=${productId}`
+      await axios.delete(
+        `${UseApiUrl(api_Config.Product.DeleteProduct)}?productId=${productId}`
       );
       Toaster.success("Đã xóa sản phẩm thành công!");
     } catch (error) {
@@ -44,271 +50,238 @@ export default function ProductManagement() {
       Toaster.error("Không thể xóa sản phẩm. Vui lòng thử lại.");
     }
   };
+
   return (
-    <div className="max-h-screen bg-black text-white p-8 relative overflow-hidden">
-      {/* Import Excel Modal */}
-      {editProduct === true && (
-        <AddProduct
-          onClose={setEditProduct}
-          dataEdit={filteredProducts}
-          ProductId={dataEdit?.id}
-          sold={dataEdit?.sold}
-          title="Sửa Sản Phẩm"
-        />
-      )}
-      {openImportModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-20">
-          <ImportExcel setOpenImportModal={setOpenImportModal} />
-        </div>
-      )}
-      {/* Background Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/3 left-1/2 w-[30rem] h-[30rem] bg-cyan-500/15 rounded-full blur-3xl animate-pulse" />
-      </div>
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center">
-                  <Package className="w-6 h-6 text-white" />
-                </div>
-                <h1 className="text-5xl font-black bg-gradient-to-r from-white via-pink-200 to-purple-200 bg-clip-text text-transparent">
-                  Products
-                </h1>
-              </div>
-              <p className="text-gray-400 text-lg">
-                Refined. Reactive. Radiant.
-              </p>
+<div className="h-[110vh] bg-gray-50 text-gray-900 p-3 sm:p-8 relative overflow-y-scroll">
+
+  {/* Edit Product Modal */}
+  {editProduct && (
+    <AddProduct
+      onClose={setEditProduct}
+      dataEdit={filteredProducts}
+      ProductId={dataEdit?.id}
+      sold={dataEdit?.sold}
+      title="Sửa Sản Phẩm"
+    />
+  )}
+
+  {/* Import Excel Modal */}
+  {openImportModal && (
+    <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-20">
+      <ImportExcel setOpenImportModal={setOpenImportModal} />
+    </div>
+  )}
+
+  {/* Background effects - đổi sang silver glow */}
+  <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute top-0 left-0 w-72 h-72 sm:w-96 sm:h-96 bg-purple-200/40 rounded-full blur-3xl animate-pulse" />
+    <div className="absolute bottom-0 right-0 w-72 h-72 sm:w-96 sm:h-96 bg-rose-200/40 rounded-full blur-3xl animate-pulse" />
+    <div className="absolute top-1/3 left-1/2 w-[20rem] sm:w-[30rem] h-[20rem] sm:h-[30rem] bg-blue-200/30 rounded-full blur-3xl animate-pulse" />
+  </div>
+
+  {/* MAIN CONTAINER */}
+  <div className="relative z-10 max-w-7xl mx-auto">
+
+    {/* HEADER */}
+    <div className="mb-10 sm:mb-12 backdrop-blur-xl bg-white/70 border border-gray-200 rounded-3xl p-6 sm:p-8 shadow-lg">
+
+      {/* Title + Buttons */}
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8 mb-8">
+
+        {/* Title */}
+        <div>
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-rose-300 rounded-2xl flex items-center justify-center">
+              <Package className="w-6 h-6 text-white" />
             </div>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setActiveAddProduct(true)}
-                className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl font-bold text-lg overflow-hidden transform hover:scale-105 transition-all"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="relative flex items-center gap-3">
-                  <Plus className="w-6 h-6" />
-                  <span>Add Product</span>
-                </div>
-              </button>
+            <h1 className="text-4xl sm:text-5xl font-black bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 bg-clip-text text-transparent">
+              Products
+            </h1>
+          </div>
+          <p className="text-gray-600 text-base sm:text-lg">
+            Refined. Reactive. Radiant.
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-wrap gap-4">
+          <button
+            onClick={() => setActiveAddProduct(true)}
+            className="px-6 py-3 sm:px-8 sm:py-4 bg-gradient-to-r from-purple-500 to-rose-400 rounded-2xl font-bold text-white text-lg flex items-center gap-3 hover:scale-105 transition"
+          >
+            <Plus className="w-6 h-6" />
+            Add Product
+          </button>
+
+          <button
+            onClick={() => setOpenImportModal(true)}
+            className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-400 rounded-2xl font-bold text-white text-lg flex items-center gap-3 hover:scale-105 transition"
+          >
+            Import <File className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Search + View Mode */}
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <div className="flex-1 relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-12 pr-4 py-3 sm:py-4 bg-white border border-gray-300 rounded-xl focus:outline-none text-gray-800 placeholder-gray-400"
+          />
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <button className="p-3 bg-gray-100 border border-gray-200 rounded-xl">
+            <Filter className="w-5 h-5 text-gray-700" />
+          </button>
+
+          <div className="flex gap-2 bg-gray-100 p-1 rounded-xl">
+            <button
+              onClick={() => setViewMode("grid")}
+              className={`p-3 rounded-lg ${
+                viewMode === "grid"
+                  ? "bg-purple-500 text-white"
+                  : "hover:bg-gray-200"
+              }`}
+            >
+              <Grid className="w-5 h-5" />
+            </button>
+
+            <button
+              onClick={() => setViewMode("list")}
+              className={`p-3 rounded-lg ${
+                viewMode === "list"
+                  ? "bg-purple-500 text-white"
+                  : "hover:bg-gray-200"
+              }`}
+            >
+              <List className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* PRODUCT GRID */}
+    <div
+      className={`grid gap-8 pb-10 ${
+        viewMode === "grid"
+          ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          : "grid-cols-1"
+      }`}
+    >
+      {filteredProducts?.map((p) => (
+        <div key={p.id} className="group relative animate-[fadeInUp_0.6s_ease-out]">
+
+          <div className="relative h-[420px] sm:h-[460px] md:h-[500px] bg-white border border-gray-200 rounded-3xl overflow-hidden hover:border-purple-400 transition shadow-sm">
+
+            {/* IMAGE */}
+            <div className="absolute inset-0">
+              <img
+                src={p.thumbnail}
+                alt={p.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-gray-900/40 to-transparent" />
+            </div>
+
+            {/* ACTION BUTTONS */}
+            <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition">
               <button
                 onClick={() => {
-                  setOpenImportModal(true);
+                  setEditProduct(true);
+                  setDataEdit(p);
                 }}
-                className="group relative px-6 py-1 bg-gradient-to-r from-green-600 to-green-400 rounded-2xl font-bold text-lg overflow-hidden transform hover:scale-105 transition-all "
+                className="p-3 bg-gray-200 rounded-xl hover:bg-gray-300"
               >
-                <h1 className="text-lg font-bold">
-                  Import From Excel{" "}
-                  <ArrowRight className="inline-block w-4 h-4" />
-                </h1>
-                <span>
-                  Upload <File className="inline-block w-4 h-4" />
-                </span>
+                <Edit className="w-5 h-5 text-gray-700" />
               </button>
-            </div>
-          </div>
 
-          {/* Search + View Switch */}
-          <div className="flex items-center gap-4">
-            <div className="flex-1 relative group">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:border-purple-500 focus:bg-white/10 transition-all text-white placeholder-gray-500"
-              />
-            </div>
-            <button className="p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all">
-              <Filter className="w-5 h-5" />
-            </button>
-            <div className="flex gap-2 bg-white/5 p-1 rounded-xl">
               <button
-                onClick={() => setViewMode("grid")}
-                className={`p-3 rounded-lg transition-all ${
-                  viewMode === "grid" ? "bg-purple-600" : "hover:bg-white/10"
-                }`}
+                onClick={() => handleDeleteProduct(p.id)}
+                className="p-3 bg-gray-200 rounded-xl hover:bg-gray-300"
               >
-                <Grid className="w-5 h-5" />
+                <Trash2 className="w-5 h-5 text-gray-700" />
               </button>
+            </div>
+
+            {/* INFO */}
+            <div className="absolute bottom-0 p-6 sm:p-8 z-10">
+
+              <span className="inline-block mb-3 px-4 py-1.5 bg-gray-100 border border-gray-300 rounded-full text-xs font-bold text-purple-600">
+                {p.type.toUpperCase()}
+              </span>
+
+              <h3 className="text-2xl sm:text-3xl font-black leading-tight mb-2 text-white">
+                {p.name}
+              </h3>
+
+              <p className="text-gray-200 text-sm line-clamp-2 mb-3">
+                {p.description}
+              </p>
+
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-lg font-semibold text-rose-300">
+                  ${p.price.toFixed(2)}
+                </span>
+
+                <div className="flex text-yellow-400">
+                  {Array.from({ length: Math.round(p.rating || 4) }).map(
+                    (_, i) => <Star key={i} size={14} fill="currentColor" />
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-between text-xs text-gray-200">
+                <span>Stock: {p.stock}</span>
+                <span>Sold: {p.sold}</span>
+
+                {p.discountValue > 0 && (
+                  <span className="text-rose-300 font-bold">
+                    -{p.discountValue}
+                    {p.discountType === "percent" ? "%" : "$"}
+                  </span>
+                )}
+              </div>
+
+              {/* VIEW DETAILS */}
               <button
-                onClick={() => setViewMode("list")}
-                className={`p-3 rounded-lg transition-all ${
-                  viewMode === "list" ? "bg-purple-600" : "hover:bg-white/10"
-                }`}
+                onClick={() => navigate(`/Fashion/Products/${p.id}`)}
+                className="w-full mt-5 px-6 py-3 bg-gradient-to-r from-purple-600 to-rose-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:scale-[1.02] transition"
               >
-                <List className="w-5 h-5" />
+                View Details <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
         </div>
+      ))}
 
-        {/* Product Grid */}
+      {/* ADD NEW CARD */}
+      <div className="group cursor-pointer">
         <div
-          className={`grid gap-8 max-h-screen overflow-y-scroll ${
-            viewMode === "grid"
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-              : "grid-cols-1"
-          }`}
+          onClick={() => setActiveAddProduct(true)}
+          className="h-[420px] sm:h-[460px] md:h-[500px] bg-white border-2 border-dashed border-gray-300 rounded-3xl hover:bg-gray-100 hover:border-purple-400 transition flex flex-col items-center justify-center gap-6 shadow-sm"
         >
-          {filteredProducts?.map((p, index) => (
-            <div
-              key={p.id}
-              className="group relative"
-              style={{
-                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`,
-              }}
-            >
-              <div className="relative h-[500px] backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:scale-[1.02]">
-                {/* Image */}
-                <div className="absolute inset-0">
-                  <img
-                    src={p.thumbnail}
-                    alt={p.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
-
-                {/* Floating actions */}
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 z-100 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
-                  {[
-                    {
-                      icon: Edit,
-                      onClick: () => {
-                        setEditProduct(true);
-                        setDataEdit(p);
-                      },
-                    },
-                    {
-                      icon: Trash2,
-                      onClick: () => handleDeleteProduct(p.id),
-                    },
-                  ].map((Icon, i) => (
-                    <button
-                      key={i}
-                      className="p-3 bg-white/10 rounded-xl hover:bg-white/20 transition-transform hover:scale-110"
-                    >
-                      <Icon.icon className="w-5 h-5" onClick={Icon.onClick} />
-                    </button>
-                  ))}
-                </div>
-
-                {/* Info */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 z-10">
-                  <div className="transform transition-all duration-500 group-hover:-translate-y-4">
-                    <div className="inline-block mb-3 px-4 py-1.5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full">
-                      <span className="text-xs font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        {p.type.toUpperCase()}
-                      </span>
-                    </div>
-                    <h3 className="text-3xl font-black mb-3 leading-tight">
-                      {p.name}
-                    </h3>
-                    <p className="text-gray-300 mb-3 line-clamp-2">
-                      {p.description}
-                    </p>
-                    <div className="flex justify-between items-center mb-4">
-                      <span className="text-lg font-semibold text-pink-400">
-                        ${p.price.toFixed(2)}
-                      </span>
-                      <div className="flex items-center gap-1 text-yellow-400">
-                        {Array.from({ length: Math.round(p.rating || 4) }).map(
-                          (_, i) => (
-                            <Star key={i} size={14} fill="currentColor" />
-                          )
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex justify-between text-xs text-gray-400">
-                      <span>Stock: {p.stock}</span>
-                      <span>Sold: {p.sold}</span>
-                      {p.discountValue > 0 && (
-                        <span className="text-rose-400 font-semibold">
-                          -{p.discountValue}
-                          {p.discountType === "percent" ? "%" : "$"}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Button */}
-                    <button
-                      type="button"
-                      className="w-full group/btn relative px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl font-bold overflow-hidden transform translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 mt-5"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
-                      <div
-                        onClick={() => navigate(`/Fashion/Products/${p.id}`)}
-                        className="relative flex items-center justify-center gap-2"
-                      >
-                        <span>View Details</span>
-                        <ArrowRight className="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform" />
-                      </div>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Shine effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Add New Card */}
-          <div
-            className="group cursor-pointer"
-            style={{
-              animation: `fadeInUp 0.6s ease-out ${
-                (filteredProducts?.length || 0) * 0.1
-              }s both`,
-            }}
-          >
-            <div className="h-[500px] backdrop-blur-xl bg-white/5 border-2 border-dashed border-white/20 rounded-3xl hover:border-purple-500 hover:bg-white/10 transition-all duration-300 flex flex-col items-center justify-center gap-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl blur-xl opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                <div
-                  onClick={() => setActiveAddProduct(true)}
-                  className="relative w-20 h-20 bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl flex items-center justify-center group-hover:scale-110 transition-transform"
-                >
-                  <Plus className="w-10 h-10 text-white" />
-                </div>
-              </div>
-              <div className="text-center">
-                <h3 className="text-2xl font-black mb-2">Add Product</h3>
-                <p className="text-gray-400">Create a new item</p>
-              </div>
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-300 to-rose-300 rounded-3xl blur-xl opacity-50 group-hover:opacity-100"></div>
+            <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-purple-500 to-rose-400 rounded-3xl flex items-center justify-center">
+              <Plus className="w-10 h-10 text-white" />
             </div>
           </div>
+
+          <h3 className="text-xl sm:text-2xl font-black">Add Product</h3>
+          <p className="text-gray-500 text-sm">Create a new item</p>
         </div>
       </div>
-
-      {/* Animations */}
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .line-clamp-2 {
-          display: -webkit-box;
-          -webkit-line-clamp: 2;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-        }
-      `}</style>
     </div>
+  </div>
+
+</div>
+
   );
 }

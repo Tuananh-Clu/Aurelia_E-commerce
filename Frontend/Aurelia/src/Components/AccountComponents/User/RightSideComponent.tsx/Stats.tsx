@@ -35,7 +35,7 @@ export const Stats = ({tongThuChi,soLuongDonHang,lastPurchaseDate,userRole,dataF
     },
   ];
   return (
-      <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((s, i) => {
           const Icon = s.icon;
           return (

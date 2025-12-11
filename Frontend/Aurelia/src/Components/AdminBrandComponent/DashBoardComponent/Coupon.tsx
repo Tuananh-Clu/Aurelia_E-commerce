@@ -56,7 +56,7 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
   });
 
   return (
-    <div className="max-h-screen overflow-y-scroll bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-8 space-y-8">
+    <div className="h-[110vh] overflow-y-scroll bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-3 md:p-8 space-y-8">
       {/* Header */}
       <header className="flex flex-col lg:flex-row justify-between lg:items-end gap-4">
         <div>

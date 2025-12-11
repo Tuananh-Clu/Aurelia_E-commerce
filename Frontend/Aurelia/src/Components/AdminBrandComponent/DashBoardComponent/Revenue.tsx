@@ -297,14 +297,14 @@ export const Revenue = () => {
   ];
 
   return (
-    <div className="max-h-screen overflow-y-scroll bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/40 p-8">
+    <div className="max-h-screen overflow-y-scroll bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/40 md:p-8 p-3">
       <div className="max-w-[1600px] mx-auto space-y-8">
         {/* Header */}
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-violet-600/10 via-purple-600/10 to-pink-600/10 rounded-3xl blur-3xl"></div>
           <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-8">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl blur-xl opacity-50"></div>
                   <div className="relative p-4 bg-gradient-to-br from-violet-600 to-purple-600 rounded-2xl shadow-lg">
@@ -312,7 +312,7 @@ export const Revenue = () => {
                   </div>
                 </div>
                 <div>
-                  <h1 className="text-4xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  <h1 className="md:text-4xl text-2xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                     Quản lý Doanh thu
                   </h1>
                   <p className="text-slate-600 mt-1 text-lg">

@@ -148,12 +148,12 @@ export const Checkout = () => {
     <>
       <LoadingOverlay isLoading={isSubmitting} message="Đang xử lý đơn hàng..." />
       <Navbar />
-      <main className="min-h-[100vh] pt-28 px-6 md:px-20 bg-white">
+      <main className="min-h-[100vh] pt-28 pb-20 px-6 md:px-20 bg-white">
         <ListCoupon isOpen={isOpen} setIsOpen={setIsOpen}  dataOrder={CartDataAdd} order={order}/>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-extrabold text-center text-gray-900 mb-16"
+          className="md:text-5xl text-3xl font-extrabold text-center text-gray-900 mb-16"
         >
           Thanh toán
         </motion.h1>
@@ -164,7 +164,7 @@ export const Checkout = () => {
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="lg:col-span-2 bg-white p-12 rounded-3xl shadow-lg border border-gray-100 space-y-8"
+            className="lg:col-span-2 bg-white md:p-12 p-3 rounded-3xl shadow-lg border border-gray-100 space-y-8"
           >
             <h2 className="text-2xl font-light text-gray-800 mb-6">
               Thông tin khách hàng

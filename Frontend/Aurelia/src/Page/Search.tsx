@@ -45,11 +45,11 @@ export const Search = () => {
             animate={{ opacity: 1 }}
             className="text-gray-500 mt-3"
           >
-            {dataFilter.length} kết quả
+            {dataFilter?.length} kết quả
           </motion.p>
 
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-6">
-            {dataFilter.slice(0, more).map((item, idx) => (
+            {dataFilter?.slice(0, more).map((item, idx) => (
               <motion.div
                 onClick={() => navigate(`/Fashion/Products/${item.id}`)}
                 key={item.id}

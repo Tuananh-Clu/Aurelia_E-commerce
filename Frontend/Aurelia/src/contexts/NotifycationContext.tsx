@@ -8,7 +8,6 @@ import {
   HubConnection,
 } from "@microsoft/signalr";
 import { v4 as uuidv4 } from "uuid";
-import toast from "react-hot-toast";
 import { AuthForShopContext } from "./AuthorForShop";
 
 export const NotificationContext = createContext<any | undefined>({
@@ -59,7 +58,7 @@ export const NotificationProvider = ({
     if (!shopId) return;
 
     const newConnection = new HubConnectionBuilder()
-      .withUrl("https://localhost:7143/notifyHub")
+      .withUrl("http://localhost:5075/notifyHub")
       .configureLogging(LogLevel.Information)
       .withAutomaticReconnect()
       .build();

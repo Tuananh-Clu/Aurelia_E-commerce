@@ -35,7 +35,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [phiVanChuyen, setPhiVanChuyen] = useState("");
   const [shopId, setShopId] = useState<string>("");
   const token = useMemo(() => localStorage.getItem("token"), []);
-  const LOCATIONIQ_KEY = "pk.fd3f99a25f3d03893a6936b3b255288c";
+
   
 
   const handleClickPayment = useCallback(async () => {
@@ -45,6 +45,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       if(shopId===""){
         return;
       }
+      console.log("Data Order:", dataOrder);
       setSelectvoucher([]);
       await axios.post(
         `${UseApiUrl(api_Config.User.SuccessPayAddOrder)}?shopId=${shopId}`,
@@ -56,7 +57,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }
       );
-      await axios.post(
+      await axios.put(
         UseApiUrl(api_Config.Product.UpdateQuantityProduct),
         dataOrder.product.map((item) => ({
           productId: item.Itemid,
@@ -95,14 +96,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [dataOrder, shopId, token, setSelectvoucher]);
   
-  // Memoize LayToaDo
+
   const LayToaDo = useCallback(async (
     address: string
   ): Promise<{ lat: number; lon: number } | null> => {
     try {
       const response = await axios.get("https://us1.locationiq.com/v1/search", {
         params: {
-          key: LOCATIONIQ_KEY,
+          key:  import.meta.env.LOCATIONIQ_KEY,
           q: address,
           format: "json",
           limit: 1,

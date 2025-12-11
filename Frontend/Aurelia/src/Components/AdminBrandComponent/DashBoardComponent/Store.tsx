@@ -34,7 +34,7 @@ export const Stores = () => {
   };
 
   return (
-    <div className="max-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-8 overflow-y-auto">
+    <div className="h-[110vh] bg-gradient-to-br from-indigo-50 via-white to-purple-50 p-3 md:p-8 overflow-y-auto w-[300px] md:w-full">
       {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

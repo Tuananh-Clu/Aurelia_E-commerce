@@ -141,7 +141,6 @@ namespace AureliaE_Commerce.Controllers
 
      
         [HttpPut("updateQuantityProduct")]
-        [Authorize]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateQuantityProduct([FromBody] List<ProductUpdateDto> products)

@@ -10,6 +10,7 @@ type AuthContextType = {
   isSignned: boolean;
   setIsignned: React.Dispatch<SetStateAction<boolean>>;
   logIn: (Email: string, Password: string) => Promise<void>;
+  errorMessage: string | null;
 
 };
 
@@ -17,10 +18,12 @@ export const AuthForShopContext = createContext<AuthContextType>({
   isSignned: false,
   setIsignned: () => {},
   logIn: async () => {},
+  errorMessage: null,
 });
 
 export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
   const [isSignned, setIsignned] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const logIn = async (Email: string, Password: string) => {
     try {
       const response = await axios.post(
@@ -36,15 +39,14 @@ export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
         Toaster.success("Đăng nhập thành công");
       }
       
-    } catch (error) {
-      Toaster.error("Đăng nhập thất bại");
-
+    } catch (error:any) {
+      setErrorMessage(error.response?.data?.message || "Đã xảy ra lỗi.");
     }
   };
 
  
   return (
-    <AuthForShopContext.Provider value={{ isSignned, setIsignned, logIn }}>
+    <AuthForShopContext.Provider value={{ isSignned, setIsignned, logIn,errorMessage }}>
       {children}
     </AuthForShopContext.Provider>
   );

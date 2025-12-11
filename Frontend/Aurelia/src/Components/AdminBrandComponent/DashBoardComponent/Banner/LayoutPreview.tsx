@@ -5,47 +5,60 @@ export const LayoutPreview = ({
   statusState,
 }: any) => {
 
-  const styleByLayoutMain: Record<string, any> = {
-    A: {
-      wrapper:
-        "relative flex flex-row-reverse items-center justify-around px-20 gap-4",
-      image:
-        "w-full h-[65vh]  object-cover brightness-75 hover:brightness-90 transition-transform duration-700 rounded-3xl shadow-2xl",
-      text: "w-[45%] flex flex-col gap-4 text-gray-900 ",
-      btn: "from-gray-700 to-black text-white hover:from-black hover:to-gray-800 border-gray-400",
-    },
-    B: {
-      wrapper:
-        "relative flex flex-row items-center  justify-around px-20 gap-4 ",
-      image:
-        "w-full h-[65vh]  object-cover rounded-3xl shadow-2xl hover:scale-105 transition-transform duration-700",
-      text: "w-[45%] flex flex-col gap-4 text-gray-900",
-      btn: "mt-4 px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition",
-    },
-    C: {
-      wrapper: "relative items-center overflow-hidden",
-      image: "absolute  w-full h-full object-cover opacity-80  transition",
-      text: "z-10 col-start-1 space-y-6 text-center w-full h-full justify-center items-center flex flex-col",
-      btn: "mt-4  bg-white/15 border border-white/30 rounded-full hover:bg-white hover:text-indigo-900 transition",
-    },
-    D: {
-      wrapper:
-        "relative  overflow-hidden bg-black text-white flex flex-col items-center justify-center rounded-[3rem]",
-      image:
-        "absolute inset-0 w-full h-full object-cover opacity-70 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] transition-transform duration-1000 hover:scale-110",
-      text: "relative z-10 flex flex-col items-center text-center gap-6 backdrop-blur-sm bg-white/10 px-12 py-10 rounded-3xl border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.2)]",
-      btn: "mt-6 px-10 py-3 bg-white/20 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-all duration-300",
-    },
+const styleByLayoutMain: Record<string, any> = {
+  A: {
+    wrapper:
+      "relative flex flex-col-reverse md:flex-row-reverse items-center justify-around px-6 md:px-20 gap-6",
+    image:
+      "w-[80vw] md:w-[25vw] h-[40vh] md:h-[65vh] object-cover brightness-75 hover:brightness-90 transition-transform duration-700 rounded-3xl shadow-2xl",
+    text:
+      "w-full md:w-[45%] flex flex-col gap-4 text-gray-900 text-center md:text-left",
+    btn: "from-gray-700 to-black text-white hover:from-black hover:to-gray-800 border-gray-400",
+  },
 
-    E: {
-      wrapper:
-        "relative overflow-hidden h-[90vh] flex flex-col items-center justify-center bg-gradient-to-tr from-[#0f172a] via-[#1e293b] to-[#334155] text-white rounded-[3rem] ",
-      image:
-        "absolute inset-0 w-full h-full object-cover opacity-70 [clip-path:polygon(0_0,100%_10%,100%_90%,0_100%)] transition-transform duration-1000 hover:scale-110",
-      text: "relative z-10 max-w-3xl text-center space-y-6 transform -skew-y-2 bg-white/10 backdrop-blur-sm rounded-3xl p-12 shadow-[0_0_40px_rgba(255,255,255,0.15)]",
-      btn: "mt-4 px-10 py-3 bg-gradient-to-r from-fuchsia-500 to-indigo-500 text-white rounded-full hover:scale-105 hover:shadow-[0_10px_30px_rgba(192,132,252,0.5)] transition-all duration-300",
-    },
-  };
+  B: {
+    wrapper:
+      "relative flex flex-col md:flex-row items-center justify-around px-6 md:px-20 gap-6",
+    image:
+      "w-[80vw] md:w-[25vw] h-[40vh] md:h-[65vh] object-cover rounded-3xl shadow-2xl hover:scale-105 transition-transform duration-700",
+    text:
+      "w-full md:w-[45%] flex flex-col gap-4 text-gray-900 text-center md:text-left",
+    btn:
+      "mt-4 px-8 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition",
+  },
+
+  C: {
+    wrapper: "relative items-center overflow-hidden h-[80vh] md:h-[100vh]",
+    image:
+      "absolute inset-0 w-full h-full object-cover opacity-80 transition",
+    text:
+      "z-10 w-full h-full flex flex-col justify-center items-center text-center space-y-6 px-4",
+    btn:
+      "mt-4 bg-white/15 border border-white/30 rounded-full hover:bg-white hover:text-indigo-900 transition",
+  },
+
+  D: {
+    wrapper:
+      "relative overflow-hidden bg-black text-white flex flex-col items-center justify-center rounded-[2rem] md:rounded-[3rem] px-6 py-12 md:py-20",
+    image:
+      "absolute inset-0 w-full h-full object-cover opacity-70 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] transition-transform duration-1000 hover:scale-110",
+    text:
+      "relative z-10 flex flex-col items-center text-center gap-6 backdrop-blur-sm bg-white/10 px-6 md:px-12 py-10 rounded-3xl border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.2)]",
+    btn:
+      "mt-6 px-10 py-3 bg-white/20 backdrop-blur-md rounded-full hover:bg-white hover:text-black transition-all duration-300",
+  },
+
+  E: {
+    wrapper:
+      "relative overflow-hidden h-[80vh] md:h-[90vh] flex flex-col items-center justify-center text-white rounded-[2rem] md:rounded-[3rem] px-6",
+    image:
+      "absolute inset-0 w-full h-full object-cover opacity-70 [clip-path:polygon(0_0,100%_10%,100%_90%,0_100%)] transition-transform duration-1000 hover:scale-110",
+    text:
+      "relative z-10 max-w-3xl text-center space-y-6 transform -skew-y-2 bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-[0_0_40px_rgba(255,255,255,0.15)]",
+    btn:
+      "mt-4 px-10 py-3 bg-gradient-to-r from-fuchsia-500 to-indigo-500 text-white rounded-full hover:scale-105 hover:shadow-[0_10px_30px_rgba(192,132,252,0.5)] transition-all duration-300",
+  },
+};
 
   const styleByLayoutStory: Record<string, any> = {
     A: {
@@ -84,7 +97,7 @@ export const LayoutPreview = ({
       : styleByLayoutStory[current?.layout];
  
   return (
-    <div>
+    <div className="">
       <div className="flex flex-row justify-between gap-8 items-start">
         {/* Preview */}
         <motion.div

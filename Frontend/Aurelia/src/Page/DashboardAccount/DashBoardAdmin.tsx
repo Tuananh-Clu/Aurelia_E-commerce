@@ -35,11 +35,12 @@ export const AdminDashboard = () => {
     }
   };
   return (
-    <div className=" flex  bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 flex-row min-h-screen w-full">
+    <div className=" flex  bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 flex-row 
+    h-[110vh] w-full">
       <div >
         <SideBoard onClick={setStatus} status={status} />
       </div>
-      <div className="w-full">{statusComponent(status)}</div>
+      <div className="w-full h-[110vh]">{statusComponent(status)}</div>
     </div>
   );
 };

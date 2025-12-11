@@ -43,7 +43,7 @@ export const SideBoard = ({
       initial={{ x: -80, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className={`h-screen  ${
+      className={`h-[110vh]  ${
         expanded ? "w-64" : "w-20"
       } bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-gray-200 shadow-2xl flex flex-col border-r border-slate-800/50 relative overflow-hidden  transition-all duration-300`}
     >

@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthorForAdminContext } from "../contexts/AuthorForAdmin";
 
 export default function FormAuthorForShopAndAdmin() {
-  const { logIn, isSignned } = useContext(AuthForShopContext);
-  const {Login }=useContext(AuthorForAdminContext)
+  const { logIn, isSignned ,errorMessage } = useContext(AuthForShopContext);
+  const {Login ,errorMessages }=useContext(AuthorForAdminContext)
   const navigate = useNavigate();
 
   const [mode, setMode] = useState<"shop" | "admin">("shop");
@@ -97,7 +97,11 @@ export default function FormAuthorForShopAndAdmin() {
                 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition"
               />
             </div>
-
+            {(errorMessage || errorMessages) && (
+              <div className="text-red-600 text-sm text-center">
+                {errorMessage || errorMessages}
+              </div>
+            )}
             <button
               type="submit"
               className="w-full py-3 bg-gradient-to-r from-gray-700 to-gray-900 hover:opacity-95 
