@@ -21,6 +21,8 @@ import { api_Config, UseApiUrl } from "../services/api";
 import { TimKiemTaiStore } from "../Components/TimKiemTaiStore";
 import { CartContext } from "../contexts/CartContext";
 import { AiSuggestBox } from "../Components/AISuggest";
+import { AuthContext } from "../contexts/Author";
+import { api_Response } from "../services/http";
 
 export const MainProduct = () => {
   const { id } = useParams();
@@ -36,6 +38,7 @@ export const MainProduct = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [scrollPosition, setScrollPosition] = useState(0);
+  const {isSignned}=useContext(AuthContext)
   const imgRef = useRef<HTMLDivElement>(null);
   const product = useMemo((): Product | undefined => {
     if (!id) return undefined;
@@ -58,18 +61,15 @@ export const MainProduct = () => {
   }, [id, dataFavouriteItemUser, location.pathname]);
 
   const handleToggleFavourite = useCallback(async (item: Product) => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    
+    if (!isSignned) {
       Toaster.error("Bạn cần đăng nhập để thêm yêu thích");
       return;
     }
 
     try {
-      await axios.post(UseApiUrl(api_Config.User.AddFavouriteItems), item, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+      api_Response(UseApiUrl(api_Config.User.AddFavouriteItems), "POST", {
+        productId: item.id,
       });
       setHeartPopup(true);
       Toaster.success("Đã thêm sản phẩm vào yêu thích!");

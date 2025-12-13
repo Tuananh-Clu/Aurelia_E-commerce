@@ -1,8 +1,9 @@
-import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
 import type { DiaChi } from "../types/type";
+import { AuthContext } from "./Author";
+import { api_Response } from "../services/http";
 
 interface DiaChiContextType {
   savedAddress: DiaChi[];
@@ -19,17 +20,22 @@ export const DiaChiContext = createContext<DiaChiContextType>({
 });
 
 export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
-  const token = localStorage.getItem("token");
+  const { userData } = useContext(AuthContext);
   const [savedAddress, setSaveAddress] = useState<DiaChi[]>([]);
 
   // --- Fetch danh sách địa chỉ ---
   const fetchDiaChi = async () => {
-    if (!token) return;
+    if (!userData) return;
     try {
-      const response = await axios.get(UseApiUrl(api_Config.User.LayDiaChi), {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setSaveAddress(response.data);
+      const response: any = api_Response(
+        UseApiUrl(api_Config.User.LayDiaChi),
+        "GET",
+        undefined,
+        {
+          withCredentials: "true",
+        }
+      );
+      setSaveAddress(response);
     } catch (error) {
       console.error(error);
     }
@@ -41,19 +47,13 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
 
   // --- Thêm địa chỉ mới ---
   const SaveDiaChi = async (data: Partial<DiaChi>) => {
-    if (!token) return;
+    if (!userData) return;
     try {
-      const response = await axios.post(
-        UseApiUrl(api_Config.User.LuuDiaChi),
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      
+      api_Response(UseApiUrl(api_Config.User.LuuDiaChi), "POST", data, {
+        withCredentials: "true",
+        "Content-Type": "application/json",
+      });
+
       fetchDiaChi(); // reload danh sách
       Toaster.success("Đã lưu địa chỉ thành công!");
     } catch (error) {
@@ -63,16 +63,14 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // --- Xóa địa chỉ ---
-  const XoaDiaChi = async (data:DiaChi) => {
-    if (!token) return;
+  const XoaDiaChi = async (data: DiaChi) => {
+    if (!userData) return;
     try {
-      await axios.post(UseApiUrl(api_Config.User.XoaDiaChi),data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
+      api_Response(UseApiUrl(api_Config.User.XoaDiaChi), "POST", data, {
+        withCredentials: "true",
+        "Content-Type": "application/json",
       });
-      
+
       fetchDiaChi();
       Toaster.success("Đã xóa địa chỉ thành công!");
     } catch (error) {

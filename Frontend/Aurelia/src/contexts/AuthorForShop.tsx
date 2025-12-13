@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { createContext,  useState, type ReactNode, type SetStateAction } from "react";
+import React, { createContext,  useContext,  useEffect,  useState, type ReactNode, type SetStateAction } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
+import { AuthContext } from "./Author";
  
 
 
@@ -11,7 +12,7 @@ type AuthContextType = {
   setIsignned: React.Dispatch<SetStateAction<boolean>>;
   logIn: (Email: string, Password: string) => Promise<void>;
   errorMessage: string | null;
-
+  shopData?: any;
 };
 
 export const AuthForShopContext = createContext<AuthContextType>({
@@ -19,11 +20,21 @@ export const AuthForShopContext = createContext<AuthContextType>({
   setIsignned: () => {},
   logIn: async () => {},
   errorMessage: null,
+  shopData: null,
 });
 
 export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
   const [isSignned, setIsignned] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [shopData, setShopData] = useState<any>(null);
+  const {fetchData}=useContext(AuthContext)
+  useEffect(() => {
+   const data= fetchData({type: "shop"});
+   setShopData(data);
+   if(data as object !== null){
+    setIsignned(true);
+   }
+  }, []);
   const logIn = async (Email: string, Password: string) => {
     try {
       const response = await axios.post(
@@ -46,7 +57,7 @@ export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
 
  
   return (
-    <AuthForShopContext.Provider value={{ isSignned, setIsignned, logIn,errorMessage }}>
+    <AuthForShopContext.Provider value={{ isSignned, setIsignned, logIn,errorMessage ,shopData}}>
       {children}
     </AuthForShopContext.Provider>
   );

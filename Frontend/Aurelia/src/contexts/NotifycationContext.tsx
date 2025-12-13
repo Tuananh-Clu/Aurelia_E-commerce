@@ -26,13 +26,12 @@ export const NotificationProvider = ({
   const [appointment, setAppointment] = useState<string[]>([]);
   const [shopId, setShopId] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
+  const {shopData}=useContext(AuthForShopContext)
   const {setIsignned}=useContext(AuthForShopContext)
   useEffect(() => {
     try {
-      const shopData = localStorage.getItem("shop");
-      const data = shopData ? JSON.parse(shopData) : {};
-      setShopId(data?.shopId || null);
-      setName(data?.shopName || "");
+      setShopId(shopData?.shopId || null);
+      setName(shopData?.shopName || "");
     } catch (error) {
       console.error("❌ Error reading shop data:", error);
     }

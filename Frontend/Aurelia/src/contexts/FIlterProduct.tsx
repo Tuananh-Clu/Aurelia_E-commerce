@@ -116,7 +116,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     try {
       const dataCached = localStorage.getItem("allProducts");
       if (dataCached) {
-        setDataProduct(JSON.parse(dataCached).data);
+        setDataProduct(JSON.parse(dataCached));
         return;
       }
       const response = await axios.get<{ data: Product[] }>(UseApiUrl(api_Config.Product.GetProduct));
@@ -128,7 +128,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [location.pathname]);
   useEffect(() => {
     fetchAllData();
 
@@ -144,7 +144,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
       p.brand.toLowerCase().includes(key.toLowerCase())
     );
     setDataFilter(filtered);
-  }, [key, dataProduct, location.pathname]);
+  }, [key,  location.pathname]);
 
   return (
     <FilterProductContext.Provider

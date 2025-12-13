@@ -32,126 +32,103 @@ namespace AureliaE_Commerce.Controller
             mongos = dbContext.SanPham;
             voucher = dbContext.MaGiamGiaVoucher;
         }
-        [NonAction]
-        public string? GetHeader(string? token)
+         [NonAction]
+        private string? GetUserIdFromCookie(string typeAccount = "user")
         {
-            if (string.IsNullOrWhiteSpace(token))
-                return null;
-            if (token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            string cookieName = typeAccount switch
             {
-                token = token.Substring("Bearer ".Length).Trim();
-            }
-            if (string.IsNullOrWhiteSpace(token))
+                "user" => "access_token_user",
+                "shop" => "access_token_shop",
+                "admin" => "access_token_admin",
+                _ => "access_token_user"
+            };
+
+            if (!Request.Cookies.TryGetValue(cookieName, out var token))
                 return null;
 
             var handler = new JwtSecurityTokenHandler();
-
             if (!handler.CanReadToken(token))
-                return null; 
+                return null;
 
             var jwtToken = handler.ReadJwtToken(token);
-
-            var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
-
+            var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
             return userId;
         }
 
         [HttpGet("LayThongTinNguoiDung")]
-        public async Task<IActionResult> GetDataUser([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> GetDataUser()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized("Chưa đăng nhập");
 
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            return Ok(new
-            {
-                user = data
-            });
+            return Ok(new { user = data });
         }
+
         [HttpPost("AddItems")]
-        public async Task<IActionResult> AddItems(
-        [FromHeader(Name = "Authorization")] string token,
-        [FromBody] Product product)
+        public async Task<IActionResult> AddItems([FromBody] Product product)
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-
             var update = Builders<Client>.Update.Push(c => c.SanPhamYeuThich, product);
-
             var result = await mongoCollection.UpdateOneAsync(filter, update);
-
-            if (result.ModifiedCount > 0)
-            {
-                return Ok(new { message = "Thêm sản phẩm thành công" });
-            }
+            if (result.ModifiedCount > 0) return Ok(new { message = "Thêm sản phẩm thành công" });
 
             return BadRequest(new { message = "Không tìm thấy user hoặc thêm thất bại" });
         }
 
-
         [HttpPost("AutoAddGioHangKhiLog")]
-        public async Task<IActionResult> AddDon(
-        [FromHeader(Name = "Authorization")]
-        string token,
-        [FromBody] List<ItemOrder> Product)
+        public async Task<IActionResult> AddDon([FromBody] List<ItemOrder> Product)
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-
-            var ids = Product.Select(p => p.Itemid).ToList();
             var update = Builders<Client>.Update.PushEach(a => a.GioHangCuaBan, Product);
-            var delete = Builders<Client>.Update.Set(a => a.GioHangCuaBan, new List<ItemOrder>());
             await mongoCollection.UpdateOneAsync(filter, update);
-            return Ok(new
-            {
-                s = "Add thanh cong",
-                p = Product
-            });
 
+            return Ok(new { s = "Add thành công", p = Product });
         }
 
         [HttpDelete("XoaGioHang")]
-        public async Task<IActionResult> XoaGioHang(
-      [FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> XoaGioHang()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
             var update = Builders<Client>.Update.Set(c => c.GioHangCuaBan, new List<ItemOrder>());
-
             await mongoCollection.UpdateOneAsync(filter, update);
 
             return Ok("Đã xóa toàn bộ giỏ hàng");
         }
 
-
         [HttpGet("GetItemFavourite")]
-        public async Task<IActionResult> GetItemFavourite(
-        [FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> GetItemFavourite()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var client = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-
-            if (client == null)
-                return NotFound("Client not found");
+            if (client == null) return NotFound("Client not found");
 
             return Ok(client.SanPhamYeuThich);
         }
 
-
-
         [HttpPost("AddDonHang")]
-        public async Task<IActionResult> AddDonHang(
-        [FromHeader(Name = "Authorization")] string token, [FromBody] OrderModel order, [FromQuery] string shopId)
+        public async Task<IActionResult> AddDonHang([FromBody] OrderModel order, [FromQuery] string shopId)
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var update = Builders<Client>.Update.Push("DonHangCuaBan", order);
             var result = await mongoCollection.UpdateOneAsync(filter, update);
+
             string shopGroup = $"Shop_{shopId}";
             string messages = $"Đơn hàng mới #{order.orderId} từ {order.name}";
             var value = order.product.Sum(a => a.price * a.quantity);
@@ -162,48 +139,50 @@ namespace AureliaE_Commerce.Controller
                 <= 500_000_000 => 500,
                 <= 1_000_000_000 => 1000,
                 _ => 2000
-
             };
+
             var productId = order.product.Select(a => a.Itemid).FirstOrDefault();
             var updates = Builders<Client>.Update.Set(a => a.Point, point);
             await mongoCollection.UpdateOneAsync(filter, updates);
+
             var quantity = order.product.Where(a => a.Itemid == productId).Sum(a => a.quantity);
 
             var filters = Builders<Shop>.Filter.And(
                 Builders<Shop>.Filter.Eq(a => a.shopId, shopId),
                 Builders<Shop>.Filter.ElemMatch(a => a.products, s => s.productId == productId)
             );
+
             var filterVoucher = Builders<MaGiamGia>.Filter.Eq(a => a.code, order.voucherUsed != null && order.voucherUsed.Count > 0 ? order.voucherUsed[0].code : "");
             var updateVoucher = Builders<MaGiamGia>.Update.Inc(a => a.soLuong, -1);
             await voucher.UpdateOneAsync(filterVoucher, updateVoucher);
+
             var updatess = Builders<Shop>.Update.Inc("products.$.sold", quantity);
             await mongo.UpdateOneAsync(filters, updatess);
-            var data = new
-            {
-                message = messages
-            };
-            await hubContext.Clients.Group(shopGroup).SendAsync("NotificationOrder", data);
-            if (result.ModifiedCount > 0)
-            {
-                return Ok(new { message = "Thêm sản phẩm thành công" });
-            }
 
+            var dataNotify = new { message = messages };
+            await hubContext.Clients.Group(shopGroup).SendAsync("NotificationOrder", dataNotify);
+
+            if (result.ModifiedCount > 0) return Ok(new { message = "Thêm sản phẩm thành công" });
             return BadRequest(new { message = "Không tìm thấy user hoặc thêm thất bại" });
-
         }
+
         [HttpGet("LayDonHang")]
-        public async Task<IActionResult> LayDonHang([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> LayDonHang()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            var order = data.DonHangCuaBan;
-            return Ok(order);
+            return Ok(data.DonHangCuaBan);
         }
+
         [HttpGet("LayDonHangGanDay")]
-        public async Task<IActionResult> LayDonHangGanDay([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> LayDonHangGanDay()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
 
@@ -214,23 +193,18 @@ namespace AureliaE_Commerce.Controller
                 .OrderByDescending(o => o.dateBuy)
                 .FirstOrDefault();
 
-            return Ok(new
-            {
-                ngayMoiNhat = orderGanDay.dateBuy
-            });
+            return Ok(new { ngayMoiNhat = orderGanDay.dateBuy });
         }
 
         [HttpGet("GetSoLuongDonHang")]
-        public async Task<IActionResult> GetSoLuongDonHang([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> GetSoLuongDonHang()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-
-            if (data == null)
-            {
-                return NotFound(new { message = "User not found" });
-            }
+            if (data == null) return NotFound(new { message = "User not found" });
 
             var soLuongDon = data.DonHangCuaBan.Count(a => a.status != "Đã Hủy");
             var tongTien = data.DonHangCuaBan
@@ -238,40 +212,32 @@ namespace AureliaE_Commerce.Controller
                 .SelectMany(dh => dh.product)
                 .Sum(p => p.quantity * p.price);
 
-            return Ok(new
-            {
-                SoLuongDon = soLuongDon,
-                TongTien = tongTien
-            });
+            return Ok(new { SoLuongDon = soLuongDon, TongTien = tongTien });
         }
-        [HttpPost("UpMeasure")]
-        public async Task<IActionResult> UpMeasure([FromHeader(Name = "Authorization")] string token, [FromBody] Measure measure)
-        {
-            var userId = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
 
+        [HttpPost("UpMeasure")]
+        public async Task<IActionResult> UpMeasure([FromBody] Measure measure)
+        {
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var update = Builders<Client>.Update.Set("SoDoNgDUng", measure);
             await mongoCollection.UpdateOneAsync(filter, update);
             return Ok(measure);
         }
+
         [HttpGet("GetSoDo")]
-        public async Task<IActionResult> GetSoDo([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> GetSoDo()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("Invalid or missing token");
-            if (data.SoDoNgDUng == null)
-            {
-                return BadRequest();
-            }
-            var das = data.SoDoNgDUng;
-            if (das == null)
-            {
-                return BadRequest();
-            }
+            if (data.SoDoNgDUng == null) return BadRequest();
 
+            var das = data.SoDoNgDUng;
             return Ok(new Measure
             {
                 vai = das.vai ?? "",
@@ -280,66 +246,67 @@ namespace AureliaE_Commerce.Controller
                 nguc = das.nguc ?? "",
                 hong = das.hong ?? ""
             });
-
-
         }
+
         [HttpPost("AddCuocHenUser")]
-        public async Task<IActionResult> AddCuocHen([FromHeader(Name = "Authorization")] string token, [FromBody] ClientAppointment clientAppointment)
+        public async Task<IActionResult> AddCuocHen([FromBody] ClientAppointment clientAppointment)
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var update = Builders<Client>.Update.Push("LichSuCuocHen", clientAppointment);
             await mongoCollection.UpdateOneAsync(filter, update);
 
             return Ok(new { message = "Thêm Lịch Hẹn Thành Công!" });
         }
+
         [HttpGet("LayCuocHenUser")]
-        public async Task<IActionResult> LayCuocHen([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> LayCuocHen()
         {
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
-            var userId = GetHeader(token);
             var user = await mongoCollection.Find(u => u.Id == userId).FirstOrDefaultAsync();
+            if (user == null) return NotFound(new { message = "Người dùng không tồn tại" });
 
-            if (user == null)
-            {
-
-                return NotFound(new { message = "Người dùng không tồn tại" });
-            }
-            var firstAppointment = user.LichSuCuocHen?.ToList();
-
-            if (firstAppointment == null)
-            {
+            var appointments = user.LichSuCuocHen?.ToList();
+            if (appointments == null || !appointments.Any())
                 return Ok(new { message = "Chưa có cuộc hẹn nào" });
-            }
-            return Ok(firstAppointment);
+
+            return Ok(appointments);
         }
 
         [HttpPost("LuuDiaChi")]
-        public async Task<IActionResult> LuuAddress([FromHeader(Name = "Authorization")] string token, [FromBody] ThongTinCaNhan thongTinCaNhan)
+        public async Task<IActionResult> LuuAddress([FromBody] ThongTinCaNhan thongTinCaNhan)
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var update = Builders<Client>.Update.Push(a => a.ThongTinDatHang, thongTinCaNhan);
             await mongoCollection.UpdateOneAsync(filter, update);
             return Ok(new { message = "Lưu Thành Công" });
         }
+
         [HttpGet("LayDiaChi")]
-        public async Task<IActionResult> LayDiaChi([FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> LayDiaChi()
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var filter = Builders<Client>.Filter.Eq(a => a.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
             return Ok(data.ThongTinDatHang);
         }
+
         [HttpPost("XoaDiaChi")]
-        public async Task<IActionResult> XoaDiaChi(
-     [FromHeader(Name = "Authorization")] string token,
-     [FromBody] ThongTinCaNhan thongTinCaNhan)
+        public async Task<IActionResult> XoaDiaChi([FromBody] ThongTinCaNhan thongTinCaNhan)
         {
-            var userId = GetHeader(token);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-
             var update = Builders<Client>.Update.PullFilter(
                 c => c.ThongTinDatHang,
                 td => td.HoVaTen == thongTinCaNhan.HoVaTen &&
@@ -349,50 +316,40 @@ namespace AureliaE_Commerce.Controller
             );
 
             var result = await mongoCollection.UpdateOneAsync(filter, update);
-
-            if (result.ModifiedCount > 0)
-                return Ok(new { message = "Xóa thành công" });
-            else
-                return NotFound(new { message = "Không tìm thấy địa chỉ" });
+            if (result.ModifiedCount > 0) return Ok(new { message = "Xóa thành công" });
+            return NotFound(new { message = "Không tìm thấy địa chỉ" });
         }
+
         [HttpPost("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileCustomer updateProfileCustomer, [FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileCustomer updateProfileCustomer)
         {
-            var userToken = GetHeader(token);
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userToken);
+            var userId = GetUserIdFromCookie("user");
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            var update = Builders<Client>.Update.Set(s => s.Name, updateProfileCustomer.hovaten)
+
+            var update = Builders<Client>.Update
+                .Set(s => s.Name, updateProfileCustomer.hovaten)
                 .Set(s => s.Email, updateProfileCustomer.email)
                 .Set(s => s.SoDt, updateProfileCustomer.soDt)
                 .Set(s => s.DiaChi, updateProfileCustomer.address)
                 .Set(s => s.Avatar, updateProfileCustomer.avatarUrl);
+
             await mongoCollection.UpdateOneAsync(filter, update);
-            var user = new Client
-            {
-                Id = data.Id,
-                PassWord = data.PassWord,
-                Point = data.Point,
-                ThongTinDatHang = data.ThongTinDatHang,
-                NgayTaoTaiKhoan = data.NgayTaoTaiKhoan,
-                Tier = data.Tier,
-                Name = updateProfileCustomer.hovaten,
-                Email = updateProfileCustomer.email,
-                SoDt = updateProfileCustomer.soDt,
-                DiaChi = updateProfileCustomer.address,
-                Avatar = updateProfileCustomer.avatarUrl,
-                SanPhamYeuThich = data.SanPhamYeuThich,
-                LichSuCuocHen = data.LichSuCuocHen,
-                DonHangCuaBan = data.DonHangCuaBan,
-                SoDoNgDUng = data.SoDoNgDUng,
 
-            };
-            return Ok(new { message = "Cập Nhật Thành Công", user = user });
+            data.Name = updateProfileCustomer.hovaten;
+            data.Email = updateProfileCustomer.email;
+            data.SoDt = updateProfileCustomer.soDt;
+            data.DiaChi = updateProfileCustomer.address;
+            data.Avatar = updateProfileCustomer.avatarUrl;
 
+            return Ok(new { message = "Cập Nhật Thành Công", user = data });
         }
         [HttpPost("UpdateTier")]
-        public async Task UpdateTier([FromHeader(Name = "Authorization")] string token)
+        public async Task UpdateTier()
         {
-            var userToken = GetHeader(token);
+            var userToken = GetUserIdFromCookie("user");
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userToken);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
             var point = data.Point;
@@ -431,11 +388,11 @@ namespace AureliaE_Commerce.Controller
 
         }
         [HttpPost("HuyDonHang")]
-        public async Task<IActionResult> HuyDonHang([FromHeader(Name = "Authorization")] string token, [FromQuery] string orderId)
+        public async Task<IActionResult> HuyDonHang( [FromQuery] string orderId)
         {
             try
             {
-                var userToken = GetHeader(token);
+                var userToken = GetUserIdFromCookie("user");
                 var filter = Builders<Client>.Filter.And(Builders<Client>.Filter.Eq(c => c.Id, userToken),
                      Builders<Client>.Filter.ElemMatch(c => c.DonHangCuaBan, d => d.orderId == orderId));
                 var update = Builders<Client>.Update.Set("DonHangCuaBan.$.status", "Đã Hủy");

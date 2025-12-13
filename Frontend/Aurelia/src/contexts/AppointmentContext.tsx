@@ -1,8 +1,13 @@
-import React, { createContext } from "react";
-import type { Appointment, AppointmentCustomer, filterSLot } from "../types/type";
+import React, { createContext} from "react";
+import type {
+  Appointment,
+  AppointmentCustomer,
+  filterSLot,
+} from "../types/type";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
+import { api_Response } from "../services/http";
 
 type AppointmentContexts = {
   UpLoadAppointment: (
@@ -16,18 +21,15 @@ type AppointmentContexts = {
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => Promise<void>;
 
-  LocSlot: (
-    date: string,
-    shopId: string
-  ) => Promise<filterSLot[] | undefined>; 
-  LayDachSachLichHenCuaUser :()=>Promise<AppointmentCustomer|void>
+  LocSlot: (date: string, shopId: string) => Promise<filterSLot[] | undefined>;
+  LayDachSachLichHenCuaUser: () => Promise<AppointmentCustomer | void>;
 };
 
 export const AppointmentContext = createContext<AppointmentContexts>({
   UpLoadAppointment: async () => {},
-  LocSlot:async()=>[],
-  UpLoadAppointmentForCustomer:async()=>{},
-  LayDachSachLichHenCuaUser :async()=>{}
+  LocSlot: async () => [],
+  UpLoadAppointmentForCustomer: async () => {},
+  LayDachSachLichHenCuaUser: async () => {},
 });
 
 export const AppointmentProvider = ({
@@ -35,10 +37,10 @@ export const AppointmentProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const token = localStorage.getItem("token");
   const UpLoadAppointment = async (
     item: Appointment | undefined,
-    shopId: string,setState:React.Dispatch<React.SetStateAction<string>>
+    shopId: string,
+    setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
     try {
       const response = await axios.post(
@@ -58,17 +60,16 @@ export const AppointmentProvider = ({
     }
   };
   const UpLoadAppointmentForCustomer = async (
-    item: AppointmentCustomer | undefined,setState:React.Dispatch<React.SetStateAction<string>>
+    item: AppointmentCustomer | undefined,
+    setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
     try {
-      const response = await axios.post(
-        `${UseApiUrl(api_Config.User.AddCuocHenVaoUSer)}`,
+      const response: any = await api_Response(
+        UseApiUrl(api_Config.User.AddCuocHenVaoUSer),
+        "POST",
         item,
         {
-         headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          "Content-Type": "application/json",
         }
       );
       setState(response.data.message);
@@ -79,40 +80,42 @@ export const AppointmentProvider = ({
       Toaster.error("Không thể thêm lịch hẹn. Vui lòng thử lại.");
     }
   };
-  const LocSlot = async (
-   date:string,shopId:string
-  ) => {
+  const LocSlot = async (date: string, shopId: string) => {
     try {
-      const data= await axios.post(
+      const data = await axios.post(
         `${UseApiUrl(api_Config.Shop.LaySlotDeLoc)}`,
-        {shopId,date},
+        { shopId, date },
         {
-         headers: {
+          headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      return data.data
-
+      return data.data;
     } catch (error) {
       console.error("Lỗi Fetch", error);
     }
   };
-   const LayDachSachLichHenCuaUser = async () => {
+  const LayDachSachLichHenCuaUser = async () => {
     try {
-      const data= await axios.get(
-        `${UseApiUrl(api_Config.User.LayCuocHenTheoUser)}`,{headers:{
-          "Authorization":`Bearer ${token}`
-        }}
+      const data = api_Response(
+        UseApiUrl(api_Config.User.LayCuocHenTheoUser),
+        "GET"
       );
-      return data.data
-
+      return data as Promise<AppointmentCustomer>;
     } catch (error) {
       console.error("Lỗi Fetch", error);
     }
   };
   return (
-    <AppointmentContext.Provider value={{ UpLoadAppointment ,UpLoadAppointmentForCustomer,LocSlot,LayDachSachLichHenCuaUser }}>
+    <AppointmentContext.Provider
+      value={{
+        UpLoadAppointment,
+        UpLoadAppointmentForCustomer,
+        LocSlot,
+        LayDachSachLichHenCuaUser,
+      }}
+    >
       {children}
     </AppointmentContext.Provider>
   );

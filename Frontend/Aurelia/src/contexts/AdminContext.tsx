@@ -1,9 +1,11 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { api_Config, UseApiUrl } from "../services/api";
 import axios from "axios";
 import type { Coupon, order } from "../types/type";
 import { Toaster } from "../Components/Toaster";
+import { AuthContext } from "./Author";
+import { api_Response } from "../services/http";
 
 type AdminContextType = {
   dataRevenue: any;
@@ -54,8 +56,7 @@ export const AdminContext = createContext({
 
 export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   {
-    const user=JSON.parse(localStorage.getItem("user") || "{}");
-    //-- DashBoard Data ---
+
     const location = useLocation();
     const [dataRevenue, setDataRevenue] = useState<any>(null);
     const [dataUser, setDataUser] = useState<any>(null);
@@ -69,21 +70,14 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const [ServiceData, setServiceData] = useState<any[]>([]);
     const [dataVoucher, setDataVoucher] = useState<Coupon[]>([]);
     const [selectvoucher, setSelectvoucher] = useState<Coupon[] >([]);
+    const {userData}=useContext(AuthContext);
     const handleClick = async (type: string, data: any) => {
       try {
         if (type === "Main") {
-          await axios.post(
-            UseApiUrl(api_Config.Banner.AdjustMainBanner),
-            data,
-            { headers: { "Content-Type": "application/json" } }
-          );
+          api_Response(UseApiUrl(api_Config.Banner.AdjustMainBanner), "POST", data);
           Toaster.success("✅ Banner updated successfully!");
         } else {
-           await axios.post(
-            UseApiUrl(api_Config.Banner.AdjustStoryBanner),
-            data,
-            { headers: { "Content-Type": "application/json" } }
-          );
+           api_Response(UseApiUrl(api_Config.Banner.AdjustStoryBanner), "POST", data);
           Toaster.success("✅ Banner updated successfully!");
         }
       } catch (error) {
@@ -93,19 +87,9 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const uptodatabase = async (type: string, data: any) => {
       try {
         if (type === "Main" || type.includes("Main")) {
-          await axios.post(
-            UseApiUrl(api_Config.Banner.AddMainBanner),
-            data,
-            { headers: { "Content-Type": "application/json" } }
-          );
-          
+        api_Response(UseApiUrl(api_Config.Banner.AddMainBanner), "POST", data);
         } else {
-          await axios.post(
-            UseApiUrl(api_Config.Banner.AddStoryBanner),
-            data,
-            { headers: { "Content-Type": "application/json" } }
-          );
-          
+          api_Response(UseApiUrl(api_Config.Banner.AddStoryBanner), "POST", data);
         }
       } catch (error) {
         console.error("❌ Error updating banner:", error);
@@ -163,13 +147,11 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
       {
         //Coupon Management Data ---
 
-        const [coupons, setCoupons] = useState([]);
+        const [coupons, setCoupons] = useState<Coupon[]>([]);
         const fetchCoupons = async () => {
           try {
-            const response = await axios.get(
-              UseApiUrl(api_Config.Coupon.getCoupons)
-            );
-            setCoupons(response.data);
+            const data = await api_Response(UseApiUrl(api_Config.Coupon.getCoupons), "GET");
+            setCoupons(data as Coupon[]);
           } catch (error) {
             console.error("❌ Error fetching coupons:", error);
           }
@@ -180,11 +162,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         }, []);
         const handleAddCoupon = async (couponData: any) => {
           try {
-           await axios.post(
-              UseApiUrl(api_Config.Coupon.addCoupon),
-              couponData,
-              { headers: { "Content-Type": "application/json" } }
-            );
+            await api_Response(UseApiUrl(api_Config.Coupon.addCoupon), "POST", couponData);
             Toaster.success("✅ Coupon added successfully!");
             fetchCoupons();
           } catch (error) {
@@ -235,7 +213,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         const suggestVoucher = async ( order: order|undefined) => {
           try {
             const response = await axios.post(
-              `${UseApiUrl(api_Config.Coupon.suggestVoucher)}?id=${user.id}`,
+              `${UseApiUrl(api_Config.Coupon.suggestVoucher)}?id=${userData.id}`,
               order,
               { headers: { "Content-Type": "application/json" } }
             );

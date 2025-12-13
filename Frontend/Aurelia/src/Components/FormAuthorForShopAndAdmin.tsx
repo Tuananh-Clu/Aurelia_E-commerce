@@ -7,34 +7,39 @@ import { useNavigate } from "react-router-dom";
 import { AuthorForAdminContext } from "../contexts/AuthorForAdmin";
 
 export default function FormAuthorForShopAndAdmin() {
-  const { logIn, isSignned ,errorMessage } = useContext(AuthForShopContext);
-  const {Login ,errorMessages }=useContext(AuthorForAdminContext)
+  const { logIn, isSignned, errorMessage } = useContext(AuthForShopContext);
+  const { Login, isAdminSigned, errorMessages } = useContext(AuthorForAdminContext);
   const navigate = useNavigate();
 
   const [mode, setMode] = useState<"shop" | "admin">("shop");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const handleSubmit = async () => {
     if (!email || !password) return;
+
     if (mode === "admin") {
       await Login(email, password);
+    } else {
+      await logIn(email, password);
     }
-    await logIn(email, password);
   };
+
   useEffect(() => {
-    if (isSignned) {
+    if ((mode === "shop" && isSignned) || (mode === "admin" && isAdminSigned)) {
       navigate(mode === "shop" ? "/DashBoardShop" : "/DashboardAdmin");
     }
-  }, [isSignned, navigate, mode]);
+  }, [mode, isSignned, isAdminSigned, navigate]);
+
+  const errorText = mode === "shop" ? errorMessage : errorMessages;
 
   return (
     <>
       <Navbar />
 
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-200 via-gray-300 to-gray-100">
-
         <div className="backdrop-blur-xl bg-white/60 shadow-2xl rounded-3xl w-full max-w-md p-10 border border-white/70">
+          {/* Mode Switch */}
           <div className="flex justify-center mb-8">
             <div className="flex bg-white/40 backdrop-blur-md border border-gray-300 rounded-full p-1 shadow-inner">
               <button
@@ -44,7 +49,6 @@ export default function FormAuthorForShopAndAdmin() {
               >
                 <Store className="w-4 h-4" /> Shop
               </button>
-
               <button
                 onClick={() => setMode("admin")}
                 className={`px-6 py-2 rounded-full flex items-center gap-2 transition
@@ -55,6 +59,7 @@ export default function FormAuthorForShopAndAdmin() {
             </div>
           </div>
 
+          {/* Header */}
           <div className="text-center mb-8">
             <div className="mx-auto w-16 h-16 bg-gradient-to-br from-gray-500 to-gray-800 rounded-2xl flex items-center justify-center text-white font-bold text-xl shadow-xl border border-white/30">
               S
@@ -67,6 +72,7 @@ export default function FormAuthorForShopAndAdmin() {
             </p>
           </div>
 
+          {/* Form */}
           <form
             className="space-y-6"
             onSubmit={(e) => {
@@ -97,11 +103,11 @@ export default function FormAuthorForShopAndAdmin() {
                 focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition"
               />
             </div>
-            {(errorMessage || errorMessages) && (
-              <div className="text-red-600 text-sm text-center">
-                {errorMessage || errorMessages}
-              </div>
+
+            {errorText && (
+              <div className="text-red-600 text-sm text-center">{errorText}</div>
             )}
+
             <button
               type="submit"
               className="w-full py-3 bg-gradient-to-r from-gray-700 to-gray-900 hover:opacity-95 
@@ -110,6 +116,7 @@ export default function FormAuthorForShopAndAdmin() {
               Đăng nhập
             </button>
           </form>
+
           <div className="mt-8 text-center text-sm text-gray-600">
             <a href="/" className="hover:text-gray-800 transition">← Quay lại trang chủ</a>
           </div>
@@ -120,3 +127,4 @@ export default function FormAuthorForShopAndAdmin() {
     </>
   );
 }
+

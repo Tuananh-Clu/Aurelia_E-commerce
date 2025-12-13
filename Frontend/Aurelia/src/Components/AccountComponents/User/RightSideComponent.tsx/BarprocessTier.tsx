@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { Crown, Gift, Sparkles, Star, Shield } from "lucide-react";
+import { AuthContext } from "../../../../contexts/Author";
+import { useContext } from "react";
 
 export const BarprocessTier = () => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const { userData } = useContext(AuthContext);
 
   const tiers = {
     Bronze: {
@@ -50,18 +52,18 @@ export const BarprocessTier = () => {
   };
 
   const pointNextTier =
-    user.point <= 1000
+    userData.point <= 1000
       ? "Silver"
-      : user.point <= 5000
+      : userData.point <= 5000
       ? "Gold"
-      : user.point <= 10000
+      : userData  .point <= 10000
       ? "Diamond"
-      : user.point <= 20000
+      : userData.point <= 20000
       ? "Royal"
       : "Royal Plus";
 
   const tierInfo = tiers[pointNextTier as keyof typeof tiers];
-  const percentNextTier = Math.min((user.point / tierInfo.max) * 100, 100);
+  const percentNextTier = Math.min((userData.point / tierInfo.max) * 100, 100);
 
   return (
     <div
@@ -77,14 +79,14 @@ export const BarprocessTier = () => {
         </div>
         <span className="text-sm text-gray-600 italic">
           Hạng hiện tại:{" "}
-          <span className="font-semibold">{user.tier || "Chưa có"}</span>
+          <span className="font-semibold">{userData.tier || "Chưa có"}</span>
         </span>
       </div>
 
       {/* Tiến trình */}
       <div className="mb-2">
         <div className="flex justify-between text-sm text-gray-600 mb-1">
-          <span>Điểm: {user.point}</span>
+          <span>Điểm: {userData.point}</span>
           <span>Hạng tiếp theo: {pointNextTier}</span>
         </div>
         <div className="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden">
@@ -96,7 +98,7 @@ export const BarprocessTier = () => {
           />
         </div>
         <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>{user.point} điểm</span>
+          <span>{userData.point} điểm</span>
           <span>{tierInfo.max} điểm</span>
         </div>
       </div>

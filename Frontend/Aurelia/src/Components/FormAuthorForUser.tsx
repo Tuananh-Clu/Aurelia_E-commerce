@@ -11,27 +11,32 @@ export const FormAuthor = () => {
   const [username, setUsername] = useState("");
   const [shake, setShake] = useState(false);
 
-  const handleSubmit = async (type: "login" | "register") => {
-    if (type === "login") {
+  // Reset form when tab changes
+  useEffect(() => {
+    setErrorMessage("");
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setShake(false);
+  }, [tab, setErrorMessage]);
+
+  // Trigger shake animation on error
+  useEffect(() => {
+    if (errorMessage) {
+      setShake(true);
+      const timer = setTimeout(() => setShake(false), 500); // reset shake after animation
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (tab === "login") {
       logIn(email, password);
     } else {
       register(username, email, password);
     }
   };
-  useEffect(() => {
-   
-    if (tab === "register") {
-      setErrorMessage("");
-      setEmail("");
-      setPassword("");
-      setUsername("");
-      setShake(false);
-    }
-     if (errorMessage) {
-      const timer = setTimeout(() => setShake(true), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [handleSubmit, errorMessage, setErrorMessage, setTab, shake]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-100">
@@ -67,88 +72,55 @@ export const FormAuthor = () => {
 
         {/* Form */}
         <AnimatePresence mode="wait">
-          {tab === "login" ? (
-            <motion.form
-              key="login"
-              initial={{ opacity: 1, y: 15 }}
-              animate={
-                shake ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, y: 15 }
-              }
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="grid gap-4"
-            >
-              <input
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-              />
-              <input
-                placeholder="Mật khẩu"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-              />
-              <div className="  text-red-600 px-4 py-2 mt-4 rounded-lg shadow-lg">
-                {errorMessage}
-              </div>
-              <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                type="button"
-                onClick={() => handleSubmit("login")}
-                className="w-full py-3 rounded-lg bg-black text-white font-medium text-sm"
-              >
-                Đăng nhập
-              </motion.button>
-            </motion.form>
-          ) : (
-            <motion.form
-              key="register"
-              initial={{ opacity: 1, y: 15 }}
-              animate={
-                shake ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, y: 15 }
-              }
-              transition={{ duration: 0.3 }}
-              className="grid gap-4"
-            >
+          <motion.form
+            key={tab}
+            initial={{ opacity: 0, y: 15 }}
+            animate={
+              shake
+                ? { x: [-8, 8, -6, 6, -4, 4, 0] }
+                : { opacity: 1, y: 0 }
+            }
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="grid gap-4"
+            onSubmit={handleSubmit}
+          >
+            {tab === "register" && (
               <input
                 placeholder="Họ tên"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
               />
-              <input
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-              />
-              <input
-                placeholder="Mật khẩu"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-              />
-              <div className="  text-red-600 px-4 py-2 mt-4 rounded-lg shadow-lg">
+            )}
+            <input
+              placeholder="Email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            />
+            <input
+              placeholder="Mật khẩu"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+            />
+            {errorMessage && (
+              <div className="text-red-600 px-4 py-2 mt-2 rounded-lg shadow-lg text-sm text-center">
                 {errorMessage}
               </div>
-              <motion.button
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-                type="button"
-                onClick={() => handleSubmit("register")}
-                className="w-full py-3 rounded-lg bg-black text-white font-medium text-sm"
-              >
-                Đăng ký
-              </motion.button>
-            </motion.form>
-          )}
+            )}
+            <motion.button
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              className="w-full py-3 rounded-lg bg-black text-white font-medium text-sm"
+            >
+              {tab === "login" ? "Đăng nhập" : "Đăng ký"}
+            </motion.button>
+          </motion.form>
         </AnimatePresence>
       </main>
     </div>

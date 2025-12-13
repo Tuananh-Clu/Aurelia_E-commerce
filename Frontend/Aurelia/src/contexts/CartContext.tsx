@@ -1,9 +1,10 @@
-import React, { createContext,  useContext,  useState, useCallback, useMemo } from "react";
+import React, { createContext,  useContext,  useState, useCallback, useMemo, use } from "react";
 import { type order, type Cart } from "../types/type";
 import axios from "axios";
 import { Toaster } from "../Components/Toaster";
 import { api_Config, UseApiUrl } from "../services/api";
 import { AdminContext } from "./AdminContext";
+import { api_Response } from "../services/http";
 
 type CartContexts = {
   CartDataAdd: Cart[];
@@ -47,16 +48,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       }
       console.log("Data Order:", dataOrder);
       setSelectvoucher([]);
-      await axios.post(
-        `${UseApiUrl(api_Config.User.SuccessPayAddOrder)}?shopId=${shopId}`,
-        dataOrder,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      api_Response(UseApiUrl(api_Config.User.SuccessPayAddOrder), "POST", dataOrder,{"Content-Type":"application/json"})
       await axios.put(
         UseApiUrl(api_Config.Product.UpdateQuantityProduct),
         dataOrder.product.map((item) => ({
@@ -64,31 +56,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           quantity: item.quantity,
         }))
       );
-      await axios.post(
-        UseApiUrl(api_Config.User.UpdateTier),
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-     const reponse= await axios.get(UseApiUrl(api_Config.User.LayTHongTinUser), {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      api_Response(UseApiUrl(api_Config.User.UpdateTier), "POST", {}, {"Content-Type":"application/json"});
+      api_Response(UseApiUrl(api_Config.User.LayTHongTinUser), "GET", {}, {"Content-Type":"application/json"});
       localStorage.removeItem("cartItems");
       setCartDataAdd([]);
-      await axios.delete(UseApiUrl(api_Config.User.XoaGioHang),{
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-      localStorage.setItem("user", JSON.stringify(reponse.data.user));
+      api_Response(UseApiUrl(api_Config.User.XoaGioHang), "DELETE", {}, {});
       Toaster.success("Thanh toán thành công! Đơn hàng đã được tạo.");
     } catch (error) {
       console.error(error);

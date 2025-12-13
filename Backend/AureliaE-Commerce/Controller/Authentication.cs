@@ -5,6 +5,7 @@ using AureliaE_Commerce.Model.Shop;
 using DnsClient;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
@@ -109,25 +110,19 @@ namespace AureliaE_Commerce.Controller
             if (BCrypt.Net.BCrypt.Verify(loginDto.Password,data.PassWord)==true)
             {
                 var token = Generate(data);
+                Response.Cookies.Append("access_token_user", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
                 return Ok(new
                 {
                     success = true,
-                    message = "Đăng nhập thành công",
-                    token,
-                    user = new
-                    {
-                        id = data.Id,
-                        email = data.Email,
-                        name = data.Name,
-                        point = data.Point,
-                        tier = data.Tier,
-                        avatar = data.Avatar,
-                        NgayTaoTaiKhoan = data.NgayTaoTaiKhoan,
-                        SanPhamYeuThich = data.SanPhamYeuThich,
-                        GioHangCuaBan=data.GioHangCuaBan,
-                        SoDoNguoiDung=data.SoDoNgDUng
-                    }
-                });
+                    message = "Đăng nhập thành công"
+                }
+                );
             }
 
             return BadRequest(new { success = false, message = "Sai Email hoặc Mật khẩu" });
@@ -162,21 +157,15 @@ namespace AureliaE_Commerce.Controller
 
             await _collection.InsertOneAsync(client);
             var token = Generate(client);
+            Response.Cookies.Append("access_token_user", token, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                Expires = DateTimeOffset.UtcNow.AddDays(7)
+            });
 
-            return Ok(new { success = true, message = "Đăng ký thành công", token,
-                user = new
-                {
-                    id = client.Id,
-                    email = client.Email,
-                    name = client.Name,
-                    point = client.Point,
-                    tier = client.Tier,
-                    avatar = client.Avatar,
-                    NgayTaoTaiKhoan = client.NgayTaoTaiKhoan,
-                    SanPhamYeuThich=client?.SanPhamYeuThich,
-                    GioHangCuaBan = data?.GioHangCuaBan,
-                    SoDoNguoiDung = data?.SoDoNgDUng
-                }
+            return Ok(new { success = true, message = "Đăng ký thành công"
             });
         }
         [HttpPost("ShopRegister")]
@@ -206,19 +195,18 @@ namespace AureliaE_Commerce.Controller
                 };
 
                 await mongoCollection.InsertOneAsync(newAdmin);
-
+                var token = GenerateAccount(newAdmin);
+                Response.Cookies.Append("access_token_shop", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
                 return Ok(new
                 {
                     success = true,
                     message = "Đăng ký admin thành công",
-                    userId = newAdmin.id,
-                    user = new
-                    {
-                        id = newAdmin.id,
-                        email = newAdmin.email,
-                        shopId=newAdmin.shopId,
-                        NgayTaoTaiKhoan = newAdmin.NgayTaoTaiKhoan
-                    }
                 });
             }
             catch (Exception ex)
@@ -245,14 +233,19 @@ namespace AureliaE_Commerce.Controller
             {
                 return BadRequest(new { success = false, message = "Sai Mật Khẩu " });
             }
-            var filter = Builders<Shop>.Filter.Eq(a => a.shopId, data.shopId);
-            var datas = await Collection.Find(filter).FirstOrDefaultAsync();
+            
             var token = GenerateAccount(data);
-            return Ok(new
-            {
-                token = token,
-                dataStore = datas
-            });
+             Response.Cookies.Append("access_token_shop", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
+                return Ok(new
+                {
+                    message = "Đăng Nhập Thành Công",
+                });
 
         }
         [HttpPost("CreateAdminAccount")]
@@ -278,12 +271,17 @@ namespace AureliaE_Commerce.Controller
 
             await collection.InsertOneAsync(admin);
             var token = GenerateAdminAccount(admin);
-
+             Response.Cookies.Append("access_token_admin", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
             return Ok(new
             {
                 success = true,
                 message = "Đăng ký thành công",
-                token=token
             });
         }
         [HttpPost("LogInAdminSite")]
@@ -308,6 +306,13 @@ namespace AureliaE_Commerce.Controller
             if(BCrypt.Net.BCrypt.Verify(login.Password, data.Password) == true)
             {
                 var token = GenerateAdminAccount(data);
+                 Response.Cookies.Append("access_token_admin", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
                 return Ok(new
                 {
                     message = "Đăng Nhập Thành Công",
@@ -319,6 +324,40 @@ namespace AureliaE_Commerce.Controller
                 return BadRequest("Not Found");
             }
 
+        }
+        [HttpGet("GetData")] 
+        public async Task<IActionResult> GetAllClients([FromQuery] string typeAccount)
+        {
+            var token= Request.Cookies[$"access_token_{typeAccount}"];
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized(new { success = false, message = "Token không hợp lệ hoặc đã hết hạn",tokens=token });
+            }
+            var handle=new JwtSecurityTokenHandler();
+            var jwtToken=handle.ReadJwtToken(token);
+            var userId= jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
+            if (typeAccount == "client")
+            {
+                var clients = Builders<Client>.Filter.Eq(a => a.Id, userId);
+                var client = await _collection.Find(clients).ToListAsync();
+                return Ok(clients);
+            }
+            else if (typeAccount == "shop")
+            {
+                var shops = Builders<ShopAccount>.Filter.Eq(a => a.id, userId);
+                var shop = await mongoCollection.Find(shops).ToListAsync();
+                return Ok(shop);
+            }
+            else if (typeAccount == "admin")
+            {
+                var admins = Builders<AdminAccount>.Filter.Eq(a => a.Id, userId);
+                var admin = await collection.Find(admins).ToListAsync();
+                return Ok(admins);
+            }
+            else
+            {
+                return BadRequest(new { success = false, message = "Loại tài khoản không hợp lệ" });
+            }
         }
     }
 }

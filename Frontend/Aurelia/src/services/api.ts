@@ -5,6 +5,7 @@ export const api_Config = {
     login: "/api/Authentication/LogIn",
     ShopLogin: "/api/Authentication/LogInShop",
     signUp: "/api/Authentication/Register",
+    getInfoUser: "/api/Authentication/GetData",
 
   },
   Product: {
@@ -94,7 +95,7 @@ export const api_Config = {
     DeleteCollection: "/api/SeasonCollection/DeleteCollection",
   }
 };
-const api_Url = "http://localhost:5075";
+export const api_Url = "http://localhost:5075";
 
 export const UseApiUrl = (item: string) => {
   return api_Url + item;

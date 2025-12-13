@@ -11,10 +11,12 @@ import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
 import { CartContext } from "./CartContext";
 import { AiPoseMeasureContext } from "./AIPoseMeasure";
+import { api_Response } from "../services/http";
 
 type AuthContextType = {
   isSignned: boolean;
   errorMessage: string;
+  userData: any;
   setIsignned: React.Dispatch<SetStateAction<boolean>>;
   setErrorMessage: React.Dispatch<SetStateAction<string>>;
   logIn: (Email: string, Password: string) => Promise<void>;
@@ -31,16 +33,19 @@ type AuthContextType = {
     address: string,
     avatar: string
   ) => Promise<void>;
+  fetchData: ({type}:{type:string})=>Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
   isSignned: false,
   errorMessage: "",
+  userData: null,
   setErrorMessage: () => {},
   setIsignned: () => {},
   logIn: async () => {},
   register: async () => {},
   UpdateProfile: async () => {},
+  fetchData: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -49,6 +54,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { setDataMeasure } = useContext(AiPoseMeasureContext);
   const { CartDataAdd, setCartDataAdd } = useContext(CartContext);
   const [errorMessage, setErrorMessage] = useState("");
+  const [userData, setUserData] = useState<any>(null);
+   const fetchData=async({type}:{type:string})=>{ await axios.get(
+      `${UseApiUrl(api_Config.authentication.getInfoUser)}?typeAccount=${type}`,
+      {
+        withCredentials: true,
+      }
+    ).then((response) => {
+      if (response.status === 200) {
+        setIsignned(true);
+        setUserData(response.data);
+        setDataMeasure(response.data.soDoNguoiDung)
+        setCartDataAdd(response.data.gioHangCuaBan || []);
+      }
+    }).catch(() => {
+      setIsignned(false);
+    });
+  }
+  useEffect(() => {
+   const data= fetchData({type: "client"});
+   setUserData(data);
+  }, []);
   const logIn = async (Email: string, Password: string) => {
     try {
       const response = await axios.post(
@@ -58,20 +84,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       );
 
       if (response.status === 200) {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("token", response.data.token);
-        setDataMeasure(response.data.user.soDoNguoiDung);
         setIsignned(true);
         Toaster.success("Đăng nhập thành công!");
-        await axios.post(
-          UseApiUrl(api_Config.User.AutoAddGioHang),
+        api_Response<any>(
+          UseApiUrl(api_Config.User.AutoAddGioHang)
+          , "POST",
           CartDataAdd,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${response.data.token}`,
-            },
-          }
+          { headers: { "Content-Type": "application/json" } }
         );
         setDoneWork(true);
       }
@@ -79,11 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setErrorMessage(error.response?.data?.message || "Đã xảy ra lỗi.");
     }
   };
-  useEffect(() => {
-    setCartDataAdd(
-      JSON.parse(localStorage.getItem("user") || "[]").gioHangCuaBan || []
-    );
-  }, [doneWork]);
+
   const register = async (
     UserName: string,
     Email: string,
@@ -98,8 +113,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (response.status === 200) {
         setIsignned(true);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        localStorage.setItem("token", response.data.token);
         Toaster.success("Đăng ký thành công! Chào mừng bạn đến với Aurelia!");
       }
       if(response.status === 400){
@@ -108,12 +121,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
     }
   };
-  const token = localStorage.getItem("token");
-  useEffect(() => {
-    if (token?.length) {
-      setIsignned(true);
-    }
-  });
+
   const UpdateProfile = async (
     name: string,
     email: string,
@@ -122,34 +130,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     avatar: string
   ) => {
     try {
-      const response = await axios.post(
+      const response = api_Response<any>(
         UseApiUrl(api_Config.User.updateprofile),
-        {
-          hovaten: name,
-          email: email,
-          soDt: phone,
-          address: address,
-          avatarUrl: avatar,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        "POST",
+        { name, email, phone, address, avatar },
+        { headers: { "Content-Type": "application/json" } }
       );
-
-      if (response.status === 200) {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+      setUserData(response);
         Toaster.success("Đã cập nhật thông tin cá nhân thành công!");
-      }
     } catch (error) {
       Toaster.error("Không thể cập nhật thông tin. Vui lòng thử lại.");
     }
   };
   return (
     <AuthContext.Provider
-      value={{ isSignned, setIsignned, logIn, register, UpdateProfile,errorMessage,setErrorMessage }}
+      value={{ isSignned, setIsignned, logIn, register, UpdateProfile,errorMessage,setErrorMessage,fetchData,userData }}
     >
       {children}
     </AuthContext.Provider>

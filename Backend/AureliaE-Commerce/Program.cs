@@ -69,6 +69,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
+        options.Events=new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                if(context.Request.Query.TryGetValue("access_token",out var token))
+                {
+                    context.Token = token;
+                }
+                return System.Threading.Tasks.Task.CompletedTask;
+            }
+        };
+
     });
 builder.Services.AddSignalR();
 var app = builder.Build();

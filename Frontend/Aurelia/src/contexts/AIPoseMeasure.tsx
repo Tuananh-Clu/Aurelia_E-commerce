@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo, type ReactNode } from "react";
 import type { Measure } from "../types/type";
-import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
+import { api_Response } from "../services/http";
+import { AuthContext } from "./Author";
 
 
 type AIMeasureContextType = {
@@ -25,38 +26,37 @@ type AiPoseMeasureProviderProps = {
 
 export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ children }) => {
   const [DataMeasure, setDataMeasure] = useState<Measure>({} as Measure);
-  const token = useMemo(() => localStorage.getItem("token"), []);
-  const fetch=async()=>{
-      try{
-        const data=await axios.get(UseApiUrl(api_Config.User.LaySoDo),{
-          headers:{"Authorization":`Bearer ${token}`}
-        });
-        setDataMeasure(data.data);
+  const {userData}=useContext(AuthContext)
+  const fetch = useCallback(async () => {
+    try {
+      const res = await api_Response(UseApiUrl(api_Config.User.LaySoDo), "GET", null, {
+        "withCredentials": true,
+      });
+      if (res && res as Measure) {
+        setDataMeasure(res as Measure);
       }
-      catch(error){ 
-      }
+    } catch (error) {
+      console.error("Error fetching user measurements:", error);
     }
-  useEffect(()=>{
-    if(!token) return;
+  }, []);
+
+  useEffect(() => {
     fetch();
-  }, [token]);
+  }, [userData, fetch]);
 
   const postMeasureToDB = useCallback(async()=>{
-    if (!DataMeasure || !token) return;
+    if (!DataMeasure ) return;
     try{
-      await axios.post(UseApiUrl(api_Config.User.UpdataMeasure),DataMeasure,{
-        headers:{
-          "Authorization":`Bearer ${token}`,
-          "Content-Type":"application/json"
-        }
+      api_Response(UseApiUrl(api_Config.User.UpdataMeasure), "POST", DataMeasure, {
+        "withCredentials": true,
       });
-      localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.getItem("user") || "{}"), soDoNguoiDung: DataMeasure }));
+      setDataMeasure(DataMeasure);
       Toaster.success("Đã lưu số đo thành công!");
     }
     catch(error){
       Toaster.error("Không thể lưu số đo. Vui lòng thử lại.");
     }
-  }, [DataMeasure, token]);
+  }, [DataMeasure]);
 
   const getAIAdviceMeasure = useCallback(async(
     ProductId:string,
@@ -64,23 +64,22 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
     subCategory:string,
     SetStateAction:React.Dispatch<React.SetStateAction<string>>
   )=>{
-    if (!token) return;
+    if (!userData) return;
     try{
-      const data=await axios.post(UseApiUrl(api_Config.AIAdvice.GetAdviceMeasure),{
-        ProductId,
-        type,
-        subCategory
-      },{
-        headers:{
-          "Authorization":`Bearer ${token}`
-        }
-      });
-      SetStateAction(data.data.message);
+    const res:any=api_Response(UseApiUrl(api_Config.AIAdvice.GetAdviceMeasure)
+        ,"POST",{
+        ProductId:ProductId,
+        type:type,
+        subCategory:subCategory
+    },{
+      "withCredentials": true,
+    });
+      SetStateAction(res.message as unknown as string);
     }
     catch{
       Toaster.error("Không thể lấy gợi ý size. Vui lòng thử lại.");
     }
-  }, [token]);
+  }, [userData]);
 
   const contextValue = useMemo(() => ({
     DataMeasure,
