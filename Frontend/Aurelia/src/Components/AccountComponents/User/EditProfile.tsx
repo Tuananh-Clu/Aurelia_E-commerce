@@ -47,9 +47,7 @@ export default function EditProfile({
 }: {
   setState: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { UpdateProfile } = useContext(AuthContext);
-  const userString = localStorage.getItem("user");
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const { UpdateProfile} = useContext(AuthContext);
   const userData = userString ? JSON.parse(userString) : {};
   const [user, setUser] = useState({
     name: userData.name || "",
