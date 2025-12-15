@@ -52,7 +52,7 @@ export const BarprocessTier = () => {
   };
 
   const pointNextTier =
-    userData.point <= 1000
+    userData?.point <= 1000
       ? "Silver"
       : userData.point <= 5000
       ? "Gold"

@@ -281,7 +281,7 @@ export const Checkout = () => {
             <div className="space-y-4 text-gray-700">
               {CartDataAdd.map((item) => (
                 <div
-                  key={item.Itemid}
+                  key={item.itemid}
                   className="flex justify-between items-center border-b border-gray-100 pb-2"
                 >
                   <div className="flex items-center gap-4">

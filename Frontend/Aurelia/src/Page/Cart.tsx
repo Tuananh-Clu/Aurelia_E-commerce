@@ -17,7 +17,7 @@ export const Cart = () => {
   );
   for(let i=0;i<CartDataAdd.length;i++){
     for(let j=i+1;j<CartDataAdd.length;j++){
-      if(CartDataAdd[i].Itemid===CartDataAdd[j].Itemid){
+      if(CartDataAdd[i].itemid===CartDataAdd[j].itemid){
         CartDataAdd.splice(j,1);
         CartDataAdd[i].quantity+=1;
         j--;
@@ -33,18 +33,17 @@ export const Cart = () => {
   const updateQty = (id: string, newQty: number) => {
     setCartDataAdd((prev) =>
       prev.map((i) =>
-        i.Itemid === id ? { ...i, quantity: Math.max(newQty, 1) } : i
+        i.itemid === id ? { ...i, quantity: Math.max(newQty, 1) } : i
       )
     );
     localStorage.setItem("cartItems", JSON.stringify(CartDataAdd));
   };
 
   const removeItem = (id: string) => {
-    setCartDataAdd((prev) => prev.filter((i) => i.Itemid !== id));
+    setCartDataAdd((prev) => prev.filter((i) => i.itemid !== id));
     localStorage.removeItem("cartItems");
-    localStorage.setItem("user", JSON.stringify({ ...JSON.parse(localStorage.getItem("user") || "{}"), gioHangCuaBan: CartDataAdd.filter((i) => i.Itemid !== id) }));
-    setCartDataAdd(CartDataAdd.filter((i) => i.Itemid !== id));
-    localStorage.setItem("cartItems", JSON.stringify(CartDataAdd.filter((i) => i.Itemid !== id)));
+    setCartDataAdd(CartDataAdd.filter((i) => i.itemid !== id));
+    localStorage.setItem("cartItems", JSON.stringify(CartDataAdd.filter((i) => i.itemid !== id)));
   };
  const checkOut = () => {
   if (CartDataAdd.length === 0) {
@@ -98,14 +97,14 @@ export const Cart = () => {
                     <div className="flex items-center gap-3 mt-4">
                       <button
                         className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => updateQty(i.Itemid , i.quantity - 1)}
+                        onClick={() => updateQty(i.itemid , i.quantity - 1)}
                       >
                         –
                       </button>
                       <span className="text-lg font-medium">{i.quantity}</span>
                       <button
                         className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => updateQty(i.Itemid , i.quantity + 1)}
+                        onClick={() => updateQty(i.itemid , i.quantity + 1)}
                       >
                         +
                       </button>
@@ -116,7 +115,7 @@ export const Cart = () => {
                       {formatPrice(i.price * i.quantity)}
                     </div>
                     <button
-                      onClick={() => removeItem(i.Itemid )}
+                      onClick={() => removeItem(i.itemid )}
                       className="text-gray-400 hover:text-red-500 transition cursor-pointer"
                     >
                       <Trash2 size={22} />

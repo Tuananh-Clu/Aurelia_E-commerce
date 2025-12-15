@@ -10,10 +10,11 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { AuthForShopContext } from "./AuthorForShop";
 
+
 export const NotificationContext = createContext<any | undefined>({
   message: [],
   appointment: [],
-  logOut: async () => {},
+  logOutShop: async () => {},
 });
 
 export const NotificationProvider = ({
@@ -26,8 +27,7 @@ export const NotificationProvider = ({
   const [appointment, setAppointment] = useState<string[]>([]);
   const [shopId, setShopId] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
-  const {shopData}=useContext(AuthForShopContext)
-  const {setIsignned}=useContext(AuthForShopContext)
+  const { shopData } = useContext(AuthForShopContext);
   useEffect(() => {
     try {
       setShopId(shopData?.shopId || null);
@@ -35,7 +35,7 @@ export const NotificationProvider = ({
     } catch (error) {
       console.error("❌ Error reading shop data:", error);
     }
-  }, []); 
+  }, []);
 
   const saveToDatabase = async (msg: any, type: string) => {
     if (!shopId) return;
@@ -63,19 +63,17 @@ export const NotificationProvider = ({
       .build();
 
     newConnection.on("NotificationOrder", (msg: string) => {
+      setMessage((prevMessage) => [...prevMessage, msg]);
 
-      setMessage(prevMessage => [...prevMessage, msg]);
-
-      saveToDatabase(msg, "Order").catch(err => 
+      saveToDatabase(msg, "Order").catch((err) =>
         console.error("Failed to save notification:", err)
       );
     });
 
     newConnection.on("AppointmentBooking", (msg: string) => {
+      setAppointment((prevAppointment) => [...prevAppointment, msg]);
 
-      setAppointment(prevAppointment => [...prevAppointment, msg]);
-      
-      saveToDatabase(msg, "Appointment").catch(err =>
+      saveToDatabase(msg, "Appointment").catch((err) =>
         console.error("Failed to save notification:", err)
       );
     });
@@ -99,38 +97,36 @@ export const NotificationProvider = ({
     return () => {
       newConnection.stop();
     };
-  }, [shopId]); 
+  }, [shopId]);
 
   const fetchMessages = async () => {
-      try {
-        const response = await axios.get(
-          `${UseApiUrl(api_Config.Shop.GetNotifycation)}?shopId=${shopId}`
-        );
-        
-        const msgs = response.data
-          .filter((item: any) => item.type === "Order" && item.isCHeck !== true)
-          .map((item: any) => item);
-        setMessage(msgs);
+    try {
+      const response = await axios.get(
+        `${UseApiUrl(api_Config.Shop.GetNotifycation)}?shopId=${shopId}`
+      );
 
-        const apps = response.data
-          .filter((item: any) => item.type === "Appointment" && item.isCHeck !== true)
-          .map((item: any) => item);
-        setAppointment(apps);
-      } catch (error) {
-        console.error("❌ Error fetching notifications:", error);
-      }
-    };
+      const msgs = response.data
+        .filter((item: any) => item.type === "Order" && item.isCHeck !== true)
+        .map((item: any) => item);
+      setMessage(msgs);
+
+      const apps = response.data
+        .filter(
+          (item: any) => item.type === "Appointment" && item.isCHeck !== true
+        )
+        .map((item: any) => item);
+      setAppointment(apps);
+    } catch (error) {
+      console.error("❌ Error fetching notifications:", error);
+    }
+  };
   useEffect(() => {
     if (!shopId) return;
-  
 
     fetchMessages();
   }, [shopId]);
 
-  const logOut = async () => {
-    localStorage.removeItem("tokenShop");
-    setIsignned(false);
-    
+  const logOutShop = async () => {
     if (connection && connection.state === HubConnectionState.Connected) {
       try {
         await connection.invoke("LeaveGroupShop", shopId);
@@ -140,9 +136,7 @@ export const NotificationProvider = ({
       }
     }
   };
-useEffect(() => {
-  localStorage.removeItem("tokenShop");
-}, [logOut]);
+
   const handleClickCheck = async (id: string) => {
     try {
       await axios.post(
@@ -164,9 +158,9 @@ useEffect(() => {
       value={{
         message,
         appointment,
-        logOut,
         name,
         handleClickCheck,
+        logOutShop,
       }}
     >
       {children}

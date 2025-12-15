@@ -319,7 +319,7 @@ const ProductList = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {filteredProducts.map((product: any) => (
+                    {filteredProducts?.map((product: any) => (
                       <tr
                         key={product.id}
                         className="hover:bg-gray-50 transition-all"

@@ -6,6 +6,7 @@ export const api_Config = {
     ShopLogin: "/api/Authentication/LogInShop",
     signUp: "/api/Authentication/Register",
     getInfoUser: "/api/Authentication/GetData",
+    Logout: "/api/Authentication/LogOut",
 
   },
   Product: {
@@ -16,7 +17,6 @@ export const api_Config = {
     DeleteProduct:"/api/Product/DeleteProuct"
   },
   User: {
-    LayTHongTinUser: "/api/Client/LayThongTinNguoiDung",
     AddFavouriteItems: "/api/Client/AddItems",
     GetItemsFavourite: "/api/Client/GetItemFavourite",
     SuccessPayAddOrder: "/api/Client/AddDonHang",
@@ -95,7 +95,7 @@ export const api_Config = {
     DeleteCollection: "/api/SeasonCollection/DeleteCollection",
   }
 };
-export const api_Url = "http://localhost:5075";
+export const api_Url = "https://localhost:5075";
 
 export const UseApiUrl = (item: string) => {
   return api_Url + item;

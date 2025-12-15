@@ -45,7 +45,6 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
     fetchDiaChi();
   }, []);
 
-  // --- Thêm địa chỉ mới ---
   const SaveDiaChi = async (data: Partial<DiaChi>) => {
     if (!userData) return;
     try {
@@ -54,7 +53,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
         "Content-Type": "application/json",
       });
 
-      fetchDiaChi(); // reload danh sách
+      fetchDiaChi(); 
       Toaster.success("Đã lưu địa chỉ thành công!");
     } catch (error) {
       Toaster.error("Không thể lưu địa chỉ. Vui lòng thử lại.");

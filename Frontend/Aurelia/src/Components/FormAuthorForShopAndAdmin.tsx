@@ -1,15 +1,14 @@
 import { User, Lock, Store, Shield } from "lucide-react";
 import { Navbar } from "./HomeLayoutComponent/Navbar";
 import { Footer } from "./HomeLayoutComponent/Footer";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthForShopContext } from "../contexts/AuthorForShop";
-import { useNavigate } from "react-router-dom";
 import { AuthorForAdminContext } from "../contexts/AuthorForAdmin";
 
 export default function FormAuthorForShopAndAdmin() {
-  const { logIn, isSignned, errorMessage } = useContext(AuthForShopContext);
-  const { Login, isAdminSigned, errorMessages } = useContext(AuthorForAdminContext);
-  const navigate = useNavigate();
+  const { logIn,  errorMessage } = useContext(AuthForShopContext);
+  const { Login, errorMessages } = useContext(AuthorForAdminContext);
+
 
   const [mode, setMode] = useState<"shop" | "admin">("shop");
   const [email, setEmail] = useState<string>("");
@@ -17,7 +16,6 @@ export default function FormAuthorForShopAndAdmin() {
 
   const handleSubmit = async () => {
     if (!email || !password) return;
-
     if (mode === "admin") {
       await Login(email, password);
     } else {
@@ -25,11 +23,6 @@ export default function FormAuthorForShopAndAdmin() {
     }
   };
 
-  useEffect(() => {
-    if ((mode === "shop" && isSignned) || (mode === "admin" && isAdminSigned)) {
-      navigate(mode === "shop" ? "/DashBoardShop" : "/DashboardAdmin");
-    }
-  }, [mode, isSignned, isAdminSigned, navigate]);
 
   const errorText = mode === "shop" ? errorMessage : errorMessages;
 

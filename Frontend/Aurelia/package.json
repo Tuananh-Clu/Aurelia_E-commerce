@@ -17,6 +17,7 @@
     "axios": "^1.12.2",
     "chart.js": "^4.5.1",
     "cheerio": "^1.1.2",
+    "file-system": "^2.2.2",
     "framer-motion": "^12.23.12",
     "fs": "^0.0.1-security",
     "leaflet": "^1.9.4",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@types/node": "^25.0.2",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",

@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\BE\\AureliaE-Commerce\\",
+  "WorkspaceRootPath": "D:\\Frontend\\Aurelia\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\be\\aureliae-commerce\\aureliae-commerce\\controller\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\frontend\\aurelia\\backend\\aureliae-commerce\\controller\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|solutionrelative:aureliae-commerce\\controller\\authentication.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\be\\aureliae-commerce\\aureliae-commerce\\controller\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\frontend\\aurelia\\backend\\aureliae-commerce\\controller\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|solutionrelative:aureliae-commerce\\controller\\clientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\be\\aureliae-commerce\\aureliae-commerce\\model\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\frontend\\aurelia\\backend\\aureliae-commerce\\model\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|solutionrelative:aureliae-commerce\\model\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\be\\aureliae-commerce\\aureliae-commerce\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|d:\\frontend\\aurelia\\backend\\aureliae-commerce\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B6837ACA-ABC5-4AD6-B99D-292E647D9F6E}|AureliaE-Commerce\\AureliaE-Commerce.csproj|solutionrelative:aureliae-commerce\\controller\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -36,9 +36,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Authentication.cs",
-              "DocumentMoniker": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Controller\\Authentication.cs",
+              "DocumentMoniker": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Controller\\Authentication.cs",
               "RelativeDocumentMoniker": "AureliaE-Commerce\\Controller\\Authentication.cs",
-              "ToolTip": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Controller\\Authentication.cs",
+              "ToolTip": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Controller\\Authentication.cs",
               "RelativeToolTip": "AureliaE-Commerce\\Controller\\Authentication.cs",
               "ViewState": "AgIAAJEAAAAAAAAAAAAiwLAAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -49,9 +49,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Client.cs",
-              "DocumentMoniker": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Model\\Client.cs",
+              "DocumentMoniker": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Model\\Client.cs",
               "RelativeDocumentMoniker": "AureliaE-Commerce\\Model\\Client.cs",
-              "ToolTip": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Model\\Client.cs",
+              "ToolTip": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Model\\Client.cs",
               "RelativeToolTip": "AureliaE-Commerce\\Model\\Client.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -61,9 +61,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "ClientController.cs",
-              "DocumentMoniker": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Controller\\ClientController.cs",
+              "DocumentMoniker": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Controller\\ClientController.cs",
               "RelativeDocumentMoniker": "AureliaE-Commerce\\Controller\\ClientController.cs",
-              "ToolTip": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Controller\\ClientController.cs",
+              "ToolTip": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Controller\\ClientController.cs",
               "RelativeToolTip": "AureliaE-Commerce\\Controller\\ClientController.cs",
               "ViewState": "AgIAAF4AAAAAAAAAAAAkwGgAAABiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -73,9 +73,9 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "ProductController.cs",
-              "DocumentMoniker": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Controller\\ProductController.cs",
+              "DocumentMoniker": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Controller\\ProductController.cs",
               "RelativeDocumentMoniker": "AureliaE-Commerce\\Controller\\ProductController.cs",
-              "ToolTip": "D:\\BE\\AureliaE-Commerce\\AureliaE-Commerce\\Controller\\ProductController.cs",
+              "ToolTip": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\Controller\\ProductController.cs",
               "RelativeToolTip": "AureliaE-Commerce\\Controller\\ProductController.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAswDMAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

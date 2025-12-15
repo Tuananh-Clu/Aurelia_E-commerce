@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
 import type { Appointment, order, Product } from "../types/type";
+import { AuthForShopContext } from "./AuthorForShop";
 export type DashBoardShopCOntexts = {
   dataLichHen: Appointment[] | undefined;
   dataDonHang: order[] | undefined;
@@ -50,14 +51,13 @@ export const DashBoardShopProvider = ({
   const [totaldoanhthu, setTotaldoanhthu] = useState(0);
   const [avgchitieu, setAvgchitieu] = useState(0);
   const [statePage, setStatePage] = useState("dashboard");
-  const shopData: any = localStorage.getItem("shop");
-  const data: any = JSON.parse(shopData);
+  const {shopData}=useContext(AuthForShopContext);
   const GetDataDashBoard = async (
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
     try {
       const response = await axios.get(
-        `${UseApiUrl(api_Config.Shop.LayDashBoard)}?shopId=${data.shopId}`
+        `${UseApiUrl(api_Config.Shop.LayDashBoard)}?shopId=${shopData.shopId}`
       );
       setState(response.data);
     } catch {
@@ -68,7 +68,7 @@ export const DashBoardShopProvider = ({
       try {
         const reponse = await axios.get(
           UseApiUrl(
-            `${api_Config.Shop.LayDanhSachLichHenVaDonHang}?shopId=${data.shopId}`
+            `${api_Config.Shop.LayDanhSachLichHenVaDonHang}?shopId=${shopData.shopId}`
           )
         );
         setDataDonHang(reponse.data.listOrder);
@@ -80,10 +80,10 @@ export const DashBoardShopProvider = ({
 
   const handleClickUpdateStatus = async (status: string, orderId: string) => {
     try {
-      const response = await axios.post(
+     await axios.post(
         UseApiUrl(`${api_Config.Shop.UpdateTrangThaiDonHang}`),
         {
-          shopId: data.shopId,
+          shopId: shopData.shopId,
           orderId: orderId,
           status: status,
         },
@@ -100,7 +100,7 @@ export const DashBoardShopProvider = ({
     try {
       const reponse = await axios.get(
         UseApiUrl(
-          `${api_Config.Shop.LaySanPhamCuaShop}?shopId=${data.shopId}`
+          `${api_Config.Shop.LaySanPhamCuaShop}?shopId=${shopData.shopId}`
         )
       );
       setDataSanPham(reponse.data);
@@ -110,9 +110,9 @@ export const DashBoardShopProvider = ({
   };
   const updateProduct=async(datas:Product)=>{
     try {
-      const reponse = await axios.post(
+      await axios.post(
         UseApiUrl(
-          `${api_Config.Shop.ThemSanPham}?shopId=${data.shopId}`,
+          `${api_Config.Shop.ThemSanPham}?shopId=${shopData.shopId}`,
         ),
         datas,
         { headers: { "Content-Type": "application/json" } }
@@ -126,9 +126,9 @@ export const DashBoardShopProvider = ({
   };
     const editProduct=async(datas:Product)=>{
     try {
-      const reponse = await axios.post(
+      await axios.post(
         UseApiUrl(
-          `${api_Config.Shop.SuaSanPham}?shopId=${data.shopId}`,
+          `${api_Config.Shop.SuaSanPham}?shopId=${shopData.shopId}`,
         ),
         datas,
         { headers: { "Content-Type": "application/json" } }

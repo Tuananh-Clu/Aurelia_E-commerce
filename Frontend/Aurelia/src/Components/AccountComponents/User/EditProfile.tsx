@@ -48,6 +48,7 @@ export default function EditProfile({
   setState: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { UpdateProfile} = useContext(AuthContext);
+  const userString = localStorage.getItem("user");
   const userData = userString ? JSON.parse(userString) : {};
   const [user, setUser] = useState({
     name: userData.name || "",
@@ -65,6 +66,7 @@ export default function EditProfile({
   const [files, setFiles] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const updatedImage = async () => {
     const apiKey = "0d1c3d8a0af15e271bc8154578e71620";
     const formData = new FormData();

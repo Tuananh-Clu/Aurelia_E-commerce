@@ -27,16 +27,16 @@ export const AuthorForAdminProvider = ({children}:{children:React.ReactNode}) =>
     const [adminData, setAdminData] = useState<any>(null);
     const Login=async(Email:string,Password:string)=>{
         try {
-            const reponse=await axios.post(UseApiUrl(api_Config.Admin.LoginAdmin),{
+            await axios.post(UseApiUrl(api_Config.Admin.LoginAdmin),{
                 Email,Password
-            },{headers:{"Content-Type":"application/json"}});
-            localStorage.setItem("AdminToken",reponse.data.token);
+            },{headers:{"Content-Type":"application/json"}, withCredentials: true});
             navigate("/Admin");
             Toaster.success("Đăng nhập thành công");
         } catch (error:any) {
               setErrorMessage(error.response?.data?.message || "Đã xảy ra lỗi.");
         }
     }
+
     useEffect(() => {
         const data = fetchData({type: "admin"});
         setAdminData(data);

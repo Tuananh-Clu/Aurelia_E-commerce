@@ -16,7 +16,6 @@ import dataCollection from "../assets/DataMock/dataSeason.json";
 import { FilterProductContext } from "../contexts/FIlterProduct";
 import type { Cart, Product } from "../types/type";
 import { Toaster } from "../Components/Toaster";
-import axios from "axios";
 import { api_Config, UseApiUrl } from "../services/api";
 import { TimKiemTaiStore } from "../Components/TimKiemTaiStore";
 import { CartContext } from "../contexts/CartContext";
@@ -68,9 +67,11 @@ export const MainProduct = () => {
     }
 
     try {
-      api_Response(UseApiUrl(api_Config.User.AddFavouriteItems), "POST", {
-        productId: item.id,
-      });
+      api_Response(UseApiUrl(api_Config.User.AddFavouriteItems), "POST", item, {
+        withCredentials: true,
+        contentType: "application/json",
+      }
+      );
       setHeartPopup(true);
       Toaster.success("Đã thêm sản phẩm vào yêu thích!");
     } catch {
@@ -100,7 +101,7 @@ export const MainProduct = () => {
       }
 
       const cartItem: Cart = {
-        Itemid: item.id,
+        itemid: item.id,
         name: item.name,
         price:
           item.discountValue > 0
@@ -114,12 +115,14 @@ export const MainProduct = () => {
       };
 
       setCartDataAdd((prev) => [...prev, cartItem]);
+        console.log(cartItem);
       localStorage.setItem(
         "cartItems",
         JSON.stringify([...CartDataAdd, cartItem])
       );
       Toaster.success("Đã thêm sản phẩm vào giỏ hàng!");
     },
+  
     [selectedColor, selectedSize, setCartDataAdd]
   );
 

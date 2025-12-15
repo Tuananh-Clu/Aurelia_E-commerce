@@ -12,8 +12,9 @@ import {
   ArrowRightCircle,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../contexts/Author";
 
 export const SideBoard = ({
   onClick,
@@ -22,6 +23,7 @@ export const SideBoard = ({
   onClick: React.Dispatch<React.SetStateAction<string>>;
   status: string;
 }) => {
+  const {logOut}=useContext(AuthContext)
   const [expanded, setExpanded] = React.useState<boolean>(true);
   const menus = [
     { name: "Dashboard", icon: <LayoutDashboard size={20} />, badge: null },
@@ -196,11 +198,12 @@ export const SideBoard = ({
             onClick={()=>{
               navigate("/login");
               localStorage.removeItem("AdminToken");
-              
+              logOut({typeAccount: "admin"});
             }}
             className={`flex items-center gap-3 w-full px-4 py-3 text-slate-400 hover:text-white hover:bg-red-500/10 hover:border-red-500/50 border border-transparent rounded-xl transition-all duration-300 group`}
           >
             <LogOut
+
               size={20}
               className={`${expanded ?"group-hover:text-red-400 transition-colors duration-300 ":"text-slate-400 group-hover:text-white transition-colors duration-300 "}`}
             />

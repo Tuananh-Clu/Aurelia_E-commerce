@@ -2,10 +2,10 @@
 {
     public class UpdateProfileCustomer
     {
-        public string hovaten { get; set; }
+        public string name { get; set; }
         public string email { get; set; }
-        public string soDt { get; set; }
+        public string phone { get; set; }
         public string address { get; set; }
-        public string avatarUrl { get; set; }
+        public string avatar { get; set; }
     }
 }

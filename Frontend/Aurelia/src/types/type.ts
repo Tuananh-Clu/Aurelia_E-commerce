@@ -77,7 +77,7 @@ export type appointmentServicess = {
   price: string;
 };
 export type Cart = {
-  Itemid: string;
+  itemid: string;
   name: string;
   price: number;
   thumnail: string;

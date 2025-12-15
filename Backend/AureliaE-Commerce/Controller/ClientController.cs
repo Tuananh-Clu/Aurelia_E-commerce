@@ -37,7 +37,7 @@ namespace AureliaE_Commerce.Controller
         {
             string cookieName = typeAccount switch
             {
-                "user" => "access_token_user",
+                "user" => "access_token_client",
                 "shop" => "access_token_shop",
                 "admin" => "access_token_admin",
                 _ => "access_token_user"
@@ -54,18 +54,6 @@ namespace AureliaE_Commerce.Controller
             var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub)?.Value;
             return userId;
         }
-
-        [HttpGet("LayThongTinNguoiDung")]
-        public async Task<IActionResult> GetDataUser()
-        {
-            var userId = GetUserIdFromCookie("user");
-            if (string.IsNullOrEmpty(userId)) return Unauthorized("Chưa đăng nhập");
-
-            var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-            var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
-            return Ok(new { user = data });
-        }
-
         [HttpPost("AddItems")]
         public async Task<IActionResult> AddItems([FromBody] Product product)
         {
@@ -309,10 +297,10 @@ namespace AureliaE_Commerce.Controller
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
             var update = Builders<Client>.Update.PullFilter(
                 c => c.ThongTinDatHang,
-                td => td.HoVaTen == thongTinCaNhan.HoVaTen &&
-                      td.DiaChi == thongTinCaNhan.DiaChi &&
-                      td.Email == thongTinCaNhan.Email &&
-                      td.SoDT == thongTinCaNhan.SoDT
+                td => td.hoVaTen == thongTinCaNhan.hoVaTen &&
+                      td.diaChi == thongTinCaNhan.diaChi &&
+                      td.email == thongTinCaNhan.email &&
+                      td.soDT == thongTinCaNhan.soDT
             );
 
             var result = await mongoCollection.UpdateOneAsync(filter, update);
@@ -328,22 +316,22 @@ namespace AureliaE_Commerce.Controller
 
             var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
             var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
+            if (data == null) return NotFound(new { message = "Người dùng không tồn tại" });
 
             var update = Builders<Client>.Update
-                .Set(s => s.Name, updateProfileCustomer.hovaten)
-                .Set(s => s.Email, updateProfileCustomer.email)
-                .Set(s => s.SoDt, updateProfileCustomer.soDt)
-                .Set(s => s.DiaChi, updateProfileCustomer.address)
-                .Set(s => s.Avatar, updateProfileCustomer.avatarUrl);
+                .Set(s => s.Name, updateProfileCustomer.name ?? data.Name)
+                .Set(s => s.Email, updateProfileCustomer.email ?? data.Email)
+                .Set(s => s.SoDt, updateProfileCustomer.phone ?? data.SoDt)
+                .Set(s => s.DiaChi, updateProfileCustomer.address ?? data.DiaChi)
+                .Set(s => s.Avatar, updateProfileCustomer.avatar ?? data.Avatar);
 
             await mongoCollection.UpdateOneAsync(filter, update);
 
-            data.Name = updateProfileCustomer.hovaten;
-            data.Email = updateProfileCustomer.email;
-            data.SoDt = updateProfileCustomer.soDt;
-            data.DiaChi = updateProfileCustomer.address;
-            data.Avatar = updateProfileCustomer.avatarUrl;
-
+            data.Name = updateProfileCustomer.name ?? data.Name;
+            data.Email = updateProfileCustomer.email ?? data.Email;
+            data.SoDt = updateProfileCustomer.phone ?? data.SoDt;
+            data.DiaChi = updateProfileCustomer.address ?? data.DiaChi;
+            data.Avatar = updateProfileCustomer.avatar ?? data.Avatar;
             return Ok(new { message = "Cập Nhật Thành Công", user = data });
         }
         [HttpPost("UpdateTier")]

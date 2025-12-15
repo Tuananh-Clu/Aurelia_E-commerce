@@ -2,12 +2,12 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/Author";
 import type { Clients, Measure } from "../../../types/type";
 import { motion } from "framer-motion";
-import { LogOut, Pencil} from "lucide-react";
+import { LogOut, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../../contexts/CartContext";
 
 type LeftSides = {
-  userString: string | null;
+  userString: Clients | null;
   SoLuongDon: number;
   SanPhamDaThich: number;
   Voucher: number;
@@ -23,12 +23,12 @@ export const LeftSide: React.FC<LeftSides> = ({
   soDo,
   setState,
 }) => {
-  const { setIsignned } = useContext(AuthContext);
-  const {setCartDataAdd}=useContext(CartContext)
-  const user: Clients | null = userString ? JSON.parse(userString) : null;
+  const { setIsignned, logOut } = useContext(AuthContext);
+  const { setCartDataAdd } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
+    logOut({ typeAccount: "client" });
     localStorage.clear();
     setIsignned(false);
     setCartDataAdd([]);
@@ -43,36 +43,34 @@ export const LeftSide: React.FC<LeftSides> = ({
     { name: "Hông", value: soDo?.hong, unit: "cm" },
   ];
 
-  const createdAt = user?.ngayTaoTaiKhoan
-    ? new Date(user.ngayTaoTaiKhoan).toLocaleDateString("vi-VN")
+  const createdAt = userString?.ngayTaoTaiKhoan
+    ? new Date(userString.ngayTaoTaiKhoan).toLocaleDateString("vi-VN")
     : "Không rõ";
 
   return (
     <div className="w-full p-6 space-y-6 rounded-3xl bg-white/80 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-white/30 ">
-      
-      {/* USER INFO */}
       <div className="flex flex-col items-center text-center space-y-3">
         <div className="relative">
           <img
             className="w-24 h-24 rounded-full ring-4 ring-indigo-200 shadow-lg object-cover"
-            src={user?.avatar || "https://via.placeholder.com/150"}
+            src={userString?.avatar || "https://via.placeholder.com/150"}
             alt="avatar"
           />
           <div className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-green-500 border-2 border-white"></div>
         </div>
 
         <h1 className="text-lg font-bold text-gray-800 tracking-wide">
-          {user?.name ? `Xin chào, ${user.name}` : "Xin chào, Bạn"}
+          {userString?.name ? `Xin chào, ${userString.name}` : "Xin chào, Bạn"}
         </h1>
 
         <p className="text-xs text-gray-500">
           Thành viên:{" "}
-          <span className="text-indigo-600 font-semibold">{user?.tier}</span>
+          <span className="text-indigo-600 font-semibold">
+            {userString?.tier}
+          </span>
         </p>
 
-        <p className="text-xs text-gray-400">
-          Tham gia từ {createdAt}
-        </p>
+        <p className="text-xs text-gray-400">Tham gia từ {createdAt}</p>
 
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -103,9 +101,7 @@ export const LeftSide: React.FC<LeftSides> = ({
 
       {/* BODY SIZE */}
       <div>
-        <h2 className="text-sm font-bold mb-2 text-gray-700">
-          Số đo cơ thể
-        </h2>
+        <h2 className="text-sm font-bold mb-2 text-gray-700">Số đo cơ thể</h2>
 
         <div className="grid grid-cols-2 gap-3">
           {bodyMeasurements.map(
@@ -134,8 +130,6 @@ export const LeftSide: React.FC<LeftSides> = ({
       >
         Cập nhật số đo
       </motion.button>
-
-
 
       {/* LOGOUT BUTTON */}
       <motion.button

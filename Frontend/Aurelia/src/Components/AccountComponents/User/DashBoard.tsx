@@ -1,27 +1,18 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Navbar } from "../../HomeLayoutComponent/Navbar";
 import { LeftSide } from "./LeftSide";
 import { RightSide } from "./RightSide";
 import { FilterProductContext } from "../../../contexts/FIlterProduct";
-import type { Clients } from "../../../types/type";
 import { AiPoseMeasureContext } from "../../../contexts/AIPoseMeasure";
 import EditProfile from "./EditProfile";
+import { AuthContext } from "../../../contexts/Author";
 
 
 
 export const DashBoard = () => {
-  const userString = localStorage.getItem("user");
+  const {userData}=useContext(AuthContext);
   const [openeditProfile, setOpeneditProfile] = useState(false);
   const { DataMeasure } = useContext(AiPoseMeasureContext);
-  const [user, setUser] = useState<Clients | null>(null);
-  const location=window.location.href;
-  
-
-  useEffect(() => {
-    setUser(JSON.parse(userString || "{}"));
-    console.log(DataMeasure)
-    
-  }, [location, userString]);
 
   const {
     dataFavouriteItemUser,
@@ -50,7 +41,7 @@ export const DashBoard = () => {
           {/* LEFT PANEL — MOBILE ON TOP */}
           <div className="w-full lg:w-1/3 xl:w-1/4 md:h-screen lg:h-auto">
             <LeftSide
-              userString={userString}
+              userString={userData}
               SanPhamDaThich={dataFavouriteItemUser.length}
               SoLuongDon={soLuongDonHang}
               Voucher={0}
@@ -63,7 +54,7 @@ export const DashBoard = () => {
           <div className="w-full  lg:w-2/3 xl:w-3/4 h-screen lg:h-auto">
             <RightSide
               dataFavouriteItemUser={dataFavouriteItemUser}
-              userRole={user?.tier}
+              userRole={userData?.tier}
               soLuongDonHang={soLuongDonHang}
               tongThuChi={TongThuChi}
               donHangChiTiet={DonHang}

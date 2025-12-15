@@ -93,6 +93,22 @@
   },
   {
     "ContainingType": "AureliaE_Commerce.Controller.AuthenticationController",
+    "Method": "GetAllClients",
+    "RelativePath": "api/Authentication/GetData",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "typeAccount",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AureliaE_Commerce.Controller.AuthenticationController",
     "Method": "LogInAccount",
     "RelativePath": "api/Authentication/LogIn",
     "HttpMethod": "POST",
@@ -254,11 +270,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "clientAppointment",
         "Type": "AureliaE_Commerce.Model.ClientAppointment",
         "IsRequired": true
@@ -274,11 +285,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
       {
         "Name": "order",
         "Type": "AureliaE_Commerce.Model.OrderModel",
@@ -301,11 +307,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "product",
         "Type": "AureliaE_Commerce.Model.Product",
         "IsRequired": true
@@ -322,11 +323,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "Product",
         "Type": "System.Collections.Generic.List\u00601[[AureliaE_Commerce.Model.ItemOrder, AureliaE-Commerce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
@@ -341,13 +337,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -357,13 +347,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -373,13 +357,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -390,11 +368,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
       {
         "Name": "orderId",
         "Type": "System.String",
@@ -410,13 +383,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -426,13 +393,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -442,13 +403,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -458,13 +413,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -474,13 +423,7 @@
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -491,11 +434,6 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
       {
         "Name": "thongTinCaNhan",
         "Type": "AureliaE_Commerce.Model.ThongTinCaNhan",
@@ -516,11 +454,6 @@
         "Name": "updateProfileCustomer",
         "Type": "AureliaE_Commerce.Dto.UpdateProfileCustomer",
         "IsRequired": true
-      },
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -532,13 +465,7 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": [
       {
         "Type": "System.Void",
@@ -556,11 +483,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "measure",
         "Type": "AureliaE_Commerce.Model.Measure",
         "IsRequired": true
@@ -577,11 +499,6 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
         "Name": "thongTinCaNhan",
         "Type": "AureliaE_Commerce.Model.ThongTinCaNhan",
         "IsRequired": true
@@ -596,13 +513,7 @@
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Authorization",
-        "Type": "System.String",
-        "IsRequired": false
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -739,7 +650,7 @@
   },
   {
     "ContainingType": "AureliaE_Commerce.Controllers.ProductController",
-    "Method": "AddItem",
+    "Method": "AddItemFromFile",
     "RelativePath": "api/Product/AddItemProduct",
     "HttpMethod": "POST",
     "IsController": true,
@@ -751,12 +662,27 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
   },
   {
     "ContainingType": "AureliaE_Commerce.Controllers.ProductController",
     "Method": "DeleteProduct",
-    "RelativePath": "api/Product/DeleteProuct",
+    "RelativePath": "api/Product/DeleteProduct",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -767,21 +693,44 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
   },
   {
     "ContainingType": "AureliaE_Commerce.Controllers.ProductController",
-    "Method": "GetProductItem",
+    "Method": "GetProducts",
     "RelativePath": "api/Product/GetProduct",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse\u00601[[System.Collections.Generic.List\u00601[[AureliaE_Commerce.Model.Product, AureliaE-Commerce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "AureliaE_Commerce.Controllers.ProductController",
-    "Method": "getProductbySearch",
+    "Method": "SearchProducts",
     "RelativePath": "api/Product/GetProductBySearch",
     "HttpMethod": "GET",
     "IsController": true,
@@ -793,7 +742,15 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse\u00601[[System.Collections.Generic.List\u00601[[AureliaE_Commerce.Model.Product, AureliaE-Commerce, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "AureliaE_Commerce.Controllers.ProductController",
@@ -809,13 +766,28 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
   },
   {
     "ContainingType": "AureliaE_Commerce.Controllers.ProductController",
     "Method": "UpdateQuantityProduct",
     "RelativePath": "api/Product/updateQuantityProduct",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -825,7 +797,22 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "AureliaE_Commerce.Common.ApiResponse",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
   },
   {
     "ContainingType": "AureliaE_Commerce.Controller.SeasonCollectionController",

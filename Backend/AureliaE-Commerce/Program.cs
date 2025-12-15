@@ -43,8 +43,8 @@ builder.Services.AddCors(a =>
     a.AddPolicy("AllowFrontEnd", s =>
     {
         s.WithOrigins(
-            "http://localhost:5173",
-            "http://localhost:3000"
+            "https://localhost:5173",
+            "https://localhost:3000"
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieTicket API v1");
-        c.RoutePrefix = string.Empty; // truy cập trực tiếp bằng http://localhost:5173/ 
+        c.RoutePrefix = string.Empty; 
     });
 }
 
@@ -99,7 +99,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseCors("AllowFrontEnd");
 app.MapHub<NotifyHub>("/notifyHub");
-app.UseAuthentication(); // ✅ cần thêm
+app.UseAuthentication(); 
 app.UseAuthorization();
 
 app.MapControllers();

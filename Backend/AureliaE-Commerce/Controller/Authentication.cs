@@ -109,8 +109,10 @@ namespace AureliaE_Commerce.Controller
 
             if (BCrypt.Net.BCrypt.Verify(loginDto.Password,data.PassWord)==true)
             {
+                Console.WriteLine("=== LOGIN CLIENT SUCCESS ===");
+
                 var token = Generate(data);
-                Response.Cookies.Append("access_token_user", token, new CookieOptions
+                Response.Cookies.Append("access_token_client", token, new CookieOptions
                 {
                     HttpOnly = true,
                     Secure = true,
@@ -157,14 +159,14 @@ namespace AureliaE_Commerce.Controller
 
             await _collection.InsertOneAsync(client);
             var token = Generate(client);
-            Response.Cookies.Append("access_token_user", token, new CookieOptions
+            Response.Cookies.Append("access_token_client", token, new CookieOptions
             {
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.None,
                 Expires = DateTimeOffset.UtcNow.AddDays(7)
             });
-
+            Console.WriteLine(Response.Cookies);
             return Ok(new { success = true, message = "Đăng ký thành công"
             });
         }
@@ -316,7 +318,6 @@ namespace AureliaE_Commerce.Controller
                 return Ok(new
                 {
                     message = "Đăng Nhập Thành Công",
-                    token = token,
                 });
             }
             else
@@ -324,6 +325,18 @@ namespace AureliaE_Commerce.Controller
                 return BadRequest("Not Found");
             }
 
+
+        }
+        [HttpDelete("LogOut")]
+        public IActionResult LogOut([FromQuery] string typeAccount)
+        {
+            Response.Cookies.Delete($"access_token_{typeAccount}", new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+            });
+            return Ok(new { success = true, message = "Đăng xuất thành công" });
         }
         [HttpGet("GetData")] 
         public async Task<IActionResult> GetAllClients([FromQuery] string typeAccount)
@@ -339,19 +352,19 @@ namespace AureliaE_Commerce.Controller
             if (typeAccount == "client")
             {
                 var clients = Builders<Client>.Filter.Eq(a => a.Id, userId);
-                var client = await _collection.Find(clients).ToListAsync();
-                return Ok(clients);
+                var client = await _collection.Find(clients).FirstOrDefaultAsync();
+                return Ok(client);
             }
             else if (typeAccount == "shop")
             {
                 var shops = Builders<ShopAccount>.Filter.Eq(a => a.id, userId);
-                var shop = await mongoCollection.Find(shops).ToListAsync();
+                var shop = await mongoCollection.Find(shops).FirstOrDefaultAsync();
                 return Ok(shop);
             }
             else if (typeAccount == "admin")
             {
                 var admins = Builders<AdminAccount>.Filter.Eq(a => a.Id, userId);
-                var admin = await collection.Find(admins).ToListAsync();
+                var admin = await collection.Find(admins).FirstOrDefaultAsync();
                 return Ok(admins);
             }
             else

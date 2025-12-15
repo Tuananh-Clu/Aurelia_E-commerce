@@ -44,7 +44,6 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   const {  isSignned } = useContext(AuthContext);
   const [handleToggleFavourite, setHandleToggleFavourite] = useState(false);
   const location = useLocation();
-  const token = localStorage.getItem("token") || "";
   const [key, setKey] = useState<string>("");
   const [dataProduct, setDataProduct] = useState<Product[]>([]);
   const [dataFilter, setDataFilter] = useState<Product[]>([]);
@@ -58,10 +57,10 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
 
   // Hủy đơn hàng
   const huyDonHang = async (orderId: string) => {
-    if (!token) return;
+    if (!isSignned) return;
     try {
       await axios.post(`${UseApiUrl(api_Config.User.HuyDon)}?orderId=${orderId}`, {}, {
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        withCredentials: true,
       });
       setHuyDonHangs(!huyDonHangs);
       Toaster.success("Đã hủy đơn hàng thành công!");
@@ -72,7 +71,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const fetchAllData = async () => {
-    if (!token || !isSignned) return;
+    if ( !isSignned) return;
     setIsLoading(true);
 
     const allProductsCached = localStorage.getItem("allProducts");
@@ -81,10 +80,10 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
     }
 
     const promises = [
-      axios.get(`${UseApiUrl(api_Config.User.GetItemsFavourite)}`, { headers: { Authorization: `Bearer ${token}` } }),
-      axios.get(`${UseApiUrl(api_Config.User.LayDonHang)}`, { headers: { Authorization: `Bearer ${token}` } }),
-      axios.get(`${UseApiUrl(api_Config.User.SoLuongDonVaTongThuChi)}`, { headers: { Authorization: `Bearer ${token}` } }),
-      axios.get(`${UseApiUrl(api_Config.User.DonHangGanDay)}`, { headers: { Authorization: `Bearer ${token}` } }),
+      axios.get(`${UseApiUrl(api_Config.User.GetItemsFavourite)}`, {withCredentials: true }),
+      axios.get(`${UseApiUrl(api_Config.User.LayDonHang)}`, { withCredentials: true}),
+      axios.get(`${UseApiUrl(api_Config.User.SoLuongDonVaTongThuChi)}`, { withCredentials: true}),
+      axios.get(`${UseApiUrl(api_Config.User.DonHangGanDay)}`, { withCredentials: true }),
     ];
 
     const results = await Promise.allSettled(promises);
@@ -132,7 +131,7 @@ export const FilterProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     fetchAllData();
 
-  }, [token, isSignned, huyDonHangs,location.pathname]);
+  }, [isSignned, huyDonHangs,location.pathname]);
 
   useEffect(() => {
     if (!key) {
