@@ -1,7 +1,10 @@
 ﻿using AureliaE_Commerce.Context;
+using AureliaE_Commerce.Controller;
 using AureliaE_Commerce.Hubs;
 using AureliaE_Commerce.Model;
 using AureliaE_Commerce.Services;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.IdentityModel.Tokens;
@@ -52,6 +55,11 @@ builder.Services.AddCors(a =>
     });
 });
 
+FirebaseApp.Create(new AppOptions()
+{
+    Credential = GoogleCredential.FromFile("secrets/aurelia-e-commerce-b24aaf6123da.json")
+});
+builder.Services.AddSingleton<EmailController>();
 builder.Services.AddSingleton<IMongoClient>(sp =>
 {
     var settings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();

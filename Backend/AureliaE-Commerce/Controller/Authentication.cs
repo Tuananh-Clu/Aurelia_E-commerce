@@ -3,6 +3,7 @@ using AureliaE_Commerce.Dto;
 using AureliaE_Commerce.Model;
 using AureliaE_Commerce.Model.Shop;
 using DnsClient;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
@@ -129,6 +130,63 @@ namespace AureliaE_Commerce.Controller
 
             return BadRequest(new { success = false, message = "Sai Email hoặc Mật khẩu" });
         }
+        [HttpPost("LogInWithFirebase")]
+        public async Task<IActionResult> LogInWithFirebase([FromQuery]  string token)
+        {
+            FirebaseToken decoded=await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(token);
+            var uid=decoded.Uid;
+            if(string.IsNullOrEmpty(uid))
+            {
+                return BadRequest(new { success = false, message = "Token không hợp lệ" });
+            }
+            var filter = Builders<Client>.Filter.Eq(a => a.Id, uid);
+            var data = await _collection.Find(filter).FirstOrDefaultAsync();
+            if(data == null)
+            {
+                var user=new Client
+                {
+                    Id=uid,
+                    Email=decoded.Claims["email"].ToString(),
+                    Name=decoded.Claims["name"].ToString(),
+                    Point=0,
+                    Tier="Bronze",
+                    NgayTaoTaiKhoan=DateTime.Now
+                };
+                await _collection.InsertOneAsync(user);
+                data=user;
+                var tokenNew = Generate(data);
+                Response.Cookies.Append("access_token_client", tokenNew, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
+                return Ok(new
+                {
+                    success = true,
+                    message = "Đăng nhập thành công"
+                });
+            }
+            if(data != null)
+            {
+                var tokenExisting = Generate(data);
+                Response.Cookies.Append("access_token_client", tokenExisting, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true,
+                    SameSite = SameSiteMode.None,
+                    Expires = DateTimeOffset.UtcNow.AddDays(7)
+                });
+                return Ok(new
+                {
+                    success = true,
+                    message = "Đăng nhập thành công"
+                });
+            }
+            return BadRequest(new { success = false, message = "Sai Email hoặc Mật khẩu" });
+        }
+
 
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] SignUpDto signUpDto)

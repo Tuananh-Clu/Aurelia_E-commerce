@@ -10,6 +10,7 @@ import { Camera } from "@mediapipe/camera_utils";
 import { AiPoseMeasureContext } from "../../contexts/AIPoseMeasure";
 import { ArrowBigLeftDashIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 type MainCamera = {
   isCameraOn: boolean;
@@ -50,6 +51,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   const { setDataMeasure } = useContext(AiPoseMeasureContext);
   const [popUp, setPopup] = useState(false);
   const [number, setNumber] = useState(3);
+  const [appearText, setAppearText] = useState(false);
   const isCountingDownRef = useRef(false);
   const countdownIntervalRef = useRef<number | null>(null);
   const poseRef = useRef<Pose | null>(null);
@@ -295,7 +297,10 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   return (
     <>
       <div className="fixed top-20 left-3 z-50">
-        <button
+        <motion.button
+        transition={{ type: "spring", stiffness: 300 }}
+        onHoverStart={() => setAppearText(true)}
+        onHoverEnd={() => setAppearText(false)}
           onClick={() => navigate(-1)}
           className="
       flex items-center gap-2
@@ -313,8 +318,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
     "
         >
           <ArrowBigLeftDashIcon className="w-5 h-5" />
-          Quay lại
-        </button>
+          {appearText && <span>Quay Lại</span>}
+        </motion.button>
       </div>
 
       <div className="flex flex-col items-center text-center md:hidden mb-4">

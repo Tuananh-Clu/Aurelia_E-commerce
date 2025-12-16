@@ -101,7 +101,7 @@ export default function EditProfile({
     setIsEditing(false);
   };
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-indigo-50 via-white to-emerald-50 md:py-10 md:px-16 px-8 py-5  md:w-full  w-[400px] ${isEditing ? "h-[150vh]" : "h-[130vh]"} rounded-3xl shadow-xl border border-gray-200`}>
+    <div className={`min-h-screen bg-gradient-to-br from-indigo-50 via-white to-emerald-50 md:py-10 md:px-16 px-8 py-5  md:w-full  w-[400px] ${isEditing ? "h-[160vh]" : "h-[140vh]"} rounded-3xl shadow-xl border border-gray-200`}>
       <div
         onClick={() => setState(false)}
         className="backdrop-blur-md bg-white/10 border border-white/20 w-10 h-10 rounded-2xl 

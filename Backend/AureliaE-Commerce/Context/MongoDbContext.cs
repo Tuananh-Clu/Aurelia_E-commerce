@@ -24,5 +24,6 @@ namespace AureliaE_Commerce.Context
         public IMongoCollection<StoryBanner> StoryBanner => mongoDatabase.GetCollection<StoryBanner>("StoryBanner");
         public IMongoCollection<MaGiamGia> MaGiamGiaVoucher => mongoDatabase.GetCollection<MaGiamGia>("Voucher");
         public IMongoCollection<LuxuryCollection> SeasonCollection => mongoDatabase.GetCollection<LuxuryCollection>("SeasonCollection");
+        public IMongoCollection<ResetPassWordHass> ResetPassWordHass => mongoDatabase.GetCollection<ResetPassWordHass>("ResetPassWordHass");
     }
 }

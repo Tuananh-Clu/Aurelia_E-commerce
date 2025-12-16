@@ -152,7 +152,7 @@ export default function BookingForm() {
     }
   };
 
-  if (isSuccess) {
+  if (isSuccess===true) {
     return <NotifySuccessBooking data={dataStore?.shopName} status={notify} />;
   }
 

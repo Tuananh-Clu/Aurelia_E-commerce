@@ -14,6 +14,7 @@ import { AiPoseMeasureContext } from "./AIPoseMeasure";
 import { api_Response } from "../services/http";
 import { useLocation } from "react-router-dom";
 
+
 type AuthContextType = {
   isSignned: boolean;
   errorMessage: string;
@@ -21,7 +22,7 @@ type AuthContextType = {
   setIsignned: React.Dispatch<SetStateAction<boolean>>;
   setErrorMessage: React.Dispatch<SetStateAction<string>>;
   logIn: (Email: string, Password: string) => Promise<void>;
-  logOut: ({typeAccount}:{typeAccount:string})=>Promise<void>;
+  logOut: ({ typeAccount }: { typeAccount: string }) => Promise<void>;
   register: (
     UserName: string,
     Email: string,
@@ -34,7 +35,7 @@ type AuthContextType = {
     address: string,
     avatar: string
   ) => Promise<void>;
-  fetchData: ({type}:{type:string})=>Promise<void>;
+  fetchData: ({ type }: { type: string }) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -47,7 +48,7 @@ export const AuthContext = createContext<AuthContextType>({
   register: async () => {},
   UpdateProfile: async () => {},
   fetchData: async () => {},
-  logOut: async () => { }
+  logOut: async () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -58,49 +59,60 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [userData, setUserData] = useState<any>(null);
 
-  const location=useLocation();
-   const fetchData=async({type}:{type:string})=>{ await axios.get(
-      `${UseApiUrl(api_Config.authentication.getInfoUser)}?typeAccount=${type}`,
-      {
-        withCredentials: true,
-      }
-    ).then((response) => {
-      if (response.status === 200) {
-        setIsignned(true);
-        setUserData(response.data);
-        setDataMeasure(response.data.soDoNguoiDung)
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-    }).catch(() => {
-      setIsignned(false);
-    });
-  }
+  const location = useLocation();
+  const fetchData = async ({ type }: { type: string }) => {
+    await axios
+      .get(
+        `${UseApiUrl(
+          api_Config.authentication.getInfoUser
+        )}?typeAccount=${type}`,
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        if (response.status === 200) {
+          setIsignned(true);
+          setUserData(response.data);
+          setDataMeasure(response.data.soDoNguoiDung);
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
+      })
+      .catch(() => {
+        setIsignned(false);
+      });
+  };
   useEffect(() => {
-   const data= fetchData({type: "client"});
-   setDoneWork(false);
-   setUserData(data);
-   
-  }, [location.pathname,doneWork,isSignned]);
+    const data = fetchData({ type: "client" });
+    setDoneWork(false);
+    setUserData(data);
+  }, [location.pathname, doneWork, isSignned]);
   const logIn = async (Email: string, Password: string) => {
     try {
       const response = await axios.post(
         UseApiUrl(api_Config.authentication.login),
         { Email, Password },
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       if (response.status === 200) {
         setIsignned(true);
         Toaster.success("Đăng nhập thành công!");
         api_Response<any>(
-          UseApiUrl(api_Config.User.AutoAddGioHang)
-          , "POST",
+          UseApiUrl(api_Config.User.AutoAddGioHang),
+          "POST",
           CartDataAdd,
-          { headers: { "Content-Type": "application/json" }, withCredentials: true  }
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
         );
         setDoneWork(true);
       }
-    } catch (error:any) {
+    } catch (error: any) {
       setErrorMessage(error.response?.data?.message || "Đã xảy ra lỗi.");
     }
   };
@@ -114,18 +126,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await axios.post(
         UseApiUrl(api_Config.authentication.signUp),
         { UserName, Email, Password },
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       if (response.status === 200) {
         setIsignned(true);
         Toaster.success("Đăng ký thành công! Chào mừng bạn đến với Aurelia!");
       }
-      if(response.status === 400){
+      if (response.status === 400) {
         setErrorMessage(response.data.message);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const UpdateProfile = async (
@@ -140,17 +154,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         UseApiUrl(api_Config.User.updateprofile),
         "POST",
         { name, email, phone, address, avatar },
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       setUserData(response);
-        Toaster.success("Đã cập nhật thông tin cá nhân thành công!");
+      Toaster.success("Đã cập nhật thông tin cá nhân thành công!");
     } catch (error) {
       Toaster.error("Không thể cập nhật thông tin. Vui lòng thử lại.");
     }
   };
-  const logOut=async({typeAccount}:{typeAccount:string})=>{
+  const logOut = async ({ typeAccount }: { typeAccount: string }) => {
     try {
-      api_Response(UseApiUrl(`${api_Config.authentication.Logout}?typeAccount=${typeAccount}`), "DELETE", null, { withCredentials: true });
+      api_Response(
+        UseApiUrl(
+          `${api_Config.authentication.Logout}?typeAccount=${typeAccount}`
+        ),
+        "DELETE",
+        null,
+        { withCredentials: true }
+      );
       setIsignned(false);
       setUserData(null);
       Toaster.success("Đăng xuất thành công!");
@@ -158,9 +182,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       Toaster.error("Đăng xuất thất bại. Vui lòng thử lại.");
     }
   };
+
   return (
     <AuthContext.Provider
-      value={{ isSignned, setIsignned, logIn, register, UpdateProfile,errorMessage,setErrorMessage,fetchData,userData, logOut }}
+      value={{
+        isSignned,
+        setIsignned,
+        logIn,
+        register,
+        UpdateProfile,
+        errorMessage,
+        setErrorMessage,
+        fetchData,
+        userData,
+        logOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

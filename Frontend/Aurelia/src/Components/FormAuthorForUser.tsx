@@ -1,17 +1,17 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/Author";
+import { LogginWithFireBase } from "../services/auth.service";
 
 export const FormAuthor = () => {
   const [tab, setTab] = useState<"login" | "register">("login");
-  const { logIn, register, errorMessage, setErrorMessage } =
+  const { logIn, register, errorMessage, setErrorMessage, fetchData } =
     useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [shake, setShake] = useState(false);
 
-  // Reset form when tab changes
   useEffect(() => {
     setErrorMessage("");
     setEmail("");
@@ -20,11 +20,10 @@ export const FormAuthor = () => {
     setShake(false);
   }, [tab, setErrorMessage]);
 
-  // Trigger shake animation on error
   useEffect(() => {
     if (errorMessage) {
       setShake(true);
-      const timer = setTimeout(() => setShake(false), 500); // reset shake after animation
+      const timer = setTimeout(() => setShake(false), 500);
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
@@ -37,7 +36,13 @@ export const FormAuthor = () => {
       register(username, email, password);
     }
   };
-
+  const logInWIthGoogle = async () => {
+    await LogginWithFireBase();
+    const isSuccess = localStorage.getItem("IsSuccessFireBaseLogin");
+    if (isSuccess === "true") {
+      await fetchData({ type: "client" });
+    }
+  };
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-100">
       <main className="w-full max-w-md bg-white rounded-2xl shadow-lg p-10">
@@ -76,9 +81,7 @@ export const FormAuthor = () => {
             key={tab}
             initial={{ opacity: 0, y: 15 }}
             animate={
-              shake
-                ? { x: [-8, 8, -6, 6, -4, 4, 0] }
-                : { opacity: 1, y: 0 }
+              shake ? { x: [-8, 8, -6, 6, -4, 4, 0] } : { opacity: 1, y: 0 }
             }
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3 }}
@@ -112,14 +115,57 @@ export const FormAuthor = () => {
                 {errorMessage}
               </div>
             )}
-            <motion.button
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full py-3 rounded-lg bg-black text-white font-medium text-sm"
-            >
-              {tab === "login" ? "Đăng nhập" : "Đăng ký"}
-            </motion.button>
+            <div >{tab === "login" ? <button>
+              <a href="/forgot-password" className="text-sm text-gray-500 hover:underline">
+                Quên mật khẩu?
+              </a>
+            </button> : null}
+             {
+              tab === "login" ? (
+                <p className="text-sm text-gray-500 text-center">
+                  Bạn chưa có tài khoản?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setTab("register")}
+                    className="text-black font-medium hover:underline"
+                  >
+                    Đăng ký
+                  </button>
+                </p>
+              ) : (
+                <p className="text-sm text-gray-500 text-center">
+                  Bạn đã có tài khoản?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setTab("login")}
+                    className="text-black font-medium hover:underline"
+                  >
+                    Đăng nhập
+                  </button>
+                </p>
+              )
+            }</div>
+
+            <div>
+              <motion.button
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                className="w-full py-3 rounded-lg bg-black text-white font-medium text-sm"
+              >
+                {tab === "login" ? "Đăng nhập" : "Đăng ký"}
+              </motion.button>
+              <h1 className="text-center my-4 text-gray-500 text-sm">Or</h1>
+              <motion.button
+                onClick={logInWIthGoogle}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                type="button"
+                className="w-full mt-2 py-3 rounded-lg bg-blue-600 text-white font-medium text-sm"
+              >
+                Đăng nhập với Google
+              </motion.button>
+            </div>
           </motion.form>
         </AnimatePresence>
       </main>

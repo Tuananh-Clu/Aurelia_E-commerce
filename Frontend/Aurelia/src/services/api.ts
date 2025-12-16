@@ -7,7 +7,11 @@ export const api_Config = {
     signUp: "/api/Authentication/Register",
     getInfoUser: "/api/Authentication/GetData",
     Logout: "/api/Authentication/LogOut",
-
+    LogInWithFireBase: "/api/Authentication/LogInWithFireBase"
+  },
+  Password: {
+    ResetPassWord: "/api/Email/ResetPassWord",
+    ChangePassWord: "/api/Email/ChangePassWord"
   },
   Product: {
     GetProduct: "/api/Product/GetProduct",

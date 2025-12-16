@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { LogOut, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../../contexts/CartContext";
+import { logOutFireBase } from "../../../services/auth.service";
 
 type LeftSides = {
   userString: Clients | null;
@@ -33,6 +34,7 @@ export const LeftSide: React.FC<LeftSides> = ({
     setIsignned(false);
     setCartDataAdd([]);
     navigate("/");
+    logOutFireBase();
   };
 
   const bodyMeasurements = [

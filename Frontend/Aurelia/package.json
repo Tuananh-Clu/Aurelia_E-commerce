@@ -18,6 +18,7 @@
     "chart.js": "^4.5.1",
     "cheerio": "^1.1.2",
     "file-system": "^2.2.2",
+    "firebase": "^12.6.0",
     "framer-motion": "^12.23.12",
     "fs": "^0.0.1-security",
     "leaflet": "^1.9.4",

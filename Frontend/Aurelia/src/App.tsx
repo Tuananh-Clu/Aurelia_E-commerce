@@ -3,6 +3,8 @@ import { useEffect, useRef, lazy, Suspense, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { LoadingScreen } from "./Components/LoadingScreen";
 import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
+import { ForgotPassword } from "./Page/ForgotPassword";
+import { ChangePassWord } from "./Page/ChangePassWord";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -124,6 +126,11 @@ function App() {
           <Route path="/login" element={<FormAuthorForShopAndAdmin />} />
           <Route path="/DashBoardShop" element={<DashboardShop />} />
           <Route path="/Admin" element={<AdminDashboard />} />
+          <Route path="/Forgot-PassWord" element={<ForgotPassword />} />
+          <Route
+            path="/Reset-PassWord/:token:email"
+            element={<ChangePassWord />}
+          />
         </Routes>
       </Suspense>
     </div>

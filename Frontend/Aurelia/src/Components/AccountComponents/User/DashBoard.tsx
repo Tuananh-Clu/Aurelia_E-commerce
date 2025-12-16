@@ -29,7 +29,7 @@ export const DashBoard = () => {
 
       {/* EDIT PROFILE MODAL */}
       {openeditProfile && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] overflow-y-auto py-10 flex justify-center px-4 h-full">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] overflow-y-auto md:py-10 py-2 flex justify-center px-4 h-full">
           <EditProfile setState={setOpeneditProfile} />
         </div>
       )}
