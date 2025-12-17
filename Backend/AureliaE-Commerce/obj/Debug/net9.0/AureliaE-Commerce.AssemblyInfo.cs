@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AureliaE-Commerce")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84f1cd71e2f8c88105bbbe4ab711aa2abc0e2210")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bebf3446a253a909b3371f4ea6b1f7832dd4e4ff")]
 [assembly: System.Reflection.AssemblyProductAttribute("AureliaE-Commerce")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AureliaE-Commerce")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
