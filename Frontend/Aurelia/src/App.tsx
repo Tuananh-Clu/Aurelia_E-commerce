@@ -6,6 +6,7 @@ import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
 import { ForgotPassword } from "./Page/ForgotPassword";
 import { ChangePassWord } from "./Page/ChangePassWord";
 
+
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
 );
@@ -128,7 +129,7 @@ function App() {
           <Route path="/Admin" element={<AdminDashboard />} />
           <Route path="/Forgot-PassWord" element={<ForgotPassword />} />
           <Route
-            path="/Reset-PassWord/:token:email"
+            path="/reset-passWord"
             element={<ChangePassWord />}
           />
         </Routes>

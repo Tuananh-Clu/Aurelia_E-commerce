@@ -14,7 +14,6 @@ import { AiPoseMeasureContext } from "./AIPoseMeasure";
 import { api_Response } from "../services/http";
 import { useLocation } from "react-router-dom";
 
-
 type AuthContextType = {
   isSignned: boolean;
   errorMessage: string;
@@ -75,7 +74,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setIsignned(true);
           setUserData(response.data);
           setDataMeasure(response.data.soDoNguoiDung);
-          localStorage.setItem("user", JSON.stringify(response.data));
+          const {passWord,...safeuser}=response.data;
+          localStorage.setItem("user", JSON.stringify(safeuser));
         }
       })
       .catch(() => {

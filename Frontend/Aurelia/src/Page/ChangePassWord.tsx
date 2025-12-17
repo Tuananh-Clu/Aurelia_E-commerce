@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
 import { motion } from "framer-motion";
 import { MethodChangePassWord } from "../services/EmailService";
-import { useParams } from "react-router-dom";
+import {  useSearchParams } from "react-router-dom";
 
 export const ChangePassWord = () => {
-    const token=useParams().token || "";
-    const email=useParams().email || "";
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email") || undefined;
+  const token = searchParams.get("token") || undefined;
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,10 +17,9 @@ export const ChangePassWord = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) return;
-
+    console.log(email,token,password);
     setLoading(true);
     MethodChangePassWord(email,token,password);
-    // TODO: Call API change-password with token
     await new Promise((r) => setTimeout(r, 1200));
 
     setLoading(false);
@@ -91,7 +91,7 @@ export const ChangePassWord = () => {
                 </p>
 
                 <a
-                  href="/login"
+                  href="/account"
                   className="mt-6 inline-flex w-full h-11 items-center justify-center rounded-xl bg-slate-900 text-white text-sm font-medium hover:bg-slate-800 transition"
                 >
                   Đi đến đăng nhập

@@ -7,14 +7,13 @@ import { Story } from "../Components/HomeLayoutComponent/Story";
 import { HotProducts } from "../Components/HomeLayoutComponent/HotProducts";
 import { DiscountProducts } from "../Components/HomeLayoutComponent/DiscountProducts";
 import { BrandMarquee } from "../Components/HomeLayoutComponent/BrandMarquee";
-import { LimitedOfferBanner } from "../Components/HomeLayoutComponent/LimitedOfferBanner";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, MessageCircle } from "lucide-react";
+
 
 export const Home = () => {
   const [isScroll, setIsScroll] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
@@ -39,23 +38,33 @@ export const Home = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="min-h-screen w-full relative"
     >
-      {isScroll ? (
+      <div className="relative z-10">
+        {/* Background gradient */}
         <div
-          onClick={handleClick}
-          className="fixed bg-black px-2 rounded-full text-white py-2 bottom-10 z-100 right-10 cursor-pointer"
+          className="absolute inset-0 z-0"
+          style={{
+            background:
+              "radial-gradient(125% 125% at 50% 90%, #fff 40%, #475569 100%)",
+          }}
+        />
+
+        <button
+          onClick={() => window.open(import.meta.env.VITE_URL_MESSENGER, "_blank")}
+          className="fixed right-5 bottom-10 w-11 h-11 rounded-full bg-blue-500 shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all z-50"
         >
-          <ArrowUp />
-        </div>
-      ) : (
-        ""
-      )}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(125% 125% at 50% 90%, #fff 40%, #475569 100%)",
-        }}
-      />
+          <MessageCircle className="w-6 h-6 text-white" />
+        </button>
+
+        {isScroll && (
+          <div
+            onClick={handleClick}
+            className="fixed bottom-25 right-5 cursor-pointer z-50 bg-black text-white w-11 h-11 flex items-center justify-center rounded-full"
+          >
+            <ArrowUp />
+          </div>
+        )}
+      </div>
+
       <Navbar />
       <HeroBanner />
       <motion.section
@@ -67,7 +76,6 @@ export const Home = () => {
         <Story />
       </motion.section>
       <BrandMarquee />
-      <LimitedOfferBanner />
       <motion.section
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -1,142 +1,169 @@
-﻿    using AureliaE_Commerce.Context;
-    using AureliaE_Commerce.Dto;
-    using AureliaE_Commerce.Model;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using MongoDB.Driver;
-    using System.IdentityModel.Tokens.Jwt;
+﻿using AureliaE_Commerce.Context;
+using AureliaE_Commerce.Dto;
+using AureliaE_Commerce.Model;
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
+using System.IdentityModel.Tokens.Jwt;
 
-    namespace AureliaE_Commerce.Controller
+namespace AureliaE_Commerce.Controller
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class GetAIAdvice : ControllerBase
     {
-        [Route("api/[controller]")]
-        [ApiController]
-        public class GetAIAdvice : ControllerBase
+        private readonly IMongoCollection<Client> _clientCollection;
+
+        public GetAIAdvice(MongoDbContext dbContext)
         {
-            public readonly IMongoCollection<Client> mongoCollection;
-            public readonly IMongoCollection<Product> productCollection;
-            public GetAIAdvice(MongoDbContext dbContext)
-            {
-                mongoCollection = dbContext.Client;
-                productCollection = dbContext.SanPham;
+            _clientCollection = dbContext.Client;
+        }
+        private enum Size
+        {
+            XS,
+            S,
+            M,
+            L,
+            XL
+        }
 
-            }
-            public enum Size
-            {
-                Unknown = 0,
-                XS = 1,
-                S = 2,
-                M = 3,
-                L = 4,
-                XL = 5
-            }
+        private class SizeRule
+        {
+            public Size Size { get; set; }
+            public double Bust { get; set; }
+            public double Waist { get; set; }
+            public double Hip { get; set; }
+            public double Shoulder { get; set; }
+        }
 
-            [NonAction]
-            public string GetHeader(string token)
+        private static readonly List<SizeRule> SizeChart = new()
+        {
+            new() { Size = Size.XS, Bust = 78, Waist = 62, Hip = 84, Shoulder = 35 },
+            new() { Size = Size.S,  Bust = 82, Waist = 66, Hip = 88, Shoulder = 36.5 },
+            new() { Size = Size.M,  Bust = 86, Waist = 70, Hip = 92, Shoulder = 37.5 },
+            new() { Size = Size.L,  Bust = 90, Waist = 74, Hip = 96, Shoulder = 38.5 },
+            new() { Size = Size.XL, Bust = 94, Waist = 78, Hip = 100, Shoulder = 39.5 },
+        };
+
+        private (Size size, string note) CalculateFemaleSize(
+            double bust,
+            double waist,
+            double hip,
+            double shoulder,
+            string productType 
+        )
+        {
+            const double SAFE_GAP = 3.0; 
+            var candidates = new List<(Size size, double score, string note)>();
+
+            foreach (var r in SizeChart)
             {
-                if (token.StartsWith("Bearer "))
+                if (r.Bust < bust - SAFE_GAP) continue;
+                if (productType == "dress" && r.Hip < hip - SAFE_GAP) continue;
+
+                double score;
+                string note;
+
+                if (productType == "top")
                 {
-                    token = token.Substring("Bearer ".Length).Trim();
+                    score =
+                        Math.Abs(r.Bust - bust) * 0.6 +
+                        Math.Abs(r.Shoulder - shoulder) * 0.4;
+
+                    note = bust > r.Bust
+                        ? "Ưu tiên theo vòng ngực, có thể hơi rộng vai"
+                        : "Form vừa ngực và vai";
                 }
-                var jwt = new JwtSecurityTokenHandler();
-                var userId = jwt.ReadJwtToken(token).Claims.First(a => a.Type == "sub").Value;
-                return userId;
-            }
-                [NonAction]
-                public Size GetSizeFromBody(double soDo, string type, string name)
+                else 
                 {
-                    var topSizes = new[]
-                    {
-                new { Size=Size.XS, BustMin=76, BustMax=80, ShoulderMin=34, ShoulderMax=36 },
-                new { Size=Size.S,  BustMin=81, BustMax=84, ShoulderMin=36, ShoulderMax=37 },
-                new { Size=Size.M,  BustMin=85, BustMax=88, ShoulderMin=37, ShoulderMax=38 },
-                new { Size=Size.L,  BustMin=89, BustMax=92, ShoulderMin=38, ShoulderMax=39 },
-                new { Size=Size.XL, BustMin=93, BustMax=96, ShoulderMin=39, ShoulderMax=40 },
-            };
+                    score =
+                        Math.Abs(r.Bust - bust) * 0.4 +
+                        Math.Abs(r.Hip - hip) * 0.35 +
+                        Math.Abs(r.Waist - waist) * 0.25;
 
-                    var dressSizes = new[]
-                    {
-                new { Size=Size.XS, BustMin=76, BustMax=80, WaistMin=60, WaistMax=64, HipMin=82, HipMax=86 },
-                new { Size=Size.S,  BustMin=81, BustMax=84, WaistMin=65, WaistMax=68, HipMin=87, HipMax=90 },
-                new { Size=Size.M,  BustMin=85, BustMax=88, WaistMin=69, WaistMax=72, HipMin=91, HipMax=94 },
-                new { Size=Size.L,  BustMin=89, BustMax=92, WaistMin=73, WaistMax=76, HipMin=95, HipMax=98 },
-                new { Size=Size.XL, BustMin=93, BustMax=96, WaistMin=77, WaistMax=80, HipMin=99, HipMax=102 },
-            };
-
-                    if (type == "top")
-                    {
-                        foreach (var t in topSizes)
-                        {
-                            if (name == "Bust" && soDo >= t.BustMin && soDo <= t.BustMax)
-                                return t.Size;
-                            if (name == "Shoulder" && soDo >= t.ShoulderMin && soDo <= t.ShoulderMax)
-                                return t.Size;
-                        }
-                    }
-                    else if (type == "dress")
-                    {
-                        foreach (var d in dressSizes)
-                        {
-                            if (name == "Bust" && soDo >= d.BustMin && soDo <= d.BustMax)
-                                return d.Size;
-                            if (name == "Waist" && soDo >= d.WaistMin && soDo <= d.WaistMax)
-                                return d.Size;
-                            if (name == "Hip" && soDo >= d.HipMin && soDo <= d.HipMax)
-                                return d.Size;
-                        }
-                    }
-
-                    return Size.Unknown;
+                    if (hip > bust + 4)
+                        note = "Dáng hông lớn, chọn theo vòng hông, eo có thể rộng";
+                    else if (bust > hip + 4)
+                        note = "Dáng ngực lớn, chọn theo vòng ngực";
+                    else
+                        note = "Form cân đối";
                 }
 
+                candidates.Add((r.Size, score, note));
+            }
 
-            [HttpPost("GetAdviceSize")]
-                public async Task<IActionResult> GetAdvice([FromHeader(Name = "Authorization")] string token, [FromBody] ProductGetAdviceFromUserDto dto)
+            if (candidates.Any())
+                return candidates.OrderBy(c => c.score).Select(c => (c.size, c.note)).First();
+
+            var fallback = SizeChart.Last();
+            return (
+                fallback.Size,
+                "Số đo lệch chuẩn, chọn size lớn nhất để đảm bảo mặc vừa"
+            );
+        }
+
+        [NonAction]
+        private string GetUserIdFromToken(string token)
+        {
+            if (token.StartsWith("Bearer "))
+                token = token.Substring("Bearer ".Length).Trim();
+
+            var jwt = new JwtSecurityTokenHandler();
+            return jwt.ReadJwtToken(token)
+                      .Claims.First(c => c.Type == "sub")
+                      .Value;
+        }
+
+        [HttpPost("GetAdviceSize")]
+        public async Task<IActionResult> GetAdviceSize(
+            [FromHeader(Name = "Authorization")] string token,
+            [FromBody] ProductGetAdviceFromUserDto dto)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return Unauthorized();
+
+            var userId = GetUserIdFromToken(token);
+
+            var client = await _clientCollection
+                .Find(c => c.Id == userId)
+                .FirstOrDefaultAsync();
+
+            if (client?.SoDoNgDUng == null)
+                return BadRequest("Người dùng chưa có số đo");
+
+            var sd = client.SoDoNgDUng;
+
+            var bust = double.Parse(sd.nguc);
+            var waist = double.Parse(sd.eo);
+            var hip = double.Parse(sd.hong);
+            var shoulder = double.Parse(sd.vai);
+
+            var productType =
+                dto.subCategory.Contains("dress") ? "dress" :
+                dto.subCategory.Contains("top") ? "top" :
+                null;
+
+            if (productType == null)
+            {
+                return Ok(new
                 {
-            if (token == null)
-            { return NotFound(); }
-            var userId = GetHeader(token);
-                    var filter = Builders<Client>.Filter.Eq(c => c.Id, userId);
-                    var data = await mongoCollection.Find(filter).FirstOrDefaultAsync();
+                    message = "Không thể ước tính size cho sản phẩm này"
+                });
+            }
 
-                    if (data.SoDoNgDUng == null) return NotFound();
+            var result = CalculateFemaleSize(
+                bust,
+                waist,
+                hip,
+                shoulder,
+                productType
+            );
 
-                    var bust = double.Parse(data.SoDoNgDUng.nguc);
-                    var waist = double.Parse(data.SoDoNgDUng.eo);
-                    var hip = double.Parse(data.SoDoNgDUng.hong);
-                    var shoulder = double.Parse(data.SoDoNgDUng.vai);
-
-                    if (dto.type == "top" && dto.subCategory.Contains("top"))
-                    {
-                        var sizeBust = GetSizeFromBody(bust, "top", "Bust");
-                        var sizeShoulder = GetSizeFromBody(shoulder, "top", "Shoulder");
-
-                        if (sizeBust == sizeShoulder)
-                            return Ok(new { message = $"AI gợi ý size: {sizeBust}" });
-
-                        if (Math.Abs((int)sizeBust - (int)sizeShoulder) == 1)
-                            return Ok(new { message = $"AI gợi ý size: {sizeShoulder}" });
-
-                        var bigger = (int)sizeBust > (int)sizeShoulder ? sizeBust : sizeShoulder;
-                        return Ok(new { message = $"AI gợi ý size: {bigger}" });
-                    }
-                    else if (dto.type == "d" && dto.subCategory.Contains("dress"))
-                    {
-                        var sizeBust = GetSizeFromBody(bust, "dress", "Bust");
-                        var sizeWaist = GetSizeFromBody(waist, "dress", "Waist");
-                        var sizeHip = GetSizeFromBody(hip, "dress", "Hip");
-
-                        if (sizeBust == sizeWaist && sizeWaist == sizeHip)
-                            return Ok(new { message = $"AI gợi ý size: {sizeBust}" });
-
-                        if (sizeWaist == sizeBust || sizeWaist == sizeHip)
-                            return Ok(new { message = $"AI gợi ý size: {sizeWaist}" });
-
-                        var finalSize = new[] { sizeBust, sizeWaist, sizeHip }.Max();
-                        return Ok(new { message = $"AI gợi ý size: {finalSize}" });
-                    }
-
-                    return Ok(new { message = "Sản phẩm không thể ước tính size" });
-                }
-
+            return Ok(new
+            {
+                size = result.size.ToString(),
+                note = result.note,
+                message = $"AI gợi ý size: {result.size}"
+            });
         }
     }
+}

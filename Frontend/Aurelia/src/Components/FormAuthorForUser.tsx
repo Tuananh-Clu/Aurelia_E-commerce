@@ -38,11 +38,15 @@ export const FormAuthor = () => {
   };
   const logInWIthGoogle = async () => {
     await LogginWithFireBase();
-    const isSuccess = localStorage.getItem("IsSuccessFireBaseLogin");
-    if (isSuccess === "true") {
-      await fetchData({ type: "client" });
-    }
-  };
+    const timer = setTimeout(async () => {
+      const success = localStorage.getItem("IsSuccessFireBaseLogin");
+      if (success === "true") {
+        await fetchData({type: "client"});
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
+  }
+ 
   return (
     <div className="flex items-center justify-center min-h-screen bg-neutral-100">
       <main className="w-full max-w-md bg-white rounded-2xl shadow-lg p-10">

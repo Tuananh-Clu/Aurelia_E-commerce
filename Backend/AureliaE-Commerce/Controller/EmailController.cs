@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
 using AureliaE_Commerce.Context;
 using AureliaE_Commerce.Model;
+using BCrypt.Net;
+using FirebaseAdmin.Auth.Hash;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 
@@ -10,6 +12,7 @@ namespace AureliaE_Commerce.Controller
     [Route("api/[controller]")]
     public class EmailController : ControllerBase
     {
+        
         public readonly IMongoCollection<ResetPassWordHass> resetPassWordHass;
         public readonly IMongoCollection<Client> client;
         public EmailController(MongoDbContext dbContext)
@@ -64,9 +67,7 @@ namespace AureliaE_Commerce.Controller
                  587,
                   MailKit.Security.SecureSocketOptions.StartTls
                   );
-
-
-            await smtpClient.AuthenticateAsync("no-reply@aureliaecommerce.com", "");
+            await smtpClient.AuthenticateAsync(Environment.GetEnvironmentVariable("Mail"), Environment.GetEnvironmentVariable("PassEmail"));
             await smtpClient.SendAsync(message);
             await smtpClient.DisconnectAsync(true);
             return Ok(new { message = "Đã gửi email đặt lại mật khẩu" });
@@ -86,9 +87,12 @@ namespace AureliaE_Commerce.Controller
                 return BadRequest(new { message = "Liên kết đặt lại mật khẩu không hợp lệ." });
             }
             var userFilter = Builders<Client>.Filter.Eq(a => a.Id, resetEntry.idUser);
-            var update = Builders<Client>.Update.Set(a => a.PassWord, request.newPassword);
+            var password=BCrypt.Net.BCrypt.HashPassword(request.newPassword,workFactor:12);
+            var update = Builders<Client>.Update.Set(a => a.PassWord, password);
             await client.UpdateOneAsync(userFilter, update);
             await resetPassWordHass.DeleteOneAsync(filter);
+
+            await resetPassWordHass.DeleteManyAsync(Builders<ResetPassWordHass>.Filter.Lt(a => a.tokenExpiration, DateTime.UtcNow));
             return Ok(new { message = "Mật khẩu đã được thay đổi thành công." });
         }
     }
