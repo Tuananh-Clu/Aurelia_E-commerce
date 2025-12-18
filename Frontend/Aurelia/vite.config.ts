@@ -13,7 +13,9 @@ export default defineConfig({
           'chart-vendor': ['chart.js', 'react-chartjs-2', 'recharts'],
           'map-vendor': ['leaflet', 'react-leaflet'],
           'ai-vendor': ['@mediapipe/pose', '@mediapipe/camera_utils'],
-          'firebase-vendor': ['firebase'],
+          // Use explicit Firebase subpath imports to avoid Vite/Rollup
+          // trying to resolve the deprecated root "firebase" entry.
+          'firebase-vendor': ['firebase/app', 'firebase/auth'],
           'signalr-vendor': ['@microsoft/signalr'],
         },
       },
