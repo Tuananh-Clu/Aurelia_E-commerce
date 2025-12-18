@@ -3,7 +3,6 @@ import { Navbar } from "../../HomeLayoutComponent/Navbar";
 import { LeftSide } from "./LeftSide";
 import { RightSide } from "./RightSide";
 import { FilterProductContext } from "../../../contexts/FIlterProduct";
-import { AiPoseMeasureContext } from "../../../contexts/AIPoseMeasure";
 import EditProfile from "./EditProfile";
 import { AuthContext } from "../../../contexts/Author";
 
@@ -12,7 +11,6 @@ import { AuthContext } from "../../../contexts/Author";
 export const DashBoard = () => {
   const {userData}=useContext(AuthContext);
   const [openeditProfile, setOpeneditProfile] = useState(false);
-  const { DataMeasure } = useContext(AiPoseMeasureContext);
 
   const {
     dataFavouriteItemUser,
@@ -45,7 +43,6 @@ export const DashBoard = () => {
               SanPhamDaThich={dataFavouriteItemUser.length}
               SoLuongDon={soLuongDonHang}
               Voucher={0}
-              soDo={DataMeasure}
               setState={setOpeneditProfile}
             />
           </div>

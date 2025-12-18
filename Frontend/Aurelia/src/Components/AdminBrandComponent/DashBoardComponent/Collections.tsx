@@ -176,7 +176,7 @@ export default function Collections() {
               : "grid-cols-1"
           }`}
         >
-          {filteredCollections?.map((collection, index) => (
+          {filteredCollections?.map((collection) => (
             <div
               key={collection.id}
               className="group relative bg-white/80 shadow border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl transition"

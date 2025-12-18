@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useContext, useMemo } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
 
@@ -9,7 +9,7 @@ export const Story = () => {
     () => (Array.isArray(StoryBanner) ? StoryBanner : []),
     [StoryBanner]
   );
-  const fade = (delay = 0) => ({
+  const fade = (delay: number = 0): Variants => ({
     hidden: { opacity: 0, y: 25 },
     show: {
       opacity: 1,

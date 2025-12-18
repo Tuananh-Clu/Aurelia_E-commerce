@@ -4,11 +4,10 @@ import {
   MapContainer,
   TileLayer,
   Marker,
-  Popup,
   Polyline,
   useMap,
 } from "react-leaflet";
-import L from "leaflet";
+import L, { Icon, LatLngExpression, LatLngTuple } from "leaflet";
 import { CheckCircle, Clock1, Home, Package, Truck } from "lucide-react";
 
 export type RightProps = {
@@ -16,19 +15,19 @@ export type RightProps = {
 };
 
 // ICONS -----------------------------------------------------
-const shopIcon = new L.Icon({
+const shopIcon: Icon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/25/25694.png",
   iconSize: [36, 36],
   iconAnchor: [18, 36],
 });
 
-const shipperIcon = new L.Icon({
+const shipperIcon: Icon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png",
   iconSize: [36, 36],
   iconAnchor: [18, 36],
 });
 
-const customerIcon = new L.Icon({
+const customerIcon: Icon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/149/149071.png",
   iconSize: [36, 36],
   iconAnchor: [18, 36],
@@ -46,7 +45,7 @@ const FitMap: React.FC<{ route: [number, number][] }> = ({ route }) => {
 // Main Component ---------------------------------------------
 export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
   const apiKey = "pk.fd3f99a25f3d03893a6936b3b255288c";
-  const [route, setRoute] = useState<[number, number][]>([]);
+  const [route, setRoute] = useState<LatLngTuple[]>([]);
   const status = data?.data?.status;
 
   // Convert status → index
@@ -61,11 +60,11 @@ export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
     return table[status] ?? 0;
   }, [status]);
 
-  const shop = data ? [data.lat, data.ion] as [number, number] : null;
+  const shop = data ? [data.lat, data.ion] as LatLngTuple : null;
   const customer = data?.data 
-    ? [data.data.lat, data.data.ion] as [number, number] 
+    ? [data.data.lat, data.data.ion] as LatLngTuple 
     : null;
-  const shipperPosition: [number, number] = [10.762622, 106.660172];
+  const shipperPosition: LatLngTuple = [10.762622, 106.660172];
 
   // Fetch route -------------------------------------------------
   useEffect(() => {
@@ -95,7 +94,7 @@ export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
     <div className="relative w-full">
       {/* MAP AREA */}
       <MapContainer
-        center={shop ?? [0, 0]}
+        center={(shop || [10.762622, 106.660172]) as LatLngExpression}
         zoom={14}
         style={{
           height: "90vh",
@@ -107,12 +106,12 @@ export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         {shop && <Marker position={shop} icon={shopIcon} />}
-        {customer && <Marker position={customer} icon={customerIcon} />}
+        {customer && <Marker position={customer}  icon={customerIcon} />}
         {shipperPosition && <Marker position={shipperPosition} icon={shipperIcon} />}
 
         {route.length > 0 && (
           <>
-            <Polyline positions={route} color="#4CAF50" weight={5} opacity={0.8} />
+            <Polyline positions={route} pathOptions={{ color: "#4CAF50", weight: 5, opacity: 0.8 }} />
             <FitMap route={route} />
           </>
         )}

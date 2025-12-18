@@ -20,7 +20,7 @@ import { EditCoupon } from "./CouponComponent/EditCoupon";
 import { v4 as uuid } from "uuid";
 export default function Coupon() {
 const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(AdminContext);
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState<any>();
   const [showAddModal, setShowAddModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterActive, setFilterActive] = useState("all");
@@ -185,7 +185,7 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
             <div>
               <p className="text-purple-100 text-sm font-medium">Tái sử dụng</p>
               <p className="text-3xl font-bold mt-2">
-                {coupons.filter((c) => c.Reuse === "Nhiều lần").length}
+                {coupons.filter((c) => c.reuse === "Nhiều lần").length}
               </p>
             </div>
             <RefreshCw className="opacity-80" size={28} />
@@ -259,9 +259,9 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
                     <div>
                       <p className="text-sm text-gray-600">Giá trị</p>
                       <p className="text-2xl font-bold text-indigo-600">
-                        {coupon.theLoaiApDung === "Phần trăm"
+                        {coupon.loaiGiam === "Phần trăm"
                           ? `${coupon.giaTri}%`
-                          : `${coupon.giaTri.toLocaleString()}đ`}
+                          : `${(coupon.giaTri ?? 0).toLocaleString()}đ`}
                       </p>
                     </div>
                   </div>
@@ -292,7 +292,7 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
                 <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded-full">
-                  {coupon.theLoaiApDung}
+                  {coupon.loaiGiam}
                 </span>
                 <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-full">
                   {coupon.reuse}

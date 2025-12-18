@@ -1,6 +1,4 @@
 import { useState } from "react";
-import dataWatch from "../../assets/DataMock/luxury_watches.json";
-import dataJewerly from "../../assets/DataMock/luxury_jewelry.json";
 import { CardProduct } from "../CardProduct";
 export const BestSeller = () => {
   const [StateButton, setStateButton] = useState("Newest");
@@ -33,8 +31,8 @@ export const BestSeller = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6 px-6">
-        {(StateButton === "Newest" ? dataWatch : dataJewerly).map((item) => (
-          <CardProduct item={item}/>
+        {((StateButton === "Newest" ? [] : []) as any[]).map((item: any, idx: number) => (
+          <CardProduct key={idx} item={item} />
         ))}
       </div>
       

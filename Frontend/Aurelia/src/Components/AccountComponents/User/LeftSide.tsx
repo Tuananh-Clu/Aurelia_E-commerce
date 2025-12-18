@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/Author";
-import type { Clients, Measure } from "../../../types/type";
+import type { Clients } from "../../../types/type";
 import { motion } from "framer-motion";
 import { LogOut, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../../contexts/CartContext";
 import { logOutFireBase } from "../../../services/auth.service";
+import { AiPoseMeasureContext } from "../../../contexts/AIPoseMeasure";
 
 type LeftSides = {
   userString: Clients | null;
   SoLuongDon: number;
   SanPhamDaThich: number;
   Voucher: number;
-  soDo: Measure | undefined;
   setState?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -21,11 +21,11 @@ export const LeftSide: React.FC<LeftSides> = ({
   SoLuongDon,
   SanPhamDaThich,
   Voucher,
-  soDo,
   setState,
 }) => {
   const { setIsignned, logOut } = useContext(AuthContext);
   const { setCartDataAdd } = useContext(CartContext);
+  const {DataMeasure}=useContext(AiPoseMeasureContext)
   const navigate = useNavigate();
 
   const handleLogOut = () => {
@@ -38,11 +38,11 @@ export const LeftSide: React.FC<LeftSides> = ({
   };
 
   const bodyMeasurements = [
-    { name: "Cao", value: soDo?.chieuCao, unit: "cm" },
-    { name: "Vai", value: soDo?.vai, unit: "cm" },
-    { name: "Ngực", value: soDo?.nguc, unit: "cm" },
-    { name: "Eo", value: soDo?.eo, unit: "cm" },
-    { name: "Hông", value: soDo?.hong, unit: "cm" },
+    { name: "Cao", value: DataMeasure?.chieuCao, unit: "cm" },
+    { name: "Vai", value: DataMeasure?.vai, unit: "cm" },
+    { name: "Ngực", value: DataMeasure?.nguc, unit: "cm" },
+    { name: "Eo", value: DataMeasure?.eo, unit: "cm" },
+    { name: "Hông", value: DataMeasure?.hong, unit: "cm" },
   ];
 
   const createdAt = userString?.ngayTaoTaiKhoan

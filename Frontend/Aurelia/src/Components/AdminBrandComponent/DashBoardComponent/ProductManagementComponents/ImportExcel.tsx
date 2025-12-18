@@ -9,7 +9,6 @@ import {
   Info,
   XCircle,
 } from "lucide-react";
-import type { Product } from "../../../../types/type";
 import { api_Config, UseApiUrl } from "../../../../services/api";
 import { Toaster } from "../../../Toaster";
 import { LoadingOverlay } from "../../../LoadingOverlay";
@@ -17,7 +16,7 @@ import { LoadingOverlay } from "../../../LoadingOverlay";
 
 
 const ImportExcel = ({setOpenImportModal}:{setOpenImportModal:React.Dispatch<React.SetStateAction<boolean>>}) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile,] = useState<File | null>(null);
   const [previewData, setPreviewData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState(false);

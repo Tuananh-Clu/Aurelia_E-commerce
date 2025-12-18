@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
   DollarSign,
   ShoppingBag,
@@ -25,20 +25,25 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import type { ChartOptions, ChartData } from "chart.js";
 import { useContext } from "react";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { Bar } from "react-chartjs-2";
 
 export const OverView = () => {
-  const fadeUp = {
+  const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
   };
 
   const { dataRevenue, dataUser, doanhThuCuaHang, bestSellingProducts } =
     useContext(AdminContext);
 
-  const data = {
+  const data: ChartData<"bar"> = {
     labels: doanhThuCuaHang.map((item) => item.shopName),
     datasets: [
       {
@@ -69,7 +74,7 @@ export const OverView = () => {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -82,10 +87,10 @@ export const OverView = () => {
       tooltip: {
         backgroundColor: "rgba(0, 0, 0, 0.8)",
         padding: 12,
-        borderRadius: 8,
+        cornerRadius: 8,
         titleFont: {
           size: 14,
-          weight: "bold",
+          weight: "bold" as const,
         },
         bodyFont: {
           size: 13,
@@ -97,7 +102,9 @@ export const OverView = () => {
         beginAtZero: true,
         grid: {
           color: "rgba(0, 0, 0, 0.05)",
-          drawBorder: false,
+        },
+        border: {
+          display: false,
         },
         ticks: {
           font: {
@@ -323,7 +330,7 @@ export const OverView = () => {
 
                 <div className="text-right flex-shrink-0">
                   <p className="text-sm font-bold text-emerald-600">
-                    {p.price * p.sold.toLocaleString("vi-VN")} VND
+                    {(p.price * p.sold).toLocaleString("vi-VN")} VND
                   </p>
                   <p className="text-xs text-gray-500">{p.sold} đã bán</p>
                 </div>

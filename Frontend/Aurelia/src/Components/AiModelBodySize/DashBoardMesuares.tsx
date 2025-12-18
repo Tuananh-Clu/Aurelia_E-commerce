@@ -42,7 +42,7 @@ export const DashBoardMeasures: React.FC<MeasuresProps> = ({
   const hasData = measures.some((m) => m.value);
 
   return (
-    <div className="p-4 sm:p-6 bg-gray-50 min-h-screen flex items-start justify-center">
+    <div className="p-4 sm:p-6 bg-gray-50 h-full flex items-start justify-center mt-4 ">
       <div className="bg-white shadow-xl rounded-2xl w-[400px] md:w-full md:max-w-lg  border border-gray-200 p-5 sm:p-6 space-y-4">
 
         {/* Camera icon */}

@@ -12,6 +12,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductRecommend } from "../Components/ProductComponent/ProductRecommend";
 import { Footer } from "../Components/HomeLayoutComponent/Footer";
+import { DynamicMetaTags } from "../Components/SEO/DynamicMetaTags";
+import { LazyImage } from "../Components/SEO/LazyImage";
 import dataCollection from "../assets/DataMock/dataSeason.json";
 import { FilterProductContext } from "../contexts/FIlterProduct";
 import type { Cart, Product } from "../types/type";
@@ -29,8 +31,8 @@ export const MainProduct = () => {
 
   const { dataProduct, dataFavouriteItemUser } =
     useContext(FilterProductContext);
-  const { setCartDataAdd, CartDataAdd } = useContext(CartContext);
 
+  const { setCartDataAdd, CartDataAdd } = useContext(CartContext);
   const [toggleBar, setToggleBar] = useState("Description");
   const [heartPopup, setHeartPopup] = useState(false);
   const [findStore, setFindStore] = useState(false);
@@ -130,8 +132,23 @@ export const MainProduct = () => {
     return <div className="p-10">Sản phẩm không tồn tại</div>;
   }
 
+  // SEO Meta Tags cho product page
+  const productTitle = product ? `${product.name} | Aurelia` : "Sản phẩm | Aurelia";
+  const productDescription = product 
+    ? `${product.description || product.name} - Mua ngay tại Aurelia với giá ${product.price.toLocaleString("vi-VN")} VND. ${product.brand ? `Thương hiệu: ${product.brand}` : ""}`
+    : "Khám phá sản phẩm thời trang cao cấp tại Aurelia";
+  const productImage = product?.images?.[0] || product?.thumbnail || "/src/assets/aurelia_logo_svg.svg";
+
   return (
     <>
+      <DynamicMetaTags
+        title={productTitle}
+        description={productDescription}
+        keywords={`${product?.name}, ${product?.brand}, ${product?.type}, thời trang, Aurelia`}
+        image={productImage}
+        url={window.location.href}
+        type="product"
+      />
       <Navbar />    <div
           className={`fixed backdrop-blur-2xl z-[9999] right-0 lg:w-[1300px] md:w-[700px] w-[350px]  md:h-full h-[400px] transition-all duration-300 ${
             findStore
@@ -155,7 +172,7 @@ export const MainProduct = () => {
                 key={idx}
                 className="relative flex flex-col items-center w-full flex-shrink-0 snap-center md:flex-shrink "
               >
-                <img
+                <LazyImage
                   src={src}
                   alt={product.name}
                   className="
@@ -164,6 +181,8 @@ export const MainProduct = () => {
             object-cover shadow-lg
             transition-all duration-300
           "
+                  width={idx === 0 ? 1200 : 500}
+                  height={idx === 0 ? 800 : 700}
                 />
                           <button
             className="
@@ -381,7 +400,7 @@ export const MainProduct = () => {
                               selectedSize === sz.size
                                 ? "bg-black text-white"
                                 : "bg-white hover:bg-gray-600 hover:text-white"
-                            }`}
+                            } ${sz.size.includes("") ? "" : "line-through cursor-not-allowed text-gray-400 hover:bg-white hover:text-gray-400 hover:cursor-not-allowed"}`}
                           >
                             {sz.size}
                           </span>

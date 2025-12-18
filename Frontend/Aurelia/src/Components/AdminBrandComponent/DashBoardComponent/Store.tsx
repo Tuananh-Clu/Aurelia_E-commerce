@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import {
   MapPin,
   Star,
@@ -24,13 +24,14 @@ export const Stores = () => {
       (filter === "Tất cả" || s.city === filter)
   );
 
-  const fadeUp = {
+  const fadeUp: Variants = {
     hidden: { opacity: 0, y: 40 },
     show: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" },
+      transition: { delay: i * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
     }),
+
   };
 
   return (

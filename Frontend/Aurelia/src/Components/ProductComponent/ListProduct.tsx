@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { FilterProductContext } from "../../contexts/FIlterProduct";
 import { motion } from "framer-motion";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { LazyImage } from "../SEO/LazyImage";
 
 export const ListProduct = () => {
 
@@ -18,7 +19,13 @@ export const ListProduct = () => {
         {dataResult?.slice(0,Number).map((item) => {
           return (
             <div onClick={()=>navigate(`/Fashion/Products/${item.id}`)} className="flex flex-col items-center cursor-pointer hover:scale-105 duration-300 h-full" key={item.id} >
-              <img className="w-96 h-[450px] object-cover" src={item.thumbnail} alt="" />
+              <LazyImage 
+                className="w-96 h-[450px] object-cover" 
+                src={item.thumbnail} 
+                alt={item.name || "Sản phẩm"}
+                width={384}
+                height={450}
+              />
               <div className="text-center w-full">
                 <h1 className="text-2xl font-heading  mt-3">{item.name}</h1>
                 <h1>{item.price.toLocaleString("vi-Vn")} VND</h1>

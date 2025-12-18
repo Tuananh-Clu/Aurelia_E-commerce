@@ -28,7 +28,7 @@ export default function ProductManagement() {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
-  const [activeAddProduct, setActiveAddProduct] = useState(false);
+  const [,setActiveAddProduct] = useState(false);
   const [editProduct, setEditProduct] = useState<boolean>(false);
   const [openImportModal, setOpenImportModal] = useState(false);
   const [dataEdit, setDataEdit] = useState<any>(null);

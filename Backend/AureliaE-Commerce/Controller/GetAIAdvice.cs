@@ -12,6 +12,7 @@ namespace AureliaE_Commerce.Controller
     public class GetAIAdvice : ControllerBase
     {
         private readonly IMongoCollection<Client> _clientCollection;
+        private readonly IMongoCollection<Product> _productCollection;
 
         public GetAIAdvice(MongoDbContext dbContext)
         {
@@ -52,6 +53,7 @@ namespace AureliaE_Commerce.Controller
             string productType 
         )
         {
+            
             const double SAFE_GAP = 3.0; 
             var candidates = new List<(Size size, double score, string note)>();
 
@@ -104,24 +106,18 @@ namespace AureliaE_Commerce.Controller
         [NonAction]
         private string GetUserIdFromToken(string token)
         {
-            if (token.StartsWith("Bearer "))
-                token = token.Substring("Bearer ".Length).Trim();
-
-            var jwt = new JwtSecurityTokenHandler();
-            return jwt.ReadJwtToken(token)
-                      .Claims.First(c => c.Type == "sub")
-                      .Value;
+            var handler = new JwtSecurityTokenHandler();
+            var jwtToken = handler.ReadJwtToken(token);
+            var userId = jwtToken.Claims.First(claim => claim.Type == JwtRegisteredClaimNames.Sub).Value;
+            return userId;
         }
 
         [HttpPost("GetAdviceSize")]
         public async Task<IActionResult> GetAdviceSize(
-            [FromHeader(Name = "Authorization")] string token,
             [FromBody] ProductGetAdviceFromUserDto dto)
         {
-            if (string.IsNullOrWhiteSpace(token))
-                return Unauthorized();
 
-            var userId = GetUserIdFromToken(token);
+            var userId = GetUserIdFromToken(Request.Cookies.TryGetValue("access_token_client", out var token) ? token : "");
 
             var client = await _clientCollection
                 .Find(c => c.Id == userId)
@@ -140,6 +136,8 @@ namespace AureliaE_Commerce.Controller
             var productType =
                 dto.subCategory.Contains("dress") ? "dress" :
                 dto.subCategory.Contains("top") ? "top" :
+                dto.type.Contains("top") ? "top" :
+                dto.type.Contains("dress") ? "dress" :
                 null;
 
             if (productType == null)

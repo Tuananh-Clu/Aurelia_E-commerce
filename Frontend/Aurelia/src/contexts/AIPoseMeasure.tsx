@@ -9,12 +9,13 @@ import { AuthContext } from "./Author";
 type AIMeasureContextType = {
   DataMeasure: Measure ;         
   postMeasureToDB:()=>Promise<void>,  
-  getAIAdviceMeasure:(ProductId:string,type:string,subCategory:string,SetStateAction:React.Dispatch<React.SetStateAction<string>>)=>Promise<void>
+  getAIAdviceMeasure:(ProductId:string,type:string,subCategory:string,SetStateAction:React.Dispatch<React.SetStateAction<{message:string,note:string,size:string}>>)=>Promise<void>
   setDataMeasure: React.Dispatch<React.SetStateAction<Measure>>; 
 };
 
 export const AiPoseMeasureContext = createContext<AIMeasureContextType>({
   DataMeasure: {} as Measure,
+
   getAIAdviceMeasure:async()=>{},
   postMeasureToDB:async()=>{},
   setDataMeasure: () => {},
@@ -27,6 +28,7 @@ type AiPoseMeasureProviderProps = {
 export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ children }) => {
   const [DataMeasure, setDataMeasure] = useState<Measure>({} as Measure);
   const {userData}=useContext(AuthContext)
+
   const fetch = useCallback(async () => {
     try {
       const res = await api_Response(UseApiUrl(api_Config.User.LaySoDo), "GET", null, {
@@ -62,30 +64,30 @@ export const AiPoseMeasureProvider: React.FC<AiPoseMeasureProviderProps> = ({ ch
     ProductId:string,
     type:string,
     subCategory:string,
-    SetStateAction:React.Dispatch<React.SetStateAction<string>>
+    SetStateAction:React.Dispatch<React.SetStateAction<{message:string,note:string,size:string}>>
   )=>{
-    if (!userData) return;
+    if (!ProductId || !type || !subCategory) return;
     try{
-    const res:any=api_Response(UseApiUrl(api_Config.AIAdvice.GetAdviceMeasure)
+    const res:any=await api_Response(UseApiUrl(api_Config.AIAdvice.GetAdviceMeasure)
         ,"POST",{
-        ProductId:ProductId,
+        productId:ProductId,
         type:type,
         subCategory:subCategory
     },{
       "withCredentials": true,
     });
-      SetStateAction(res.message as unknown as string);
-    }
+    SetStateAction({message:res.message,note:res.note,size:res.size});
+  }
     catch{
       Toaster.error("Không thể lấy gợi ý size. Vui lòng thử lại.");
     }
-  }, [userData]);
-
+  }, []);
+;
   const contextValue = useMemo(() => ({
     DataMeasure,
     setDataMeasure,
     postMeasureToDB,
-    getAIAdviceMeasure
+    getAIAdviceMeasure,
   }), [DataMeasure, postMeasureToDB, getAIAdviceMeasure]);
 
   return (

@@ -7,6 +7,7 @@ import { Story } from "../Components/HomeLayoutComponent/Story";
 import { HotProducts } from "../Components/HomeLayoutComponent/HotProducts";
 import { DiscountProducts } from "../Components/HomeLayoutComponent/DiscountProducts";
 import { BrandMarquee } from "../Components/HomeLayoutComponent/BrandMarquee";
+import { DynamicMetaTags } from "../Components/SEO/DynamicMetaTags";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ArrowUp, MessageCircle } from "lucide-react";
@@ -31,13 +32,20 @@ export const Home = () => {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, left: "24px", bottom: "-24px" }}
-      animate={{ opacity: 1, left: "0px", bottom: "0px" }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen w-full relative"
-    >
+    <>
+      <DynamicMetaTags
+        title="Aurelia - Thời Trang Cao Cấp | Trang Chủ"
+        description="Khám phá bộ sưu tập thời trang cao cấp tại Aurelia. AI đo số đo thông minh, gợi ý size chính xác và hệ thống loyalty points hấp dẫn."
+        keywords="thời trang, mua sắm online, quần áo, fashion, AI đo số đo, Aurelia"
+        url={window.location.href}
+      />
+      <motion.div
+        initial={{ opacity: 0, left: "24px", bottom: "-24px" }}
+        animate={{ opacity: 1, left: "0px", bottom: "0px" }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="min-h-screen w-full relative"
+      >
       <div className="relative z-10">
         {/* Background gradient */}
         <div
@@ -49,8 +57,9 @@ export const Home = () => {
         />
 
         <button
-          onClick={() => window.open(import.meta.env.VITE_URL_MESSENGER, "_blank")}
-          className="fixed right-5 bottom-10 w-11 h-11 rounded-full bg-blue-500 shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all z-50"
+        
+          onClick={() => window.open(`https://${import.meta.env.VITE_URL_MESSENGER}`, "_blank")}
+          className="fixed right-5 bottom-10 w-11 h-11 rounded-full bg-blue-500 shadow-lg flex items-center justify-center hover:bg-blue-600 transition-all z-50 cursor-pointer"
         >
           <MessageCircle className="w-6 h-6 text-white" />
         </button>
@@ -116,6 +125,7 @@ export const Home = () => {
       ></motion.section>
 
       <Footer />
-    </motion.div>
+      </motion.div>
+    </>
   );
 };

@@ -109,7 +109,7 @@ export const PopUpDetail = ({
                 </h3>
                 {order.product.map((item) => (
                   <div
-                    key={item.Itemid}
+                    key={item.itemid}
                     className="border-b border-gray-200 pb-2 last:border-0"
                   >
                     <p className="font-medium text-gray-800">{item.name}</p>

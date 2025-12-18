@@ -12,7 +12,7 @@ export const BannerSetting = () => {
   const [selected, setSelected] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [popupAddBanner, setPopupAddBanner] = useState(false);
-  const [bannerState, setBannerState] = useState<any>();
+  const [, setBannerState] = useState<any>();
 
   const [localMainBanner, setLocalMainBanner] = useState(MainBanner);
   const [localStoryBanner, setLocalStoryBanner] = useState(StoryBanner);

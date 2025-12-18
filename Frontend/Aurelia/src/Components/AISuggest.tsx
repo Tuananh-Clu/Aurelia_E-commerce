@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState} from "react";
 import { AiPoseMeasureContext } from "../contexts/AIPoseMeasure";
 import { AuthContext } from "../contexts/Author";
 
@@ -7,27 +7,49 @@ type AiSuggestBoxProps = {
   type: string;
   subcategory: string;
 };
-
 export const AiSuggestBox = ({ productId, type, subcategory }: AiSuggestBoxProps) => {
     const {getAIAdviceMeasure}=useContext(AiPoseMeasureContext)
+    const [AIAdvice,setAIAdvice]=useState<{message:string,note:string,size:string}>({message:"",note:"",size:""});
     const {isSignned}=useContext(AuthContext)
-    const [AIAdvice,setAIAdvice]=useState("");
     useEffect(()=>{
       if(isSignned===false) return; 
         getAIAdviceMeasure(productId,type,subcategory,setAIAdvice)
     },[productId])
   return (
-    <div className=" border border-gray-200 rounded-xl p-4 bg-gradient-to-r from-gray-50 to-white shadow-sm mb-4">
-      <h2 className="font-heading text-lg font-medium mb-2 flex items-center gap-2">
-        🤖 Gợi ý từ AI
-      </h2>
-      {AIAdvice ? (
-        <p className="text-sm text-gray-700 leading-relaxed">
-          {AIAdvice}
+<div className="border border-gray-200 rounded-lg p-4 bg-white mb-4">
+  <h2 className="text-sm font-semibold text-gray-900 mb-2">
+    AI Size Recommendation
+  </h2>
+
+  {AIAdvice ? (
+    <div className="space-y-1 text-sm text-gray-700">
+      {AIAdvice.size && (
+        <div>
+          <span className="text-gray-500">Recommended size:</span>{" "}
+          <span className="font-medium text-gray-900">
+            {AIAdvice.size}
+          </span>
+        </div>
+      )}
+
+      {AIAdvice.message && (
+        <p className="text-gray-600">
+          {AIAdvice.message}
         </p>
-      ) : (
-        <p className="text-gray-400 text-sm">Đang phân tích số đo của bạn...</p>
+      )}
+
+      {AIAdvice.note && (
+        <p className="text-xs text-gray-500">
+          {AIAdvice.note}
+        </p>
       )}
     </div>
+  ) : (
+    <p className="text-sm text-gray-400">
+      Analyzing your measurements…
+    </p>
+  )}
+</div>
+
   );
 };

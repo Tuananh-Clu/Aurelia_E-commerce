@@ -10,7 +10,6 @@ import React, {
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
 import { CartContext } from "./CartContext";
-import { AiPoseMeasureContext } from "./AIPoseMeasure";
 import { api_Response } from "../services/http";
 import { useLocation } from "react-router-dom";
 
@@ -53,8 +52,7 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isSignned, setIsignned] = useState(false);
   const [doneWork, setDoneWork] = useState(false);
-  const { setDataMeasure } = useContext(AiPoseMeasureContext);
-  const { CartDataAdd, setCartDataAdd } = useContext(CartContext);
+  const { CartDataAdd,  } = useContext(CartContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [userData, setUserData] = useState<any>(null);
 
@@ -73,7 +71,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         if (response.status === 200) {
           setIsignned(true);
           setUserData(response.data);
-          setDataMeasure(response.data.soDoNguoiDung);
           const {passWord,...safeuser}=response.data;
           localStorage.setItem("user", JSON.stringify(safeuser));
         }

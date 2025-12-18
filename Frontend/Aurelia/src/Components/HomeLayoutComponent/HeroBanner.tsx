@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { useContext, useState, useEffect } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -21,7 +21,7 @@ export const HeroBanner = () => {
 
   const data = banners[index];
 
-  const fadeUp = (delay = 0) => ({
+  const fadeUp = (delay: number = 0): Variants => ({
     hidden: { opacity: 0, y: 30 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: "easeOut" } },
   });
@@ -82,7 +82,7 @@ const styleByLayoutMain: Record<string, any> = {
 };
 
   const style = styleByLayoutMain[data.layout];
-  const slideVariants = {
+  const slideVariants:Variants = {
     enter: { opacity: 0, x: 100 },
     center: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
     exit: { opacity: 0, x: -100, transition: { duration: 0.5, ease: "easeIn" } },

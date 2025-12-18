@@ -76,12 +76,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         {},
         { "Content-Type": "application/json" }
       );
-      api_Response(
-        UseApiUrl(api_Config.User.LayTHongTinUser),
-        "GET",
-        {},
-        { "Content-Type": "application/json" }
-      );
       localStorage.removeItem("cartItems");
       setCartDataAdd([]);
       api_Response(UseApiUrl(api_Config.User.XoaGioHang), "DELETE", {}, {});
