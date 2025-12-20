@@ -114,8 +114,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           axios.get(UseApiUrl(api_Config.Admin.GetShopInfo)),
           axios.get(UseApiUrl(api_Config.Admin.GetDoanhThuCaNam)),
         ]);
-
-        setMainBanner(bannerRes.data.mainBanner || []);
+        setMainBanner(bannerRes.data.mainBanner);
         setStoryBanner(bannerRes.data.storyBanner || []);
         setDataRevenue(revenueRes.data);
         setDataUser(userRes.data);
