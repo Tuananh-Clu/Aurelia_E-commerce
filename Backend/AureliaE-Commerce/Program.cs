@@ -48,11 +48,7 @@ builder.Services.AddCors(a =>
 {
     a.AddPolicy("AllowFrontEnd", s =>
     {
-        s.WithOrigins(
-            "https://aureliashop.vercel.app",
-            "https://localhost:3000",
-            "https://lol-tgdq.onrender.com"
-        )
+        s.AllowAnyOrigin()
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
