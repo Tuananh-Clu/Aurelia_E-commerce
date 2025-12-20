@@ -14,7 +14,10 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-dotenv.net.DotEnv.Load();
+if(builder.Environment.IsDevelopment())
+{
+   dotenv.net.DotEnv.Load();
+}
 builder.Configuration["MongoDbSettings:ConnectionString"] = Environment.GetEnvironmentVariable("MONGODB_URI");
 builder.Configuration["Jwt:Key"] = Environment.GetEnvironmentVariable("JWT_KEY");
 builder.Services.AddEndpointsApiExplorer(); 
@@ -46,7 +49,7 @@ builder.Services.AddCors(a =>
     a.AddPolicy("AllowFrontEnd", s =>
     {
         s.WithOrigins(
-            "https://localhost:5173",
+            "https://aureliashop.vercel.app",
             "https://localhost:3000"
         )
         .AllowAnyHeader()
@@ -54,10 +57,24 @@ builder.Services.AddCors(a =>
         .AllowCredentials();
     });
 });
+var firebaseJson =
+    Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_JSON");
+
+if (string.IsNullOrWhiteSpace(firebaseJson))
+{
+    throw new Exception("Missing FIREBASE_CREDENTIALS_JSON environment variable");
+}
+
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential
+        .FromJson(firebaseJson)
+        .CreateScoped("https://www.googleapis.com/auth/cloud-platform")
+});
 
 FirebaseApp.Create(new AppOptions()
 {
-    Credential = GoogleCredential.FromFile("secrets/aurelia-e-commerce-b24aaf6123da.json")
+    Credential = GoogleCredential.FromJson(firebaseJson).CreateScoped("https://www.googleapis.com/auth/cloud-platform")
 });
 builder.Services.AddSingleton<EmailController>();
 builder.Services.AddSingleton<IMongoClient>(sp =>
