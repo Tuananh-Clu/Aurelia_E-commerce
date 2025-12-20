@@ -57,25 +57,28 @@ builder.Services.AddCors(a =>
         .AllowCredentials();
     });
 });
-var firebaseJson =
-    Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_JSON");
+var firebaseJson =Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_JSON");
 
 if (string.IsNullOrWhiteSpace(firebaseJson))
 {
     throw new Exception("Missing FIREBASE_CREDENTIALS_JSON environment variable");
 }
 
-FirebaseApp.Create(new AppOptions
+if (FirebaseApp.DefaultInstance == null)
 {
-    Credential = GoogleCredential
-        .FromJson(firebaseJson)
-        .CreateScoped("https://www.googleapis.com/auth/cloud-platform")
-});
+    if (string.IsNullOrWhiteSpace(firebaseJson))
+    {
+        throw new Exception("Missing FIREBASE_CREDENTIALS_JSON environment variable");
+    }
 
-FirebaseApp.Create(new AppOptions()
-{
-    Credential = GoogleCredential.FromJson(firebaseJson).CreateScoped("https://www.googleapis.com/auth/cloud-platform")
-});
+    FirebaseApp.Create(new AppOptions
+    {
+        Credential = GoogleCredential
+            .FromJson(firebaseJson)
+            .CreateScoped("https://www.googleapis.com/auth/cloud-platform")
+    });
+}
+
 builder.Services.AddSingleton<EmailController>();
 builder.Services.AddSingleton<IMongoClient>(sp =>
 {
