@@ -50,7 +50,8 @@ builder.Services.AddCors(a =>
     {
         s.WithOrigins(
             "https://aureliashop.vercel.app",
-            "https://localhost:3000"
+            "https://localhost:3000",
+            "https://lol-tgdq.onrender.com"
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -123,13 +124,14 @@ var app = builder.Build();
 
 
 
-app.UseHttpsRedirection();
 app.UseRouting();
+
 app.UseCors("AllowFrontEnd");
-app.MapHub<NotifyHub>("/notifyHub");
-app.UseAuthentication(); 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapHub<NotifyHub>("/notifyHub");
 app.MapControllers();
 
 app.Run();
