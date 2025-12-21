@@ -1,8 +1,105 @@
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Homepage - Trang chủ -->
   <url>
     <loc>https://aureliashop.vercel.app/</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
+  
+  <!-- Collections - Tất cả bộ sưu tập -->
   <url>
-    <loc>https://aureliashop.vercel.app/Fashion/Products/e03c93d8-4af2-4f86-952b-74836e105f6d</loc>
+    <loc>https://aureliashop.vercel.app/Collection</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
+  
+  <!-- Products - Danh sách sản phẩm -->
+  <url>
+    <loc>https://aureliashop.vercel.app/Fashion/Products</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Search - Tìm kiếm -->
+  <url>
+    <loc>https://aureliashop.vercel.app/search</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Cart - Giỏ hàng -->
+  <url>
+    <loc>https://aureliashop.vercel.app/cart</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Account - Tài khoản người dùng -->
+  <url>
+    <loc>https://aureliashop.vercel.app/account</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- About - Giới thiệu -->
+  <url>
+    <loc>https://aureliashop.vercel.app/about</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Payment - Thanh toán -->
+  <url>
+    <loc>https://aureliashop.vercel.app/payment</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <!-- Body Measurements - Đo số đo cơ thể -->
+  <url>
+    <loc>https://aureliashop.vercel.app/bodyMeasurements</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Login - Đăng nhập -->
+  <url>
+    <loc>https://aureliashop.vercel.app/login</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Forgot Password - Quên mật khẩu -->
+  <url>
+    <loc>https://aureliashop.vercel.app/Forgot-PassWord</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  
+  <!-- Reset Password - Đặt lại mật khẩu -->
+  <url>
+    <loc>https://aureliashop.vercel.app/reset-passWord</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  
+
+
 </urlset>
