@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { FilterProductContext } from "../../contexts/FIlterProduct";
 import { DanhMuc } from "../HomeLayoutComponent/DanhMucSanPham";
 import { useNavigate } from "react-router-dom";
+import { LazyImage } from "../SEO/LazyImage";
 
 export const FilterType = () => {
   const { key, setKey } = useContext(FilterProductContext);
@@ -44,11 +45,8 @@ export const FilterType = () => {
       >
         <div className="grid grid-cols-2">
           <div>
-            <img
-              className="object-cover h-[560px] w-full rounded-l-2xl"
-              src="https://i.pinimg.com/1200x/b2/c2/10/b2c21065b22e80fb10ef36bdddf994df.jpg"
-              alt="Danh mục"
-            />
+          <LazyImage src="https://i.pinimg.com/1200x/b2/c2/10/b2c21065b22e80fb10ef36bdddf994df.jpg"
+          alt="Image Filter" className="object-cover h-[560px] w-full rounded-l-2xl"/>
           </div>
 
           <div className="p-10 flex flex-col">
