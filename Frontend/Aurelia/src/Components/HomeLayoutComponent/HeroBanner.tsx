@@ -2,7 +2,6 @@ import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { useContext, useState, useEffect } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { LazyImage } from "../SEO/LazyImage";
 
 export const HeroBanner = () => {
   const { MainBanner } = useContext(AdminContext);
@@ -155,18 +154,14 @@ export const HeroBanner = () => {
           </motion.div>
 
           {/* Image */}
-          <motion.div
-          className={style.image}
+          <motion.img
+            src={data.linkUrl}
+            alt="Hero Banner"
+            className={style.image}
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: "spring", stiffness: 120, damping: 16 }}
-          >
-            <LazyImage
-              src={data.imageUrl || data.image || data.linkImage}
-              alt="Hero Banner"
-              className={style.image}
-            ></LazyImage>
-          </motion.div>
+          />
         </motion.div>
       </AnimatePresence>
 
