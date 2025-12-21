@@ -156,6 +156,7 @@ export const HeroBanner = () => {
 
           {/* Image */}
           <motion.div
+          className={style.image}
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: "spring", stiffness: 120, damping: 16 }}
