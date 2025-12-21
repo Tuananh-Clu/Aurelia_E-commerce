@@ -6,12 +6,13 @@ import type { ChangeEvent } from "react";
 import { Search as SearchIcon } from "lucide-react";
 import { FilterProductContext } from "../contexts/FIlterProduct";
 import { useNavigate } from "react-router-dom";
+import { LazyImage } from "../Components/SEO/LazyImage";
 
 export const Search = () => {
   const { key, setKey, dataFilter } = useContext(FilterProductContext);
   const onChange = (e: ChangeEvent<HTMLInputElement>) => setKey(e.target.value);
-  const navigate=useNavigate();
-  const [more,setMore]=useState(20);
+  const navigate = useNavigate();
+  const [more, setMore] = useState(20);
 
   return (
     <>
@@ -58,26 +59,38 @@ export const Search = () => {
                 transition={{ delay: 0.05 * idx }}
                 className="bg-white  shadow-sm overflow-hidden group cursor-pointer"
               >
-                <div className="h-90 overflow-hidden">
-                  <motion.img
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.4 }}
+                  className="h-90 overflow-hidden"
+                >
+                  <LazyImage
                     src={item.thumbnail}
                     alt={item.name}
                     className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.4 }}
                   />
-                </div>
+                </motion.div>
                 <div className="p-4">
                   <div className="flex items-center flex-col gap-2">
                     <h3 className="font-medium">{item.name}</h3>
-                    <span className="text-sm text-gray-600">{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
+                    <span className="text-sm text-gray-600">
+                      {item.price.toLocaleString("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
+                    </span>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
           <div className="w-full flex items-center justify-center mt-10">
-            <button onClick={()=>setMore(prev=>prev+10)} className="border-0.5 p-2 hover:bg-black hover:text-white cursor-pointer">Xem Thêm</button>
+            <button
+              onClick={() => setMore((prev) => prev + 10)}
+              className="border-0.5 p-2 hover:bg-black hover:text-white cursor-pointer"
+            >
+              Xem Thêm
+            </button>
           </div>
         </div>
       </main>

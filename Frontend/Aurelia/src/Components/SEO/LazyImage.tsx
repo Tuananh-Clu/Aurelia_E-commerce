@@ -33,7 +33,6 @@ export const LazyImage = ({
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              // Load image khi vào viewport
               const img = new Image();
               img.src = src;
               img.onload = () => {

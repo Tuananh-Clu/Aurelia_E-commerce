@@ -4,6 +4,7 @@ import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
 import { useContext, useEffect, useState } from "react";
 import { CollectionContext } from "../contexts/SeasonContext";
 import { LoadingOverlay } from "../Components/LoadingOverlay";
+import { LazyImage } from "../Components/SEO/LazyImage";
 
 export const Collection = () => {
   const { id } = useParams();
@@ -61,11 +62,7 @@ export const Collection = () => {
             >
 
               <div className="overflow-hidden w-full">
-                <img
-                  src={product?.thumbnail}
-                  alt={product?.name}
-                  className="w-full h-[600px] object-cover transform transition duration-700 ease-in-out group-hover:scale-105"
-                />
+                <LazyImage src={product?.thumbnail} alt={product?.name} className="w-full h-[600px] object-cover transform transition duration-700 ease-in-out group-hover:scale-105" />
               </div>
 
 

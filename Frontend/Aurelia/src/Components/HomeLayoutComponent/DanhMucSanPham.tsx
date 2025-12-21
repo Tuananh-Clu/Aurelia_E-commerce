@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FilterProductContext } from "../../contexts/FIlterProduct";
+import { LazyImage } from "../SEO/LazyImage";
 
 export const DanhMuc = [
   {
@@ -51,12 +52,7 @@ export const DanhMucSanPham = () => {
             onClick={() => handleClick(item.type)}
             className="relative group h-44 md:h-56 rounded-2xl overflow-hidden shadow-md cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
           >
-            {/* Ảnh */}
-            <img
-              src={item.img}
-              alt={item.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
+            <LazyImage src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
             {/* Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition duration-500"></div>
             {/* Text */}

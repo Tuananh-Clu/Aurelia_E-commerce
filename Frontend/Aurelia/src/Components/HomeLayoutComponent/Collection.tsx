@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { CollectionContext } from "../../contexts/SeasonContext";
+import { LazyImage } from "../SEO/LazyImage";
 
 export const Collection = () => {
   const navigate = useNavigate();
@@ -24,11 +25,7 @@ export const Collection = () => {
         >
           {/* Hình ảnh */}
           <div className="md:w-1/2 relative rounded-3xl overflow-hidden shadow-xl">
-            <img
-              src={item.banner}
-              alt={item.name}
-              className="w-full h-[420px] object-cover transform transition-transform duration-700 group-hover:scale-110"
-            />
+          <LazyImage src={item.image} alt={item.name} className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
           </div>
 
