@@ -25,7 +25,7 @@ export const Collection = () => {
         >
           {/* Hình ảnh */}
           <div className="md:w-1/2 relative rounded-3xl overflow-hidden shadow-xl">
-          <LazyImage src={item.banner} alt={item.name} className="w-full h-full object-cover transform transition-transform duration-700 hover:scale-105" />
+          <LazyImage src={item.banner} alt={item.name} className="w-full h-[420px] object-cover transform transition-transform duration-700 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
           </div>
 
