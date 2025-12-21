@@ -33,7 +33,7 @@ builder.Services.AddSingleton<ProductItemsService>();
 builder.Services.AddSingleton<ShopService>();
 builder.Services.AddControllers();
 var mongoUri = Environment.GetEnvironmentVariable("MONGODB_URI");
-var dbName   = Environment.GetEnvironmentVariable("DATABASE_NAME");
+var dbName   = Environment.GetEnvironmentVariable("DataBaseName");
 builder.Services.AddSingleton<IMongoDatabase>(sp =>
 {
     var client =sp.GetRequiredService<IMongoClient>();
