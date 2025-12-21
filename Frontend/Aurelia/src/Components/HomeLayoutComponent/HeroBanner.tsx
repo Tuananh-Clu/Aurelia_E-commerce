@@ -161,7 +161,7 @@ export const HeroBanner = () => {
             transition={{ type: "spring", stiffness: 120, damping: 16 }}
           >
             <LazyImage
-              src={data.imageUrl}
+              src={data.imageUrl || data.image || data.linkImage}
               alt="Hero Banner"
               className={style.image}
             ></LazyImage>
