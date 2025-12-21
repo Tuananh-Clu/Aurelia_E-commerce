@@ -32,14 +32,12 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddSingleton<ProductItemsService>();
 builder.Services.AddSingleton<ShopService>();
 builder.Services.AddControllers();
+var mongoUri = Environment.GetEnvironmentVariable("MONGODB_URI");
+var dbName   = Environment.GetEnvironmentVariable("DATABASE_NAME");
 builder.Services.AddSingleton<IMongoDatabase>(sp =>
 {
-    var settings = builder.Configuration
-        .GetSection("MongoDbSettings")
-        .Get<MongoDbSettings>();
-
-    var client = new MongoClient(settings.ConnectionString);
-    return client.GetDatabase(settings.DatabaseName);
+    var client =sp.GetRequiredService<IMongoClient>();
+    return client.GetDatabase(dbName);
 });
 
 builder.Services.AddSingleton<MongoDbContext>();
@@ -49,9 +47,7 @@ builder.Services.AddCors(a =>
     a.AddPolicy("AllowFrontEnd", s =>
     {
                 s.WithOrigins(
-            "https://aureliashop.vercel.app",
-            "https://localhost:3000",
-            "https://lol-tgdq.onrender.com"
+            "https://aureliashop.vercel.app"
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -59,7 +55,7 @@ builder.Services.AddCors(a =>
     });
 });
 var firebaseJson =Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_JSON");
-
+firebaseJson = firebaseJson.Replace("\\n", "\n");
 if (string.IsNullOrWhiteSpace(firebaseJson))
 {
     throw new Exception("Missing FIREBASE_CREDENTIALS_JSON environment variable");
@@ -79,12 +75,9 @@ if (FirebaseApp.DefaultInstance == null)
             .CreateScoped("https://www.googleapis.com/auth/cloud-platform")
     });
 }
-
-builder.Services.AddSingleton<EmailController>();
-builder.Services.AddSingleton<IMongoClient>(sp =>
+builder.Services.AddSingleton<IMongoClient>(_ =>
 {
-    var settings = builder.Configuration.GetSection("MongoDbSettings").Get<MongoDbSettings>();
-    return new MongoClient(settings.ConnectionString);
+   return new MongoClient(mongoUri);
 });
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
