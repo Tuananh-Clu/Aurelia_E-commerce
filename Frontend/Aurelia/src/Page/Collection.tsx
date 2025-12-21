@@ -62,7 +62,7 @@ export const Collection = () => {
             >
 
               <div className="overflow-hidden w-full">
-                <LazyImage src={product?.thumbnail} alt={product?.name} className="w-full h-[600px] object-cover transform transition duration-700 ease-in-out group-hover:scale-105" />
+                <LazyImage src={product?.thumbnail} alt={product?.name} className="w-full h-[420px] object-cover transform transition-transform duration-700 group-hover:scale-110" />
               </div>
 
 

@@ -15,7 +15,7 @@ export const AllCollection = () => {
         {collectionData?.map((item:any)=>{
             return(
                 <div className="relative">
-                    <LazyImage src={item.image} alt={item.name} className="w-full h-[500px] object-cover"/>
+                    <LazyImage src={item.banner} alt={item.name} className="w-full h-[250px] md:h-full"/>
                     <div className="absolute inset-0 z-5 w-full bg-black/15 hover:bg-transparent transition duration-300 h-full text-center flex flex-col items-center justify-center">
                         <h1 className="md:text-5xl text-2xl text-white font-semibold ">{item.name}</h1>
                         <h1 className="text-gray-400 mt-2 md:text-2xl text-sm">{item.slogan}</h1>
