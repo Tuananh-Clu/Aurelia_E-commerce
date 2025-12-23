@@ -131,17 +131,16 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
 
         const rightHand = results.poseLandmarks?.[16];
         if (!rightHand) return;
-
+        if (
+          rightHand.x < shoulderRight.x ||
+          rightHand.x > shoulderLeft.x ||
+          rightHand.y < shoulderLeft.y ||
+          rightHand.y > leftHip.y
+        ) {
+          return;
+        }
         const handInBox =
-          rightHand.x > 0.2 &&
-          rightHand.x < 0.56 &&
-          rightHand.y > 0.41 &&
-          rightHand.y < 0.78;
-
-        ctx.strokeStyle = handInBox ? "#00FF00" : "#FF0000";
-        ctx.lineWidth = 4;
-        ctx.strokeRect(0.2 * width, 0.3 * height, 150, 150);
-
+          rightHand && shoulderRight && rightHand.y < shoulderRight.y - 0.05;
         if (isCountingDownRef.current || !handInBox) return;
 
         isCountingDownRef.current = true;
@@ -298,9 +297,9 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
     <>
       <div className="fixed top-20 left-3 z-50">
         <motion.button
-        transition={{ type: "spring", stiffness: 300 }}
-        onHoverStart={() => setAppearText(true)}
-        onHoverEnd={() => setAppearText(false)}
+          transition={{ type: "spring", stiffness: 300 }}
+          onHoverStart={() => setAppearText(true)}
+          onHoverEnd={() => setAppearText(false)}
           onClick={() => navigate(-1)}
           className="
       flex items-center gap-2
@@ -330,7 +329,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           Vui lòng đứng trước khung hình
         </p>
       </div>
-      <div className="relative md:w-[1300px] md:h-[700px] h-[1000px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative md:w-[1300px] md:h-[700px] h-[700px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
         <video
           ref={videoRef}
           className="hidden"

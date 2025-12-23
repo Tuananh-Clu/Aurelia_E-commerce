@@ -1,16 +1,14 @@
-
-import { useContext, useState, useEffect } from 'react'
-import { DashBoardMeasures } from '../Components/AiModelBodySize/DashBoardMesuares'
-import { Main } from '../Components/AiModelBodySize/Main'
-import { Navbar } from '../Components/HomeLayoutComponent/Navbar'
-import { AiPoseMeasureContext } from '../contexts/AIPoseMeasure'
-
+import { useContext, useState, useEffect } from "react";
+import { DashBoardMeasures } from "../Components/AiModelBodySize/DashBoardMesuares";
+import { Main } from "../Components/AiModelBodySize/Main";
+import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { AiPoseMeasureContext } from "../contexts/AIPoseMeasure";
 
 export const BodySize = () => {
-  const [isCameraOn,setIsCameraOn]=useState(false);
-  const {DataMeasure,postMeasureToDB}=useContext(AiPoseMeasureContext);
-  const [safeData,setSafeData]=useState(false);
-  
+  const [isCameraOn, setIsCameraOn] = useState(false);
+  const { DataMeasure, postMeasureToDB } = useContext(AiPoseMeasureContext);
+  const [safeData, setSafeData] = useState(false);
+
   useEffect(() => {
     if (safeData) {
       postMeasureToDB();
@@ -20,11 +18,24 @@ export const BodySize = () => {
 
   return (
     <>
-    <Navbar/>
-    <div className='mt-20 px-15 flex flex-col md:flex-row items-center justify-center gap-10 mb-10'>
-          <Main isCameraOn={isCameraOn} setIsCameraOn={setIsCameraOn}  />
-          <DashBoardMeasures setIsCameraOn={setIsCameraOn} iscameraOn={isCameraOn} datas={DataMeasure} setDatas={setSafeData}/>        
-    </div>
+      <Navbar />
+      <div
+        className="  mt-24
+  px-4 md:px-8
+  flex flex-col md:flex-row
+  justify-center
+  items-start
+  gap-10
+  mb-10"
+      >
+        <Main isCameraOn={isCameraOn} setIsCameraOn={setIsCameraOn} />
+        <DashBoardMeasures
+          setIsCameraOn={setIsCameraOn}
+          iscameraOn={isCameraOn}
+          datas={DataMeasure}
+          setDatas={setSafeData}
+        />
+      </div>
     </>
-  )
-}
+  );
+};
