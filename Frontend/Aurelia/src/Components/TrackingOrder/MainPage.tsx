@@ -1,36 +1,73 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "../HomeLayoutComponent/Navbar";
-import { RightSiteMap } from "./RightSiteMap";
-
+import LeftSite from "./LeftSite";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { api_Config, UseApiUrl } from "../../services/api";
 import type { order } from "../../types/type";
-import LeftSite from "./LeftSite";
+import { MapPin, X } from "lucide-react";
+import RightSiteMap from "./RightSiteMap";
 
 export const MainPage = () => {
   const { id } = useParams();
   const [data, setData] = useState<order>();
+  const [showMapMobile, setShowMapMobile] = useState(false);
+
   useEffect(() => {
     const fetch = async () => {
-      const data = await axios.get(
+      const res = await axios.get(
         `${UseApiUrl(api_Config.Shop.LayDonHangTheoID)}?id=${id}`
       );
-      setData(data.data);
+      setData(res.data);
     };
     fetch();
   }, [id]);
+
   return (
     <>
       <Navbar />
-      <div className="w-full flex flex-col lg:flex-row gap-4 justify-around px-4 lg:px-8 py-6">
-        <div className="w-full lg:w-2/5 lg:max-w-xl">
+
+      {/* ===== DESKTOP LAYOUT ===== */}
+      <div className="hidden lg:flex w-full gap-6 px-8 py-6">
+        <div className="w-2/5 max-w-xl">
           <LeftSite data={data} />
         </div>
-        <div className="w-full lg:w-3/5 mt-6 lg:mt-20">
+        <div className="w-3/5">
           <RightSiteMap data={data} />
         </div>
       </div>
+
+      {/* ===== MOBILE LAYOUT ===== */}
+      <div className="lg:hidden px-4 py-4 pb-24">
+        <LeftSite data={data} />
+      </div>
+
+      {/* ===== MOBILE MAP OVERLAY ===== */}
+      {showMapMobile && (
+        <div className="fixed inset-0 z-[9999] bg-black">
+          {/* Close button */}
+          <button
+            onClick={() => setShowMapMobile(false)}
+            className="absolute top-4 right-4 z-[10000] bg-white rounded-full p-2 shadow"
+          >
+            <X className="w-5 h-5 text-gray-700" />
+          </button>
+
+          <RightSiteMap data={data} />
+        </div>
+      )}
+
+      {!showMapMobile && (
+        <button
+          onClick={() => setShowMapMobile(true)}
+          className="lg:hidden fixed bottom-4 left-1/2 -translate-x-1/2 
+          bg-blue-600 text-white px-6 py-3 rounded-full shadow-lg 
+          flex items-center gap-2 z-[999]"
+        >
+          <MapPin className="w-5 h-5" />
+          Xem bản đồ giao hàng
+        </button>
+      )}
     </>
   );
 };

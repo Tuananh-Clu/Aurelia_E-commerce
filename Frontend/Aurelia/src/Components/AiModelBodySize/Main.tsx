@@ -330,7 +330,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           Vui lòng đứng trước khung hình
         </p>
       </div>
-      <div className="relative md:w-[1300px] md:h-[700px] h-[400px] sm:w-[700px] w-[400px] p-12 mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative md:w-[1300px] md:h-[700px] h-[1500px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
         <video
           ref={videoRef}
           className="hidden"
@@ -342,10 +342,10 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         <canvas
           ref={canvasRef}
           className="w-full h-full rounded-3xl object-cover"
-          width={1300}
-          height={900}
+          width={1700}
+          height={1900}
         />
-        <div className="flex w-full  items-center justify-center  md:hidden ">
+        <div className="flex w-full  items-center justify-center  md:hidden absolute bottom-0 left-0 z-40 right-0 ">
           <button
             onClick={() => setIsCameraOn(true)}
             className="bg-black/50 backdrop-blur-sm text-white text-sm font-medium px-4 py-1.5 rounded-full shadow"

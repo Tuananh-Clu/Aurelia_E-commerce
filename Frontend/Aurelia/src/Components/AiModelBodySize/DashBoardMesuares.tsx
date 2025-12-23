@@ -132,7 +132,7 @@ export const DashBoardMeasures: React.FC<MeasuresProps> = ({
           {hasData && (
             <button
               onClick={() => setDatas(true)}
-              className=" hiddenmd:flex-1 md:flex items-center justify-center gap-2 py-3 rounded-full font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
+              className=" hidden md:flex-1 md:flex items-center justify-center gap-2 py-3 rounded-full font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 transition"
             >
               <RefreshCcw className="w-5 h-5" />
               Lưu

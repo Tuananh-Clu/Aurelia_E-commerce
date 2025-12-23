@@ -14,7 +14,7 @@ export type RightProps = {
   data: any;
 };
 
-// ICONS -----------------------------------------------------
+
 const shopIcon: Icon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/25/25694.png",
   iconSize: [36, 36],
@@ -33,22 +33,19 @@ const customerIcon: Icon = new L.Icon({
   iconAnchor: [18, 36],
 });
 
-// Fit map to route -------------------------------------------
-const FitMap: React.FC<{ route: [number, number][] }> = ({ route }) => {
+
+const FitMap: React.FC<{ route: LatLngTuple[] }> = ({ route }) => {
   const map = useMap();
   useEffect(() => {
-    if (route.length > 0) map.fitBounds(route);
+    if (route.length) map.fitBounds(route);
   }, [route]);
   return null;
 };
 
-// Main Component ---------------------------------------------
-export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
-  const apiKey = "pk.fd3f99a25f3d03893a6936b3b255288c";
+const RightSiteMap: React.FC<RightProps> = ({ data }) => {
   const [route, setRoute] = useState<LatLngTuple[]>([]);
   const status = data?.data?.status;
 
-  // Convert status → index
   const statusIndex = useMemo(() => {
     const table: Record<string, number> = {
       "Chờ Xác Nhận": 0,
@@ -60,13 +57,12 @@ export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
     return table[status] ?? 0;
   }, [status]);
 
-  const shop = data ? [data.lat, data.ion] as LatLngTuple : null;
-  const customer = data?.data 
-    ? [data.data.lat, data.data.ion] as LatLngTuple 
+  const shop: LatLngTuple | null = data ? [data.lat, data.ion] : null;
+  const customer: LatLngTuple | null = data?.data
+    ? [data.data.lat, data.data.ion]
     : null;
-  const shipperPosition: LatLngTuple = [10.762622, 106.660172];
+  const shipper: LatLngTuple = [10.762622, 106.660172];
 
-  // Fetch route -------------------------------------------------
   useEffect(() => {
     if (!shop || !customer) return;
 
@@ -74,92 +70,132 @@ export const RightSiteMap: React.FC<RightProps> = ({ data }) => {
       try {
         const coords = `${shop[1]},${shop[0]};${customer[1]},${customer[0]}`;
         const res = await fetch(
-          `https://us1.locationiq.com/v1/directions/driving/${coords}?key=${apiKey}&geometries=geojson`
+          `https://us1.locationiq.com/v1/directions/driving/${coords}?key=${
+            import.meta.env.VITE_LOCATIONIQ_KEY
+          }&geometries=geojson`
         );
         const json = await res.json();
-
         const geo = json.routes?.[0]?.geometry?.coordinates ?? [];
         setRoute(geo.map(([lon, lat]: [number, number]) => [lat, lon]));
-      } catch (err) {
-        console.error(err);
+      } catch (e) {
+        console.error(e);
       }
     };
 
     fetchRoute();
   }, [shop, customer]);
 
-  const icons = [<Clock1 />, <CheckCircle />, <Package />, <Truck />, <Home />];
+  const icons = [
+    <Clock1 />,
+    <CheckCircle />,
+    <Package />,
+    <Truck />,
+    <Home />,
+  ];
+
 
   return (
     <div className="relative w-full">
-      {/* MAP AREA */}
+
       <MapContainer
-        center={(shop || [10.762622, 106.660172]) as LatLngExpression}
+        center={(shop || shipper) as LatLngExpression}
         zoom={14}
-        style={{
-          height: "90vh",
-          width: "100%",
-          borderRadius: "16px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-        }}
+        className="w-full h-[70vh] lg:h-[90vh] rounded-2xl shadow-lg"
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
         {shop && <Marker position={shop} icon={shopIcon} />}
-        {customer && <Marker position={customer}  icon={customerIcon} />}
-        {shipperPosition && <Marker position={shipperPosition} icon={shipperIcon} />}
+        {customer && <Marker position={customer} icon={customerIcon} />}
+        <Marker position={shipper} icon={shipperIcon} />
 
         {route.length > 0 && (
           <>
-            <Polyline positions={route} pathOptions={{ color: "#4CAF50", weight: 5, opacity: 0.8 }} />
+            <Polyline
+              positions={route}
+              pathOptions={{
+                color: "#4CAF50",
+                weight: 5,
+                opacity: 0.85,
+              }}
+            />
             <FitMap route={route} />
           </>
         )}
       </MapContainer>
 
-      {/* TRACKING STATUS CARD */}
-      <div className="absolute top-4 right-4 bg-gray-800/80 text-white rounded-2xl p-4 w-60 z-[999] shadow-xl backdrop-blur">
-        <h2 className="text-center font-semibold mb-2">Trạng thái đơn hàng</h2>
+      <div className="hidden lg:block absolute top-4 right-4 bg-gray-900/80 text-white rounded-2xl p-4 w-60 z-[999] shadow-xl backdrop-blur">
+        <h2 className="text-center font-semibold mb-2">
+          Trạng thái đơn hàng
+        </h2>
 
         <div className="flex flex-col items-center py-2">
           {icons.map((icon, index) => (
             <div key={index} className="flex flex-col items-center">
-              {/* Status Icon */}
               <div
-                className={`flex items-center justify-center rounded-full transition-all duration-300 
+                className={`flex items-center justify-center rounded-full transition-all duration-300
                 ${
                   statusIndex === index
-                    ? "bg-gradient-to-r from-green-400 to-green-600 w-16 h-16 scale-110 shadow-green-500/40"
+                    ? "bg-gradient-to-r from-green-400 to-green-600 w-16 h-16 scale-110"
                     : "bg-gray-700 w-11 h-11 opacity-70"
                 }`}
               >
                 {icon}
               </div>
 
-              {/* Line between icons */}
               {index < icons.length - 1 && (
                 <div
                   className={`w-1 h-[70px] transition-all duration-500 ${
                     statusIndex > index
                       ? "bg-gradient-to-b from-green-400 to-green-600"
-                      : "bg-white/40"
+                      : "bg-white/30"
                   }`}
-                ></div>
+                />
               )}
             </div>
           ))}
         </div>
 
-        {/* Text status */}
-        <div className="text-center mt-2 text-sm opacity-90">
-          {status}
-        </div>
-
+        <div className="text-center mt-2 text-sm">{status}</div>
         <div className="text-xs text-center opacity-70 mt-1">
-          Cập nhật lần cuối:{" "}
-          {new Date(data?.data?.tracking?.updateTime).toLocaleDateString()}
+          Cập nhật:{" "}
+          {new Date(
+            data?.data?.tracking?.updateTime
+          ).toLocaleDateString("vi-VN")}
+        </div>
+      </div>
+
+      <div className="lg:hidden absolute bottom-3 left-3 right-3 z-[999]">
+        <div className="bg-gray-900/90 rounded-2xl px-4 py-3 shadow-xl backdrop-blur">
+          <div className="flex items-center justify-between">
+            {icons.map((icon, index) => (
+              <div
+                key={index}
+                className={`flex flex-col items-center flex-1 transition-all ${
+                  index === statusIndex ? "scale-110" : "opacity-50"
+                }`}
+              >
+                <div
+                  className={`flex items-center justify-center rounded-full ${
+                    index === statusIndex
+                      ? "bg-green-500 w-10 h-10"
+                      : "bg-gray-700 w-8 h-8"
+                  }`}
+                >
+                  {icon}
+                </div>
+
+                {index === statusIndex && (
+                  <span className="text-[10px] mt-1 font-semibold text-green-400">
+                    {status}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+export default RightSiteMap;
