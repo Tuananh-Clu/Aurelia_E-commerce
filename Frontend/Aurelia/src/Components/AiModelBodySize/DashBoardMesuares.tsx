@@ -42,7 +42,7 @@ export const DashBoardMeasures: React.FC<MeasuresProps> = ({
   const hasData = measures.some((m) => m.value);
 
   return (
-    <div className="flex justify-center p-4">
+    <div className="flex justify-center md:p-4 ">
       <div className="
         w-full max-w-lg
         bg-white/80 backdrop-blur-xl

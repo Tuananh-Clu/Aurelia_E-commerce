@@ -140,7 +140,12 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           return;
         }
         const handInBox =
-          rightHand && shoulderRight && rightHand.y < shoulderRight.y - 0.05;
+          rightHand &&
+          rightHand.x > Math.min(shoulderLeft.x, shoulderRight.x) &&
+          rightHand.x < Math.max(shoulderLeft.x, shoulderRight.x) &&
+          rightHand.y > head.y &&
+          rightHand.y < leftHip.y;
+
         if (isCountingDownRef.current || !handInBox) return;
 
         isCountingDownRef.current = true;
@@ -321,7 +326,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         </motion.button>
       </div>
 
-      <div className="flex flex-col items-center text-center md:hidden mb-4">
+      <div className="flex flex-col items-center text-center justify-center md:hidden mb-4 w-full">
         <h2 className="text-xl font-bold text-gray-800">
           Bảng Thông Số Cơ Thể
         </h2>
