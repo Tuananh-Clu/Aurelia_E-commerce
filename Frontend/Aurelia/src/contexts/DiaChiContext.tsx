@@ -32,7 +32,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
         "GET",
         undefined,
         {
-          withCredentials: "true",
+          withCredentials: true,
         }
       );
       setSaveAddress(response);
@@ -49,7 +49,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
     if (!userData) return;
     try {
       api_Response(UseApiUrl(api_Config.User.LuuDiaChi), "POST", data, {
-        withCredentials: "true",
+        withCredentials: true,
         "Content-Type": "application/json",
       });
 
@@ -66,7 +66,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
     if (!userData) return;
     try {
       api_Response(UseApiUrl(api_Config.User.XoaDiaChi), "POST", data, {
-        withCredentials: "true",
+        withCredentials: true,
         "Content-Type": "application/json",
       });
 

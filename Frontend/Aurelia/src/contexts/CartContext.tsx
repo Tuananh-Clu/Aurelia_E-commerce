@@ -93,7 +93,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           "https://us1.locationiq.com/v1/search",
           {
             params: {
-              key: import.meta.env.LOCATIONIQ_KEY,
+              key: import.meta.env.VITE_LOCATIONIQ_KEY,
               q: address,
               format: "json",
               limit: 1,
