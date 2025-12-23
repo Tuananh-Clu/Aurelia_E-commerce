@@ -330,7 +330,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           Vui lòng đứng trước khung hình
         </p>
       </div>
-      <div className="relative md:w-[1300px] md:h-[700px] h-[1500px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative md:w-[1300px] md:h-[700px] h-[1000px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
         <video
           ref={videoRef}
           className="hidden"
