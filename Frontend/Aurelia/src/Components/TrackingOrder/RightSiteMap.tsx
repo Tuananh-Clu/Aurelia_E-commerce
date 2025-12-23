@@ -12,6 +12,7 @@ import { CheckCircle, Clock1, Home, Package, Truck } from "lucide-react";
 
 export type RightProps = {
   data: any;
+  id:string | undefined;
 };
 
 
@@ -42,7 +43,7 @@ const FitMap: React.FC<{ route: LatLngTuple[] }> = ({ route }) => {
   return null;
 };
 
-const RightSiteMap: React.FC<RightProps> = ({ data }) => {
+const RightSiteMap: React.FC<RightProps> = ({ data,id }: RightProps) => {
   const [route, setRoute] = useState<LatLngTuple[]>([]);
   const status = data?.data?.status;
 
@@ -83,7 +84,7 @@ const RightSiteMap: React.FC<RightProps> = ({ data }) => {
     };
 
     fetchRoute();
-  }, [shop, customer]);
+  }, [id, shop, customer]);
 
   const icons = [
     <Clock1 />,

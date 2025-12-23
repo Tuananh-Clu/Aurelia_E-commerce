@@ -26,34 +26,29 @@ export const MainPage = () => {
   return (
     <>
       <Navbar />
-
-      {/* ===== DESKTOP LAYOUT ===== */}
       <div className="hidden lg:flex w-full gap-6 px-8 py-6">
         <div className="w-2/5 max-w-xl">
           <LeftSite data={data} />
         </div>
         <div className="w-3/5">
-          <RightSiteMap data={data} />
+          <RightSiteMap id={id} data={data} />
         </div>
       </div>
 
-      {/* ===== MOBILE LAYOUT ===== */}
       <div className="lg:hidden px-4 py-4 pb-24">
         <LeftSite data={data} />
       </div>
 
-      {/* ===== MOBILE MAP OVERLAY ===== */}
       {showMapMobile && (
         <div className="fixed inset-0 z-[9999] bg-black">
-          {/* Close button */}
-          <button
+       <button
             onClick={() => setShowMapMobile(false)}
             className="absolute top-4 right-4 z-[10000] bg-white rounded-full p-2 shadow"
           >
             <X className="w-5 h-5 text-gray-700" />
           </button>
 
-          <RightSiteMap data={data} />
+          <RightSiteMap id={id} data={data} />
         </div>
       )}
 

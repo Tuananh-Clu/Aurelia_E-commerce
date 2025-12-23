@@ -61,7 +61,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         `${UseApiUrl(api_Config.User.SuccessPayAddOrder)}?shopId=${shopId}`,
         "POST",
         dataOrder,
-        { "Content-Type": "application/json" }
+        { "Content-Type": "application/json" ,withCredentials: true}
       );
       await axios.put(
         UseApiUrl(api_Config.Product.UpdateQuantityProduct),
@@ -74,7 +74,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         UseApiUrl(api_Config.User.UpdateTier),
         "POST",
         {},
-        { "Content-Type": "application/json" }
+        { "Content-Type": "application/json",withCredentials: true }
       );
       localStorage.removeItem("cartItems");
       setCartDataAdd([]);
