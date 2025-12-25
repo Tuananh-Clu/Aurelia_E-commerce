@@ -130,8 +130,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         const rightHand = results.poseLandmarks?.[16];
         if (!rightHand) return;
 
-        const handInBox =
-          rightHand.y < ((shoulderLeft.y + shoulderRight.y) / 2) * 0.4;
+        const handInBox = rightHand.y < 0.3; 
+
 
         if (isCountingDownRef.current && !handInBox) {
           if (countdownIntervalRef.current !== null) {
