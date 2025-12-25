@@ -129,19 +129,15 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
 
         const rightHand = results.poseLandmarks?.[16];
         if (!rightHand) return;
-        if (
-          rightHand.x < shoulderRight.x ||
-          rightHand.x > shoulderLeft.x ||
-          rightHand.y < shoulderLeft.y ||
-          rightHand.y > leftHip.y
-        ) {
-          return;
-        }
+        const minX = Math.min(shoulderLeft.x, shoulderRight.x);
+        const maxX = Math.max(shoulderLeft.x, shoulderRight.x);
+        const topY = head.y;
+        const bottomY = leftHip.y;
         const handInBox =
-          rightHand &&
-          rightHand.x > Math.min(shoulderLeft.x, shoulderRight.x) &&
-          rightHand.y > head.y &&
-          rightHand.y < leftHip.y;
+          rightHand.x > minX &&
+          rightHand.x < maxX &&
+          rightHand.y > topY &&
+          rightHand.y < bottomY;
 
         if (isCountingDownRef.current || !handInBox) return;
 
@@ -184,7 +180,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
                 shoulderWidth
               );
               const chest =
-                calculateEllipseCircumference(shoulderWidth, shoulderDepth) *SCALE *
+                calculateEllipseCircumference(shoulderWidth, shoulderDepth) *
+                SCALE *
                 100;
 
               const hipWidth = calculate3DDistance(leftHip, rightHip);
@@ -216,11 +213,12 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
                 waistWidth
               );
               const waist =
-                calculateEllipseCircumference(waistWidth, waistDepth) *100 *
+                calculateEllipseCircumference(waistWidth, waistDepth) *
+                100 *
                 SCALE *
                 1.35;
               setDataMeasure({
-                vai: (shoulderWidth  * SCALE * 100).toFixed(1),
+                vai: (shoulderWidth * SCALE * 100).toFixed(1),
                 nguc: chest.toFixed(1),
                 eo: waist.toFixed(1),
                 hong: hip.toFixed(1),
