@@ -128,29 +128,11 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           results.poseWorldLandmarks[24],
         ];
 
-        const rightHandIndices = [16, 17, 18, 19, 20];
-        let avgX = 0,
-          avgY = 0,
-          count = 0;
-        rightHandIndices.forEach((i) => {
-          const lm = results.poseLandmarks?.[i];
-          if (lm && lm.visibility == null ? 0 : 0 > 0.5) {
-            avgX += lm.x;
-            avgY += lm.y;
-            count++;
-          }
-        });
-        if (count === 0) return;
-        const minX = Math.min(shoulderLeft.x, shoulderRight.x);
-        const maxX = Math.max(shoulderLeft.x, shoulderRight.x);
-        const topY = head.y;
-        const bottomY = Math.max(leftHip.y, rightHip.y);
-        const rightHand = { x: avgX / count, y: avgY / count };
-        const handInBox =
-          rightHand.x > minX &&
-          rightHand.x < maxX &&
-          rightHand.y > topY &&
-          rightHand.y < bottomY;
+        const rightHand = results.poseLandmarks?.[16];
+        if (!rightHand) return;
+
+        const shoulderY = (shoulderLeft.y + shoulderRight.y) / 2;
+        const handInBox = rightHand.y < shoulderY;
 
         if (isCountingDownRef.current && !handInBox) {
           if (countdownIntervalRef.current !== null) {
