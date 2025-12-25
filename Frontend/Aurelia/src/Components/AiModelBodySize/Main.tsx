@@ -58,6 +58,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   const cameraInstanceRef = useRef<Camera | null>(null);
 
   const navigate = useNavigate();
+  
   const drawLandmarks = useCallback(
     (
       ctx: CanvasRenderingContext2D,
@@ -129,6 +130,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
 
         const rightHand = results.poseLandmarks?.[16];
         if (!rightHand) return;
+        
         const minX = Math.min(shoulderLeft.x, shoulderRight.x);
         const maxX = Math.max(shoulderLeft.x, shoulderRight.x);
         const topY = head.y;
@@ -139,13 +141,22 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           rightHand.y > topY &&
           rightHand.y < bottomY;
 
+        if (isCountingDownRef.current && !handInBox) {
+          if (countdownIntervalRef.current !== null) {
+            clearInterval(countdownIntervalRef.current);
+            countdownIntervalRef.current = null;
+          }
+          isCountingDownRef.current = false;
+          setPopup(false);
+          return;
+        }
+
         if (isCountingDownRef.current || !handInBox) return;
 
         isCountingDownRef.current = true;
         setNumber(3);
         setPopup(true);
 
-        // Clear any existing interval
         if (countdownIntervalRef.current !== null) {
           clearInterval(countdownIntervalRef.current);
         }
@@ -273,19 +284,16 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       });
 
     return () => {
-      // Cleanup interval
       if (countdownIntervalRef.current !== null) {
         clearInterval(countdownIntervalRef.current);
         countdownIntervalRef.current = null;
       }
 
-      // Stop camera
       if (cameraInstanceRef.current) {
         cameraInstanceRef.current.stop();
         cameraInstanceRef.current = null;
       }
 
-      // Stop media stream
       const stream = videoRef.current?.srcObject as MediaStream;
       if (stream) {
         stream.getTracks().forEach((track) => track.stop());
@@ -294,7 +302,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         }
       }
 
-      // Close pose
       if (poseRef.current) {
         poseRef.current.close();
         poseRef.current = null;
@@ -338,20 +345,20 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           Vui lòng đứng trước khung hình
         </p>
       </div>
-      <div className="relative md:w-[1300px] md:h-[700px] h-[700px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative md:w-[1000px] md:h-[700px] h-[400px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
         <video
           ref={videoRef}
           className="hidden"
           autoPlay
           playsInline
-          width={1300}
-          height={900}
+          width={2000}
+          height={2000}
         />
         <canvas
           ref={canvasRef}
           className="w-full h-full rounded-3xl object-cover"
-          width={1700}
-          height={1900}
+          width={2000}
+          height={2000}
         />
         <div className="flex w-full  items-center justify-center  md:hidden absolute bottom-0 left-0 z-40 right-0 ">
           <button
