@@ -95,12 +95,11 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       requestAnimationFrame(() => {
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(video, 0, 0, width, height);
-
         if (
           !results.poseWorldLandmarks ||
-          results.poseWorldLandmarks.length < 33
+          results.poseWorldLandmarks.length === 0
         )
-          return;
+        return;
 
         drawLandmarks(
           ctx,
@@ -131,8 +130,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         const rightHand = results.poseLandmarks?.[16];
         if (!rightHand) return;
 
-       const handInBox = rightHand.y < (shoulderLeft.y + shoulderRight.y) / 2 * 0.9;
-
+        const handInBox =
+          rightHand.y < ((shoulderLeft.y + shoulderRight.y) / 2) * 0.9;
 
         if (isCountingDownRef.current && !handInBox) {
           if (countdownIntervalRef.current !== null) {
