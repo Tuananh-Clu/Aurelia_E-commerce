@@ -91,8 +91,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
 
       const width = canvas.width;
       const height = canvas.height;
-
-      // Use requestAnimationFrame for smoother rendering
       requestAnimationFrame(() => {
         ctx.clearRect(0, 0, width, height);
         ctx.drawImage(video, 0, 0, width, height);
@@ -142,7 +140,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         const handInBox =
           rightHand &&
           rightHand.x > Math.min(shoulderLeft.x, shoulderRight.x) &&
-          rightHand.x < Math.max(shoulderLeft.x, shoulderRight.x) &&
           rightHand.y > head.y &&
           rightHand.y < leftHip.y;
 
@@ -166,8 +163,17 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
               }
               setPopup(false);
               isCountingDownRef.current = false;
+              const avgZ = (leftFoot.z + rightFoot.z + head.z) / 3;
+              const distanceFactor = Math.max(
+                0.6,
+                Math.min(1.4, 1 / Math.abs(avgZ))
+              );
 
-              // Calculate measurements
+              const heightCmRaw =
+                Math.abs(Math.max(leftFoot.y, rightFoot.y) - head.y) * 100;
+              const heightCm = heightCmRaw * distanceFactor;
+              const SCALE = heightCm / heightCmRaw;
+
               const shoulderWidth = calculate3DDistance(
                 shoulderLeft,
                 shoulderRight
@@ -178,7 +184,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
                 shoulderWidth
               );
               const chest =
-                calculateEllipseCircumference(shoulderWidth, shoulderDepth) *
+                calculateEllipseCircumference(shoulderWidth, shoulderDepth) *SCALE *
                 100;
 
               const hipWidth = calculate3DDistance(leftHip, rightHip);
@@ -188,7 +194,10 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
                 hipWidth
               );
               const hip =
-                calculateEllipseCircumference(hipWidth, hipDepth) * 100 * 1.55;
+                calculateEllipseCircumference(hipWidth, hipDepth) *
+                SCALE *
+                100 *
+                1.05;
 
               const leftWaist = {
                 x: shoulderLeft.x * 0.3 + leftHip.x * 0.7,
@@ -207,14 +216,11 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
                 waistWidth
               );
               const waist =
-                calculateEllipseCircumference(waistWidth, waistDepth) *
-                100 *
+                calculateEllipseCircumference(waistWidth, waistDepth) *100 *
+                SCALE *
                 1.35;
-
-              const heightCm =
-                (Math.max(leftFoot.y, rightFoot.y) - head.y) * 100;
               setDataMeasure({
-                vai: (shoulderWidth * 1.56 * 100).toFixed(1),
+                vai: (shoulderWidth  * SCALE * 100).toFixed(1),
                 nguc: chest.toFixed(1),
                 eo: waist.toFixed(1),
                 hong: hip.toFixed(1),
