@@ -131,7 +131,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         if (!rightHand) return;
 
         const handInBox =
-          rightHand.y < ((shoulderLeft.y + shoulderRight.y) / 2) * 0.9;
+          rightHand.y < ((shoulderLeft.y + shoulderRight.y) / 2) * 0.4;
 
         if (isCountingDownRef.current && !handInBox) {
           if (countdownIntervalRef.current !== null) {
