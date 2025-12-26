@@ -56,6 +56,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   const countdownIntervalRef = useRef<number | null>(null);
   const poseRef = useRef<Pose | null>(null);
   const cameraInstanceRef = useRef<Camera | null>(null);
+  const isMobile = window.innerWidth < 768;
 
   const navigate = useNavigate();
 
@@ -67,7 +68,16 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       w: number,
       h: number
     ) => {
-      landmarks.forEach((l, i) => {
+      const importantLandmarkIndices = [
+        landmarks[0],
+        landmarks[11],
+        landmarks[12],
+        landmarks[23],
+        landmarks[24],
+        landmarks[31],
+        landmarks[32],
+      ];
+      importantLandmarkIndices.forEach((l, i) => {
         const p = poseLandmarks[i];
         if (!p || !l) return;
         ctx.beginPath();
@@ -99,8 +109,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           !results.poseWorldLandmarks ||
           results.poseWorldLandmarks.length === 0
         )
-        return;
-
+          return;
         drawLandmarks(
           ctx,
           results.poseWorldLandmarks,
@@ -130,8 +139,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         const rightHand = results.poseLandmarks?.[16];
         if (!rightHand) return;
 
-        const handInBox = rightHand.y < 0.3; 
-
+        const handInBox = rightHand.y < 0.45;
 
         if (isCountingDownRef.current && !handInBox) {
           if (countdownIntervalRef.current !== null) {
@@ -162,17 +170,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
               }
               setPopup(false);
               isCountingDownRef.current = false;
-              const avgZ = (leftFoot.z + rightFoot.z + head.z) / 3;
-              const distanceFactor = Math.max(
-                0.6,
-                Math.min(1.4, 1 / Math.abs(avgZ))
-              );
-
-              const heightCmRaw =
-                Math.abs(Math.max(leftFoot.y, rightFoot.y) - head.y) * 100;
-              const heightCm = heightCmRaw * distanceFactor;
-              const SCALE = heightCm / heightCmRaw;
-
               const shoulderWidth = calculate3DDistance(
                 shoulderLeft,
                 shoulderRight
@@ -184,7 +181,6 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
               );
               const chest =
                 calculateEllipseCircumference(shoulderWidth, shoulderDepth) *
-                SCALE *
                 100;
 
               const hipWidth = calculate3DDistance(leftHip, rightHip);
@@ -194,10 +190,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
                 hipWidth
               );
               const hip =
-                calculateEllipseCircumference(hipWidth, hipDepth) *
-                SCALE *
-                100 *
-                1.05;
+                calculateEllipseCircumference(hipWidth, hipDepth) * 100 * 1.62;
 
               const leftWaist = {
                 x: shoulderLeft.x * 0.3 + leftHip.x * 0.7,
@@ -218,14 +211,40 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
               const waist =
                 calculateEllipseCircumference(waistWidth, waistDepth) *
                 100 *
-                SCALE *
-                1.35;
+                1.44;
+
+              const heightCm =
+                (Math.max(leftFoot.y, rightFoot.y) - head.y) * 100;
+              const DataMeasure = useRef({
+                vai: [] as number[],
+                nguc: [] as number[],
+                eo: [] as number[],
+                hong: [] as number[],
+                chieuCao: [] as number[],
+              });
+              const BUFFER_SIZE = 20;
+              if (DataMeasure.current.vai.length >= BUFFER_SIZE) {
+                DataMeasure.current.vai.shift();
+                DataMeasure.current.nguc.shift();
+                DataMeasure.current.eo.shift();
+                DataMeasure.current.hong.shift();
+                DataMeasure.current.chieuCao.shift();
+              }
+              DataMeasure.current.vai.push(shoulderWidth * 1.38 * 100);
+              DataMeasure.current.nguc.push(chest);
+              DataMeasure.current.eo.push(waist);
+              DataMeasure.current.hong.push(hip);
+              DataMeasure.current.chieuCao.push(heightCm);
+              const avg = (arr: number[]) => {
+                const value = arr.reduce((a, b) => a + b, 0) / arr.length;
+                return Math.round(value).toString();
+              };
               setDataMeasure({
-                vai: (shoulderWidth * SCALE * 100).toFixed(1),
-                nguc: chest.toFixed(1),
-                eo: waist.toFixed(1),
-                hong: hip.toFixed(1),
-                chieuCao: heightCm.toFixed(1),
+                vai: avg(DataMeasure.current.vai),
+                nguc: avg(DataMeasure.current.nguc),
+                eo: avg(DataMeasure.current.eo),
+                hong: avg(DataMeasure.current.hong),
+                chieuCao: avg(DataMeasure.current.chieuCao),
               });
               return 0;
             }
@@ -245,7 +264,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
     });
     pose.setOptions({
-      modelComplexity: 2,
+      modelComplexity: isMobile ? 0 : 2,
       smoothLandmarks: true,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
@@ -254,7 +273,14 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
     pose.onResults(handleResults);
     poseRef.current = pose;
     navigator.mediaDevices
-      .getUserMedia({ video: { width: 1280, height: 720 } })
+      .getUserMedia({
+        video: {
+          width: isMobile ? 640 : 1280,
+          height: isMobile ? 480 : 720,
+          frameRate: { ideal: isMobile ? 24 : 30 },
+        },
+        audio: false,
+      })
       .then((stream) => {
         if (!videoRef.current) return;
 
@@ -337,7 +363,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           Vui lòng đứng trước khung hình
         </p>
       </div>
-      <div className="relative md:w-[1000px] md:h-[700px] h-[400px] sm:w-[700px] w-[400px] p-4 pb-5 md:mt-10 overflow-hidden rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="relative    md:w-[1000px] md:h-[840px] h-[400px] sm:w-[700px] w-[400px]    rounded-3xl shadow-2xl border border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100   ">
         <video
           ref={videoRef}
           className="hidden"
@@ -349,8 +375,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
         <canvas
           ref={canvasRef}
           className="w-full h-full rounded-3xl object-cover"
-          width={2000}
-          height={2000}
+          width={isMobile ? 400 : 2000}
+          height={isMobile ? 400 : 2000}
         />
         <div className="flex w-full  items-center justify-center  md:hidden absolute bottom-0 left-0 z-40 right-0 ">
           <button

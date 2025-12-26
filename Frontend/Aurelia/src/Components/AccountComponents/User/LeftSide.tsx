@@ -38,7 +38,6 @@ export const LeftSide: React.FC<LeftSides> = ({
   };
 
   const bodyMeasurements = [
-    { name: "Cao", value: DataMeasure?.chieuCao, unit: "cm" },
     { name: "Vai", value: DataMeasure?.vai, unit: "cm" },
     { name: "Ngực", value: DataMeasure?.nguc, unit: "cm" },
     { name: "Eo", value: DataMeasure?.eo, unit: "cm" },

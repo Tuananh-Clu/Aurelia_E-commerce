@@ -20,11 +20,10 @@ export const BodySize = () => {
     <>
       <Navbar />
       <div
-        className="   mt-24
+        className="   mt-18
   px-4 md:px-8
-  flex flex-col md:flex-row
-  justify-center
-  items-center
+  flex flex-col lg:flex-row
+items-center
   gap-10
   mb-10"
       >

@@ -17,6 +17,7 @@ namespace AureliaE_Commerce.Controller
         public GetAIAdvice(MongoDbContext dbContext)
         {
             _clientCollection = dbContext.Client;
+            _productCollection = dbContext.SanPham;
         }
         private enum Size
         {
@@ -50,21 +51,22 @@ namespace AureliaE_Commerce.Controller
             double waist,
             double hip,
             double shoulder,
-            string productType 
+            string productType,
+            string productId
         )
         {
-            
-            const double SAFE_GAP = 3.0; 
-            var candidates = new List<(Size size, double score, string note)>();
 
+            const double SAFE_GAP = 3.0;
+            var candidates = new List<(Size size, double score, string note)>();
+            var filter = Builders<Product>.Filter.Eq(p => p.id, productId);
+            var dataSize = _productCollection.Find(filter).FirstOrDefault();
+            var productSizes = SizeChart.Select(s => s.Size).ToList();
             foreach (var r in SizeChart)
             {
                 if (r.Bust < bust - SAFE_GAP) continue;
                 if (productType == "dress" && r.Hip < hip - SAFE_GAP) continue;
-
                 double score;
                 string note;
-
                 if (productType == "top")
                 {
                     score =
@@ -75,7 +77,7 @@ namespace AureliaE_Commerce.Controller
                         ? "Ưu tiên theo vòng ngực, có thể hơi rộng vai"
                         : "Form vừa ngực và vai";
                 }
-                else 
+                else
                 {
                     score =
                         Math.Abs(r.Bust - bust) * 0.4 +
@@ -92,15 +94,21 @@ namespace AureliaE_Commerce.Controller
 
                 candidates.Add((r.Size, score, note));
             }
-
-            if (candidates.Any())
+            if (candidates.Count > 0)
                 return candidates.OrderBy(c => c.score).Select(c => (c.size, c.note)).First();
+            var sizeCandidates = candidates.Select(c => c.size).ToList();
+            Size fallbackSize;
+            if (sizeCandidates.Count > 0)
+            {
+                var maxCandidate = sizeCandidates.Max();
+                fallbackSize = productSizes.Contains(maxCandidate) ? maxCandidate : productSizes.Max();
+            }
+            else
+            {
+                fallbackSize = productSizes.Count > 0 ? productSizes.Max() : Size.M;
+            }
 
-            var fallback = SizeChart.Last();
-            return (
-                fallback.Size,
-                "Số đo lệch chuẩn, chọn size lớn nhất để đảm bảo mặc vừa"
-            );
+            return (fallbackSize, "Kích thước lớn nhất có thể"); ;
         }
 
         [NonAction]
@@ -153,7 +161,8 @@ namespace AureliaE_Commerce.Controller
                 waist,
                 hip,
                 shoulder,
-                productType
+                productType,
+                dto.ProductId
             );
 
             return Ok(new
