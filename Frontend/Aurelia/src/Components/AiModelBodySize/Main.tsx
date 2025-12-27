@@ -57,6 +57,13 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
   const poseRef = useRef<Pose | null>(null);
   const cameraInstanceRef = useRef<Camera | null>(null);
   const isMobile = window.innerWidth < 768;
+  const DataMeasure = useRef({
+    vai: [] as number[],
+    nguc: [] as number[],
+    eo: [] as number[],
+    hong: [] as number[],
+    chieuCao: [] as number[],
+  });
 
   const navigate = useNavigate();
 
@@ -68,16 +75,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
       w: number,
       h: number
     ) => {
-      const importantLandmarkIndices = [
-        landmarks[0],
-        landmarks[11],
-        landmarks[12],
-        landmarks[23],
-        landmarks[24],
-        landmarks[31],
-        landmarks[32],
-      ];
-      importantLandmarkIndices.forEach((l, i) => {
+      landmarks.forEach((l, i) => {
         const p = poseLandmarks[i];
         if (!p || !l) return;
         ctx.beginPath();
@@ -215,13 +213,7 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
 
               const heightCm =
                 (Math.max(leftFoot.y, rightFoot.y) - head.y) * 100;
-              const DataMeasure = useRef({
-                vai: [] as number[],
-                nguc: [] as number[],
-                eo: [] as number[],
-                hong: [] as number[],
-                chieuCao: [] as number[],
-              });
+
               const BUFFER_SIZE = 20;
               if (DataMeasure.current.vai.length >= BUFFER_SIZE) {
                 DataMeasure.current.vai.shift();
@@ -369,8 +361,8 @@ export const Main: React.FC<MainCamera> = ({ isCameraOn, setIsCameraOn }) => {
           className="hidden"
           autoPlay
           playsInline
-          width={2000}
-          height={2000}
+          width={isMobile ? 400 : 2000}
+          height={isMobile ? 400 : 2000}
         />
         <canvas
           ref={canvasRef}
