@@ -5,7 +5,7 @@ import { LoadingScreen } from "./Components/LoadingScreen";
 import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
 import { ForgotPassword } from "./Page/ForgotPassword";
 import { ChangePassWord } from "./Page/ChangePassWord";
-
+import Snowfall from "react-snowfall";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -92,13 +92,18 @@ function App() {
   return (
     <div ref={ref}>
       {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
+        <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999] w-full h-full">
           <LoadingScreen />
         </div>
-
-
       )}
       <Toaster position="top-center" reverseOrder={false} />
+      <Snowfall
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+        }}
+      />
       <Suspense
         fallback={
           <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
@@ -128,10 +133,7 @@ function App() {
           <Route path="/DashBoardShop" element={<DashboardShop />} />
           <Route path="/Admin" element={<AdminDashboard />} />
           <Route path="/Forgot-PassWord" element={<ForgotPassword />} />
-          <Route
-            path="/reset-passWord"
-            element={<ChangePassWord />}
-          />
+          <Route path="/reset-passWord" element={<ChangePassWord />} />
         </Routes>
       </Suspense>
     </div>

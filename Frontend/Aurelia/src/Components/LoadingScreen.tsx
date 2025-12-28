@@ -43,16 +43,10 @@ export const LoadingScreen = () => {
           />
         ))}
 
-        {/* Logo + Brand */}
         <div className="relative z-10 flex flex-col items-center gap-6">
-          {/* Logo với Glow và ánh sáng di chuyển */}
           <div className="relative w-24 h-24 flex items-center justify-center">
-            {/* Glow tĩnh */}
             <div className="absolute inset-0 rounded-full shadow-[0_0_30px_rgba(156,163,175,0.3)]" />
-            {/* Ánh sáng di chuyển */}
             <span className="absolute inset-0 rounded-full bg-white/20 animate-light-move blur-lg"></span>
-
-            {/* Logo chính */}
             <div className="w-24 h-24 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center shadow-lg">
               <span className="text-5xl font-serif text-gray-800 tracking-wider">
                 A
@@ -60,14 +54,11 @@ export const LoadingScreen = () => {
             </div>
           </div>
 
-          {/* Brand Name với shimmer gradient */}
           <h1 className="text-5xl font-serif font-extrabold tracking-widest relative overflow-hidden text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-gray-100 to-gray-300">
             AURELIA
             <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/0 via-white/40 to-white/0 animate-shimmer"></span>
           </h1>
         </div>
-
-        {/* CSS Animation */}
         <style>{`
           @keyframes shimmer {
             0% { transform: translateX(-100%); }
