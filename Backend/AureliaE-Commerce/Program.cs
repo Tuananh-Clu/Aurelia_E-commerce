@@ -115,6 +115,8 @@ var app = builder.Build();
         c.RoutePrefix = string.Empty; 
     });
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://*:{port}");
 
 
 app.UseRouting();
