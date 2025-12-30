@@ -82,7 +82,7 @@ function App() {
       setIsLoading(false);
     }, 3000);
     return () => clearTimeout(timer);
-  }, [delayLoading]);
+  }, []);
 
   useEffect(() => {
     if (ref.current) {
