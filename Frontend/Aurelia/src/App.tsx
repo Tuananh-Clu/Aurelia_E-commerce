@@ -1,11 +1,12 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useEffect, useRef, lazy, Suspense, useState } from "react";
+import { useEffect, useRef, lazy, Suspense, useState, useContext } from "react";
 import { Toaster } from "react-hot-toast";
 import { LoadingScreen } from "./Components/LoadingScreen";
 import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
 import { ForgotPassword } from "./Page/ForgotPassword";
 import { ChangePassWord } from "./Page/ChangePassWord";
 import Snowfall from "react-snowfall";
+import { AdminContext } from "./contexts/AdminContext";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -71,14 +72,16 @@ function App() {
   const location = useLocation();
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const {delayLoading,MainBanner}=useContext(AdminContext)
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    if(delayLoading===false&& MainBanner===null){
+      setIsLoading(true);
+    }
+    else{
       setIsLoading(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
+    }
+  }, [delayLoading,MainBanner]);
 
   useEffect(() => {
     if (ref.current) {

@@ -21,6 +21,7 @@ type AdminContextType = {
   ServiceData: any[];
   dataVoucher: Coupon[];
   selectvoucher: Coupon[] ;
+  delayLoading:boolean;
   setSelectvoucher: React.Dispatch<React.SetStateAction<Coupon[] >>;
   handleClick: (type: string, data: any) => void;
   uptodatabase: (type: string, data: any) => void;
@@ -39,6 +40,7 @@ export const AdminContext = createContext({
   StoryBanner: [],
   dataShop: [],
   coupons: [] as Coupon[],
+  delayLoading: false,
   revenueData: [],
   categoryData: [],
   ServiceData: [],
@@ -70,6 +72,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const [ServiceData, setServiceData] = useState<any[]>([]);
     const [dataVoucher, setDataVoucher] = useState<Coupon[]>([]);
     const [selectvoucher, setSelectvoucher] = useState<Coupon[] >([]);
+    const [delayLoading, setDelayLoading] = useState(false);
     const {userData}=useContext(AuthContext);
     const handleClick = async (type: string, data: any) => {
       try {
@@ -124,7 +127,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setRevenueData(revenueDataRes.data.revenue || []);
         setCategoryData(revenueDataRes.data.stockByType || []);
         setServiceData(revenueDataRes.data.appointMent|| []);
-        
+        setDelayLoading(true);
       } catch (error) {
         console.error("❌ Error fetching data:", error);
       }
@@ -225,6 +228,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         return (
           <AdminContext.Provider
             value={{
+              delayLoading,
               categoryData,
               revenueData,
               dataRevenue,
