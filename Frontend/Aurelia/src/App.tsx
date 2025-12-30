@@ -75,12 +75,13 @@ function App() {
   const {delayLoading,MainBanner}=useContext(AdminContext)
 
   useEffect(() => {
-    if(delayLoading===false&& MainBanner===null){
+    if(delayLoading===true || MainBanner.length===0){
       setIsLoading(true);
     }
-    else{
+    const timer = setTimeout(() => {
       setIsLoading(false);
-    }
+    }, 3000);
+    return () => clearTimeout(timer);
   }, [delayLoading,MainBanner]);
 
   useEffect(() => {
