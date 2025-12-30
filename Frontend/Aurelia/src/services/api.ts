@@ -99,7 +99,7 @@ export const api_Config = {
     DeleteCollection: "/api/SeasonCollection/DeleteCollection",
   }
 };
-export const api_Url = "https://lol-tgdq.onrender.com";
+export const api_Url = "https://aurelia-ecommerce-api-728278d74719.herokuapp.com";
 
 export const UseApiUrl = (item: string) => {
   return api_Url + item;
