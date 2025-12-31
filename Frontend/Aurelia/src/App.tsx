@@ -72,15 +72,15 @@ function App() {
   const location = useLocation();
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const {delayLoading}=useContext(AdminContext)
+  const {MainBanner}=useContext(AdminContext)
 
   useEffect(() => {
-    if(delayLoading===true ){
-      setIsLoading(true);
+    if(MainBanner.length===0){
+      return;
     }
-    else{
+    setTimeout(() => {
       setIsLoading(false);
-    }
+    },  3000 );
   }, []);
   useEffect(() => {
     if (ref.current) {
