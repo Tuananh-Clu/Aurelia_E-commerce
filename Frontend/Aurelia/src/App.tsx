@@ -72,18 +72,16 @@ function App() {
   const location = useLocation();
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const {delayLoading,MainBanner}=useContext(AdminContext)
+  const {delayLoading}=useContext(AdminContext)
 
   useEffect(() => {
-    if(delayLoading===true || MainBanner.length===0){
+    if(delayLoading===true ){
       setIsLoading(true);
     }
-    const timer = setTimeout(() => {
+    else{
       setIsLoading(false);
-    }, 3000);
-    return () => clearTimeout(timer);
+    }
   }, []);
-
   useEffect(() => {
     if (ref.current) {
       scrollTo({

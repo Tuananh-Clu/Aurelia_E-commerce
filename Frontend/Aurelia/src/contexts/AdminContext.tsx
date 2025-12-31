@@ -71,7 +71,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     const [ServiceData, setServiceData] = useState<any[]>([]);
     const [dataVoucher, setDataVoucher] = useState<Coupon[]>([]);
     const [selectvoucher, setSelectvoucher] = useState<Coupon[]>([]);
-    const [delayLoading, setDelayLoading] = useState(false);
+    const [delayLoading, setDelayLoading] = useState(true);
     const { userData } = useContext(AuthContext);
     const handleClick = async (type: string, data: any) => {
       try {
@@ -115,7 +115,6 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     };
     const fetchDataRevenue = async () => {
       try {
-        setDelayLoading(true);
         const [
           bannerRes,
           revenueRes,
@@ -143,7 +142,9 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setRevenueData(revenueDataRes.data.revenue || []);
         setCategoryData(revenueDataRes.data.stockByType || []);
         setServiceData(revenueDataRes.data.appointMent || []);
-        setDelayLoading(false);
+        if(bannerRes.status === 200){
+          setDelayLoading(false);
+        }
       } catch (error) {
         console.error("❌ Error fetching data:", error);
       }
