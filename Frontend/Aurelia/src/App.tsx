@@ -72,16 +72,17 @@ function App() {
   const location = useLocation();
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const {MainBanner}=useContext(AdminContext)
+  const { MainBanner = [] } = useContext(AdminContext)
 
   useEffect(() => {
-    if(MainBanner.length===0){
+    if (!Array.isArray(MainBanner) || MainBanner.length === 0) {
       return;
     }
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setIsLoading(false);
     },  3000 );
-  }, []);
+    return () => clearTimeout(timer);
+  }, [MainBanner]);
   useEffect(() => {
     if (ref.current) {
       scrollTo({
