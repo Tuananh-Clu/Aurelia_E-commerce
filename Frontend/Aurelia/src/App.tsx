@@ -1,12 +1,11 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { useEffect, useRef, lazy, Suspense, useState, useContext } from "react";
+import { useEffect, useRef, lazy, Suspense, useState} from "react";
 import { Toaster } from "react-hot-toast";
 import { LoadingScreen } from "./Components/LoadingScreen";
 import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
 import { ForgotPassword } from "./Page/ForgotPassword";
 import { ChangePassWord } from "./Page/ChangePassWord";
 import Snowfall from "react-snowfall";
-import { AdminContext } from "./contexts/AdminContext";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -72,17 +71,13 @@ function App() {
   const location = useLocation();
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { MainBanner = [] } = useContext(AdminContext)
 
   useEffect(() => {
-    if (!Array.isArray(MainBanner) || MainBanner.length === 0) {
-      return;
-    }
     const timer = setTimeout(() => {
       setIsLoading(false);
-    },  3000 );
+    },  3500 );
     return () => clearTimeout(timer);
-  }, [MainBanner]);
+  }, []);
   useEffect(() => {
     if (ref.current) {
       scrollTo({
