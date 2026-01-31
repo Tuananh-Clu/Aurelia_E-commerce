@@ -14,10 +14,10 @@ import {
   Search,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AdminContext } from "@/Providers/AdminContext";
 import { AddCoupon } from "./CouponComponent/AddCoupon";
 import { EditCoupon } from "./CouponComponent/EditCoupon";
 import { v4 as uuid } from "uuid";
+import { AdminContext } from "../../../../Providers/AdminContext";
 export default function Coupon() {
 const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(AdminContext);
   const [editing, setEditing] = useState<any>();

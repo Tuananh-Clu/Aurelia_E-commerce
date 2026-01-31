@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { Plus } from "lucide-react";
 import { useContext } from "react";
-import { AdminContext } from "@/Providers/AdminContext";
+import { AdminContext } from "../../../../../Providers/AdminContext";
 
 export const AddCoupon = ({
   showAddModal,

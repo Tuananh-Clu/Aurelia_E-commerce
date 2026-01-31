@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CardProduct } from "@/Features/Product/components/CardProduct";
+import { CardProduct } from "../../../Features/Product/components/CardProduct";
 export const BestSeller = () => {
   const [StateButton, setStateButton] = useState("Newest");
   const handleClick = (item: string) => {

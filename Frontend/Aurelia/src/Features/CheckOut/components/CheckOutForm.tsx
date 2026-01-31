@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronLeft } from "lucide-react";
 import { useCheckout } from "../hooks";
 import type { DiaChi } from "../types";
-import { PaymentOptions } from "@/Features/MockPayment.tsx/PaymentOptions";
+import { PaymentOptions } from "../../../Features/MockPayment.tsx/PaymentOptions";
 
 
 export const CheckoutForm = () => {

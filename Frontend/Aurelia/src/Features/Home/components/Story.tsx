@@ -1,6 +1,6 @@
 import { motion, type Variants } from "framer-motion";
 import { useContext, useMemo } from "react";
-import { AdminContext } from "@/Providers/AdminContext";
+import { AdminContext } from "../../../Providers/AdminContext";
 
 
 export const Story = () => {

@@ -9,7 +9,8 @@ import {
   Award,
   Sparkles,
 } from "lucide-react";
-import { DashBoardShopCOntext } from "@/Providers/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../../../Providers/DashBoardShopContext";
+
 
 export default function ListCustomer() {
   const [search, setSearch] = useState("");

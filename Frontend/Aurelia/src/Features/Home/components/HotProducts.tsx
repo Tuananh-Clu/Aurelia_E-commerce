@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react";
-import { FilterProductContext } from "@/Providers/FIlterProduct";
-import type { Product } from "@/types/type";
+import { FilterProductContext } from "../../../Providers/FIlterProduct";
+import type { Product } from "../../../types/type";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 

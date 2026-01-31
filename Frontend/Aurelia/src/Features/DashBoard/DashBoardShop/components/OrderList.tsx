@@ -10,8 +10,9 @@ import {
   Calendar,
   User,
 } from "lucide-react";
-import { DashBoardShopCOntext } from "@/Providers/DashBoardShopContext";
+
 import { PopUpDetail } from "./OrderListMiniComponent/PopUpDetail";
+import { DashBoardShopCOntext } from "../../../../Providers/DashBoardShopContext";
 
 export default function OrderListElegant() {
   const { dataDonHang, handleClickUpdateStatus } = useContext(DashBoardShopCOntext);

@@ -14,7 +14,7 @@ import {
   Grid,
   List,
 } from "lucide-react";
-import { CollectionContext } from "@/Providers/SeasonContext";
+import { CollectionContext } from "../../../../Providers/SeasonContext";
 import { useNavigate } from "react-router-dom";
 import AddCollectionForm from "./CollectionComponent/AddCollectionForm";
 

@@ -17,7 +17,7 @@ export const OrderSummary = () => {
   const shipping = Number(phiVanChuyen ?? 0);
   const subtotal = useMemo(
     () =>
-      CartDataAdd.reduce((acc, curr) => acc + curr.price * curr.quantity, 0),
+      CartDataAdd.reduce((acc:any, curr:any) => acc + curr.price * curr.quantity, 0),
     [],
   );
   const taxes = 0.0;

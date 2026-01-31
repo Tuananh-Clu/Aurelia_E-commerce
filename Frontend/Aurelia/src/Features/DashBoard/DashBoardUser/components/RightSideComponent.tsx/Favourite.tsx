@@ -1,7 +1,8 @@
 import { Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import type { Product } from "@/types/type";
+
 import { useNavigate } from "react-router-dom";
+import type { Product } from "@/types/type";
 
 export const Favourite = ({ dataFavouriteItemUser }: { dataFavouriteItemUser: Product[] }) => {
   const navigate = useNavigate();

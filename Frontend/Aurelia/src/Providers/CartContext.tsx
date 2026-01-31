@@ -27,12 +27,12 @@ type CartContexts = {
 export const CartContext = createContext<CartContexts>({
   CartDataAdd: [],
   dataOrder: undefined,
-  handleClickPayment: async () => {},
+  handleClickPayment: async () => { },
   LayToaDo: async () => null,
-  setDataOrder: () => {},
-  setCartDataAdd: () => {},
+  setDataOrder: () => { },
+  setCartDataAdd: () => { },
   phiVanChuyen: "",
-  LayPhiVanCHuyen: async () => {},
+  LayPhiVanCHuyen: async () => { },
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -61,7 +61,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         `${UseApiUrl(api_Config.User.SuccessPayAddOrder)}?shopId=${shopId}`,
         "POST",
         dataOrder,
-        { "Content-Type": "application/json" ,withCredentials: true}
+        { "Content-Type": "application/json", withCredentials: true }
       );
       await axios.put(
         UseApiUrl(api_Config.Product.UpdateQuantityProduct),
@@ -74,7 +74,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         UseApiUrl(api_Config.User.UpdateTier),
         "POST",
         {},
-        { "Content-Type": "application/json",withCredentials: true }
+        { "Content-Type": "application/json", withCredentials: true }
       );
       localStorage.removeItem("cartItems");
       setCartDataAdd([]);
@@ -125,7 +125,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         );
         setPhiVanChuyen(data.data.shippingFee);
         setShopId(data.data.storeId);
-      } catch {}
+      } catch { }
     },
     [dataOrder]
   );

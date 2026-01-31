@@ -14,13 +14,14 @@ import {
   Package,
   Star,
 } from "lucide-react";
-import { FilterProductContext } from "@/Providers/FIlterProduct";
+
 import ImportExcel from "./ProductManagementComponents/ImportExcel";
-import { AddProduct } from "@/Features/DashBoard/DashBoardShop/components/ProductListComponents/AddProduct";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
+import { FilterProductContext } from "../../../../Providers/FIlterProduct";
+import { AddProduct } from "../../DashBoardShop/components/ProductListComponents/AddProduct";
+import { Toaster } from "../../../../shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../../../../services/api";
 
 export default function ProductManagement() {
   const { dataProduct } = useContext(FilterProductContext);

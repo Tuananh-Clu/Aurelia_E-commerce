@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import { useContext, useState, useEffect } from "react";
-import { AdminContext } from "@/Providers/AdminContext";
+import { AdminContext } from "../../../Providers/AdminContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const HeroBanner = () => {

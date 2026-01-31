@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CartContext } from "@/Providers/CartContext";
+import { CartContext } from "../../../Providers/CartContext";
 import { Menu, X, ShoppingCartIcon } from "lucide-react";
 import logo from "@/assets/aurelia_logo_svg.svg";
 

@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { NotificationContext } from "@/Providers/NotifycationContext";
-import { AuthContext } from "@/Providers/Author";
+import { AuthContext } from "../../../../Providers/Author";
+import { NotificationContext } from "../../../../Providers/NotifycationContext";
+
 export const PopupSetting = () => {
   const { logOutShop } = useContext(NotificationContext);
   const {logOut}=useContext(AuthContext)

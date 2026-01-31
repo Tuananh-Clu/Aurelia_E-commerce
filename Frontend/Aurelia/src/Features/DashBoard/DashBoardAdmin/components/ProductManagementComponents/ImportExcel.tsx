@@ -9,9 +9,9 @@ import {
   Info,
   XCircle,
 } from "lucide-react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
-import { LoadingOverlay } from "@/shared/components/LoadingOverlay";
+import { api_Config, UseApiUrl } from "../../../../../services/api";
+import { Toaster } from "../../../../../shared/components/Toaster";
+import { LoadingOverlay } from "../../../../../shared/components/LoadingOverlay";
 
 
 

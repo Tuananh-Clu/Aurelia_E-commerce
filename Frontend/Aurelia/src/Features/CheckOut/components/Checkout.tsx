@@ -1,9 +1,9 @@
-import { Navbar } from "@/Features/Home/components/Navbar";
+import { Navbar } from "../../../Features/Home/components/Navbar";
 import { useCheckout } from "../hooks";
 import { CheckoutForm } from "./CheckOutForm";
 import { OrderSummary } from "./OrderSummary";
-import { LoadingOverlay } from "@/shared/components/LoadingOverlay";
-import { Footer } from "@/Features/Home/components/Footer";
+import { LoadingOverlay } from "../../../shared/components/LoadingOverlay";
+import { Footer } from "../../../Features/Home/components/Footer";
 
 export const Checkout = () => {
   const { isSubmitting } = useCheckout();

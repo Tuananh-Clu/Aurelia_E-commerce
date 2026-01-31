@@ -27,8 +27,8 @@ ChartJS.register(
 );
 import type { ChartOptions, ChartData } from "chart.js";
 import { useContext } from "react";
-import { AdminContext } from "@/Providers/AdminContext";
 import { Bar } from "react-chartjs-2";
+import { AdminContext } from "../../../../Providers/AdminContext";
 
 export const OverView = () => {
   const fadeUp: Variants = {

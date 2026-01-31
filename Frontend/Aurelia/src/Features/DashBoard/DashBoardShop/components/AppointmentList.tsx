@@ -1,6 +1,7 @@
 import { Calendar, Clock, User, Mail, Phone, CheckCircle, XCircle, Timer, MessageSquare } from "lucide-react";
-import type { Appointment } from "@/types/type";
+
 import { useState } from "react";
+import type { Appointment } from "../../../../types/type";
 
 export default function AppointmentList({
   appointments,

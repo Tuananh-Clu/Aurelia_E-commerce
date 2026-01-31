@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Crown, Gift, Sparkles, Star, Shield } from "lucide-react";
-import { AuthContext } from "@/Providers/Author";
 import { useContext } from "react";
+import { AuthContext } from "@/Providers/Author";
 
 export const BarprocessTier = () => {
   const { userData } = useContext(AuthContext);

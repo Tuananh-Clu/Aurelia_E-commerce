@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useContext } from "react";
-import { CollectionContext } from "@/Providers/SeasonContext";
-import { LazyImage } from "@/services/SEO/LazyImage";
+import { CollectionContext } from "../../../Providers/SeasonContext";
+import { LazyImage } from "../../../services/SEO/LazyImage";
 
 export const Collection = () => {
   const navigate = useNavigate();

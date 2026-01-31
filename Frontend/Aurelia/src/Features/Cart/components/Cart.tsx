@@ -1,7 +1,7 @@
 import { CartItemRow } from "./CartItem";
 import { CartSummary } from "./CartSumary";
-import { Navbar } from "@/Features/Home/components/Navbar";
-import { Footer } from "@/Features/Home/components/Footer";
+import { Navbar } from "../../../Features/Home/components/Navbar";
+import { Footer } from "../../../Features/Home/components/Footer";
 import { useCart } from "../hook/useCart";
 
 export const Cart = () => {
@@ -29,7 +29,7 @@ export const Cart = () => {
 
             <div className="space-y-12">
               {CartDataAdd.length > 0 ? (
-                CartDataAdd.map((item) => (
+                CartDataAdd.map((item:any) => (
                   <CartItemRow
                     key={item.itemid}
                     item={item}

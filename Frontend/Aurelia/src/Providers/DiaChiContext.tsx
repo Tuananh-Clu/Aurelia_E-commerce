@@ -4,6 +4,7 @@ import { Toaster } from "../shared/components/Toaster";
 import type { DiaChi } from "../types/type";
 import { AuthContext } from "./Author";
 import { api_Response } from "../services/http";
+import { checkoutApi } from "../Features/CheckOut/api";
 
 interface DiaChiContextType {
   savedAddress: DiaChi[];
@@ -14,9 +15,9 @@ interface DiaChiContextType {
 
 export const DiaChiContext = createContext<DiaChiContextType>({
   savedAddress: [],
-  fetchDiaChi: async () => {},
-  SaveDiaChi: async () => {},
-  XoaDiaChi: async () => {},
+  fetchDiaChi: async () => { },
+  SaveDiaChi: async () => { },
+  XoaDiaChi: async () => { },
 });
 
 export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
@@ -53,7 +54,7 @@ export const DiaChiProvider = ({ children }: { children: React.ReactNode }) => {
         "Content-Type": "application/json",
       });
 
-      fetchDiaChi(); 
+      fetchDiaChi();
       Toaster.success("Đã lưu địa chỉ thành công!");
     } catch (error) {
       Toaster.error("Không thể lưu địa chỉ. Vui lòng thử lại.");

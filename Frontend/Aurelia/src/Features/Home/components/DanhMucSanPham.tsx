@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { FilterProductContext } from "@/Providers/FIlterProduct";
-import { LazyImage } from "@/services/SEO/LazyImage";
+import { FilterProductContext } from "../../../Providers/FIlterProduct";
+import { LazyImage } from "../../../services/SEO/LazyImage";
 
 export const DanhMuc = [
   {

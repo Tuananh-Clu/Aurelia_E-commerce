@@ -11,7 +11,8 @@ import {
   ArrowBigLeftDash,
 } from "lucide-react";
 import { PopupSetting } from "./PopupSetting";
-import { NotificationContext } from "@/Providers/NotifycationContext";
+import { NotificationContext } from "../../../../Providers/NotifycationContext";
+
 
 type SideBars = {
   setState: React.Dispatch<React.SetStateAction<string>>;

@@ -1,5 +1,5 @@
 import { Package, User, MapPin, Calendar, X } from "lucide-react";
-import type { order } from "@/types/type";
+import type { order } from "../../../../../types/type";
 
 export const PopUpDetail = ({
   data,

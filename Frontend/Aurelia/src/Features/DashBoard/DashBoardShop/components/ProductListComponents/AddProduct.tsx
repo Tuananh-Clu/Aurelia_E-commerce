@@ -1,8 +1,10 @@
 import React, {  useContext, useEffect, useState } from "react";
 import { Plus, Trash2, X } from "lucide-react";
-import type { Product } from "@/types/type";
+
 import { v4 as uuid } from "uuid";
-import { DashBoardShopCOntext } from "@/Providers/DashBoardShopContext";
+import { DashBoardShopCOntext } from "../../../../../Providers/DashBoardShopContext";
+import type { Product } from "../../../../../types/type";
+
 
 
 export const AddProduct = ({
@@ -14,7 +16,7 @@ export const AddProduct = ({
 }: {
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
   title: string;
-  dataEdit: Product[];
+  dataEdit:Product[];
   ProductId: string;
   sold: number;
 }) => {
