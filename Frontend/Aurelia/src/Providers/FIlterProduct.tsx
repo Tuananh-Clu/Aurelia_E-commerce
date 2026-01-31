@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useState, type ReactNode, useContext} from "react";
-import type { order, Product } from "@/types/type";
+import type { order, Product } from "../types/type";
 import axios from "axios";
-import { api_Config, UseApiUrl } from "@/services/api";
+import { api_Config, UseApiUrl } from "../services/api";
 import { useLocation } from "react-router-dom";
-import { Toaster } from "@/shared/components/Toaster";
+
 import { AuthContext } from "./Author"; 
+import { Toaster } from "../shared/components/Toaster";
 
 type FilterProductContextType = {
   key: string;

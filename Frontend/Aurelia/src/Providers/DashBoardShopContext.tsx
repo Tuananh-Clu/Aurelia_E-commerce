@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
-import type { Appointment, order, Product } from "@/types/type";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
+import type { Appointment, order, Product } from "../types/type";
 import { AuthForShopContext } from "./AuthorForShop";
 export type DashBoardShopCOntexts = {
   dataLichHen: Appointment[] | undefined;

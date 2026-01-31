@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
-import type { DiaChi } from "@/types/type";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
+import type { DiaChi } from "../types/type";
 import { AuthContext } from "./Author";
-import { api_Response } from "@/services/http";
+import { api_Response } from "../services/http";
 
 interface DiaChiContextType {
   savedAddress: DiaChi[];

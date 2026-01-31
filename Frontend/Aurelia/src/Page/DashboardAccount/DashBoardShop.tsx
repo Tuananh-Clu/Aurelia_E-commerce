@@ -1,11 +1,11 @@
 import { useContext} from "react";
-import { SideBar } from "@/Features/DashBoard/DashBoardShop/components/SideBar";
-import { DashBoardShop } from "@/Features/DashBoard/DashBoardShop/components/DashBoard";
-import { DashBoardShopCOntext } from "@/Providers/DashBoardShopContext";
-import ProductList from "@/Features/DashBoard/DashBoardShop/components/ProductList";
-import AppointmentList from "@/Features/DashBoard/DashBoardShop/components/AppointmentList";
-import ListCustomers from "@/Features/DashBoard/DashBoardShop/components/ListCustomers";
-import OrderListElegant from "@/Features/DashBoard/DashBoardShop/components/OrderList";
+import  {SideBar}  from "../../Features/DashBoard/DashBoardShop/components/SideBar";
+import  {DashBoardShop}  from "../../Features/DashBoard/DashBoardShop/components/DashBoard";
+import  {DashBoardShopCOntext}  from "../../Providers/DashBoardShopContext";
+import ProductList from "../../Features/DashBoard/DashBoardShop/components/ProductList";
+import AppointmentList from "../../Features/DashBoard/DashBoardShop/components/AppointmentList";
+import ListCustomers from "../../Features/DashBoard/DashBoardShop/components/ListCustomers";
+import OrderListElegant from "../../Features/DashBoard/DashBoardShop/components/OrderList";
 export default function MainContents() {
   const { statePage, setStatePage } = useContext(DashBoardShopCOntext);
   const { dataLichHen } = useContext(DashBoardShopCOntext);

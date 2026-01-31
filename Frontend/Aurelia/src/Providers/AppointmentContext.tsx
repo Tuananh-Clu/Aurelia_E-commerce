@@ -3,11 +3,11 @@ import type {
   Appointment,
   AppointmentCustomer,
   filterSLot,
-} from "@/types/type";
+} from "../types/type";
 import axios from "axios";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
-import { api_Response } from "@/services/http";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
+import { api_Response } from "../services/http";
 
 type AppointmentContexts = {
   UpLoadAppointment: (

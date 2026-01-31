@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { Footer } from "@/Features/Home/components/Footer";
-import { Navbar } from "@/Features/Home/components/Navbar";
+import { Footer } from "../Features/Home/components/Footer";
+import { Navbar } from "../Features/Home/components/Navbar";
 import { useContext, useEffect, useState } from "react";
-import { CollectionContext } from "@/Providers/SeasonContext";
-import { LoadingOverlay } from "@/shared/components/LoadingOverlay";
-import { LazyImage } from "@/services/SEO/LazyImage";
+import { CollectionContext } from "../Providers/SeasonContext";
+import { LoadingOverlay } from "../shared/components/LoadingOverlay";
+import { LazyImage } from "../services/SEO/LazyImage";
 
 export const Collection = () => {
   const { id } = useParams();

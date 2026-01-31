@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { MockPayPal } from "@/Features/MockPayment.tsx/Paypal";
-import { CreditCardPayment } from "@/Features/MockPayment.tsx/CreditCard";
+import { MockPayPal } from "../Features/MockPayment.tsx/Paypal";
+import { CreditCardPayment } from "../Features/MockPayment.tsx/CreditCard";
 
 export const MockPayMent = () => {
   const { id } = useParams();

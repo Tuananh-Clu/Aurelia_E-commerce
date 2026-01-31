@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { Move, Heart, Circle, Square } from "lucide-react";
 import type { Measure, MeasureItem } from "../types";
 
 export function useDashBoardMeasures(datas?: Measure) {
@@ -8,25 +7,25 @@ export function useDashBoardMeasures(datas?: Measure) {
       {
         label: "Vai",
         value: datas?.vai,
-        icon: <Move className="w-5 h-5 text-blue-600" />  ,
+        icon:' <Move className="w-5 h-5 text-blue-600" /> ' ,
         unit: "cm",
       },
       {
         label: "Ngực",
         value: datas?.nguc,
-        icon: <Heart className="w-5 h-5 text-pink-600" />,
+        icon: ' <Heart className="w-5 h-5 text-pink-600" /> ',
         unit: "cm",
       },
       {
         label: "Eo",
         value: datas?.eo,
-        icon: <Circle className="w-5 h-5 text-green-600" />,
+        icon: ' <Circle className="w-5 h-5 text-green-600" /> ',
         unit: "cm",
       },
       {
         label: "Hông",
         value: datas?.hong,
-        icon: <Square className="w-5 h-5 text-purple-600" />,
+        icon: ' <Square className="w-5 h-5 text-purple-600" /> ',
         unit: "cm",
       },
     ],

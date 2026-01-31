@@ -5,12 +5,12 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { type order, type Cart } from "@/types/type";
+import { type order, type Cart } from "../types/type";
 import axios from "axios";
-import { Toaster } from "@/shared/components/Toaster";
-import { api_Config, UseApiUrl } from "@/services/api";
+import { Toaster } from "../shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../services/api";
 import { AdminContext } from "./AdminContext";
-import { api_Response } from "@/services/http";
+import { api_Response } from "../services/http";
 import { AuthContext } from "./Author";
 
 type CartContexts = {

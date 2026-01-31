@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo, type ReactNode } from "react";
-import type { Measure } from "@/types/type";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
-import { api_Response } from "@/services/http";
+import type { Measure } from "../types/type";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
+import { api_Response } from "../services/http";
 import { AuthContext } from "./Author";
 
 

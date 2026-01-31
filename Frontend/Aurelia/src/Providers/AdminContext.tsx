@@ -1,11 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { api_Config, UseApiUrl } from "@/services/api";
+import { api_Config, UseApiUrl } from "../services/api";
 import axios from "axios";
-import type { Coupon, order } from "@/types/type";
-import { Toaster } from "@/shared/components/Toaster";
+import type { Coupon, order } from "../types/type";
+import { Toaster } from "../shared/components/Toaster";
 import { AuthContext } from "./Author";
-import { api_Response } from "@/services/http";
+import { api_Response } from "../services/http";
 
 type AdminContextType = {
   dataRevenue: any;

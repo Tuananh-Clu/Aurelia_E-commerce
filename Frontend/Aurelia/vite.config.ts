@@ -2,8 +2,14 @@ import { defineConfig } from "vite";
 
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import path from "path/win32";
 export default defineConfig({
   plugins: [react(), tailwindcss(),],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
   build: {
     rollupOptions: {
       output: {
@@ -13,8 +19,6 @@ export default defineConfig({
           'chart-vendor': ['chart.js', 'react-chartjs-2', 'recharts'],
           'map-vendor': ['leaflet', 'react-leaflet'],
           'ai-vendor': ['@mediapipe/pose', '@mediapipe/camera_utils'],
-          // Use explicit Firebase subpath imports to avoid Vite/Rollup
-          // trying to resolve the deprecated root "firebase" entry.
           'firebase-vendor': ['firebase/app', 'firebase/auth'],
           'signalr-vendor': ['@microsoft/signalr'],
         },

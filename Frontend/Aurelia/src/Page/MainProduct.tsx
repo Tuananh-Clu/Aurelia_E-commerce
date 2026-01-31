@@ -1,5 +1,5 @@
 import { useLocation, useParams } from "react-router-dom";
-import { Navbar } from "@/Features/Home/components/Navbar";
+import { Navbar } from "../Features/Home/components/Navbar";
 import { ArrowBigLeftDashIcon, Heart } from "lucide-react";
 import {
   useContext,
@@ -10,20 +10,20 @@ import {
   useRef,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ProductRecommend } from "@/Features/Product/components/ProductRecommend";
-import { Footer } from "@/Features/Home/components/Footer";
-import { DynamicMetaTags } from "@/services/SEO/DynamicMetaTags";
-import { LazyImage } from "@/services/SEO/LazyImage";
-import dataCollection from "@/assets/DataMock/dataSeason.json";
-import { FilterProductContext } from "@/Providers/FIlterProduct";
-import type { Cart, Product } from "@/types/type";
-import { Toaster } from "@/shared/components/Toaster";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { TimKiemTaiStore } from "@/Features/BookingAppointment/TimKiemTaiStore";
-import { CartContext } from "@/Providers/CartContext";
-import { AiSuggestBox } from "@/Features/AI/components/AISuggest";
-import { AuthContext } from "@/Providers/Author";
-import { api_Response } from "@/services/http";
+import { ProductRecommend } from "../Features/Product/components/ProductRecommend";
+import { Footer } from "../Features/Home/components/Footer";
+import { DynamicMetaTags } from "../services/SEO/DynamicMetaTags";
+import { LazyImage } from "../services/SEO/LazyImage";
+import dataCollection from "../assets/DataMock/dataSeason.json";
+import { FilterProductContext } from "../Providers/FIlterProduct";
+import type { Cart, Product } from "../types/type";
+import { Toaster } from "../shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../services/api";
+import { TimKiemTaiStore } from "../Features/BookingAppointment/TimKiemTaiStore";
+import { CartContext } from "../Providers/CartContext";
+import { AiSuggestBox } from "../Features/AI/components/AISuggest";
+import { AuthContext } from "../Providers/Author";
+import { api_Response } from "../services/http";
 
 export const MainProduct = () => {
   const { id } = useParams();

@@ -1,13 +1,12 @@
-import { useContext, useState, useCallback } from "react";
-import { Percent, TruckIcon, Zap } from "lucide-react";
-import { AdminContext } from "@/Providers/AdminContext";
-import { Toaster } from "@/shared/components/Toaster";
+import { useContext, useState, useCallback, createElement } from "react";
 import type { Coupon, CouponCardProps } from "../types";
+import { AdminContext } from "../../../Providers/AdminContext";
+import { Toaster } from "../../../shared/components/Toaster";
+import { Percent, Truck, Zap } from "lucide-react";
 
 export function useCouponCard({ type }: CouponCardProps) {
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
-  const { coupons, dataVoucher, selectvoucher, setSelectvoucher } =
-    useContext(AdminContext);
+  const { coupons , selectvoucher, setSelectvoucher, dataVoucher } =useContext(AdminContext);
 
   const copyCode = useCallback((code: string, id: string) => {
     navigator.clipboard.writeText(code);
@@ -31,18 +30,21 @@ export function useCouponCard({ type }: CouponCardProps) {
   }, []);
 
   const getIcon = useCallback((typeCoupon: string) => {
-    if (typeCoupon === "order") return <Percent className="w-5 h-5" />;
-    if (typeCoupon === "ship") return <TruckIcon className="w-5 h-5" />;
-    return <Zap className="w-5 h-5" />;
+    if (typeCoupon === "order") {
+      return createElement(Percent, { className: "w-5 h-5" });
+    }
+    if (typeCoupon === "ship") {
+      return createElement(Truck, { className: "w-5 h-5" });
+    }
+    return createElement(Zap, { className: "w-5 h-5" });
   }, []);
 
   const applyCoupon = useCallback(
     (coupon: Coupon) => {
-      const hasOrder = selectvoucher?.find((a) => a.typeCoupon === "order");
-      const hasShip = selectvoucher?.find((a) => a.typeCoupon === "ship");
+      const hasOrder = selectvoucher?.find((a: Coupon) => a.typeCoupon === "order");
+      const hasShip = selectvoucher?.find((a: Coupon) => a.typeCoupon === "ship");
 
       if (coupon.typeCoupon === "order" && hasOrder) {
-        alert("Chỉ được áp dụng 1 mã giảm giá đơn hàng");
         return;
       }
       if (coupon.typeCoupon === "ship" && hasShip) {
@@ -50,7 +52,7 @@ export function useCouponCard({ type }: CouponCardProps) {
         return;
       }
 
-      setSelectvoucher((prev) => [...prev, coupon]);
+      setSelectvoucher((prev:any) => [...prev, coupon]);
       Toaster.success("Áp dụng mã giảm giá thành công");
     },
     [selectvoucher, setSelectvoucher]

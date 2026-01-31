@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext,  useEffect,  useState } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
 
 type CollectionContextType = {
     seasonCollections: any;

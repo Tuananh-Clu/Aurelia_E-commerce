@@ -1,11 +1,11 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { useEffect, useRef, lazy, Suspense, useState} from "react";
 import { Toaster } from "react-hot-toast";
-import { LoadingScreen } from "@/shared/components/LoadingScreen";
-import FormAuthorForShopAndAdmin from "@/Features/FormAuth/components/FormAuthorForShopAndAdmin";
-import { ForgotPassword } from "@/Page/ForgotPassword";
-import { ChangePassWord } from "@/Page/ChangePassWord";
 import Snowfall from "react-snowfall";
+import { ForgotPassword } from "./Page/ForgotPassword";
+import { ChangePassWord } from "./Page/ChangePassWord";
+import { LoadingScreen } from "./shared/components/LoadingScreen";
+import FormAuthorForShopAndAdmin from "./Features/FormAuth/components/FormAuthorForShopAndAdmin";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -20,12 +20,12 @@ const BodySize = lazy(() =>
   import("./Page/BodySize").then((m) => ({ default: m.BodySize }))
 );
 const FormBooking = lazy(() =>
-  import("./Components/BookingAppointment/FormBooking").then((m) => ({
+  import("../src/Features/BookingAppointment/FormBooking").then((m) => ({
     default: m.default,
   }))
 );
 const MainPage = lazy(() =>
-  import("@/Features/TrackingOrder/MainPage").then((m) => ({
+  import("../src/Features/TrackingOrder/MainPage").then((m) => ({
     default: m.MainPage,
   }))
 );
@@ -56,7 +56,7 @@ const Search = lazy(() =>
   import("./Page/Search").then((m) => ({ default: m.Search }))
 );
 const Cart = lazy(() =>
-  import("@/Features/Cart/components/Cart").then((m) => ({ default: m.Cart }))
+  import("../src/Features/Cart/components/Cart").then((m) => ({ default: m.Cart }))
 );
 const Account = lazy(() =>
   import("./Page/DashboardAccount/DashBoardUser").then((m) => ({

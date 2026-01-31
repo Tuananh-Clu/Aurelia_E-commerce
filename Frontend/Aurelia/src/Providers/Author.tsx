@@ -7,10 +7,10 @@ import React, {
   type ReactNode,
   type SetStateAction,
 } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
 import { CartContext } from "./CartContext";
-import { api_Response } from "@/services/http";
+import { api_Response } from "../services/http";
 import { useLocation } from "react-router-dom";
 
 type AuthContextType = {

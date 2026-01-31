@@ -1,9 +1,10 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../services/api";
+
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./Author";
+import { Toaster } from "../shared/components/Toaster";
 
 type AuthorForAdminType = {
     Login: (Email:string,Password:string) => Promise<void>;

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { createContext, useState } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { type ProductAppoinment, type Shop } from "@/types/type";
+import { api_Config, UseApiUrl } from "../services/api";
+import { type ProductAppoinment, type Shop } from "../types/type";
 
 type StoreContexts = {
   dataStore: Shop[];

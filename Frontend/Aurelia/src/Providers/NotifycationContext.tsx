@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
+import { api_Config, UseApiUrl } from "../services/api";
 import axios from "axios";
 import { LogLevel } from "@microsoft/signalr/dist/esm/ILogger";
 import {

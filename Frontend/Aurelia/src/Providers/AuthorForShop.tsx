@@ -6,8 +6,8 @@ import  {
   useState,
   type ReactNode,
 } from "react";
-import { api_Config, UseApiUrl } from "@/services/api";
-import { Toaster } from "@/shared/components/Toaster";
+import { api_Config, UseApiUrl } from "../services/api";
+import { Toaster } from "../shared/components/Toaster";
 import { AuthContext } from "./Author";
 import { useNavigate } from "react-router-dom";
 

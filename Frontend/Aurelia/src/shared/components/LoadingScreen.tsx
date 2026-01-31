@@ -5,7 +5,7 @@ export const LoadingScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), 6000); // 3s loading
+    const timer = setTimeout(() => setIsVisible(false), 6000);
     return () => clearTimeout(timer);
   }, []);
 
