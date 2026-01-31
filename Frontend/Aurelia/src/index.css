@@ -9,7 +9,6 @@
   font-style: normal;
 }
 
-/* Design tokens - Light & Minimal */
 :root{
   --bg: #fafafa;
   --surface: #ffffff;
@@ -25,7 +24,6 @@
   --shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* Utilities that complement Tailwind - Light Theme */
 .elevated{
   background: var(--card);
   box-shadow: var(--shadow);
@@ -53,14 +51,12 @@
 .text-muted{ color: var(--text-muted); }
 .text-body{ color: var(--text); }
 
-/* Light theme base styles */
 body {
   background-color: var(--bg);
   color: var(--text);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Smooth scrolling and base */
 
 *{
   scroll-behavior: smooth;
@@ -68,3 +64,11 @@ body {
 *{
  -ms-overflow-style: none;  scrollbar-width: none;
 }
+body
+{
+  font-family:  {
+    display: ["'Cormorant Garamond'", "serif"],
+    body: ["'Open Sans'", "sans-serif"]
+  }
+};
+

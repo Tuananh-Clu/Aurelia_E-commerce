@@ -1,18 +1,18 @@
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
-import { Footer } from "../Components/HomeLayoutComponent/Footer";
+import { Navbar } from "@/Features/Home/components/Navbar";
+import { Footer } from "@/Features/Home/components/Footer";
 import { motion } from "framer-motion";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { CartContext } from "../contexts/CartContext";
-import { DiaChiContext } from "../contexts/DiaChiContext";
-import { PaymentOptions } from "../Components/MockPayment.tsx/PaymentOptions";
+import { CartContext } from "@/Providers/CartContext";
+import { DiaChiContext } from "@/Providers/DiaChiContext";
+import { PaymentOptions } from "@/Features/MockPayment.tsx/PaymentOptions";
 import { useNavigate } from "react-router-dom";
-import { Toaster } from "../Components/Toaster";
-import { LoadingOverlay } from "../Components/LoadingOverlay";
+import { Toaster } from "@/shared/components/Toaster";
+import { LoadingOverlay } from "@/shared/components/LoadingOverlay";
 import { v4 as uuidv4 } from "uuid";
-import type { DiaChi, order } from "../types/type";
+import type { DiaChi, order } from "@/types/type";
 import { TicketCheck } from "lucide-react";
-import { ListCoupon } from "../Components/ListCoupon";
-import { AdminContext } from "../contexts/AdminContext";
+import { ListCoupon } from "@/Features/CheckOut/components/ListCoupon";
+import { AdminContext } from "@/Providers/AdminContext";
 
 export const Checkout = () => {
   const { CartDataAdd, setDataOrder, LayToaDo, phiVanChuyen, LayPhiVanCHuyen } =

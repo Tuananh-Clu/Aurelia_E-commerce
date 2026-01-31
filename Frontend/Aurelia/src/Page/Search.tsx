@@ -1,12 +1,12 @@
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
-import { Footer } from "../Components/HomeLayoutComponent/Footer";
+import { Navbar } from "@/Features/Home/components/Navbar";
+import { Footer } from "@/Features/Home/components/Footer";
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import type { ChangeEvent } from "react";
 import { Search as SearchIcon } from "lucide-react";
 import { FilterProductContext } from "../contexts/FIlterProduct";
 import { useNavigate } from "react-router-dom";
-import { LazyImage } from "../Components/SEO/LazyImage";
+import { LazyImage } from "@/services/SEO/LazyImage";
 
 export const Search = () => {
   const { key, setKey, dataFilter } = useContext(FilterProductContext);

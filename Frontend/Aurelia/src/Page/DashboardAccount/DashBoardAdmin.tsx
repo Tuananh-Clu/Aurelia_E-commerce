@@ -1,13 +1,13 @@
 import { Settings } from "lucide-react";
 import { useState } from "react";
-import { OverView } from "../../Components/AdminBrandComponent/DashBoardComponent/OverView";
-import { BannerSetting } from "../../Components/AdminBrandComponent/DashBoardComponent/Banner/BannerSetting";
-import { SideBoard } from "../../Components/AdminBrandComponent/DashBoardComponent/SideBoard";
-import { Stores } from "../../Components/AdminBrandComponent/DashBoardComponent/Store";
-import Coupon from "../../Components/AdminBrandComponent/DashBoardComponent/Coupon";
-import { Revenue } from "../../Components/AdminBrandComponent/DashBoardComponent/Revenue";
-import Collections from "../../Components/AdminBrandComponent/DashBoardComponent/Collections";
-import ProductManagement from "../../Components/AdminBrandComponent/DashBoardComponent/ProductManagement";
+import { OverView } from "@/Features/DashBoard/DashBoardAdmin/components/OverView";
+import { BannerSetting } from "@/Features/DashBoard/DashBoardAdmin/components/Banner/BannerSetting";
+import { SideBoard } from "@/Features/DashBoard/DashBoardAdmin/components/SideBoard";
+import { Stores } from "@/Features/DashBoard/DashBoardAdmin/components/Store";
+import Coupon from "@/Features/DashBoard/DashBoardAdmin/components/Coupon";
+import { Revenue } from "@/Features/DashBoard/DashBoardAdmin/components/Revenue";
+import Collections from "@/Features/DashBoard/DashBoardAdmin/components/Collections";
+import ProductManagement from "@/Features/DashBoard/DashBoardAdmin/components/ProductManagement";
 
 
 

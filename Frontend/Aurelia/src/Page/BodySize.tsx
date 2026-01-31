@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
-import { DashBoardMeasures } from "../Components/AiModelBodySize/DashBoardMesuares";
-import { Main } from "../Components/AiModelBodySize/Main";
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
-import { AiPoseMeasureContext } from "../contexts/AIPoseMeasure";
+import { DashBoardMeasures } from "@/Features/AI/components/DashBoardMesuares";
+import { Main } from "@/Features/AI/components/Main";
+import { Navbar } from "@/Features/Home/components/Navbar";
+import { AiPoseMeasureContext } from "@/Providers/AIPoseMeasure";
 
 export const BodySize = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);

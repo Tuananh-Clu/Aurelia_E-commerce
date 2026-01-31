@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar"
-import { CollectionContext } from "../contexts/SeasonContext";
+import { Navbar } from "@/Features/Home/components/Navbar"
+import { CollectionContext } from "@/Providers/SeasonContext";
 import { useContext } from "react";
-import { LazyImage } from "../Components/SEO/LazyImage";
+import { LazyImage } from "@/services/SEO/LazyImage";
 
 
 export const AllCollection = () => {

@@ -1,10 +1,10 @@
 
 import { useContext } from "react";
-import { Navbar } from "../../Components/HomeLayoutComponent/Navbar";
-import { AuthContext } from "../../contexts/Author";
-import { DashBoard } from "../../Components/AccountComponents/User/DashBoard";
-import { FormAuthor } from "../../Components/FormAuthorForUser";
-import { Footer } from "../../Components/HomeLayoutComponent/Footer";
+import { Navbar } from "@/Features/Home/components/Navbar";
+import { AuthContext } from "@/Providers/Author";
+import { DashBoard } from "@/Features/DashBoard/DashBoardUser/components/DashBoard";
+import { FormAuthor } from "@/Features/FormAuth/components/FormAuthorForUser";
+import { Footer } from "@/Features/Home/components/Footer";
 
 
 

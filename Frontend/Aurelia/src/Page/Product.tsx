@@ -1,9 +1,9 @@
 
-import { Footer } from "../Components/HomeLayoutComponent/Footer";
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
-import { BannerTitle } from "../Components/ProductComponent/BannerTitle";
-import { FilterType } from "../Components/ProductComponent/FilterType";
-import { ListProduct } from "../Components/ProductComponent/ListProduct";
+import { Footer } from "@/Features/Home/components/Footer";
+import { Navbar } from "@/Features/Home/components/Navbar";
+import { BannerTitle } from "@/Features/Product/components/BannerTitle";
+import { FilterType } from "@/Features/Product/components/FilterType";
+import { ListProduct } from "@/Features/Product/components/ListProduct";
 
 
 

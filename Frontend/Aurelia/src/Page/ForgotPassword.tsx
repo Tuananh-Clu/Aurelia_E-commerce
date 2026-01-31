@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { Navbar } from "@/Features/Home/components/Navbar";
 import { motion } from "framer-motion";
-import { Footer } from "../Components/HomeLayoutComponent/Footer";
-import { MethodForgotPassword } from "../services/EmailService";
+import { Footer } from "@/Features/Home/components/Footer";
+import { MethodForgotPassword } from "@/services/EmailService";
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");

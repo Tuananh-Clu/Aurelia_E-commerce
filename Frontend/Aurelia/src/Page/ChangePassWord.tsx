@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
+import { Navbar } from "@/Features/Home/components/Navbar";
 import { motion } from "framer-motion";
 import { MethodChangePassWord } from "../services/EmailService";
 import {  useSearchParams } from "react-router-dom";
