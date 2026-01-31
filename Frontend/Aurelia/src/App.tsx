@@ -20,7 +20,7 @@ const BodySize = lazy(() =>
   import("./Page/BodySize").then((m) => ({ default: m.BodySize }))
 );
 const FormBooking = lazy(() =>
-  import("../src/Features/BookingAppointment/FormBooking").then((m) => ({
+  import("../src/Features/BookingAppointment/components/FormBooking").then((m) => ({
     default: m.default,
   }))
 );
