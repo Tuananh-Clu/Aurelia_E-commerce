@@ -19,7 +19,7 @@ import { FilterProductContext } from "../Providers/FIlterProduct";
 import type { Cart, Product } from "../types/type";
 import { Toaster } from "../shared/components/Toaster";
 import { api_Config, UseApiUrl } from "../services/api";
-import { TimKiemTaiStore } from "../Features/BookingAppointment/TimKiemTaiStore";
+import { TimKiemTaiStore } from "../Features/BookingAppointment/components/TimKiemTaiStore";
 import { CartContext } from "../Providers/CartContext";
 import { AiSuggestBox } from "../Features/AI/components/AISuggest";
 import { AuthContext } from "../Providers/Author";

@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { type Appointment, type filterSLot, type Shop } from "@/types/type";
-import { StoreContext } from "@/Providers/Store";
+import { type Appointment, type filterSLot, type Shop } from "../../../types/type";
+import { StoreContext } from "../../../Providers/Store";
 import { useParams } from "react-router-dom";
 import { Clock, MapPin, Phone } from "lucide-react";
-import { AppointmentContext } from "@/Providers/AppointmentContext";
+import { AppointmentContext } from "../../../Providers/AppointmentContext";
 import { v4 as uuidv4 } from "uuid";
-import { NotifySuccessBooking } from "@/shared/components/NotifySuccessBooking";
-import { Navbar } from "@/Features/Home/components/Navbar";
-import { Footer } from "@/Features/Home/components/Footer";
-import { LoadingOverlay } from "@/shared/components/LoadingOverlay";
+import { NotifySuccessBooking } from "../../../shared/components/NotifySuccessBooking";
+import { Navbar } from "../../../Features/Home/components/Navbar";
+import { Footer } from "../../../Features/Home/components/Footer";
+import { LoadingOverlay } from "../../../shared/components/LoadingOverlay";
 type SlotStatus = { time: string; full: boolean | false };
 
 export default function BookingForm() {
