@@ -1,20 +1,25 @@
-import { motion } from "framer-motion";
-import { Clock, Heart,
-  ShieldCheck, ShoppingBag } from "lucide-react";
+import { Clock, Heart, ShieldCheck, ShoppingBag } from "lucide-react";
 
-export const Stats = ({tongThuChi,soLuongDonHang,lastPurchaseDate,userRole,dataFavouriteItemUser}:any) => {
-
+export const Stats = ({
+  tongThuChi,
+  soLuongDonHang,
+  lastPurchaseDate,
+  userRole,
+  dataFavouriteItemUser,
+}: any) => {
   const stats = [
     {
       title: "Tổng Chi Tiêu",
-      value: `${tongThuChi.toLocaleString("vi-VN")}₫`,
+      value: `${tongThuChi}₫`,
       subtitle: `${soLuongDonHang} đơn`,
       icon: ShoppingBag,
       color: "from-blue-500 to-indigo-500",
     },
     {
       title: "Mua Gần Nhất",
-      value: lastPurchaseDate ? "Chưa có đơn" : new Date(lastPurchaseDate).toLocaleDateString("vi-VN"),
+      value: lastPurchaseDate
+        ? "Chưa có đơn"
+        : new Date(lastPurchaseDate).toLocaleDateString("vi-VN"),
       subtitle: "Lần mua gần đây",
       icon: Clock,
       color: "from-purple-500 to-pink-500",
@@ -28,33 +33,45 @@ export const Stats = ({tongThuChi,soLuongDonHang,lastPurchaseDate,userRole,dataF
     },
     {
       title: "Sản Phẩm Yêu Thích",
-      value: `${dataFavouriteItemUser.length}`,
+      value: `${dataFavouriteItemUser?.length}`,
       subtitle: "Đã lưu",
       icon: Heart,
       color: "from-rose-500 to-pink-500",
     },
   ];
   return (
-      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((s, i) => {
-          const Icon = s.icon;
-          return (
-            <motion.div
-              key={i}
-              whileHover={{ y: -3, scale: 1.02 }}
-              className="p-5 rounded-2xl bg-white/70 backdrop-blur-md shadow-sm hover:shadow-md border border-gray-100 flex flex-col items-center text-center transition-all"
-            >
-              <div
-                className={`p-3 rounded-full bg-gradient-to-br ${s.color} text-white shadow-md mb-3`}
-              >
-                <Icon size={20} />
-              </div>
-              <h2 className="text-lg font-bold text-gray-800">{s.value}</h2>
-              <p className="text-sm text-gray-500">{s.title}</p>
-              <span className="text-xs text-gray-400">{s.subtitle}</span>
-            </motion.div>
-          );
-        })}
-      </div>
-  )
-}
+    <div className="grid grid-cols-2 gap-8 max-w-md">
+      {stats.map((s, i) => {
+        const Icon = s.icon;
+        return (
+          <div
+            key={i}
+            className="
+          bg-white
+          border border-neutral-200
+          p-6
+          flex flex-col
+          justify-between
+          min-h-[150px]
+          transition-all
+          hover:border-neutral-300
+        "
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] tracking-widest uppercase text-neutral-500">
+                {s.title}
+              </span>
+              <Icon className="text-neutral-400" size={18} />
+            </div>
+            <div>
+              <p className="text-3xl font-light text-neutral-900 mt-4">
+                {s.value.length > 7 ? "—" : s.value}
+              </p>
+              <p className="text-xs text-neutral-400 mt-1">{s.subtitle}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

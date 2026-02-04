@@ -54,11 +54,7 @@
 .text-body{ color: var(--text); }
 
 /* Light theme base styles */
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+
 
 /* Smooth scrolling and base */
 
@@ -67,4 +63,11 @@ body {
 }
 *{
  -ms-overflow-style: none;  scrollbar-width: none;
+}
+body 
+{
+  font-family: {
+     display: ["'Cormorant Garamond'", "serif"],
+              sans: ["'Inter'", "sans-serif"],
+  }
 }

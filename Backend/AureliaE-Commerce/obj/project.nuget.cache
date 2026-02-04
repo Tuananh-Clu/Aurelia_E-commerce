@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cvN6NQUCGz8=",
+  "dgSpecHash": "F81DYwpypb8=",
   "success": true,
-  "projectFilePath": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj",
+  "projectFilePath": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\yianh\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
     "C:\\Users\\yianh\\.nuget\\packages\\awssdk.securitytoken\\3.7.100.14\\awssdk.securitytoken.3.7.100.14.nupkg.sha512",

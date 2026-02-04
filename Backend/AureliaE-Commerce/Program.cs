@@ -47,7 +47,8 @@ builder.Services.AddCors(a =>
     a.AddPolicy("AllowFrontEnd", s =>
     {
                 s.WithOrigins(
-            "https://aureliashop.vercel.app"
+            "https://aureliashop.vercel.app",
+            "https://localhost:4121"
         )
         .AllowAnyHeader()
         .AllowAnyMethod()
@@ -116,7 +117,6 @@ var app = builder.Build();
     });
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
 
 
 app.UseRouting();

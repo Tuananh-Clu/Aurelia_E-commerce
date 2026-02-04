@@ -22,6 +22,7 @@ type CartContexts = {
   LayToaDo: (address: string) => Promise<{ lat: number; lon: number } | null>;
   phiVanChuyen: string;
   LayPhiVanCHuyen: (DuLieuDauRa: boolean) => Promise<void>;
+  formatPrice?: (num: number) => string;
 };
 
 export const CartContext = createContext<CartContexts>({
@@ -33,6 +34,11 @@ export const CartContext = createContext<CartContexts>({
   setCartDataAdd: () => {},
   phiVanChuyen: "",
   LayPhiVanCHuyen: async () => {},
+  formatPrice: (num: number) =>
+    new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(num),
 });
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -47,7 +53,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [phiVanChuyen, setPhiVanChuyen] = useState("");
   const [shopId, setShopId] = useState<string>("");
   const token = useMemo(() => localStorage.getItem("token"), []);
-
+   const formatPrice = (num: number) =>
+     new Intl.NumberFormat("vi-VN", {
+       style: "currency",
+       currency: "VND",
+     }).format(num);
   const handleClickPayment = useCallback(async () => {
     if (!dataOrder) return;
 
@@ -140,6 +150,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       LayToaDo,
       LayPhiVanCHuyen,
       phiVanChuyen,
+      formatPrice
     }),
     [
       CartDataAdd,

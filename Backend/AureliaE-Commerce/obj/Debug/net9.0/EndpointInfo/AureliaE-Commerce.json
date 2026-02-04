@@ -120,6 +120,27 @@
         }
       }
     },
+    "/api/Authentication/LogInWithFirebase": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Authentication/Register": {
       "post": {
         "tags": [
@@ -268,6 +289,27 @@
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Authentication/LogOut": {
+      "delete": {
+        "tags": [
+          "Authentication"
+        ],
+        "parameters": [
+          {
+            "name": "typeAccount",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -425,18 +467,6 @@
             }
           }
         },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Client/LayThongTinNguoiDung": {
-      "get": {
-        "tags": [
-          "Client"
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -1034,6 +1064,68 @@
             "application/*+json": {
               "schema": {
                 "$ref": "#/components/schemas/OrderModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/ResetPassWord": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Email/ChangePassWord": {
+      "post": {
+        "tags": [
+          "Email"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePassWordRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePassWordRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePassWordRequestDto"
               }
             }
           }
@@ -2104,6 +2196,24 @@
         },
         "additionalProperties": false
       },
+      "ChangePassWordRequestDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ClientAppointment": {
         "type": "object",
         "properties": {
@@ -2811,7 +2921,7 @@
       "UpdateProfileCustomer": {
         "type": "object",
         "properties": {
-          "hovaten": {
+          "name": {
             "type": "string",
             "nullable": true
           },
@@ -2819,7 +2929,7 @@
             "type": "string",
             "nullable": true
           },
-          "soDt": {
+          "phone": {
             "type": "string",
             "nullable": true
           },
@@ -2827,7 +2937,7 @@
             "type": "string",
             "nullable": true
           },
-          "avatarUrl": {
+          "avatar": {
             "type": "string",
             "nullable": true
           }

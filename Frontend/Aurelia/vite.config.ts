@@ -35,4 +35,12 @@ export default defineConfig({
       'framer-motion',
     ],
   },
+  server: {
+      https: {
+      key: './localhost+2-key.pem',
+      cert: './localhost+2.pem'
+    },
+    port: 4121, 
+    open: true
+  }
 });

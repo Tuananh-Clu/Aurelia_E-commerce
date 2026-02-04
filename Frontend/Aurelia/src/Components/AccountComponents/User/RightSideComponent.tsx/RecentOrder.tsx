@@ -1,24 +1,24 @@
-import { ShoppingBag, PackageCheck, Truck, Clock, XCircle, CheckCircle2 } from "lucide-react";
+import {
+  ShoppingBag,
+  PackageCheck,
+  Truck,
+  Clock,
+  XCircle,
+  CheckCircle2,
+} from "lucide-react";
 import type { order } from "../../../../types/type";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { FilterProductContext } from "../../../../contexts/FIlterProduct";
+import { OrderCard } from "./OrderCard";
 
 const STATUS_CONFIG = [
-  { label: "Chờ Xác Nhận", color: "yellow", icon: Clock },
-  { label: "Đã Xác Nhận", color: "blue", icon: CheckCircle2 },
-  { label: "Đang Giao", color: "indigo", icon: Truck },
-  { label: "Đã Giao", color: "green", icon: PackageCheck },
-  { label: "Đã Hủy", color: "red", icon: XCircle },
+  { label: "Chờ Xác Nhận", icon: Clock },
+  { label: "Đã Xác Nhận", icon: CheckCircle2 },
+  { label: "Đang Giao", icon: Truck },
+  { label: "Đã Giao", icon: PackageCheck },
+  { label: "Đã Hủy", icon: XCircle },
 ] as const;
-
-const STATUS_BADGE: Record<string, string> = {
-  "Chờ Xác Nhận": "bg-yellow-100 text-yellow-700",
-  "Đã Xác Nhận": "bg-blue-100 text-blue-700",
-  "Đang Giao": "bg-indigo-100 text-indigo-700",
-  "Đã Giao": "bg-green-100 text-green-700",
-  "Đã Hủy": "bg-red-100 text-red-700",
-};
 
 export const RecentOrder = ({ donHangChiTiet }: { donHangChiTiet: order[] }) => {
   const navigate = useNavigate();
@@ -36,38 +36,42 @@ export const RecentOrder = ({ donHangChiTiet }: { donHangChiTiet: order[] }) => 
     });
 
   return (
-    <div className="px-3 py-5 bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-gray-100 flex flex-col gap-5">
-      {/* Header */}
-      <h1 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-        <ShoppingBag size={22} className="text-indigo-600" />
-        Đơn hàng
-      </h1>
+    <div className="border border-neutral-200 h-screen px-6 py-6 space-y-6">
 
-      {/* Status Filter */}
-      <div className="flex items-center gap-3 overflow-x-auto pb-2">
-        {STATUS_CONFIG.map(({ label, color, icon: Icon }) => {
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <ShoppingBag size={18} className="text-neutral-500" />
+        <h1 className="text-sm tracking-widest uppercase text-neutral-900">
+          Đơn hàng của bạn
+        </h1>
+      </div>
+
+      {/* Status Filter – editorial tabs */}
+      <div className="flex gap-6 border-b border-neutral-200 pb-3 overflow-x-auto">
+        {STATUS_CONFIG.map(({ label, icon: Icon }) => {
           const isActive = openStatus === label;
           return (
             <button
               key={label}
               onClick={() => setOpenStatus(isActive ? null : label)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm whitespace-nowrap transition-all duration-200
-                ${isActive
-                  ? `bg-${color}-100 text-${color}-700 border-${color}-300 font-medium shadow-sm`
-                  : "bg-white text-gray-600 border-gray-300 hover:bg-gray-100"
+              className={`flex items-center gap-2 text-xs tracking-widest uppercase whitespace-nowrap transition
+                ${
+                  isActive
+                    ? "text-neutral-900 border-b border-neutral-900 pb-2"
+                    : "text-neutral-400 hover:text-neutral-700 pb-2"
                 }`}
             >
-              <Icon className={`w-5 h-5 ${isActive ? `text-${color}-500` : "text-gray-500"}`} />
+              <Icon size={14} />
               {label}
             </button>
           );
         })}
       </div>
 
-      {/* Orders List */}
+      {/* Orders */}
       <div className="space-y-4">
         {donHangChiTiet
-          .filter((order) => !openStatus || order.status === openStatus)
+          .filter((o) => !openStatus || o.status === openStatus)
           .map((order) => (
             <OrderCard
               key={order.orderId}
@@ -78,56 +82,6 @@ export const RecentOrder = ({ donHangChiTiet }: { donHangChiTiet: order[] }) => 
               navigate={navigate}
             />
           ))}
-      </div>
-    </div>
-  );
-};
-
-
-const OrderCard = ({ order, calcOrderTotal, formatDate, huyDonHang, navigate }:any) => {
-  return (
-    <div className="rounded-2xl bg-white/90 backdrop-blur-md shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all p-5 border border-gray-100 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      
-      {/* Product Image */}
-      <img
-        src={order.product[0]?.thumnail}
-        alt="Product"
-        className="w-20 h-20 object-cover rounded-lg"
-      />
-
-      {/* Order Info */}
-      <div className="space-y-1 flex-1">
-        <h2 className="font-semibold text-gray-800 text-base">Mã Đơn Hàng: {order.orderId}</h2>
-        <p className="text-gray-600 text-sm">Ngày Đặt: {formatDate(Number(order.ngayTaoDon))}</p>
-        <p className="text-gray-700 text-sm font-medium">
-          Tổng Tiền:{" "}
-          <span className="text-indigo-600 font-semibold">
-            {calcOrderTotal(order).toLocaleString("vi-VN", { style: "currency", currency: "VND" })}
-          </span>
-        </p>
-      </div>
-
-      <div className="flex flex-col items-center md:items-end gap-3">
-        <span className={`px-3 py-1 rounded-full text-xs font-medium ${STATUS_BADGE[order.status]}`}>
-          {order.status}
-        </span>
-
-        <div className="flex items-center gap-3">
-          {order.status === "Chờ Xác Nhận" && (
-            <button
-              onClick={() => huyDonHang(order.orderId)}
-              className="px-3 py-1.5 rounded-lg border border-red-500 text-red-600 hover:bg-red-50 transition text-sm font-medium"
-            >
-              Hủy
-            </button>
-          )}
-          <button
-            onClick={() => navigate(`/tracking/${order.orderId}`)}
-            className="px-3 py-1.5 rounded-lg border border-indigo-500 text-indigo-600 hover:bg-indigo-50 transition text-sm font-medium"
-          >
-            Chi tiết
-          </button>
-        </div>
       </div>
     </div>
   );

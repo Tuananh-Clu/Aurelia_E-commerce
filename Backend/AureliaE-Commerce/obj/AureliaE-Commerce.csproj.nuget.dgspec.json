@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj": {}
+    "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj": {}
   },
   "projects": {
-    "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj": {
+    "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj",
+        "projectUniqueName": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj",
         "projectName": "AureliaE-Commerce",
-        "projectPath": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj",
+        "projectPath": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\AureliaE-Commerce.csproj",
         "packagesPath": "C:\\Users\\yianh\\.nuget\\packages\\",
-        "outputPath": "D:\\Frontend\\Aurelia\\Backend\\AureliaE-Commerce\\obj\\",
+        "outputPath": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

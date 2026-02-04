@@ -1,163 +1,49 @@
 import { Navbar } from "../Components/HomeLayoutComponent/Navbar";
 import { Footer } from "../Components/HomeLayoutComponent/Footer";
-import { motion } from "framer-motion";
-import { useMemo, useContext } from "react";
-import { Trash2 } from "lucide-react";
+import { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
-import { useNavigate } from "react-router-dom";
-import { Toaster } from "../Components/Toaster";
+import { CartItemRow } from "../Components/CartComponents/CartItemRow";
+import { CartSummary } from "../Components/CartComponents/CartSummary";
 
 export const Cart = () => {
   const { CartDataAdd, setCartDataAdd } = useContext(CartContext);
-  const navigate=useNavigate()
-
-  const subtotal = useMemo(
-    () => CartDataAdd.reduce((s, i) => s + i.price * i.quantity, 0),
-    [CartDataAdd]
-  );
-  for(let i=0;i<CartDataAdd.length;i++){
-    for(let j=i+1;j<CartDataAdd.length;j++){
-      if(CartDataAdd[i].itemid===CartDataAdd[j].itemid){
-        CartDataAdd.splice(j,1);
-        CartDataAdd[i].quantity+=1;
-        j--;
-      }
-    }
-  }
-  const formatPrice = (num: number) =>
-    new Intl.NumberFormat("vi-VN", {
-      style: "currency",
-      currency: "VND",
-    }).format(num);
-
-  const updateQty = (id: string, newQty: number) => {
-    setCartDataAdd((prev) =>
-      prev.map((i) =>
-        i.itemid === id ? { ...i, quantity: Math.max(newQty, 1) } : i
-      )
-    );
-    localStorage.setItem("cartItems", JSON.stringify(CartDataAdd));
-  };
-
-  const removeItem = (id: string) => {
-    setCartDataAdd((prev) => prev.filter((i) => i.itemid !== id));
-    localStorage.removeItem("cartItems");
-    setCartDataAdd(CartDataAdd.filter((i) => i.itemid !== id));
-    localStorage.setItem("cartItems", JSON.stringify(CartDataAdd.filter((i) => i.itemid !== id)));
-  };
- const checkOut = () => {
-  if (CartDataAdd.length === 0) {
-    Toaster.error("Giỏ hàng của bạn đang trống!");
-    return;
-  } else {
-    navigate("/payment");
-  }
-};
-
   return (
     <>
       <Navbar />
-      <main className="min-h-[100vh] pt-40 px-6 md:px-20 py-20 bg-gradient-to-b from-neutral-50 to-neutral-100">
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-5xl font-light tracking-wide uppercase text-center bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-black"
-        >
-          Giỏ hàng của bạn
-        </motion.h1>
+      <main className="max-w-7xl mx-auto px-6 lg:px-12 py-16 md:py-24 flex-grow w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+          <div className="lg:col-span-7">
+            <h2 className="serif-title text-4xl mb-12 tracking-wide font-light border-b border-silver dark:border-neutral-800 pb-6 transition-colors duration-300">
+              Your Selections
+            </h2>
 
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Danh sách sản phẩm */}
-          <div className="lg:col-span-2 space-y-6">
-            {CartDataAdd.length === 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-gray-500 bg-white rounded-3xl p-14 text-center shadow-md border border-gray-200"
-              >
-                Giỏ hàng của bạn đang trống.
-              </motion.div>
-            ) : (
-              CartDataAdd.map((i,index) => (
-                <motion.div
-                  key={index }
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-center gap-8 bg-white rounded-3xl p-6 shadow-md border border-gray-200 hover:shadow-xl transition-all"
-                >
-                  <img
-                    src={i.thumnail}
-                    alt={i.name}
-                    className="w-32 h-32 rounded-2xl object-cover border border-gray-100 shadow-sm"
+            <div className="space-y-12">
+              {CartDataAdd.length > 0 ? (
+                CartDataAdd.map((item) => (
+                  <CartItemRow
+                    key={item.itemid}
+                    item={item}
                   />
-                  <div className="flex-1 space-y-2">
-                    <h3 className="font-semibold text-lg text-gray-800">{i.name}</h3>
-                    <p className="text-sm text-gray-500">Size: {i.size}</p>
-                    <p className="text-sm text-gray-500">Màu: {i.color}</p>
-                    <div className="flex items-center gap-3 mt-4">
-                      <button
-                        className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => updateQty(i.itemid , i.quantity - 1)}
-                      >
-                        –
-                      </button>
-                      <span className="text-lg font-medium">{i.quantity}</span>
-                      <button
-                        className="px-3 py-1.5 rounded-full border text-gray-600 hover:bg-gray-100 cursor-pointer"
-                        onClick={() => updateQty(i.itemid , i.quantity + 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <div className="text-lg font-semibold text-gray-800">
-                      {formatPrice(i.price * i.quantity)}
-                    </div>
-                    <button
-                      onClick={() => removeItem(i.itemid )}
-                      className="text-gray-400 hover:text-red-500 transition cursor-pointer"
-                    >
-                      <Trash2 size={22} />
-                    </button>
-                  </div>
-                </motion.div>
-              ))
-            )}
+                ))
+              ) : (
+                <div className="text-center py-20">
+                  <p className="text-neutral-500 font-light text-lg">
+                    Your cart is currently empty.
+                  </p>
+                  <button
+                    onClick={() => setCartDataAdd([])}
+                    className="mt-4 text-xs uppercase tracking-widest border-b border-black dark:border-white pb-1"
+                  >
+                    Reload Catalog
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Tóm tắt đơn hàng */}
-          <motion.aside
-            initial={{ opacity: 0, x: 12 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="bg-white rounded-3xl p-8 h-fit shadow-lg border border-gray-200"
-          >
-            <h2 className="text-2xl font-light uppercase tracking-wide text-gray-700">
-              Tóm tắt
-            </h2>
-            <div className="mt-6 space-y-4 text-base">
-              <div className="flex justify-between text-gray-600">
-                <span>Tạm tính</span>
-                <span>{formatPrice(subtotal)}</span>
-              </div>
-              {
-                
-              }
-              <div className="border-t pt-5 flex justify-between text-lg font-semibold text-gray-800">
-                <span>Tổng</span>
-                <span>{formatPrice(subtotal)}</span>
-              </div>
-            </div>
-            <motion.button
-            onClick={checkOut}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="mt-10 w-full bg-gradient-to-r cursor-pointer from-black via-gray-800 to-gray-900 text-white rounded-full py-4 text-lg tracking-wide shadow-xl hover:shadow-2xl transition-all"
-              disabled={CartDataAdd.length === 0}
-            >
-              Thanh toán ngay
-            </motion.button>
-          </motion.aside>
+          <div className="lg:col-span-5">
+            <CartSummary tax={0}  />
+          </div>
         </div>
       </main>
       <Footer />

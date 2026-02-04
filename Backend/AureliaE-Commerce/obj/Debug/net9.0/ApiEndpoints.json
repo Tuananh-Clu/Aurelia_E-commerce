@@ -157,6 +157,38 @@
   },
   {
     "ContainingType": "AureliaE_Commerce.Controller.AuthenticationController",
+    "Method": "LogInWithFirebase",
+    "RelativePath": "api/Authentication/LogInWithFirebase",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AureliaE_Commerce.Controller.AuthenticationController",
+    "Method": "LogOut",
+    "RelativePath": "api/Authentication/LogOut",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "typeAccount",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AureliaE_Commerce.Controller.AuthenticationController",
     "Method": "RegisterUser",
     "RelativePath": "api/Authentication/Register",
     "HttpMethod": "POST",
@@ -418,16 +450,6 @@
   },
   {
     "ContainingType": "AureliaE_Commerce.Controller.ClientController",
-    "Method": "GetDataUser",
-    "RelativePath": "api/Client/LayThongTinNguoiDung",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AureliaE_Commerce.Controller.ClientController",
     "Method": "LuuAddress",
     "RelativePath": "api/Client/LuuDiaChi",
     "HttpMethod": "POST",
@@ -628,18 +650,45 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "AureliaE_Commerce.Controller.GetAIAdvice",
-    "Method": "GetAdvice",
-    "RelativePath": "api/GetAIAdvice/GetAdviceSize",
+    "ContainingType": "AureliaE_Commerce.Controller.EmailController",
+    "Method": "ChangePassWord",
+    "RelativePath": "api/Email/ChangePassWord",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "Authorization",
+        "Name": "request",
+        "Type": "AureliaE_Commerce.Model.ChangePassWordRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AureliaE_Commerce.Controller.EmailController",
+    "Method": "ResetPassWord",
+    "RelativePath": "api/Email/ResetPassWord",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "email",
         "Type": "System.String",
-        "IsRequired": false
-      },
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AureliaE_Commerce.Controller.GetAIAdvice",
+    "Method": "GetAdviceSize",
+    "RelativePath": "api/GetAIAdvice/GetAdviceSize",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
         "Name": "dto",
         "Type": "AureliaE_Commerce.Dto.ProductGetAdviceFromUserDto",

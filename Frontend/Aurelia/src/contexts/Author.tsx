@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {
+import  {
   createContext,
   useContext,
   useEffect,
@@ -12,6 +12,7 @@ import { Toaster } from "../Components/Toaster";
 import { CartContext } from "./CartContext";
 import { api_Response } from "../services/http";
 import { useLocation } from "react-router-dom";
+import { LogginWithFireBase } from "../services/auth.service";
 
 type AuthContextType = {
   isSignned: boolean;
@@ -34,6 +35,9 @@ type AuthContextType = {
     avatar: string
   ) => Promise<void>;
   fetchData: ({ type }: { type: string }) => Promise<void>;
+  logInWIthGoogle: () => Promise<void>;
+  tab:string;
+  setTab: React.Dispatch<SetStateAction<string>>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -47,9 +51,13 @@ export const AuthContext = createContext<AuthContextType>({
   UpdateProfile: async () => {},
   fetchData: async () => {},
   logOut: async () => {},
+  logInWIthGoogle: async () => {},
+  tab: "login",
+  setTab: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [tab, setTab] = useState<string>("login");
   const [isSignned, setIsignned] = useState(false);
   const [doneWork, setDoneWork] = useState(false);
   const { CartDataAdd,  } = useContext(CartContext);
@@ -138,7 +146,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (error) {}
   };
-
+  
+  const logInWIthGoogle = async () => {
+    await LogginWithFireBase();
+  };
   const UpdateProfile = async (
     name: string,
     email: string,
@@ -183,6 +194,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
+        logInWIthGoogle,
         isSignned,
         setIsignned,
         logIn,
@@ -193,6 +205,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         fetchData,
         userData,
         logOut,
+        tab,
+        setTab,
       }}
     >
       {children}
