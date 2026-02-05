@@ -38,15 +38,12 @@ export const RecentOrder = ({ donHangChiTiet }: { donHangChiTiet: order[] }) => 
   return (
     <div className="border border-neutral-200 h-screen px-6 py-6 space-y-6">
 
-      {/* Header */}
       <div className="flex items-center gap-3">
         <ShoppingBag size={18} className="text-neutral-500" />
         <h1 className="text-sm tracking-widest uppercase text-neutral-900">
           Đơn hàng của bạn
         </h1>
       </div>
-
-      {/* Status Filter – editorial tabs */}
       <div className="flex gap-6 border-b border-neutral-200 pb-3 overflow-x-auto">
         {STATUS_CONFIG.map(({ label, icon: Icon }) => {
           const isActive = openStatus === label;
@@ -68,7 +65,6 @@ export const RecentOrder = ({ donHangChiTiet }: { donHangChiTiet: order[] }) => 
         })}
       </div>
 
-      {/* Orders */}
       <div className="space-y-4">
         {donHangChiTiet
           .filter((o) => !openStatus || o.status === openStatus)

@@ -86,13 +86,7 @@ const RightSiteMap: React.FC<RightProps> = ({ data,id }: RightProps) => {
     fetchRoute();
   }, [id, shop, customer]);
 
-  const icons = [
-    <Clock1 />,
-    <CheckCircle />,
-    <Package />,
-    <Truck />,
-    <Home />,
-  ];
+
 
 
   return (

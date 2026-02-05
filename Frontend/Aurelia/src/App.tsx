@@ -6,6 +6,7 @@ import FormAuthorForShopAndAdmin from "./Components/FormAuthorForShopAndAdmin";
 import { ForgotPassword } from "./Page/ForgotPassword";
 import { ChangePassWord } from "./Page/ChangePassWord";
 import Snowfall from "react-snowfall";
+import { OrderDetals } from "./Components/TrackingOrder/OrderDetals";
 
 const MainProduct = lazy(() =>
   import("./Page/MainProduct").then((m) => ({ default: m.MainProduct }))
@@ -126,6 +127,7 @@ function App() {
           <Route path="/payment/:id" element={<MockPayMent />} />
           <Route path="/bodyMeasurements" element={<BodySize />} />
           <Route path="/BookingAppointment/:id" element={<FormBooking />} />
+          <Route path="/orders/:id" element={<OrderDetals />} />
           <Route path="/tracking/:id" element={<MainPage />} />
           <Route path="/login" element={<FormAuthorForShopAndAdmin />} />
           <Route path="/DashBoardShop" element={<DashboardShop />} />

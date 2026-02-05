@@ -17,14 +17,12 @@ export const OrderCard = ({
         hover:border-neutral-300
       "
     >
-      {/* Image */}
       <img
         src={order.product[0]?.thumnail}
         alt="Product"
         className="w-24 h-24 object-cover"
       />
 
-      {/* Info */}
       <div className="flex-1 space-y-1">
         <p className="text-xs tracking-widest uppercase text-neutral-400">
           Order #{order.orderId}
@@ -57,7 +55,7 @@ export const OrderCard = ({
           )}
 
           <button
-            onClick={() => navigate(`/account/orders/${order.orderId}`)}
+            onClick={() => navigate(`/orders/${order.orderId}`)}
             className="text-xs tracking-widest uppercase text-neutral-900 border-b border-neutral-900"
           >
             Xem chi tiết
