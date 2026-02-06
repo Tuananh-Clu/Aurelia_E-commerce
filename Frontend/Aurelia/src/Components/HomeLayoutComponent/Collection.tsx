@@ -23,13 +23,11 @@ export const Collection = () => {
             index % 2 === 1 ? "md:flex-row-reverse" : ""
           }`}
         >
-          {/* Hình ảnh */}
           <div className="md:w-1/2 relative rounded-3xl overflow-hidden shadow-xl">
           <LazyImage src={item.banner} alt={item.name} className="w-full h-[420px] object-cover transform transition-transform duration-700 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
           </div>
 
-          {/* Nội dung */}
           <div className="md:w-1/2 w-full flex flex-col justify-center p-6 rounded-2xl bg-white/70 backdrop-blur-sm shadow-md">
             <p className="text-sm uppercase tracking-widest text-gray-500 mb-1">
               {item.slug}

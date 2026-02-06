@@ -7,28 +7,28 @@ export const DanhMuc = [
   {
     name: "Váy",
     type: "dress",
-    img: "https://i.pinimg.com/736x/58/0b/b7/580bb7f28cfbf183f2746993a181d9f7.jpg"
+    img: "https://i.pinimg.com/736x/58/0b/b7/580bb7f28cfbf183f2746993a181d9f7.jpg",
   },
   {
     name: "Áo",
     type: "top",
-    img: "https://i.pinimg.com/1200x/9b/e4/d5/9be4d5d483ce50ddc1dd7cdedcbde159.jpg"
+    img: "https://i.pinimg.com/1200x/9b/e4/d5/9be4d5d483ce50ddc1dd7cdedcbde159.jpg",
   },
   {
     name: "Trang Sức",
     type: "jewelry",
-    img: "https://i.pinimg.com/736x/1a/d8/11/1ad8111c65c6f2781ccba0009c11cd36.jpg"
+    img: "https://i.pinimg.com/736x/1a/d8/11/1ad8111c65c6f2781ccba0009c11cd36.jpg",
   },
   {
     name: "Đồng Hồ",
     type: "watch",
-    img: "https://i.pinimg.com/736x/87/9b/ec/879bec5e2a5e23f2528bf1efd93c3f74.jpg"
+    img: "https://i.pinimg.com/736x/87/9b/ec/879bec5e2a5e23f2528bf1efd93c3f74.jpg",
   },
   {
     name: "Phụ Kiện",
     type: "accessory",
-    img: "https://i.pinimg.com/1200x/c4/49/77/c44977b0c84eb51f1713c0778959fc8f.jpg"
-  }
+    img: "https://i.pinimg.com/1200x/c4/49/77/c44977b0c84eb51f1713c0778959fc8f.jpg",
+  },
 ];
 
 export const DanhMucSanPham = () => {
@@ -45,24 +45,66 @@ export const DanhMucSanPham = () => {
       <h1 className="text-3xl md:text-4xl tracking-tight font-heading font-bold text-gray-900 text-center mb-12">
         Danh Mục Sản Phẩm
       </h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto px-6">
-        {DanhMuc.map((item, idx) => (
+      <div className="w-full max-w-7xl mx-auto gap-8 px-4 md:px-0 flex flex-row  ">
+        <div className="flex flex-col w-3/5 ">
+          <LazyImage
+            src={DanhMuc[0].img}
+            alt={DanhMuc[0].name}
+            className="w-full h-full object-cover rounded-lg mb-4"
+          />
           <div
-            key={idx}
-            onClick={() => handleClick(item.type)}
-            className="relative group h-44 md:h-56 rounded-2xl overflow-hidden shadow-md cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
+            onClick={() => handleClick(DanhMuc[0].type)}
+            className="text-center cursor-pointer text-lg font-medium text-white hover:text-gray-900 absolute left-0 right-0 bottom-4 mx-auto"
           >
-            <LazyImage src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition duration-500"></div>
-            {/* Text */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center">
-              <h2 className="text-white text-lg md:text-xl font-semibold drop-shadow-md">
-                {item.name}
-              </h2>
+            {DanhMuc[0].name}
+          </div>
+        </div>
+
+        <div className="flex flex-col w-2/5">
+          <div className="flex flex-row  gap-5 w-full ">
+            {DanhMuc.slice(1, 3).map((item) => (
+              <div key={item.type} className="mb-6 relative">
+                <LazyImage
+                  src={item.img}
+                  alt={item.name}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
+                />
+                <div
+                  onClick={() => handleClick(item.type)}
+                  className="text-center cursor-pointer text-lg font-medium text-white hover:text-gray-900 absolute left-0 right-0 bottom-4 mx-auto"
+                >
+                  {item.name}
+                </div>
+              </div>
+            ))}
+          </div>
+           <div className="flex flex-col relative">
+            <LazyImage
+              src={DanhMuc[3].img}
+              alt={DanhMuc[3].name}
+              className="w-full h-48 object-cover rounded-lg mb-4"
+            />
+            <div
+              onClick={() => handleClick(DanhMuc[3].type)}
+              className="text-center cursor-pointer text-lg font-medium text-white hover:text-gray-900 absolute left-0 right-0 bottom-4 mx-auto"
+            >
+              {DanhMuc[4].name}
             </div>
           </div>
-        ))}
+          <div className="flex flex-col relative">
+            <LazyImage
+              src={DanhMuc[4].img}
+              alt={DanhMuc[4].name}
+              className="w-full h-48 object-cover rounded-lg mb-4"
+            />
+            <div
+              onClick={() => handleClick(DanhMuc[4].type)}
+              className="text-center cursor-pointer text-lg font-medium text-white hover:text-gray-900 absolute left-0 right-0 bottom-4 mx-auto"
+            >
+              {DanhMuc[4].name}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
