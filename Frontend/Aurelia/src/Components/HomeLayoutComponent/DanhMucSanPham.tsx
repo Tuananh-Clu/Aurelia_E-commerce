@@ -46,11 +46,13 @@ export const DanhMucSanPham = () => {
         Danh Mục Sản Phẩm
       </h1>
       <div className="w-full max-w-7xl mx-auto gap-8 px-4 md:px-0 flex flex-row  ">
-        <div className="flex flex-col w-3/5 ">
+        <div className="flex flex-col w-3/5 h-[676px]
+        relative">
           <LazyImage
+          onClick={() => handleClick(DanhMuc[0].type)}
             src={DanhMuc[0].img}
             alt={DanhMuc[0].name}
-            className="w-full h-full object-cover rounded-lg mb-4"
+            className="w-full  h-[676px] object-cover cursor-pointer rounded-lg mb-4"
           />
           <div
             onClick={() => handleClick(DanhMuc[0].type)}
@@ -60,14 +62,15 @@ export const DanhMucSanPham = () => {
           </div>
         </div>
 
-        <div className="flex flex-col w-2/5">
-          <div className="flex flex-row  gap-5 w-full ">
+        <div className="flex flex-col w-2/5 ">
+          <div className="flex flex-row  gap-5 w-full  ">
             {DanhMuc.slice(1, 3).map((item) => (
               <div key={item.type} className="mb-6 relative">
                 <LazyImage
+                onClick={() => handleClick(DanhMuc[0].type)}
                   src={item.img}
                   alt={item.name}
-                  className="w-full h-48 object-cover rounded-lg mb-4"
+                  className="w-67 h-59 object-cover cursor-pointer rounded-lg mb-4"
                 />
                 <div
                   onClick={() => handleClick(item.type)}
@@ -80,22 +83,24 @@ export const DanhMucSanPham = () => {
           </div>
            <div className="flex flex-col relative">
             <LazyImage
+            onClick={() => handleClick(DanhMuc[0].type)}
               src={DanhMuc[3].img}
               alt={DanhMuc[3].name}
-              className="w-full h-48 object-cover rounded-lg mb-4"
+              className="w-full h-48 object-cover cursor-pointer rounded-lg mb-4"
             />
             <div
               onClick={() => handleClick(DanhMuc[3].type)}
               className="text-center cursor-pointer text-lg font-medium text-white hover:text-gray-900 absolute left-0 right-0 bottom-4 mx-auto"
             >
-              {DanhMuc[4].name}
+              {DanhMuc[3].name}
             </div>
           </div>
           <div className="flex flex-col relative">
             <LazyImage
+            onClick={() => handleClick(DanhMuc[0].type)}
               src={DanhMuc[4].img}
               alt={DanhMuc[4].name}
-              className="w-full h-48 object-cover rounded-lg mb-4"
+              className="w-full h-48 object-cover cursor-pointer rounded-lg mb-4"
             />
             <div
               onClick={() => handleClick(DanhMuc[4].type)}

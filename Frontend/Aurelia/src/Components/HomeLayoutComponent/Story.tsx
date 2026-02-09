@@ -1,6 +1,7 @@
-import { motion, type Variants } from "framer-motion";
+
 import { useContext, useMemo } from "react";
 import { AdminContext } from "../../contexts/AdminContext";
+import { ArrowBigLeftDash } from "lucide-react";
 
 
 export const Story = () => {
@@ -9,123 +10,138 @@ export const Story = () => {
     () => (Array.isArray(StoryBanner) ? StoryBanner : []),
     [StoryBanner]
   );
-  const fade = (delay: number = 0): Variants => ({
-    hidden: { opacity: 0, y: 25 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { delay, duration: 0.8, ease: "easeOut" },
-    },
-  });
 
- const styleByLayoutStory: Record<string, any> = {
-    A: {
-      wrapper:
-        "relative flex flex-col justify-center items-center text-center h-[750px] bg-black text-white overflow-hidden",
-      image:
-        "absolute inset-0 w-full h-full object-cover brightness-[0.45] scale-110 hover:scale-115 transition-transform duration-[1200ms] ease-[cubic-bezier(.4,0,.2,1)]",
-      text: "relative z-10 max-w-3xl space-y-6 backdrop-blur-sm bg-white/5 px-10 py-8 rounded-3xl border border-white/10 shadow-[0_0_60px_rgba(255,255,255,0.1)]",
-    },
-    B: {
-      wrapper:
-        "relative flex flex-col items-center gap-24 py-40 px-10 bg-gradient-to-b from-white to-gray-50 rounded-[3rem] overflow-hidden",
-      image:
-        "w-[full] md:w-[60%] h-[450px] object-cover rounded-[2rem] shadow-xl hover:scale-105 transition-transform duration-700",
-      text: "max-w-3xl text-center md:text-left space-y-4 bg-white/80 backdrop-blur-sm p-10 rounded-[2rem] shadow-[0_10px_40px_rgba(0,0,0,0.08)]",
-    },
-    C: {
-      wrapper:
-        "relative flex flex-col justify-end items-start h-[750px] text-white overflow-hidden",
-      image:
-        "absolute inset-0 w-full h-full object-cover brightness-[0.4] hover:brightness-[0.5] transition duration-700",
-      text: "relative z-10 p-20 max-w-2xl space-y-4 bg-gradient-to-t from-black/70 via-black/40 to-transparent rounded-[3rem]",
-    },
-    D: {
-      wrapper:
-        "relative  bg-white overflow-hidden rounded-[3rem] flex items-center justify-center bg-black ",
-      image:
-        "absolute w-[60%] h-[80%] object-cover rounded-[2rem] shadow-[0_20px_80px_rgba(0,0,0,0.25)] left-[10%] top-[10%] rotate-[-3deg] hover:rotate-0 transition-all duration-700",
-      text: "absolute right-[8%] bottom-[15%] max-w-md bg-black text-white px-10 py-8 rounded-[2rem] shadow-[0_0_60px_rgba(0,0,0,0.3)] leading-relaxed space-y-4",
-    },
-  };
-  return (
+return (
     <>
-      {banner
-        .filter((b) => b.active)
-        .map((banner) => {
-          const layoutKey = (banner.layout || "A").toUpperCase() as keyof typeof styleByLayoutStory;
-          const style = styleByLayoutStory[layoutKey] || styleByLayoutStory.A;
-
-          return (
-            <section
-              key={banner.id}
-              className={`${style.wrapper} mb-16  shadow-lg overflow-hidden relative`}
-            >
-              {/* 🌆 Background */}
-              <div className="absolute inset-0">
-                <img
-                  src={banner.linkUrl}
-                  alt={banner.mainTitle}
-                  className={style.image}
-                />
-                <div className={`absolute inset-0 bg-gradient-to-t ${style.overlay}`} />
-              </div>
-
-
-              {/* 📝 Content */}
-              <div className={style.text}>
-                <motion.h2
-                  variants={fade(0)}
-                  initial="hidden"
-                  animate="show"
-                  className="text-4xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r bg-clip-text text-transparent tracking-tight"
-                  style={{ color: banner.colorMainTitle }}
-                >
-                  {banner.mainTitle}
-                </motion.h2>
-
-                {banner.h1 && (
-                  <motion.h3
-                    variants={fade(0.2)}
-                    initial="hidden"
-                    animate="show"
-                    className={`text-xl md:text-2xl font-medium mb-4 ${banner.colorText}`}
-                    style={{color:banner.colorText}}
-                  >
-                    {banner.h1}
-                  </motion.h3>
-                )}
-
-                {banner.pagaraph && (
-                  <motion.p
-                    variants={fade(0.3)}
-                    initial="hidden"
-                    animate="show"
-                    className="text-base md:text-lg leading-relaxed text-gray-100/90 mb-6"
-                    style={{color:banner.colorText}}
-                  >
-                    {banner.pagaraph}
-                  </motion.p>
-                )}
-
-                {banner.H2 && (
-                  <motion.div
-                    variants={fade(0.5)}
-                    initial="hidden"
-                    animate="show"
-                    className="mt-8"
-                  >
-                    <h3
-                      className={`text-lg md:text-xl italic ${style.quote} font-light tracking-wide`}
-                    >
-                      “{banner.H2}”
-                    </h3>
-                  </motion.div>
-                )}
-              </div>
-            </section>
-          );
-        })}
+    {
+      banner.map((data: any, index: number) => {
+        if (data.layout=== 'A') {
+          return <StoryA key={index} data={data} />;
+        }
+        else if (data.layout === 'B') {
+          return <StoryB key={index} data={data} />;
+        }
+        else if (data.layout === 'C') {
+          return <StoryC key={index} data={data} />;
+        }
+        return null;
+      }
+      )
+    }
     </>
+)
+};
+export const StoryA = ({ data }: any) => {
+  return (
+    <section className="relative w-full h-[90vh] flex items-center overflow-hidden bg-zinc-900 dark:bg-black">
+      <div className="absolute inset-0 w-full h-full">
+        <img
+          alt="High-end fashion aesthetic background"
+          className="w-full h-full object-cover opacity-60 scale-105 animate-slow-zoom"
+          src={data.linkUrl}
+        />
+        <div className="absolute inset-0 banner-gradient"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/50 via-transparent to-transparent"></div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-8 md:px-16 lg:px-24">
+        <div className="max-w-3xl animate-fade-in-up">
+          <div className="w-16 h-0.5 bg-primary mb-8"></div>
+          <p className="font-serif text-6xl md:text-8xl lg:text-9xl text-white leading-tight mb-8 tracking-tighter drop-shadow-lg">
+            {data.mainTitle}
+          </p>
+          <div className="flex flex-col md:row items-start md:items-center gap-6">
+            <h1 className="text-white/80 text-xl md:text-2xl font-serif tracking-widest uppercase">
+              {data.h1}
+            </h1>
+            <div className="hidden md:block w-12 h-px bg-white/20"></div>
+            <p className="text-white/60 text-base leading-relaxed font-light max-w-sm">
+              {data.pagaraph}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
+
+export const StoryB = ({ data }: {data: any}) => {
+  return (
+    <section className="w-full flex flex-col md:flex-row h-auto md:h-[500px] lg:h-[600px] bg-charcoal overflow-hidden shadow-2xl rounded-sm">
+      <div className="w-full md:w-[42%] flex flex-col justify-center p-10 md:p-16 lg:p-24 bg-black border-r border-white/5 relative">
+        <div className="absolute top-0 left-0 w-1 h-20 bg-primary opacity-50"></div>
+        <div className="flex flex-col gap-6 md:gap-8">
+          <span className=" text-xl md:text-2xl font-serif tracking-wide animate-in fade-in slide-in-from-left-4 duration-700">
+            {data.mainTitle}
+          </span>
+
+          <h1 className="text-white text-4xl md:text-5xl lg:text-7xl font-black leading-[1.1] tracking-tight animate-in fade-in slide-in-from-left-6 duration-1000">
+            {data.h1}
+          </h1>
+
+          <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-sm animate-in fade-in slide-in-from-left-8 duration-1000 delay-200">
+            {data.pagaraph}
+          </p>
+
+          <div className="mt-4 md:mt-6">
+            <button className="group relative overflow-hidden inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.4em] text-white py-2">
+              <span className="relative z-10">Discover More</span>
+              <ArrowBigLeftDash className="w-5 h-5 transform rotate-180 transition-transform duration-500 group-hover:-translate-x-2" />
+              <span className="absolute bottom-0 left-0 w-8 h-px bg-primary transition-all duration-500 group-hover:w-full"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full md:w-[58%] relative min-h-[400px] md:h-full group">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent z-10 md:hidden"></div>
+        <div className="absolute inset-0 bg-black/5 mix-blend-overlay z-10"></div>
+
+        <div
+          className="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-[3000ms] group-hover:scale-110"
+          style={{ backgroundImage: `url("${data.linkUrl}")` }}
+          aria-label="Artistic close-up of luxury hangers"
+        ></div>
+        <div className="absolute bottom-8 right-8 z-20 hidden lg:flex items-center gap-4 bg-black/40 backdrop-blur-md p-4 border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+          <div className="w-8 h-px bg-primary"></div>
+          <span className="text-[10px] uppercase tracking-widest text-white/70">
+            Signature Series // SS24
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const StoryC = ({ data }: {data: any}) => {
+  return (
+    <section className="relative w-full h-[600px] flex items-center overflow-hidden bg-luxury-charcoal dark:bg-black">
+      <div className="absolute inset-0 w-full h-full">
+        <img 
+          alt="High-end silver designer hangers" 
+          className="w-full h-full object-cover object-right opacity-80" 
+          src={data.linkUrl}
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = 'https://picsum.photos/1920/600?grayscale';
+          }}
+        />
+        <div className="absolute inset-0 banner-gradient"></div>
+      </div>
+      
+      <div className="relative z-10 container mx-auto px-8 md:px-16 lg:px-24">
+        <div className="max-w-2xl">
+          <p className=" text-5xl md:text-7xl lg:text-8xl text-white font-serif  leading-tight mb-6  animate-fade-in-up">
+            {data.mainTitle}
+          </p>
+          <h1 className="text-white text-2xl md:text-3xl font-light mb-4 tracking-wide uppercase">
+            {data.h1}
+          </h1>
+          <p className="text-white/80 text-lg leading-relaxed font-light max-w-md">
+            {data.pagaraph}
+          </p>
+        </div>
+      </div>
+
+    </section>
+  );
+}

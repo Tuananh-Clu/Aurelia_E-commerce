@@ -17,7 +17,7 @@ export const HeroBanner = () => {
   if (!banners.length) return null;
   const current = banners[index];
 
- return (
+  return (
     <div className="relative w-full  overflow-hidden">
       {current.layout === "A" ? (
         <HeroA data={current} />
@@ -28,7 +28,7 @@ export const HeroBanner = () => {
       ) : current.layout === "D" ? (
         <HeroD data={current} />
       ) : null}
- <button
+      <button
         onClick={() =>
           setIndex((prev) => (prev - 1 + banners.length) % banners.length)
         }
@@ -51,10 +51,16 @@ export const HeroA = ({ data }: { data: any }) => {
     <section className="relative w-full flex flex-col lg:flex-row min-h-screen pt-10">
       <div className="flex-grow lg:w-[60%] flex flex-col justify-between p-8 md:p-16 lg:p-24 bg-white dark:bg-background-dark z-10">
         <div className="max-w-md mt-16 md:mt-24">
-          <p className="text-[10px] tracking-widest-plus uppercase text-gray-400 mb-8 animate-pulse">
+          <p
+            className="text-[10px] tracking-widest-plus uppercase mb-8 animate-pulse"
+            style={{ color: data.colorText }}
+          >
             {data.h1}
           </p>
-          <h2 className="text-2xl md:text-3xl z-40 leading-relaxed font-light text-gray-900 ">
+          <h2
+            className="text-2xl md:text-3xl z-40 leading-relaxed font-light"
+            style={{ color: data.colorText }}
+          >
             {data.pagaraph}
           </h2>
         </div>
@@ -64,7 +70,10 @@ export const HeroA = ({ data }: { data: any }) => {
             href="#"
             className="group inline-flex items-center gap-6 py-4 relative"
           >
-            <span className="text-[10px] tracking-ultra-wide uppercase font-bold">
+            <span
+              className="text-[10px] tracking-ultra-wide uppercase font-bold"
+              style={{ color: data.colorText }}
+            >
               {data.textInButton}
             </span>
             <div className="text-primary group-hover:translate-x-4 transition-transform duration-500">
@@ -89,7 +98,10 @@ export const HeroA = ({ data }: { data: any }) => {
       </div>
       <div className="relative flex-grow lg:w-[40%] flex min-h-[500px] lg:min-h-0 bg-transparent z-10 border-l border-gray-100 dark:border-gray-800">
         <div className="absolute left-0 top-0 bottom-0 flex items-center justify-center z-20 pointer-events-none -translate-x-3/4  overflow-hidden">
-          <h1 className="vertical-text text-5xl md:text-7xl lg:text-8xl font-thin tracking-ultra-wide text-black  uppercase whitespace-nowrap  py-12 px-2 select-none">
+          <h1
+            className="vertical-text text-5xl md:text-7xl lg:text-8xl font-thin tracking-ultra-wide uppercase whitespace-nowrap py-12 px-2 select-none"
+            style={{ color: data.colorMainTitle }}
+          >
             {data.mainTitle}
           </h1>
         </div>
@@ -125,13 +137,19 @@ export const HeroB = ({ data }: { data: any }) => {
 
       <div className="relative z-10 flex flex-col items-center text-center px-6 animate-luxury">
         <div className="flex flex-col gap-10 items-center">
-          <h1 className="text-aurelia-charcoal dark:text-white text-5xl md:text-7xl lg:text-9xl font-extralight tracking-extrawide leading-none text-glow drop-shadow-sm">
+          <h1
+            className="text-5xl md:text-7xl lg:text-9xl font-extralight tracking-extrawide leading-none text-glow drop-shadow-sm"
+            style={{ color: data.colorMainTitle }}
+          >
             {data.mainTitle}
           </h1>
           <div className="w-[120px] h-[1px] bg-gradient-to-r from-transparent via-aurelia-silver to-transparent"></div>
 
           <div className="flex flex-col gap-8 items-center max-w-xl">
-            <p className="text-sm md:text-base text-gray-600 font-light tracking-[0.2em] italic leading-relaxed">
+            <p
+              className="text-sm md:text-base font-light tracking-[0.2em] italic leading-relaxed"
+              style={{ color: data.colorText }}
+            >
               {data.pagaraph}
             </p>
 
@@ -170,7 +188,10 @@ const HeroC = ({ data }: { data: any }) => {
         </span>
       </div>
       <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden xl:block text-right">
-        <span className="vertical-text rotate-180 text-[10px] tracking-[0.8em] font-medium uppercase text-gray-300">
+        <span
+          className="vertical-text rotate-180 text-[10px] tracking-[0.8em] font-medium uppercase"
+          style={{ color: data.colorMainTitle }}
+        >
           {data.mainTitle}
         </span>
       </div>
@@ -183,11 +204,17 @@ const HeroC = ({ data }: { data: any }) => {
           <div className="flex items-center justify-center gap-4 mb-4">
             <div className="h-[1px] w-12 bg-gray-200" />
             <div className="h-[1px] w-12 bg-gray-200" />
-            <span className="text-[10px] tracking-[0.3em] font-semibold text-gray-400 uppercase">
+            <span
+              className="text-[10px] tracking-[0.3em] font-semibold uppercase"
+              style={{ color: data.colorText }}
+            >
               {data.subtitle}
             </span>
           </div>
-          <h1 className="text-6xl md:text-8xl lg:text-[110px] font-black serif uppercase tracking-tight leading-none">
+          <h1
+            className="text-6xl md:text-8xl lg:text-[110px] font-black serif uppercase tracking-tight leading-none"
+            style={{ color: data.colorMainTitle }}
+          >
             {data.h1.split(" ")[0]}
             <br />
             {data.h1.split(" ")[1]}
@@ -216,11 +243,17 @@ const HeroC = ({ data }: { data: any }) => {
           className="max-w-lg text-center space-y-10 animate-fade-in"
           key={`desc-${data.id}`}
         >
-          <p className="text-lg md:text-xl text-gray-600 font-light leading-relaxed serif italic">
+          <p
+            className="text-lg md:text-xl font-light leading-relaxed serif italic"
+            style={{ color: data.colorText }}
+          >
             {data.pagaraph}
           </p>
 
-          <button className="px-12 py-5 bg-[#0a0a0a] text-white text-[11px] font-bold tracking-[0.4em] uppercase hover:bg-gray-800 transition-colors shadow-xl">
+          <button
+            className="px-12 py-5 text-white text-[11px] font-bold tracking-[0.4em] uppercase hover:opacity-80 transition-colors shadow-xl"
+            style={{ backgroundColor: data.colorMainTitle }}
+          >
             Explore Collection
           </button>
         </div>
@@ -233,10 +266,16 @@ const HeroD = ({ data }: { data: any }) => {
   return (
     <main className="flex-1 flex flex-col items-center justify-center relative px-4 h-screen overflow-hidden">
       <div className="text-center">
-        <h1 className="text-[10vw] md:text-[14vw] font-black leading-none tracking-[-0.05em] silver-foil-text italic select-none">
+        <h1
+          className="text-[10vw] md:text-[14vw] font-black leading-none tracking-[-0.05em] silver-foil-text italic select-none"
+          style={{ color: data.colorMainTitle }}
+        >
           {data.mainTitle}
         </h1>
-        <p className="mt-2 text-[10px] md:text-xs uppercase tracking-ultra-wide text-luxury-gray">
+        <p
+          className="mt-2 text-[10px] md:text-xs uppercase tracking-ultra-wide"
+          style={{ color: data.colorText }}
+        >
           {data.pagaraph}
         </p>
       </div>
@@ -245,6 +284,7 @@ const HeroD = ({ data }: { data: any }) => {
         <a
           href="#"
           className="relative inline-block text-sm md:text-base tracking-very-wide font-light uppercase silver-foil-text cta-line group"
+          style={{ color: data.colorText }}
         >
           {data.textButton}
         </a>
@@ -260,7 +300,10 @@ const HeroD = ({ data }: { data: any }) => {
       </div>
 
       <div className="absolute bottom-16 left-8 md:left-24 flex flex-col items-center gap-6">
-        <span className="text-[10px] tracking-widest font-bold silver-foil-text">
+        <span
+          className="text-[10px] tracking-widest font-bold silver-foil-text"
+          style={{ color: data.colorText }}
+        >
           05 / 05
         </span>
         <div className="w-[1px] h-32 bg-gradient-to-b from-luxury-silver via-gray-300 to-transparent"></div>

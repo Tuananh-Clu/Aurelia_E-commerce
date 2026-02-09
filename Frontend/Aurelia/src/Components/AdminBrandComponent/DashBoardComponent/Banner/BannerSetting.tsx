@@ -7,7 +7,6 @@ import { LayoutPreview } from "./LayoutPreview";
 
 export const BannerSetting = () => {
   const { MainBanner, StoryBanner, handleClick } = useContext(AdminContext);
-
   const [statusState, setStatusState] = useState<"Main" | "Story">("Main");
   const [selected, setSelected] = useState(0);
   const [file, setFile] = useState<File | null>(null);
@@ -21,11 +20,10 @@ export const BannerSetting = () => {
   const current = banners?.[selected];
 
   const ListStyle = useMemo(
-    () => (statusState === "Main" ? ["A", "B", "C", "D", "E"] : ["A", "B", "C", "D"]),
+    () => (statusState === "Main" ? ["A", "B", "C", "D"] : ["A", "B", "C", "D"]),
     [statusState]
   );
 
-  // Update a single field in current banner
   const updateBannerField = useCallback(
     (field: string, value: any) => {
       const updater = (prev: any[]) =>
@@ -41,8 +39,6 @@ export const BannerSetting = () => {
   const SaveChangeValue = () => {
     handleClick(statusState, current);
   };
-
-  // Upload image
   const uploadImage = async (fileList: File[]) => {
     try {
       const apiKey = "0d1c3d8a0af15e271bc8154578e71620";
@@ -80,8 +76,6 @@ export const BannerSetting = () => {
 
   return (
     <div className=" p-3 md:p-8 w-[300px] md:w-full space-y-8 overflow-y-auto max-h-screen">
-
-      {/* Popup thêm banner */}
       {popupAddBanner && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 w-full h-full">
           <AddBanner
@@ -90,8 +84,6 @@ export const BannerSetting = () => {
           />
         </div>
       )}
-
-      {/* Header */}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
           Quản lý Banner ({statusState})
@@ -177,14 +169,11 @@ export const BannerSetting = () => {
           </div>
         </div>
 
-        {/* RIGHT COLUMN (EDIT FORM) */}
         <div className="w-full md:w-[30%] bg-white/70 backdrop-blur-lg rounded-3xl p-6 shadow-xl space-y-6 h-fit md:sticky md:top-8">
 
           <h3 className="text-xl font-semibold text-gray-800">
             Chỉnh sửa Banner
           </h3>
-
-          {/* Upload image */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-600">
               Ảnh chính
@@ -203,8 +192,6 @@ export const BannerSetting = () => {
               />
             </div>
           </div>
-
-          {/* Layout selection */}
           <div>
             {ListStyle.map((style, idx) => (
               <button
@@ -217,7 +204,6 @@ export const BannerSetting = () => {
             ))}
           </div>
 
-          {/* Main title */}
           <div>
             <label className="flex items-center gap-2 text-sm font-medium text-gray-600">
               <Type size={16} /> Tiêu đề chính
@@ -230,7 +216,6 @@ export const BannerSetting = () => {
             />
           </div>
 
-          {/* Sub title 1 */}
           <div>
             <label className="flex items-center gap-2 text-sm font-medium text-gray-600">
               <Edit2 size={16} /> Tiêu đề phụ 1
@@ -242,7 +227,6 @@ export const BannerSetting = () => {
             />
           </div>
 
-          {/* Story: Sub title 2 */}
           {statusState === "Story" && (
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-600">
@@ -256,7 +240,6 @@ export const BannerSetting = () => {
             </div>
           )}
 
-          {/* Main: Button text */}
           {statusState === "Main" && (
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-gray-600">
