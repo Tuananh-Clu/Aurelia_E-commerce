@@ -7,7 +7,6 @@ import {
   Eye,
   Package,
   Star,
-  Zap,
   Shirt,
   ArrowRight,
   Filter,
@@ -41,7 +40,7 @@ export default function Collections() {
   const handleclick = (id: string) => navigate(`/Collection/${id}`);
 
   return (
-    <div className="h-[110vh] overflow-y-auto bg-[#f5f6f7] text-[#1d1d1f] p-3 md:p-8 md:w-full   relative">
+    <div className="h-[110vh] overflow-y-auto  text-[#1d1d1f] p-3 md:p-8 md:w-full   relative">
 
       {activeAddCollection && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-start justify-center z-50">
@@ -52,18 +51,13 @@ export default function Collections() {
           />
         </div>
       )}
-
-      {/* Header */}
       <div className="w-full mx-auto">
-        <div className="mb-8 bg-white/70 backdrop-blur-md border border-slate-200 shadow-lg rounded-2xl p-6 sm:p-8">
+        <div className="mb-8    p-6 sm:p-8">
 
           <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-6 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-12 h-12 bg-gradient-to-br from-slate-300 to-slate-100 shadow-inner rounded-2xl flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-slate-700" />
-                </div>
-                <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-800">
+                <h1 className="text-4xl sm:text-5xl  serif">
                   Collections
                 </h1>
               </div>
@@ -74,7 +68,7 @@ export default function Collections() {
 
             <button
               onClick={() => setActiveAddCollection(true)}
-              className="px-6 py-3 bg-slate-800 text-white rounded-xl font-semibold hover:bg-slate-700 transition"
+              className="px-6 py-3 bg-black text-white  font-semibold hover:bg-slate-700 transition"
             >
               <div className="flex items-center gap-2">
                 <Plus className="w-5 h-5" />
@@ -82,8 +76,6 @@ export default function Collections() {
               </div>
             </button>
           </div>
-
-          {/* Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
               {
@@ -123,7 +115,6 @@ export default function Collections() {
           </div>
         </div>
 
-        {/* Search bar */}
         <div className="mb-8 bg-white/70 backdrop-blur border border-slate-200 shadow rounded-xl p-4">
           <div className="flex items-center gap-3 flex-wrap">
 
@@ -167,8 +158,6 @@ export default function Collections() {
 
           </div>
         </div>
-
-        {/* Collections */}
         <div
           className={`grid gap-6 ${
             viewMode === "grid"
@@ -179,7 +168,7 @@ export default function Collections() {
           {filteredCollections?.map((collection) => (
             <div
               key={collection.id}
-              className="group relative bg-white/80 shadow border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl transition"
+              className="group relative bg-white/80 shadow border border-slate-200  overflow-hidden hover:shadow-xl transition"
             >
               <div className="h-64 sm:h-72 relative">
                 <img
@@ -188,7 +177,6 @@ export default function Collections() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 
-                {/* action buttons */}
                 <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition">
                   <button
                     onClick={() => {
@@ -237,8 +225,6 @@ export default function Collections() {
               </div>
             </div>
           ))}
-
-          {/* Add new */}
           <div
             className="h-[350px] bg-white/70 border border-slate-300 rounded-2xl flex flex-col justify-center items-center cursor-pointer hover:bg-slate-100 transition"
             onClick={() => setActiveAddCollection(true)}

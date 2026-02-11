@@ -5,8 +5,6 @@ import {
   Users,
   Percent,
   BarChart3,
-  TrendingUp,
-  TrendingDown,
 } from "lucide-react";
 import {
   Chart as ChartJS,
@@ -23,12 +21,14 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 import type { ChartOptions, ChartData } from "chart.js";
 import { useContext } from "react";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { Bar } from "react-chartjs-2";
+import BestSeller from "./BestSeller";
+import StatsCard from "./StatsCard";
 
 export const OverView = () => {
   const fadeUp: Variants = {
@@ -50,26 +50,15 @@ export const OverView = () => {
         label: "Doanh thu theo tháng",
         data: doanhThuCuaHang.map((item) => item.revenue),
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(255, 159, 64)",
-          "rgb(255, 205, 86)",
-          "rgb(75, 192, 192)",
-          "rgb(54, 162, 235)",
-          "rgb(153, 102, 255)",
           "rgb(201, 203, 207)",
+          "black",
         ],
         borderColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
           "rgba(201, 203, 207, 0.2)",
+          "rgba(0, 0, 0, 0.2)",
         ],
         borderWidth: 2,
-        borderRadius: 8,
-        hoverBackgroundColor: "rgba(99, 102, 241, 1)",
+        hoverBackgroundColor: "white",
       },
     ],
   };
@@ -129,7 +118,7 @@ export const OverView = () => {
 
   const cards = [
     {
-      icon: <DollarSign className="text-emerald-500" size={24} />,
+      icon: <DollarSign className="text-white" size={24} />,
       title: "Doanh thu",
       value: dataRevenue?.totalRevenue.toLocaleString("vi-VN", {
         style: "currency",
@@ -144,7 +133,7 @@ export const OverView = () => {
       iconBg: "bg-emerald-500/10",
     },
     {
-      icon: <ShoppingBag className="text-indigo-500" size={24} />,
+      icon: <ShoppingBag className="text-white" size={24} />,
       title: "Đơn hàng",
       value: dataRevenue?.totalOrders.toLocaleString("vi-VN"),
       trend:
@@ -156,7 +145,7 @@ export const OverView = () => {
       iconBg: "bg-indigo-500/10",
     },
     {
-      icon: <Users className="text-purple-500" size={24} />,
+      icon: <Users className="text-white" size={24} />,
       title: "Khách hàng",
       value: dataUser?.soLuongKhachDangKy.toLocaleString("vi-VN"),
       trend:
@@ -168,7 +157,7 @@ export const OverView = () => {
       iconBg: "bg-purple-500/10",
     },
     {
-      icon: <Percent className="text-orange-500" size={24} />,
+      icon: <Percent className="text-white" size={24} />,
       title: "Mã giảm giá",
       value: dataUser?.soLuongCoupon.toLocaleString("vi-VN"),
       trend:
@@ -191,70 +180,23 @@ export const OverView = () => {
         show: { transition: { staggerChildren: 0.1 } },
       }}
     >
-      {/* Header */}
-      <motion.div variants={fadeUp} className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-2">
+      <motion.div className="mb-8" variants={fadeUp}>
+        <h2 className="serif text-4xl lg:text-5xl font-normal  mb-3">
           Bảng tổng quan thương hiệu
-        </h1>
-        <p className="text-base text-gray-600">
+        </h2>
+        <p className="text-secondary dark:text-accent text-sm font-light tracking-wide">
           Cập nhật hiệu suất và tình hình kinh doanh mới nhất
         </p>
       </motion.div>
-
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        {cards.map((item, i) => (
-          <motion.div
-            key={i}
-            variants={fadeUp}
-            whileHover={{ y: -4, scale: 1.01 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className={`relative overflow-hidden p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg border border-gray-100 transition-all duration-300`}
-          >
-            <div
-              className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${item.color} rounded-full blur-3xl -z-0`}
-            />
-
-            <div className="relative z-10">
-              <div className="flex items-start justify-between mb-4">
-                <div className={`p-3 ${item.iconBg} rounded-xl`}>
-                  {item.icon}
-                </div>
-                <div
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-full ${
-                    item.isPositive ? "bg-emerald-50" : "bg-rose-50"
-                  }`}
-                >
-                  {item.isPositive ? (
-                    <TrendingUp size={14} className="text-emerald-600" />
-                  ) : (
-                    <TrendingDown size={14} className="text-rose-600" />
-                  )}
-                  <span
-                    className={`text-xs font-semibold ${
-                      item.isPositive ? "text-emerald-600" : "text-rose-600"
-                    }`}
-                  >
-                    {item.trend}
-                  </span>
-                </div>
-              </div>
-
-              <p className="text-sm font-medium text-gray-500 mb-1">
-                {item.title}
-              </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                {item.value}
-              </h2>
-              <p className="text-xs text-gray-400 mt-2">so với tháng trước</p>
-            </div>
-          </motion.div>
-        ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      {
+        cards.map((card) => (
+          <StatsCard data={card} />
+        ))
+      }
       </div>
 
-      {/* Chart and Best Sellers Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Chart */}
         <motion.div
           variants={fadeUp}
           className="lg:col-span-2 bg-white rounded-2xl shadow-sm p-6 border border-gray-100"
@@ -287,61 +229,13 @@ export const OverView = () => {
           )}
         </motion.div>
 
-        {/* Best Sellers */}
-        <motion.div
-          variants={fadeUp}
-          className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100"
-        >
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-2xl">🔥</span>
-            <h2 className="text-xl font-bold text-gray-900">
-              Sản phẩm bán chạy
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            {bestSellingProducts?.slice(0, 5)?.map((p, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ x: 4 }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer group"
-              >
-                <div
-                  className={`flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg font-bold text-sm ${
-                    i === 0
-                      ? "bg-gradient-to-br from-yellow-400 to-orange-500 text-white"
-                      : i === 1
-                      ? "bg-gradient-to-br from-gray-300 to-gray-400 text-white"
-                      : i === 2
-                      ? "bg-gradient-to-br from-yellow-600 to-yellow-800 text-white"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                >
-                  {i + 1}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900 text-sm truncate group-hover:text-indigo-600 transition-colors">
-                    {p.name}
-                  </p>
-                  <p className="text-xs text-gray-500">{p.type}</p>
-                </div>
-
-                <div className="text-right flex-shrink-0">
-                  <p className="text-sm font-bold text-emerald-600">
-                    {(p.price * p.sold).toLocaleString("vi-VN")} VND
-                  </p>
-                  <p className="text-xs text-gray-500">{p.sold} đã bán</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        <div className="flex flex-col">
+          <BestSeller TOP_PRODUCTS={bestSellingProducts.slice(0, 5)} />
 
           <button className="w-full mt-4 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors border border-gray-200">
             Xem tất cả sản phẩm
           </button>
-        </motion.div>
+        </div>
       </div>
     </motion.div>
   );
