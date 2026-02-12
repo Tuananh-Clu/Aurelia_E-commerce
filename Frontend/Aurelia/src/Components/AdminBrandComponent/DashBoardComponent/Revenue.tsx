@@ -15,7 +15,7 @@ import {
 import { useContext, useState } from "react";
 import { AdminContext } from "../../../contexts/AdminContext";
 import { Bar, Doughnut, Radar, Line } from "react-chartjs-2";
-import { TrendingUp, PieChart, Activity, Sparkles, DollarSign, ShoppingCart, Zap, Star } from "lucide-react";
+import { TrendingUp, PieChart, Activity, DollarSign, ShoppingCart, Zap, Star } from "lucide-react";
 
 ChartJS.register(
   RadialLinearScale,
@@ -35,12 +35,10 @@ export const Revenue = () => {
   const { revenueData, categoryData, ServiceData,dataRevenue } = useContext(AdminContext);
   const [hoveredCard, setHoveredCard] = useState(null);
 
-  // Calculate stats from actual data
   const totalRevenue = revenueData.reduce((sum, item) => sum + item.revenue, 0);
   const totalOrders = revenueData.reduce((sum, item) => sum + item.orders, 0);
   const avgRevenue = revenueData.length > 0 ? totalRevenue / revenueData.length : 0;
 
-  // Advanced gradient bar chart
   const barData = {
     labels: revenueData.map((item) => item.thang),
     datasets: [
@@ -50,8 +48,8 @@ export const Revenue = () => {
         backgroundColor: (context:any) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-          gradient.addColorStop(0, "rgba(99, 102, 241, 0.9)");
-          gradient.addColorStop(1, "rgba(139, 92, 246, 0.3)");
+          gradient.addColorStop(0, "black");
+          gradient.addColorStop(1, "gray");
           return gradient;
         },
         borderRadius: 16,
@@ -63,8 +61,8 @@ export const Revenue = () => {
         backgroundColor: (context:any) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-          gradient.addColorStop(0, "rgba(236, 72, 153, 0.9)");
-          gradient.addColorStop(1, "rgba(244, 114, 182, 0.3)");
+         gradient.addColorStop(0, "white");
+          gradient.addColorStop(1, "gray");
           return gradient;
         },
         borderRadius: 16,
@@ -73,7 +71,6 @@ export const Revenue = () => {
     ],
   };
 
-  // Doughnut with gradient
   const doughnutData = {
     labels: categoryData.map((item) => item.type),
     datasets: [
@@ -96,7 +93,6 @@ export const Revenue = () => {
     ],
   };
 
-  // Radar chart for services
   const radarData = {
     labels: ServiceData.map((item) => item.service),
     datasets: [
@@ -116,19 +112,18 @@ export const Revenue = () => {
     ],
   };
 
-  // Line chart for trend
   const lineData = {
     labels: revenueData.map((item) => item.thang),
     datasets: [
       {
         label: "Xu hướng doanh thu",
         data: revenueData.map((item) => item.revenue),
-        borderColor: "rgba(99, 102, 241, 1)",
+        borderColor: "black",
         backgroundColor: (context:any) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-          gradient.addColorStop(0, "rgba(99, 102, 241, 0.4)");
-          gradient.addColorStop(1, "rgba(99, 102, 241, 0.0)");
+          gradient.addColorStop(0, "rgba(0, 0, 0, 0.4)");
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0.0)");
           return gradient;
         },
         borderWidth: 4,
@@ -137,9 +132,9 @@ export const Revenue = () => {
         pointRadius: 8,
         pointHoverRadius: 12,
         pointBackgroundColor: "#ffffff",
-        pointBorderColor: "rgba(99, 102, 241, 1)",
+        pointBorderColor: "black",
         pointBorderWidth: 3,
-        pointHoverBackgroundColor: "rgba(99, 102, 241, 1)",
+        pointHoverBackgroundColor: "black",
         pointHoverBorderColor: "#ffffff",
       },
     ],
@@ -265,8 +260,8 @@ export const Revenue = () => {
       title: "Tổng doanh thu",
       value: `${(totalRevenue ).toLocaleString("vi-VN")}đ`,
       change: `${dataRevenue?.growthRateRevenue >= 0 ? '+' : ''}${dataRevenue?.growthRateRevenue}%`,
-      gradient: "from-violet-500 to-purple-600",
-      bgGradient: "from-violet-500/10 to-purple-600/10",
+      gradient: "bg-black/90",
+      bgGradient: "bg-black/10",
     },
     {
       icon: ShoppingCart,
@@ -275,24 +270,24 @@ export const Revenue = () => {
       change: revenueData.length >= 2 
         ? `${dataRevenue?.growthRateOrders ? '+' : ''}${dataRevenue?.growthRateOrders}%`
         : "+0.0%",
-      gradient: "from-pink-500 to-rose-600",
-      bgGradient: "from-pink-500/10 to-rose-600/10",
+      gradient: "bg-black/90",
+      bgGradient: "bg-black/10",
     },
     {
       icon: TrendingUp,
       title: "Doanh thu TB",
       value: `${(avgRevenue ).toLocaleString("vi-VN")}đ`,
       change: "Trung bình",
-      gradient: "from-amber-500 to-orange-600",
-      bgGradient: "from-amber-500/10 to-orange-600/10",
+      gradient: "bg-black/90",
+      bgGradient: "bg-black/10",
     },
     {
       icon: Star,
       title: "Danh mục",
       value: categoryData.length.toString(),
       change: `${ServiceData.length} dịch vụ`,
-      gradient: "from-emerald-500 to-green-600",
-      bgGradient: "from-emerald-500/10 to-green-600/10",
+      gradient: "bg-black/90",
+      bgGradient: "bg-black/10",
     },
   ];
 
@@ -305,23 +300,14 @@ export const Revenue = () => {
           <div className="relative bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-8">
             <div className="flex items-center justify-between">
               <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl blur-xl opacity-50"></div>
-                  <div className="relative p-4 bg-gradient-to-br from-violet-600 to-purple-600 rounded-2xl shadow-lg">
-                    <Sparkles className="w-8 h-8 text-white" />
-                  </div>
-                </div>
                 <div>
-                  <h1 className="md:text-4xl text-2xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                  <h1 className="md:text-5xl text-2xl text-black serif bg-clip-text ">
                     Quản lý Doanh thu
                   </h1>
                   <p className="text-slate-600 mt-1 text-lg">
                     Theo dõi và phân tích hiệu suất kinh doanh
                   </p>
                 </div>
-              </div>
-              <div className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                <span className="text-white font-semibold text-lg">Thương hiệu</span>
               </div>
             </div>
           </div>
@@ -341,28 +327,27 @@ export const Revenue = () => {
               <div className={`absolute inset-0 bg-gradient-to-r ${stat.bgGradient} rounded-2xl blur-xl transition-opacity duration-500 ${
                 hoveredCard === idx ? "opacity-100" : "opacity-0"
               }`}></div>
-              <div className="relative bg-white/70 backdrop-blur-xl rounded-2xl shadow-lg border border-white/60 p-6 hover:shadow-2xl transition-all duration-300">
+              <div className="relative bg-white/70 backdrop-blur-xl shadow-lg border border-white/60 p-6 hover:shadow-2xl transition-all duration-300">
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 bg-gradient-to-br ${stat.gradient} rounded-xl shadow-md group-hover:scale-110 transition-transform duration-300`}>
+                  <div className={`p-3 bg-gradient-to-br ${stat.gradient}  shadow-md group-hover:scale-110 transition-transform duration-300`}>
                     <stat.icon className="w-6 h-6 text-white" />
                   </div>
-                  <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-sm font-semibold">
+                  <span className="px-3 py-1   text-black  text-sm serif">
                     {stat.change}
                   </span>
                 </div>
                 <p className="text-slate-600 text-sm font-medium mb-1">{stat.title}</p>
-                <p className="text-3xl font-bold text-slate-800">{stat.value}</p>
+                <p className="text-3xl serif text-slate-800">{stat.value}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Main Charts Row */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Bar Chart */}
           <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl border border-white/60 p-8 hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-gradient-to-br from-violet-600 to-purple-600 rounded-xl shadow-md">
+              <div className="p-3 bg-black  shadow-md">
                 <TrendingUp className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -378,7 +363,7 @@ export const Revenue = () => {
           {/* Line Chart */}
           <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl border border-white/60 p-8 hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-gradient-to-br from-blue-600 to-cyan-600 rounded-xl shadow-md">
+              <div className="p-3 bg-black  shadow-md">
                 <Activity className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -397,7 +382,7 @@ export const Revenue = () => {
           {/* Doughnut Chart */}
           <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl border border-white/60 p-8 hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-gradient-to-br from-pink-600 to-rose-600 rounded-xl shadow-md">
+              <div className="p-3 bg-black  shadow-md">
                 <PieChart className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -413,7 +398,7 @@ export const Revenue = () => {
           {/* Radar Chart */}
           <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-xl border border-white/60 p-8 hover:shadow-2xl transition-all duration-300">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-gradient-to-br from-emerald-600 to-green-600 rounded-xl shadow-md">
+              <div className="p-3 bg-black  shadow-md">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <div>

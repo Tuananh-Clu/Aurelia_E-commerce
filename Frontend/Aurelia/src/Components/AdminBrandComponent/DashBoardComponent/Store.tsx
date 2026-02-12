@@ -43,8 +43,7 @@ export const Stores = () => {
         className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 mb-12"
       >
         <div>
-          <h1 className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text flex items-center gap-3">
-            <Building2 className="text-indigo-600" />
+          <h1 className="text-5xl serif bg-clip-text flex items-center gap-3">
             Hệ thống Cửa hàng Aurelia
           </h1>
           <p className="text-gray-600 mt-2 text-sm">
@@ -91,7 +90,6 @@ export const Stores = () => {
         </div>
       </motion.div>
 
-      {/* STORE LIST */}
       <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
         {filteredStores.map((store, i) => (
           <motion.div
@@ -101,7 +99,7 @@ export const Stores = () => {
             animate="show"
             custom={i}
             whileHover={{ scale: 1.02 }}
-            className="bg-white rounded-3xl shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-gray-100 transition-all overflow-hidden group relative"
+            className="bg-white  shadow-[0_10px_30px_rgba(0,0,0,0.05)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.08)] border border-gray-100 transition-all overflow-hidden group relative"
           >
             <div className="relative h-56 overflow-hidden">
               <motion.img
@@ -124,7 +122,7 @@ export const Stores = () => {
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="bg-indigo-50 p-4 rounded-2xl text-center">
-                  <p className="text-xs text-indigo-500 font-medium">Doanh thu</p>
+                  <p className="text-xs  font-medium">Doanh thu</p>
                   <p className="text-lg font-semibold text-gray-900">
                     {store.revenue.toLocaleString()}₫
                   </p>
@@ -134,7 +132,7 @@ export const Stores = () => {
                 </div>
 
                 <div className="bg-purple-50 p-4 rounded-2xl text-center">
-                  <p className="text-xs text-purple-500 font-medium">Đánh giá</p>
+                  <p className="text-xs  font-medium">Đánh giá</p>
                   <p className="flex justify-center items-center gap-1 font-semibold text-gray-900">
                     <Star className="text-yellow-400 fill-yellow-400" size={16} /> {store.rating}
                   </p>
@@ -144,17 +142,14 @@ export const Stores = () => {
 
               <div className="flex items-center justify-between text-sm text-gray-600">
                 <div className="flex items-center gap-1">
-                  <Phone size={14} className="text-indigo-500" />
+                  <Phone size={14} className="" />
                   {store.phone}
                 </div>
-                <button className="px-4 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 hover:to-purple-200 transition-all">
+                <button className="px-4 py-1.5 text-xs font-semibold   hover:from-indigo-200 hover:to-purple-200 transition-all">
                   Xem chi tiết
                 </button>
               </div>
             </div>
-
-            {/* Glow line bottom */}
-            <div className="absolute bottom-0 left-0 w-full h-[3px] bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
           </motion.div>
         ))}
       </div>

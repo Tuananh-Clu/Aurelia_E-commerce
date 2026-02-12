@@ -56,7 +56,7 @@ const { coupons,handleDeleteCoupon,handleToggleCouponStatus } = useContext(Admin
     <div className="h-[110vh] overflow-y-scroll bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-3 md:p-8 space-y-8">
       <header className="flex flex-col lg:flex-row justify-between lg:items-end gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-black serif flex items-center gap-3">
+          <h1 className="text-5xl serif text-black serif flex items-center gap-3">
             Quản Lý Mã Giảm Giá
           </h1>
           <p className="text-gray-500 mt-2">

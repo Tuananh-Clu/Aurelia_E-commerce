@@ -85,16 +85,16 @@ export const BannerSetting = () => {
         </div>
       )}
       <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-          Quản lý Banner ({statusState})
+        <h1 className="text-5xl serif   text-gray-800">
+          Quản lý Banner 
         </h1>
 
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setStatusState("Main")}
-            className={`px-4 py-2 rounded-xl font-medium transition ${
+            className={`px-4 py-2  font-medium transition ${
               statusState === "Main"
-                ? "bg-blue-500 text-white"
+                ? "bg-black text-white"
                 : "bg-white border text-gray-700"
             }`}
           >
@@ -103,9 +103,9 @@ export const BannerSetting = () => {
 
           <button
             onClick={() => setStatusState("Story")}
-            className={`px-4 py-2 rounded-xl font-medium transition ${
+            className={`px-4 py-2  font-medium transition ${
               statusState === "Story"
-                ? "bg-pink-500 text-white"
+                ? "bg-black text-white"
                 : "bg-white border text-gray-700"
             }`}
           >
@@ -114,7 +114,7 @@ export const BannerSetting = () => {
 
           <button
             onClick={() => setPopupAddBanner(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-blue-500 text-white px-4 py-2 rounded-xl shadow hover:opacity-90"
+            className="flex items-center gap-2 bg-red-400 text-white px-4 py-2 shadow hover:opacity-90"
           >
             <Plus size={18} /> Thêm Banner
           </button>
@@ -197,7 +197,7 @@ export const BannerSetting = () => {
               <button
                 key={idx}
                 onClick={() => updateBannerField("layout", style)}
-                className="mr-2 mb-2 px-4 py-2 rounded-xl border text-gray-700 hover:bg-gray-100 transition"
+                className="mr-2 mb-2 px-4 py-2  border text-gray-700 hover:bg-gray-100 transition"
               >
                 Layout {style}
               </button>
@@ -301,17 +301,16 @@ export const BannerSetting = () => {
             </div>
           </div>
 
-          {/* Status */}
           <div>
             <label className="flex flex-col gap-2 text-sm font-medium text-gray-600">
               <div className="flex items-center gap-2 mb-2">
                 <h1>Trạng Thái:</h1>
                 {current.active ? (
-                  <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">
+                  <span className="bg-green-100 text-green-800 px-3 py-1 ">
                     Hoạt động
                   </span>
                 ) : (
-                  <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full">
+                  <span className="bg-red-100 text-red-800 px-3 py-1">
                     Ngừng hoạt động
                   </span>
                 )}
@@ -332,11 +331,9 @@ export const BannerSetting = () => {
               </motion.button>
             </label>
           </div>
-
-          {/* Save button */}
           <button
             onClick={SaveChangeValue}
-            className="w-full bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-semibold py-2.5 rounded-xl hover:opacity-90 transition"
+            className="w-full bg-black text-white font-semibold py-2.5 hover:opacity-90 transition"
           >
             Lưu thay đổi
           </button>
