@@ -11,7 +11,7 @@ export const MockPayMent = () => {
   }
   switch (id) {
     case "paypal":
-      data = <MockPayPal onClose={handleClickClose} />;
+      data = <MockPayPal  />;
       break;
     case "card":
       data = <CreditCardPayment onClose={handleClickClose} />;

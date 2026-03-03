@@ -13,6 +13,7 @@
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/pose": "^0.5.1675469404",
     "@microsoft/signalr": "^9.0.6",
+    "@paypal/react-paypal-js": "^9.0.1",
     "@tailwindcss/vite": "^4.1.12",
     "axios": "^1.12.2",
     "chart.js": "^4.5.1",

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SignalR;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json.Linq;
+using PayPalCheckoutSdk.Orders;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace AureliaE_Commerce.Controller
@@ -307,7 +308,26 @@ namespace AureliaE_Commerce.Controller
             if (result.ModifiedCount > 0) return Ok(new { message = "Xóa thành công" });
             return NotFound(new { message = "Không tìm thấy địa chỉ" });
         }
-
+        [HttpPost("PaypalPayment")]
+        public async Task<IActionResult> PaypalPayment([FromBody] PaypalDto paypalDto)
+        {
+            var client=PayPalClient.Client();
+            var request = new PayPalCheckoutSdk.Orders.OrdersGetRequest(paypalDto.orderId);
+            var response = await client.Execute(request);
+            var order = response.Result<PayPalCheckoutSdk.Orders.Order>();
+            if (order.Status == "COMPLETED")
+            {
+                var userId = GetUserIdFromCookie("user");
+                if (string.IsNullOrEmpty(userId)) return Unauthorized();
+                var totalAmount=paypalDto.order.product.Sum(a => a.price * a.quantity);
+                if (order.PurchaseUnits[0].AmountWithBreakdown.Value != totalAmount.ToString())
+                {
+                    return BadRequest(new { message = "Số tiền thanh toán không khớp" });
+                }
+                return Ok(new { message = "Thanh toán thành công", orderId = order.Id , amount = order.PurchaseUnits[0].AmountWithBreakdown.Value });
+            }
+            return BadRequest(new { message = "Thanh toán thất bại" });
+        }
         [HttpPost("UpdateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileCustomer updateProfileCustomer)
         {

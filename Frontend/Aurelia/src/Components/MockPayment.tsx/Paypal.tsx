@@ -1,104 +1,93 @@
 import { useContext, useState } from "react";
-import { Mail, Lock } from "lucide-react";
 import { CartContext } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 import { LoadingOverlay } from "../LoadingOverlay";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { api_Config, UseApiUrl } from "../../services/api";
+import axios from "axios";
 
-
-export const MockPayPal = ({ onClose }: { onClose: () => void }) => {
+export const MockPayPal = () => {
   const [loading, setLoading] = useState(false);
-  const navigate=useNavigate()
-  const {dataOrder,handleClickPayment,setCartDataAdd}=useContext(CartContext)
-  const handlePay = () => {
+  const navigate = useNavigate();
+  const { dataOrder, handleClickPayment, setCartDataAdd } =
+    useContext(CartContext);
+  const handlePay = async({orderId}:{orderId: string}) => {
     setLoading(true);
-     handleClickPayment()
+    const response = await axios.post(UseApiUrl(api_Config.User.PaypalPayment),
+      {
+        orderId: orderId,
+        order: dataOrder
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if(response.status === 200){
+    handleClickPayment();
     setTimeout(() => {
-      setLoading(false);
-      navigate("/")
+    setLoading(false);
+    navigate("/");
     }, 1500);
-    setCartDataAdd([])
+    setCartDataAdd([]);
+    }
+
   };
+  const totalAmount = dataOrder?.product?.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
   return (
     <>
       <LoadingOverlay isLoading={loading} message="Đang xử lý thanh toán..." />
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
-        {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b bg-gray-50">
-          <img
-            src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-mark-color.svg"
-            alt="PayPal"
-            className="h-8"
-          />
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-black text-xl"
-          >
-            ✕
-          </button>
-        </div>
+      <PayPalScriptProvider
+        options={{
+          "client-id": import.meta.env.Client_Id_Paypal,
+          currency: "VND",
+        }}
+      >
+        <PayPalButtons
+          createOrder={(_, actions) => {
+            const total = totalAmount || 0;
 
-        {/* Body */}
-        <div className="p-6 space-y-4">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-800">
-              Thanh toán bằng PayPal
-            </h2>
-            <p className="text-sm text-gray-500">
-              Bạn đang thanh toán đơn hàng:
-            </p>
-            <div className="mt-3 border rounded-lg p-3">
-              <p className="font-medium">{dataOrder?.product[0].name}</p>
-              <p className="text-blue-600 font-bold text-xl mt-1">
-                {dataOrder?.product[0].price}
-              </p>
-            </div>
-          </div>
-
-          {/* Mock login form */}
-          <div className="space-y-3">
-            <div className="flex items-center border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
-              <Mail className="h-4 w-4 text-gray-400 mr-2" />
-              <input
-                type="email"
-                placeholder="Email PayPal"
-                className="w-full outline-none text-sm"
-              />
-            </div>
-            <div className="flex items-center border rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-500">
-              <Lock className="h-4 w-4 text-gray-400 mr-2" />
-              <input
-                type="password"
-                placeholder="Mật khẩu"
-                className="w-full outline-none text-sm"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t bg-gray-50">
-          <button
-            onClick={handlePay}
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-2 bg-[#0070BA] hover:bg-[#005EA6] disabled:bg-blue-300 disabled:cursor-not-allowed text-white py-3 rounded-full font-semibold text-base shadow-md transition-all transform hover:scale-[1.02] active:scale-[0.98]"
-          >
-            {loading ? (
-              <span className="animate-pulse">Đang xử lý...</span>
-            ) : (
-              <>
-                <img
-                  src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-color.svg"
-                  alt="pp"
-                  className="h-5"
-                />
-                Thanh toán bằng PayPal
-              </>
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
+            return actions.order.create({
+              intent: "CAPTURE",
+              purchase_units: [
+                {
+                  description: `Thanh toán đơn hàng của ${dataOrder?.name || "Khách hàng"}`,
+                  custom_id: dataOrder?.orderId?.toString() || "guest",
+                  invoice_id: `INV_${Date.now()}`,
+                  amount: {
+                    currency_code: "VND",
+                    value: total.toFixed(2),
+                    breakdown: {
+                      item_total: {
+                        currency_code: "VND",
+                        value: total.toFixed(2),
+                      },
+                    },
+                  },
+                  items: dataOrder?.product?.map((item) => ({
+                    name: item.name,
+                    unit_amount: {
+                      currency_code: "VND",
+                      value: item.price.toFixed(2),
+                    },
+                    quantity: item.quantity.toString(),
+                  })),
+                },
+              ],
+            });
+          }}
+          onApprove={async (_, actions) => {
+            const order = await actions?.order?.capture();
+            await handlePay({orderId: order?.id || ""});
+            setCartDataAdd([]);
+            navigate("/");
+          }}
+        />
+      </PayPalScriptProvider>
     </>
   );
 };

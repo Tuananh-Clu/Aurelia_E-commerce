@@ -38,7 +38,8 @@ export const api_Config = {
     UpdateTier: "/api/Client/UpdateTier",
     HuyDon: "/api/Client/HuyDonHang",
         AutoAddGioHang: "/api/Client/AutoAddGioHangKhiLog",
-        XoaGioHang: "/api/Client/XoaGioHang" 
+        XoaGioHang: "/api/Client/XoaGioHang" ,
+        PaypalPayment: "/api/Client/PaypalPayment"
 
   },
   Shop: {

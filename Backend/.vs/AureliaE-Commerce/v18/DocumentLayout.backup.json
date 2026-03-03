@@ -26,8 +26,8 @@
               "Title": ".env",
               "DocumentMoniker": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\.env",
               "RelativeDocumentMoniker": "AureliaE-Commerce\\.env",
-              "ToolTip": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\.env*",
-              "RelativeToolTip": "AureliaE-Commerce\\.env*",
+              "ToolTip": "D:\\Frontend\\Aurelia\\Aurelia_E-commerce\\Backend\\AureliaE-Commerce\\.env",
+              "RelativeToolTip": "AureliaE-Commerce\\.env",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-02-03T13:37:23.275Z",
@@ -48,8 +48,11 @@
               "RelativeToolTip": "AureliaE-Commerce\\Program.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAAACMAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-03T13:36:41.044Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-03T13:36:41.044Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }

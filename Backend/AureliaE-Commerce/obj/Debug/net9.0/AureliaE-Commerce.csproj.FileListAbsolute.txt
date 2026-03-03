@@ -493,3 +493,5 @@ D:\Frontend\Aurelia\Aurelia_E-commerce\Backend\AureliaE-Commerce\obj\Debug\net9.
 D:\Frontend\Aurelia\Aurelia_E-commerce\Backend\AureliaE-Commerce\obj\Debug\net9.0\AureliaE-Commerce.pdb
 D:\Frontend\Aurelia\Aurelia_E-commerce\Backend\AureliaE-Commerce\obj\Debug\net9.0\AureliaE-Commerce.genruntimeconfig.cache
 D:\Frontend\Aurelia\Aurelia_E-commerce\Backend\AureliaE-Commerce\obj\Debug\net9.0\ref\AureliaE-Commerce.dll
+D:\Frontend\Aurelia\Aurelia_E-commerce\Backend\AureliaE-Commerce\bin\Debug\net9.0\PayPalCheckoutSdk.dll
+D:\Frontend\Aurelia\Aurelia_E-commerce\Backend\AureliaE-Commerce\bin\Debug\net9.0\PayPalHttp-Dotnet.dll

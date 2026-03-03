@@ -101,6 +101,10 @@
               "target": "Package",
               "version": "[2.30.0, )"
             },
+            "PayPalCheckoutSdk": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
             "Swashbuckle.AspNetCore.Swagger": {
               "target": "Package",
               "version": "[9.0.4, )"
