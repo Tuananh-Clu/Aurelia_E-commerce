@@ -1,14 +1,12 @@
 import axios from "axios";
 import  {
   createContext,
-  useContext,
-  useEffect,
   useState,
   type ReactNode,
 } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
-import { AuthContext } from "./Author";
+
 import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
@@ -25,17 +23,7 @@ export const AuthForShopContext = createContext<AuthContextType>({
 
 export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [shopData, setShopData] = useState<any>(null);
   const navigate = useNavigate();
-  const { fetchData } = useContext(AuthContext);
-  useEffect(() => {
-    const data = fetchData({ type: "shop" });
-    setShopData(data);
-    localStorage.setItem("shopData", JSON.stringify(data));
-
-    if ((data as object) !== null) {
-    }
-  }, [navigate]);
   const logIn = async (Email: string, Password: string) => {
     try {
       const response = await axios.post(
@@ -56,7 +44,7 @@ export const AuthForShopProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthForShopContext.Provider value={{ logIn, errorMessage, shopData }}>
+    <AuthForShopContext.Provider value={{ logIn, errorMessage }}>
       {children}
     </AuthForShopContext.Provider>
   );

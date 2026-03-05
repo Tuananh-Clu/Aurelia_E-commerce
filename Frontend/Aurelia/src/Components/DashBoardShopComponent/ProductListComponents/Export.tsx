@@ -1,7 +1,6 @@
 import * as XLSX from "xlsx";
 import { Download } from "lucide-react";
 export const Export = ({ Data }: { Data: any }) => {
-  console.log(Data);
   if (!Data || Data.length === 0) {
     return <div>No data to export</div>;
   }

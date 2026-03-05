@@ -18,7 +18,6 @@ import { AddProduct } from "./ProductListComponents/AddProduct";
 
 const ProductList = () => {
   const { datasanPham } = useContext(DashBoardShopCOntext);
-  console.log(datasanPham);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [viewMode, setViewMode] = useState("grid");
@@ -205,7 +204,7 @@ const ProductList = () => {
           {/* Products Grid */}
           {viewMode === "grid" ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProducts.map((product: any) => (
+              {filteredProducts?.map((product: any) => (
                 <div
                   key={product.id}
                   className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-all  hover:-translate-y-1 group"
@@ -388,7 +387,7 @@ const ProductList = () => {
             </div>
           )}
 
-          {filteredProducts.length === 0 && (
+          {filteredProducts?.length === 0 && (
             <div className="bg-white rounded-2xl shadow-sm p-16 text-center border border-gray-100">
               <div className="w-24 h-24 bg-gray-100 rounded-3xl flex items-center justify-center mx-auto mb-6">
                 <Package className="w-12 h-12 text-gray-400" />

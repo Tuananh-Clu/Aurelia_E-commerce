@@ -51,7 +51,7 @@ export const DashBoardShopProvider = ({
   const [totaldoanhthu, setTotaldoanhthu] = useState(0);
   const [avgchitieu, setAvgchitieu] = useState(0);
   const [statePage, setStatePage] = useState("dashboard");
-  const {shopData}=useContext(AuthForShopContext);
+  const shopData = JSON.parse(localStorage.getItem("shopData") || "{}");
   const GetDataDashBoard = async (
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => {
@@ -105,7 +105,7 @@ export const DashBoardShopProvider = ({
       );
       setDataSanPham(reponse.data);
     } catch {
-      
+      console.error("Không thể tải danh sách sản phẩm. Vui lòng thử lại.");
     }
   };
   const updateProduct=async(datas:Product)=>{
@@ -157,7 +157,7 @@ export const DashBoardShopProvider = ({
     taskFetchSanPham();
     taskFetch();
     getAllCustomer();
-  }, []);
+  }, [shopData]);
   return (
     <DashBoardShopCOntext.Provider
       value={{

@@ -38,7 +38,7 @@ export const AuthorForAdminProvider = ({children}:{children:React.ReactNode}) =>
     }
 
     useEffect(() => {
-        const data = fetchData({type: "admin"});
+        const data = fetchData();
         setAdminData(data);
         if(data as object !== null){
             setIsAdminSigned(true);

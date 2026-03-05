@@ -18,8 +18,8 @@ export default function ListCustomer() {
 
   const filtered = dataCustomer?.filter(
     (c) =>
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.email.toLowerCase().includes(search.toLowerCase())
+      c?.name?.toLowerCase().includes(search.toLowerCase()) ||
+      c?.email?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (

@@ -34,7 +34,7 @@ type AuthContextType = {
     address: string,
     avatar: string
   ) => Promise<void>;
-  fetchData: ({ type }: { type: string }) => Promise<void>;
+  fetchData: () => Promise<void>;
   logInWIthGoogle: () => Promise<void>;
   tab:string;
   setTab: React.Dispatch<SetStateAction<string>>;
@@ -65,7 +65,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [userData, setUserData] = useState<any>(null);
 
   const location = useLocation();
-  const fetchData = async ({ type }: { type: string }) => {
+  const fetchData = async () => {
+      let type: "client" | "shop" | "admin" = "client";
+      if (location.pathname.startsWith("/DashBoardShop")) type = "shop";
+      if (location.pathname.startsWith("/Admin")) type = "admin";
+
     await axios
       .get(
         `${UseApiUrl(
@@ -80,7 +84,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setIsignned(true);
           setUserData(response.data);
           const {passWord,...safeuser}=response.data;
-          localStorage.setItem("user", JSON.stringify(safeuser));
+          type === "client" && localStorage.setItem("userData", JSON.stringify(safeuser));
+          type === "shop" && localStorage.setItem("shopData", JSON.stringify(safeuser));
+          
+          return response.data;
         }
       })
       .catch(() => {
@@ -88,7 +95,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       });
   };
   useEffect(() => {
-    const data = fetchData({ type: "client" });
+    const data = fetchData();
     setDoneWork(false);
     setUserData(data);
   }, [location.pathname, doneWork, isSignned]);
