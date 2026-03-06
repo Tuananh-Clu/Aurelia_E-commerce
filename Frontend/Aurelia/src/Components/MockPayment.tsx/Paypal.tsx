@@ -44,7 +44,7 @@ export const MockPayPal = () => {
       <PayPalScriptProvider
         options={{
           "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
-          currency: "VND",
+          currency: "USD",
         }}
       >
         <PayPalButtons
@@ -59,11 +59,11 @@ export const MockPayPal = () => {
                   custom_id: dataOrder?.orderId?.toString() || "guest",
                   invoice_id: `INV_${Date.now()}`,
                   amount: {
-                    currency_code: "VND",
+                    currency_code: "USD",
                     value: total.toFixed(2),
                     breakdown: {
                       item_total: {
-                        currency_code: "VND",
+                        currency_code: "USD",
                         value: total.toFixed(2),
                       },
                     },
@@ -71,7 +71,7 @@ export const MockPayPal = () => {
                   items: dataOrder?.product?.map((item) => ({
                     name: item.name,
                     unit_amount: {
-                      currency_code: "VND",
+                      currency_code: "USD",
                       value: item.price.toFixed(2),
                     },
                     quantity: item.quantity.toString(),
