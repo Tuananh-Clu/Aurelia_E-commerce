@@ -43,7 +43,7 @@ export const MockPayPal = () => {
       <LoadingOverlay isLoading={loading} message="Đang xử lý thanh toán..." />
       <PayPalScriptProvider
         options={{
-          "client-id": import.meta.env.Client_Id_Paypal,
+          "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
           currency: "VND",
         }}
       >
