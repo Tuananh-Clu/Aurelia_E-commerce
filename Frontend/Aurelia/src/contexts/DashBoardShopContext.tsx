@@ -1,21 +1,18 @@
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext,  useEffect, useState } from "react";
 import { api_Config, UseApiUrl } from "../services/api";
 import { Toaster } from "../Components/Toaster";
 import type { Appointment, order, Product } from "../types/type";
-import { AuthForShopContext } from "./AuthorForShop";
 export type DashBoardShopCOntexts = {
   dataLichHen: Appointment[] | undefined;
   dataDonHang: order[] | undefined;
   datasanPham: any;
-  statePage: string;
   GetDataDashBoard: (
     setState: React.Dispatch<React.SetStateAction<string>>
   ) => Promise<void>;
   handleClickUpdateStatus: (status: string, orderId: string) => Promise<void>;
   updateProduct:(data:Product)=>Promise<void>;
   editProduct:(data:Product)=>Promise<void>;
-  setStatePage: React.Dispatch<React.SetStateAction<string>>;
   taskFetchSanPham:()=>Promise<void>;
   dataCustomer:any[] |undefined;
   totalCustomer:number;
@@ -35,8 +32,6 @@ export const DashBoardShopCOntext = createContext<DashBoardShopCOntexts>({
   taskFetchSanPham: async () => {},
   updateProduct:async()=>{},
   editProduct:async()=>{},
-  statePage: "dashboard",
-  setStatePage: () => {},
 });
 export const DashBoardShopProvider = ({
   children,
@@ -50,7 +45,6 @@ export const DashBoardShopProvider = ({
   const [totalCustomer, setTotalCustomer] = useState(0);
   const [totaldoanhthu, setTotaldoanhthu] = useState(0);
   const [avgchitieu, setAvgchitieu] = useState(0);
-  const [statePage, setStatePage] = useState("dashboard");
   const shopData = JSON.parse(localStorage.getItem("shopData") || "{}");
   const GetDataDashBoard = async (
     setState: React.Dispatch<React.SetStateAction<string>>
@@ -157,7 +151,7 @@ export const DashBoardShopProvider = ({
     taskFetchSanPham();
     taskFetch();
     getAllCustomer();
-  }, [shopData]);
+  }, []);
   return (
     <DashBoardShopCOntext.Provider
       value={{
@@ -168,8 +162,6 @@ export const DashBoardShopProvider = ({
         datasanPham,
         updateProduct,
         editProduct,
-        statePage
-        ,setStatePage,
         taskFetchSanPham,
         dataCustomer,
         totalCustomer,

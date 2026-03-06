@@ -63,41 +63,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { CartDataAdd,  } = useContext(CartContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [userData, setUserData] = useState<any>(null);
-
   const location = useLocation();
   const fetchData = async () => {
-      let type: "client" | "shop" | "admin" = "client";
-      if (location.pathname.startsWith("/DashBoardShop")) type = "shop";
-      if (location.pathname.startsWith("/Admin")) type = "admin";
+    let type: "client" | "shop" | "admin" = "client";
+    if (location.pathname.startsWith("/DashBoardShop")) type = "shop";
+    if (location.pathname.startsWith("/Admin")) type = "admin";
+    if (location.pathname.startsWith("/account")) type = "client";
 
-    await axios
-      .get(
-        `${UseApiUrl(
-          api_Config.authentication.getInfoUser
-        )}?typeAccount=${type}`,
-        {
-          withCredentials: true,
+    try {
+      const response = await axios.get(
+        `${UseApiUrl(api_Config.authentication.getInfoUser)}?typeAccount=${type}`,
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        setIsignned(true);
+        setUserData(response.data);
+        const { passWord, ...safeuser } = response.data;
+        if (type === "client") {
+          localStorage.setItem("userData", JSON.stringify(safeuser));
         }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          setIsignned(true);
-          setUserData(response.data);
-          const {passWord,...safeuser}=response.data;
-          type === "client" && localStorage.setItem("userData", JSON.stringify(safeuser));
-          type === "shop" && localStorage.setItem("shopData", JSON.stringify(safeuser));
-          
-          return response.data;
+        if (type === "shop") {
+          localStorage.setItem("shopData", JSON.stringify(safeuser));
         }
-      })
-      .catch(() => {
-        setIsignned(false);
-      });
+      }
+    } catch {
+      setIsignned(false);
+    }
   };
+
   useEffect(() => {
-    const data = fetchData();
-    setDoneWork(false);
-    setUserData(data);
+    const load = async () => {
+      await fetchData();
+      setDoneWork(false);
+    };
+    load();
   }, [location.pathname, doneWork, isSignned]);
   const logIn = async (Email: string, Password: string) => {
     try {
@@ -155,7 +155,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   
   const logInWIthGoogle = async () => {
-    await LogginWithFireBase();
+    try {
+      await LogginWithFireBase();
+      await fetchData();
+      setIsignned(true);
+      Toaster.success("Đăng nhập Google thành công!");
+    } catch {
+      Toaster.error("Đăng nhập Google thất bại.");
+    }
   };
   const UpdateProfile = async (
     name: string,

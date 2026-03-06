@@ -8,7 +8,7 @@ export const LogginWithFireBase = async () => {
   const result = await signInWithPopup(auth, GoogleProvider);
 
   try {
-    api_Response(
+    await api_Response(
       `${UseApiUrl(
         api_Config.authentication.LogInWithFireBase
       )}?token=${await result.user.getIdToken()}`,

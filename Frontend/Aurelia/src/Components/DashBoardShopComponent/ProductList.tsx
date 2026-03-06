@@ -75,7 +75,7 @@ const ProductList = () => {
           <div className="mb-10">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-3 tracking-tight">
+                <h1 className="text-4xl serif text-gray-900 mb-3 tracking-tight">
                   Quản Lý Sản Phẩm
                 </h1>
                 <p className="text-lg text-gray-500">
@@ -86,7 +86,7 @@ const ProductList = () => {
                 <Export Data={datasanPham?.shopData?.products} />
                 <button
                   onClick={() => {setPopUpAddProduct(true); setTitle("Thêm Sản Phẩm Mới")}}
-                  className="px-6 py-3 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all font-medium flex items-center gap-2 shadow-lg shadow-gray-900/10"
+                  className="px-6 py-3 bg-gray-900 text-white hover:bg-gray-800 transition-all font-medium flex items-center gap-2 shadow-lg shadow-gray-900/10"
                 >
                   <Plus className="w-5 h-5" />
                   Thêm Sản Phẩm
@@ -96,54 +96,54 @@ const ProductList = () => {
 
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
+              <div className="bg-white  shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-100  flex items-center justify-center">
                     <Package className="w-6 h-6 text-gray-700" />
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 mb-1">Tổng Sản Phẩm</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl serif text-gray-900">
                   {totalProducts}
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
+              <div className="bg-white  shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-100  flex items-center justify-center">
                     <DollarSign className="w-6 h-6 text-gray-700" />
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 mb-1">Giá Trị Kho</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl serif text-gray-900">
                   {(totalValue / 1000000).toFixed(1)}M
                 </p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
+              <div className="bg-white  shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-100  flex items-center justify-center">
                     <TrendingUp className="w-6 h-6 text-gray-700" />
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 mb-1">Đã Bán</p>
-                <p className="text-3xl font-bold text-gray-900">{totalSold}</p>
+                <p className="text-3xl serif text-gray-900">{totalSold}</p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
+              <div className="bg-white shadow-sm p-6 border border-gray-100 hover:shadow-md transition-all">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-100  flex items-center justify-center">
                     <Star className="w-6 h-6 text-gray-700" />
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 mb-1">Đánh Giá TB</p>
-                <p className="text-3xl font-bold text-gray-900">{avgRating}</p>
+                <p className="text-3xl serif text-gray-900">{avgRating}</p>
               </div>
             </div>
           </div>
 
           {/* Filters & Search */}
-          <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 border border-gray-100">
+          <div className="bg-white  shadow-sm p-6 mb-6 border border-gray-100">
             <div className="flex flex-col md:flex-row gap-4 items-center">
               <div className="flex-1 relative w-full">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -152,7 +152,7 @@ const ProductList = () => {
                   placeholder="Tìm kiếm sản phẩm, thương hiệu..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 focus:bg-white transition-all"
+                  className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 focus:outline-none focus:border-gray-400 focus:bg-white transition-all"
                 />
               </div>
 
@@ -160,7 +160,7 @@ const ProductList = () => {
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="px-5 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-gray-400 font-medium text-gray-700"
+                  className="px-5 py-3 bg-gray-50 border border-gray-200  focus:outline-none focus:border-gray-400 font-medium text-gray-700"
                 >
                   <option value="all">Tất cả loại</option>
                   {datasanPham?.danhSachSanPham
@@ -178,7 +178,7 @@ const ProductList = () => {
                 <div className="flex gap-1 bg-gray-100 p-1 rounded-xl">
                   <button
                     onClick={() => setViewMode("grid")}
-                    className={`p-2.5 rounded-lg transition-all ${
+                    className={`p-2.5  transition-all ${
                       viewMode === "grid"
                         ? "bg-white shadow-sm"
                         : "hover:bg-white/50"
@@ -188,7 +188,7 @@ const ProductList = () => {
                   </button>
                   <button
                     onClick={() => setViewMode("list")}
-                    className={`p-2.5 rounded-lg transition-all ${
+                    className={`p-2.5  transition-all ${
                       viewMode === "list"
                         ? "bg-white shadow-sm"
                         : "hover:bg-white/50"
@@ -207,7 +207,7 @@ const ProductList = () => {
               {filteredProducts?.map((product: any) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-all  hover:-translate-y-1 group"
+                  className="bg-white  shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-all  hover:-translate-y-1 group"
                 >
                   <div className="relative overflow-hidden bg-gray-50">
                     <img
@@ -217,7 +217,7 @@ const ProductList = () => {
                     />
                     <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
                       <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                      <span className="font-bold text-gray-900 text-sm">
+                      <span className="serif text-gray-900 text-sm">
                         {product.rating}
                       </span>
                     </div>
@@ -229,7 +229,7 @@ const ProductList = () => {
                   </div>
 
                   <div className="p-5">
-                    <h3 className="font-bold text-gray-900 mb-2 text-lg line-clamp-2 group-hover:text-gray-700 transition-colors">
+                    <h3 className=" text-gray-900 mb-2 text-lg line-clamp-2 group-hover:text-gray-700 transition-colors">
                       {product.name.length > 30
                         ? `${product.name.slice(0, 25)}...`
                         : product.name}

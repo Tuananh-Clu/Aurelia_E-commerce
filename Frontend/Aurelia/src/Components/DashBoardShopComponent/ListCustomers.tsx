@@ -7,12 +7,13 @@ import {
   TrendingUp,
   ShoppingBag,
   Award,
-  Sparkles,
 } from "lucide-react";
 import { DashBoardShopCOntext } from "../../contexts/DashBoardShopContext";
+import { CartContext } from "../../contexts/CartContext";
 
 export default function ListCustomer() {
   const [search, setSearch] = useState("");
+  const {formatPrice}=useContext(CartContext)
   const { dataCustomer, totalCustomer, totaldoanhthu, avgchitieu } =
     useContext(DashBoardShopCOntext);
 
@@ -27,11 +28,8 @@ export default function ListCustomer() {
       {/* ===== Header ===== */}
       <header className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-md">
-            <Sparkles className="text-white" size={26} />
-          </div>
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl serif ">
               Khách hàng
             </h1>
             <p className="text-gray-600 text-sm">
@@ -48,24 +46,21 @@ export default function ListCustomer() {
             title: "Tổng khách hàng",
             value: totalCustomer,
             icon: Award,
-            gradient: "from-indigo-500 to-purple-600",
           },
           {
             title: "Tổng doanh thu",
-            value: `${(totaldoanhthu / 1000).toFixed(2)}M₫`,
+            value: `${formatPrice(totaldoanhthu)}`,
             icon: TrendingUp,
-            gradient: "from-emerald-500 to-teal-500",
           },
           {
             title: "Trung bình / KH",
-            value: `${(avgchitieu / 1000).toFixed(2)}M₫`,
+            value: `${formatPrice(avgchitieu)}`,
             icon: ShoppingBag,
-            gradient: "from-orange-500 to-pink-600",
           },
-        ].map(({ title, value, icon: Icon, gradient }, i) => (
+        ].map(({ title, value, icon: Icon }, i) => (
           <div
             key={i}
-            className="relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+            className="relative bg-white  p-6 shadow-sm border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -73,7 +68,7 @@ export default function ListCustomer() {
                 <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
               </div>
               <div
-                className={`w-14 h-14 rounded-xl bg-gradient-to-br ${gradient} flex items-center justify-center shadow-md`}
+                className={`w-14 h-14 bg-black  flex items-center justify-center shadow-md`}
               >
                 <Icon className="text-white" size={26} />
               </div>
@@ -90,7 +85,7 @@ export default function ListCustomer() {
           placeholder="Tìm khách hàng theo tên hoặc email..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-14 pr-5 py-4 bg-white rounded-2xl border border-gray-200 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all"
+          className="w-full pl-14 pr-5 py-4 bg-white  border border-gray-200 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition-all"
         />
       </div>
 
@@ -100,7 +95,7 @@ export default function ListCustomer() {
           filtered.map((c) => (
             <div
               key={c.id}
-              className="group relative bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              className="group relative bg-white  p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
               {/* Badge */}
               <div className="absolute top-4 right-4 px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-semibold rounded-full flex items-center gap-1">
@@ -113,7 +108,7 @@ export default function ListCustomer() {
                 <img
                   src={c.avatar}
                   alt={c.name}
-                  className="w-16 h-16 rounded-2xl object-cover ring-4 ring-white shadow-sm group-hover:scale-105 transition-transform duration-300"
+                  className="w-16 h-16 object-cover ring-4 ring-white shadow-sm group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="flex-1">
                   <h2 className="text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors">
@@ -170,7 +165,7 @@ export default function ListCustomer() {
                   </div>
                 </div>
 
-                <button className="w-full py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-md">
+                <button className="w-full py-3  text-white  bg-black hover:opacity-90 transition-all shadow-md">
                   Xem chi tiết
                 </button>
               </div>

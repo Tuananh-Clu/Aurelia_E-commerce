@@ -3,14 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/Author";
 import Icon from "./icon";
 import { motion, AnimatePresence } from "framer-motion";
-import {  ArrowLeftCircle, ArrowRightCircle, LogOut, Menu } from "lucide-react";
+import {  ArrowLeftCircle, ArrowRightCircle, LogOut, Menu, } from "lucide-react";
 
-export const SideBoard = ({
+export const SideBar = ({
   onClick,
   status,
+  type
 }: {
   onClick: React.Dispatch<React.SetStateAction<string>>;
   status: string;
+  type: string;
 }) => {
   const { logOut } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -22,27 +24,21 @@ export const SideBoard = ({
     <>
       <button
         onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-500 p-2 bg-white shadow-md rounded-lg"
+        className="lg:hidden fixed top-4 left-4 z-1 p-2 bg-white shadow-md rounded-lg"
       >
         <Menu size={20} />
       </button>
       <AnimatePresence>
         {mobileOpen && (
           <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.4 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 bg-black z-400 lg:hidden"
-            />
+
 
             <motion.aside
               initial={{ x: -300 }}
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ duration: 0.3 }}
-              className="fixed left-0 top-0 h-screen w-64 bg-white z-50 lg:hidden flex flex-col"
+              className="fixed left-0 top-0 h-screen w-64 bg-white z-10 lg:hidden flex flex-col"
             >
               <SidebarContent
                 expanded={true}
@@ -60,7 +56,7 @@ export const SideBoard = ({
       <aside
         className={`hidden lg:flex  left-0 top-0 h-screen ${
           expanded ? "w-64" : "w-20"
-        } bg-white border-r border-gray-200 z-500 flex-col transition-all duration-300`}
+        } bg-white border-r border-gray-200 z-5 flex-col transition-all duration-300`}
       >
         <SidebarContent
           expanded={expanded}
@@ -69,6 +65,7 @@ export const SideBoard = ({
           onClick={onClick}
           navigate={navigate}
           logOut={logOut}
+          type={type}
         />
       </aside>
     </>
@@ -83,8 +80,11 @@ const SidebarContent = ({
   navigate,
   logOut,
   closeMobile,
+  type
 }: any) => {
-  const NAV_ITEMS = [
+  const NAV_ITEMS = 
+    type==="admin"
+    ?[
     { id: "Dashboard", label: "Dashboard", icon: "LayoutDashboard" },
     { id: "banner", label: "Banner", icon: "Image" },
     { id: "discount", label: "Mã giảm giá", icon: "Tag", badge: 3 },
@@ -92,7 +92,14 @@ const SidebarContent = ({
     { id: "revenue", label: "Doanh thu", icon: "Wallet" },
     { id: "collections", label: "Collections", icon: "Layers", badge: 12 },
     { id: "products", label: "Sản phẩm", icon: "Package", badge: 5 },
-  ];
+  ]:
+  [
+    { id: "dashboard",  label: "Dashboard" ,icon: "LayoutDashboard"},
+    { id: "orders",  label: "Đơn hàng",icon: "ShoppingCart", },
+    { id: "appointments",  label: "Lịch hẹn",icon: "Calendar", },
+    { id: "products",  label: "Sản phẩm",icon: "Package" },
+    { id: "customers",  label: "Khách hàng",icon: "Users" },
+  ]
 
   return (
     <>
@@ -123,7 +130,7 @@ const SidebarContent = ({
           <button
             key={item.id}
             onClick={() => {
-              onClick(item.label);
+              onClick(type==="admin"?item.label:item.id);
               if (closeMobile) closeMobile();
             }}
             className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition ${

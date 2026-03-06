@@ -2,7 +2,7 @@ import { Settings } from "lucide-react";
 import { useState } from "react";
 import { OverView } from "../../Components/AdminBrandComponent/DashBoardComponent/OverView";
 import { BannerSetting } from "../../Components/AdminBrandComponent/DashBoardComponent/Banner/BannerSetting";
-import { SideBoard } from "../../Components/AdminBrandComponent/DashBoardComponent/SideBoard";
+import { SideBar } from "../../Components/AdminBrandComponent/DashBoardComponent/SideBar";
 import { Stores } from "../../Components/AdminBrandComponent/DashBoardComponent/Store";
 import Coupon from "../../Components/AdminBrandComponent/DashBoardComponent/Coupon";
 import { Revenue } from "../../Components/AdminBrandComponent/DashBoardComponent/Revenue";
@@ -38,7 +38,7 @@ export const AdminDashboard = () => {
     <div className=" flex  bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800 flex-row 
     h-[110vh] w-full">
       <div >
-        <SideBoard onClick={setStatus} status={status} />
+        <SideBar onClick={setStatus} status={status} type="admin" />
       </div>
       <div className="w-full h-[110vh]">{statusComponent(status)}</div>
     </div>

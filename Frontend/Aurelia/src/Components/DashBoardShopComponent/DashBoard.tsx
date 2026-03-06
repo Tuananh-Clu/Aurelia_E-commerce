@@ -38,28 +38,24 @@ export function DashBoardShop({
       }) ?? "0",
       change: dataDashBoard?.doanhSoPhanTram ?? "0%",
       icon: TrendingUp,
-      color: "from-emerald-500 to-teal-500",
     },
     {
       title: "Đơn hàng mới",
       value: dataDashBoard?.orderHomNay?? "0",
       change: dataDashBoard?.orderHomNay ?? "0",
       icon: ShoppingCart,
-      color: "from-blue-500 to-cyan-500",
     },
     {
       title: "Lịch hẹn hôm nay",
       value: dataDashBoard?.soLichHen ?? "0",
       change: dataDashBoard?.soLichHen + " đang chờ",
       icon: Calendar,
-      color: "from-purple-500 to-pink-500",
     },
     {
       title: "Khách hàng mới",
       value: dataDashBoard?.soUser ?? "0",
       change: "+" + (dataDashBoard?.soLuongTang ?? "0") + " tuần này",
       icon: Users,
-      color: "from-orange-500 to-red-500",
     },
   ];
 
@@ -101,7 +97,7 @@ export function DashBoardShop({
       {/* Header */}
       <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="serif text-4xl text-gray-900">Dashboard</h1>
           <p className="text-gray-500 mt-1">
             Chào mừng trở lại! Đây là tổng quan hôm nay.
           </p>
@@ -115,12 +111,12 @@ export function DashBoardShop({
             <input
               type="text"
               placeholder="Tìm kiếm..."
-              className="pl-12 pr-4 py-3 bg-white rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-64 shadow-sm"
+              className="pl-12 pr-4 py-3 bg-white  border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full md:w-64 shadow-sm"
             />
           </div>
           <button
             onClick={() => setNotificationOpen(!notifycationOpen)}
-            className="relative p-3 bg-white rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors shadow-sm"
+            className="relative p-3 bg-white  border border-gray-200 hover:bg-gray-50 transition-colors shadow-sm"
           >
             <Bell size={20} className="text-gray-600" />
             {message && message?.message!==null && appointment?.message !== null && (
@@ -136,15 +132,15 @@ export function DashBoardShop({
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
+            className="bg-white  p-6 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
           >
             <div className="flex items-start justify-between mb-4">
               <div
-                className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center shadow-lg`}
+                className={`w-12 h-12  bg-gradient-to-br bg-black flex items-center justify-center shadow-lg`}
               >
                 <stat.icon size={22} className="text-white" />
               </div>
-              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+              <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 ">
                 {stat.change}
               </span>
             </div>
@@ -159,14 +155,14 @@ export function DashBoardShop({
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <section className="bg-white  p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-900">
+            <h3 className="text-lg  text-gray-900">
               Đơn hàng gần đây
             </h3>
             <button
               onClick={onclick}
-              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              className="text-sm text-black font-medium"
             >
               Xem tất cả
             </button>
@@ -215,12 +211,12 @@ export function DashBoardShop({
         {/* Upcoming Appointments */}
         <section className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-gray-900">
+            <h3 className="text-lg  text-gray-900">
               Lịch hẹn sắp tới
             </h3>
             <button
               onClick={onChange}
-              className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              className="text-sm text-black   font-medium"
             >
               Xem lịch
             </button>
@@ -257,7 +253,7 @@ export function DashBoardShop({
           ) : (
             <EmptyState text="Không có lịch hẹn nào" />
           )}
-          <button className="w-full mt-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-xl hover:shadow-lg transition-all duration-300">
+          <button className="w-full mt-4 py-3  text-black border-1 font-medium  hover:shadow-lg transition-all duration-300">
             Thêm lịch hẹn mới
           </button>
         </section>

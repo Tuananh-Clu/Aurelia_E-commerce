@@ -25,7 +25,7 @@ export const Export = ({ Data }: { Data: any }) => {
   return (
     <button
       onClick={exportData}
-      className="px-6 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all font-medium flex items-center gap-2 shadow-sm"
+      className="px-6 py-3 bg-white border border-gray-200 text-gray-700  hover:bg-gray-50 hover:border-gray-300 transition-all font-medium flex items-center gap-2 shadow-sm"
     >
       <Download className="w-5 h-5" />
       Export

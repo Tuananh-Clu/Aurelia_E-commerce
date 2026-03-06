@@ -22,12 +22,11 @@ export default function OrderListElegant() {
   const [PopUpDetailOpen, setPopUpDetailOpen] = useState(false);
   const [orderId, setOrderId] = useState("");
 
-  // Cập nhật danh sách khi dữ liệu gốc thay đổi
   useEffect(() => {
     setFilteredOrders(dataDonHang || []);
   }, [dataDonHang]);
 
-  // Lọc đơn hàng theo search + trạng thái
+
   useEffect(() => {
     if (!dataDonHang) return;
 
@@ -46,7 +45,7 @@ export default function OrderListElegant() {
     setFilteredOrders(filtered);
   }, [searchTerm, filter, dataDonHang]);
 
-  // Biểu tượng theo trạng thái
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Chờ xác nhận":
@@ -64,7 +63,7 @@ export default function OrderListElegant() {
     }
   };
 
-  // Trạng thái tiếp theo
+
   const getNextStatus = (status: string) => {
     switch (status) {
       case "Chờ xác nhận":
@@ -105,14 +104,11 @@ export default function OrderListElegant() {
           {/* Header */}
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center shadow-lg shadow-indigo-200">
-                <Package className="w-5 h-5 text-white" />
-              </div>
-              <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 via-indigo-800 to-blue-900 bg-clip-text text-transparent">
+              <h1 className="text-4xl serif text-black   ">
                 Quản lý đơn hàng
               </h1>
             </div>
-            <p className="text-gray-600 text-sm ml-12">
+            <p className="text-gray-600 text-sm ">
               Theo dõi và quản lý tất cả đơn hàng của bạn
             </p>
           </div>
@@ -124,7 +120,7 @@ export default function OrderListElegant() {
               <input
                 type="text"
                 placeholder="Tìm kiếm theo tên hoặc mã đơn hàng..."
-                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl pl-12 pr-4 py-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 shadow-sm hover:shadow-md transition-all"
+                className="w-full bg-white/80 backdrop-blur-sm border border-gray-200  pl-12 pr-4 py-3.5 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 shadow-sm hover:shadow-md transition-all"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -137,9 +133,9 @@ export default function OrderListElegant() {
               <button
                 key={btn}
                 onClick={() => setFilter(btn)}
-                className={`group relative px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                className={`group relative px-4 py-2.5  text-sm font-medium transition-all duration-200 ${
                   filter === btn
-                    ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg shadow-indigo-200 scale-105"
+                    ? "bg-black text-white shadow-lg shadow-indigo-200 scale-105"
                     : "bg-white/70 backdrop-blur-sm text-gray-700 border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50/50"
                 }`}
               >
@@ -149,7 +145,7 @@ export default function OrderListElegant() {
                     className={`text-xs px-2 py-0.5 rounded-full ${
                       filter === btn
                         ? "bg-white/20 text-white"
-                        : "bg-gray-100 text-gray-600 group-hover:bg-indigo-100 group-hover:text-indigo-700"
+                        : "bg-gray-100 text-gray-600 group-hover:bg-indigo-100 "
                     }`}
                   >
                     {getOrderCount(btn)}
@@ -225,7 +221,7 @@ export default function OrderListElegant() {
                       </div>
 
                       <button
-                        className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-medium shadow-md hover:shadow-xl hover:from-indigo-700 hover:to-blue-700 transition-all duration-300 hover:-translate-y-0.5"
+                        className="flex items-center justify-center gap-2 px-6 py-2.5  bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-medium shadow-md hover:shadow-xl hover:from-indigo-700 hover:to-blue-700 transition-all duration-300 hover:-translate-y-0.5"
                         onClick={() => {
                           setPopUpDetailOpen(true);
                           setOrderId(order.orderId);
@@ -236,7 +232,7 @@ export default function OrderListElegant() {
                       </button>
 
                       <button
-                        className="flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl bg-white text-gray-700 font-medium border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
+                        className="flex items-center justify-center gap-2 px-6 py-2.5  bg-white text-gray-700 font-medium border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5"
                         onClick={() =>
                           handleClickUpdateStatus(getNextStatus(order.status), order.orderId)
                         }
@@ -256,7 +252,6 @@ export default function OrderListElegant() {
   );
 }
 
-/* === Component phụ gọn hơn === */
 
 function InfoCard({
   icon,
@@ -271,7 +266,7 @@ function InfoCard({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center flex-shrink-0 transition-colors">
+      <div className="w-10 h-10  bg-indigo-50 flex items-center justify-center flex-shrink-0 transition-colors">
         {icon}
       </div>
       <div className="min-w-0">
@@ -299,7 +294,7 @@ function EmptyState({
 }) {
   return (
     <div className="bg-white/60 backdrop-blur-sm rounded-3xl border border-gray-200 p-16 text-center shadow-sm">
-      <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-gray-100 flex items-center justify-center">
+      <div className="w-20 h-20 mx-auto mb-4  bg-gray-100 flex items-center justify-center">
         {icon}
       </div>
       <h3 className="text-xl font-semibold text-gray-700 mb-2">{title}</h3>

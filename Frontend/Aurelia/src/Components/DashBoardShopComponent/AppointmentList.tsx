@@ -36,15 +36,15 @@ export default function AppointmentList({
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="flex flex-wrap justify-between items-center mb-6 gap-3">
-        <h1 className="text-3xl font-bold text-gray-800">Danh sách lịch hẹn</h1>
+        <h1 className="text-4xl serif  text-gray-800">Danh sách lịch hẹn</h1>
         <div className="flex gap-2">
           {["Tất cả", "Chờ xác nhận", "Đã xác nhận", "Hoàn thành", "Đã hủy"].map((s) => (
             <button
               key={s}
               onClick={() => setFilter(s)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium shadow-sm transition-all ${
+              className={`px-4 py-2  text-sm font-medium shadow-sm transition-all ${
                 filter === s
-                  ? "bg-indigo-600 text-white shadow-indigo-200"
+                  ? "bg-black text-white shadow-indigo-200"
                   : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
               }`}
             >
